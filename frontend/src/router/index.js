@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
+import LoginView from '@/views/accounts/LoginView.vue'
+// import LoginView from '@/components/accounts/GoogleLogin.vue'
+// D:\SNS\frontend\src\views\accounts
 
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: Home
+  // },
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'LoginView',
+    component: LoginView
   },
   {
     path: '/about',
