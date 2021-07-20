@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Kakao from '../components/accounts/Kakao.vue'
+import LoginView from '@/views/accounts/LoginView.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,6 +11,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/',
+    name: 'LoginView',
+    component: LoginView
   },
   {
     path: '/about',
