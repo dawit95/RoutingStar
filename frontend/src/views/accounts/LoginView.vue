@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Google from '@/components/accounts/GoogleLogin.vue'
+import Google from '@/components/accounts/Google.vue'
 
 export default {
   name: 'LoginView',
