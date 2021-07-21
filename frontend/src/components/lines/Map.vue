@@ -18,8 +18,8 @@ export default {
   methods: {
     showMap() {
       this.map = new window.google.maps.Map(document.getElementById('map'), {
-            center: { lat:-25.34, lng: 131.036 },
-            zoom: 8,
+            center: { lat:37.501, lng: 127.039 },
+            zoom: 12,
             streetViewControl: false,
             mapTypeControl: false,
             zoomControl: false,
@@ -38,7 +38,7 @@ export default {
 
       script.onload = () => this.showMap();
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY;
+        "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&region=KR&language=ko";
       document.head.appendChild(script);
     },
     addPoint(event) {
