@@ -1,4 +1,5 @@
 <template>
+
   <v-app>
     <v-app-bar
       app
@@ -48,7 +49,6 @@
 
 export default {
   name: 'App',
-
   data: () => ({
     //
   }),
