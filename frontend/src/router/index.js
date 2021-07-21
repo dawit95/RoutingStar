@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Kakao from '../components/accounts/Kakao.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
+import LinesView from '@/views/lines/LinesView.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/kakao',
     name: 'Kakao',
     component: Kakao
+  },
+  {
+    path: '/Lines',
+    name: 'Lines',
+    component: LinesView,
   },
 ]
 
