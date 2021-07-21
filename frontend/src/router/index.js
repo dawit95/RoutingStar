@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LoginView from '@/views/accounts/LoginView.vue'
 import LinesView from '@/views/lines/LinesView.vue'
 
 Vue.use(VueRouter)
