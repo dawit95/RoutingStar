@@ -1,7 +1,5 @@
 package com.curation.backend.user.domain;
 
-import com.curation.backend.global.config.auth.AuthProvider;
-import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,23 +34,14 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
-
-    @Column
-    private String providerId;
-
     @Builder
-    public User(String name, String email, String profileImg, String userDescription, String fileName, Role role, AuthProvider provider, String providerId){
+    public User(String name, String email, String profileImg, String userDescription, String fileName, Role role){
         this.name = name;
         this.email = email;
         this.profileImg= profileImg;
         this.userDescription = userDescription;
         this.fileName = fileName;
         this.role = role;
-        this.provider = provider;
-        this.providerId = providerId;
     }
 
     public User update(String name, String profileImg){

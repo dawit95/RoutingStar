@@ -17,13 +17,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
+                //CSRF비활성화
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
                 //antMatchers의 url은 frontend와 함께 정리하여 변환.
-                .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .antMatchers("/api/**").hasRole(Role.USER.name())
+                .antMatchers("/auth/**","oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
