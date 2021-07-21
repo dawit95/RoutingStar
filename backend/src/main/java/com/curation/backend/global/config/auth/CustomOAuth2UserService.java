@@ -2,6 +2,7 @@ package com.curation.backend.global.config.auth;
 
 
 import com.curation.backend.global.dto.OAuthAttributes;
+import com.curation.backend.global.dto.SessionUser;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
