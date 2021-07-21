@@ -13,6 +13,12 @@ export default {
   components: {
     Nav
   },
+  mounted () {
+    if (this.name === 'Home') {
+      console.log('home')
+      this.value = 2
+    }
+  }
 }
 </script>
 
