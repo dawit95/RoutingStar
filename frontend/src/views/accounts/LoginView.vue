@@ -1,17 +1,20 @@
 <template>
-  <Google />
+  <div>
+    <Google />
+    <Kakao />
+  </div>
 </template>
 
 <script>
 import Google from '@/components/accounts/GoogleLogin.vue'
+import Kakao from '@/components/accounts/Kakao.vue'
 
 export default {
   name: 'LoginView',
   components: {
-    Google
+    Google,
+    Kakao,
   },
-
-
 }
 </script>
 
