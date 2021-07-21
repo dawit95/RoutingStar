@@ -29,7 +29,6 @@ const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
     methods: {
         onSuccess(googleUser) {
         console.log(googleUser);
-        console.log(API_KEY);
       
         // This only gets the user information: id, name, imageUrl and email
         console.log(googleUser.getBasicProfile());
