@@ -1,11 +1,8 @@
 <template>
 <v-card>
-    <v-bottom-navigation
-    absolute
-    :value="activeBtn"
-    grow
-    color="teal"
-  >
+  <v-bottom-navigation 
+  absolute grow color="teal"
+  :value="value">
     <v-btn @click="moveToSearch">
       <span>Search</span>
       <v-icon>mdi-magnify</v-icon>
@@ -22,16 +19,12 @@
     </v-btn>
   </v-bottom-navigation>
 
-    <v-sheet
-      id="scroll-area-2"
-      class="overflow-y-auto"
-      max-height="605"
-    >
-      <v-container style="height: 800px;">
+  <v-sheet align-self-end>
+    <v-container style="height: 800px;">
 
-      </v-container>
-    </v-sheet>
-  </v-card>
+    </v-container>
+  </v-sheet>
+</v-card>
 </template>
 
 <script>
@@ -39,7 +32,7 @@ export default {
   name: 'Nav',
   data () {
     return {
-
+      value: 2,
     }
   },
   methods: {
@@ -52,7 +45,7 @@ export default {
     moveToHome () {
       this.$router.push({ name: 'HomeView' })
     },
-  }
+  },
 }
 </script>
 
