@@ -33,6 +33,7 @@ export default {
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
     }, 
+    
     addGoogleMapScript() {
       const script = document.createElement("script");
 
