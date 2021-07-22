@@ -1,16 +1,47 @@
 <template>
-  <div>
-    <!-- 검색창 -->
-    <input v-model="SearchWord.word"
-      id="pac-input"
-      class="controls"
-      type="text"
-      placeholder="Search Box"
-    />
-    <!-- 맵 -->
-    <div id="map"></div>
+  <v-container fluid grid-list-md>
+    <v-layout row swap>
 
-  </div>
+      <v-flex xs12>
+        <div>
+          <!-- 검색창 -->
+          <input v-model="SearchWord.word"
+            id="pac-input"
+            class="controls"
+            type="text"
+            placeholder="Search Box"
+          />
+          <!-- 맵 -->
+          <div id="map"></div>
+        </div>
+      </v-flex>
+
+      <v-divider></v-divider>
+
+      <v-flex xs12>
+        <v-list
+          outlined
+          v-for="pointItem in pointList"
+          :key="pointItem.id"
+        >
+          <v-list-item outlined ma-0 pa-0>
+            <v-list-item-content>
+              <v-file-input label="첨부파일"></v-file-input>
+              <v-textarea
+                label="장소에대한 짧은설명"
+                rows="1"
+                prepend-icon="mdi-comment"
+              ></v-textarea>
+              <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
+            </v-list-item-content>
+          </v-list-item>
+
+        </v-list>
+
+      </v-flex>
+
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -26,7 +57,11 @@ export default {
       },
       map: null,
       polyLine: null,
-
+      lat: '',
+      lng: '',
+      image: null,
+      pointInfo: '',
+      pointList: [],
     }
   },
   methods: {
@@ -51,6 +86,7 @@ export default {
     
     initMap() {
       this.map = new window.google.maps.Map(document.getElementById("map"), {
+        mapId: "8e0a97af9386fef",
         center: { lat:37.501, lng: 127.039 },
         zoom: 16,
         streetViewControl: false,
@@ -131,10 +167,22 @@ export default {
     addPoint(event) {
       const path = this.polyLine.getPath();
       path.push( event.latLng );
-
-      console.log( event.latLng.lat());
+      console.log(event)
+      // console.log( event.latLng.lat());
       new window.google.maps.Marker( { position:event.latLng, map:this.map});
-    }
+      this.addPointItem(event)
+    },
+    addPointItem (event) {
+      // console.log('작동함 ㅇㅇ')
+      let newPoint = {
+        image : null,
+        lat : event.latLng.lat(),
+        lng : event.latLng.lng(),
+        content: null,
+        thumbnail : false,
+      }
+      this.pointList.push(newPoint)
+    },
   },
   mounted() {
     window.google && window.google.maps
