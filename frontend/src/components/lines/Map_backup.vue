@@ -1,124 +1,59 @@
 <template>
+
   <div>
-    <!-- 검색창 -->
-    <input v-model="SearchWord.word"
+    <h1>This is Place Search Box</h1>
+    <div>
+      <!-- 인풋박스 -->
+    <input
       id="pac-input"
       class="controls"
       type="text"
-      placeholder="Search Box"
-    />
+      placeholder="Search Box"/>
+    </div>
+    <h1>test</h1>
     <!-- 맵 -->
-    <div id="map"></div>
-
+    <div id ="map">
+    </div>
   </div>
+
 </template>
 
 <script>
 export default {
-  name: 'Map',
-  components: {
-
+  name: 'App',
+  props: {
+    msg: String
   },
   data() {
     return {
-      SearchWord: {
-        word: '',
-      },
       map: null,
       polyLine: null,
-
     }
   },
   methods: {
-    // 0. HTML에 Script 삽입
-    // API key 보호를 위해 변수로 삽입
     addGoogleMapScript() {
       const script = document.createElement("script");
 
-      script.onload = () => this.initMap();
+      script.onload = () => this.showMap();
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&libraries=places&region=KR&language=ko&v=weekly";
-      // script.async = true;
+        "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&libraries=places&region=KR&language=ko&v=quarterly";
+      script.async = true;
       script.defer = true;
       document.head.appendChild(script);
     },
-    // This example adds a search box to a map, using the Google Place Autocomplete
-    // feature. People can enter geographical searches. The search box will return a
-    // pick list containing a mix of places and predicted search terms.
-    // This example requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-    
-    initMap() {
-      this.map = new window.google.maps.Map(document.getElementById("map"), {
-        center: { lat:37.501, lng: 127.039 },
-        zoom: 16,
-        streetViewControl: false,
-        mapTypeControl: false,
-        zoomControl: false,
-        fullscreenControl: false,
-        // mapTypeId: "roadmap",
-      });
-      // 1. 검색창 만들기
-      // Create the search box and link it to the UI element.
-      const input = document.getElementById("pac-input");
-      const searchBox = new window.google.maps.places.SearchBox(input);
-      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
-      // Bias the SearchBox results towards current map's viewport.
-      // 2.검색어에 따라 바운더리를 바꾼다
-      this.map.addListener("bounds_changed", () => {
-        searchBox.setBounds(this.map.getBounds());
-      });
-      // let markers = [];
-      // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
-      searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        // 검색된 단어 (엔터 후) 찍어보기
-        // console.log(this.SearchWord.word)
-        if (places.length == 0) {
-          return;
-        }
-        // // Clear out the old markers.
-        // markers.forEach((marker) => {
-        //   marker.setMap(null);
-        // });
-        // markers = [];
-        // For each place, get the icon, name and location.
-        const bounds = new window.google.maps.LatLngBounds();
-        places.forEach((place) => {
-          if (!place.geometry || !place.geometry.location) {
-            console.log("Returned place contains no geometry");
-            return;
-          }
-        //   const icon = {
-        //     url: place.icon,
-        //     size: new google.maps.Size(71, 71),
-        //     origin: new google.maps.Point(0, 0),
-        //     anchor: new google.maps.Point(17, 34),
-        //     scaledSize: new google.maps.Size(25, 25),
-        //   };
-        //   // Create a marker for each place.
-          // markers.push(
-          //   new google.maps.Marker({
-          //     map,
-          //     icon,
-          //     title: place.name,
-          //     position: place.geometry.location,
-          //   })
-          // );
-
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-        this.map.fitBounds(bounds);
-      });
-
-      // 3. 폴리라인(루트 라인)을 만든다
+    test() {
+      console.log('done');
+    },
+    showMap() {
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
+            center: { lat:37.501, lng: 127.039 },
+            zoom: 16,
+            streetViewControl: false,
+            mapTypeControl: false,
+            zoomControl: false,
+            fullscreenControl: false
+      })
+      console.log(this.map)
       this.polyLine = new window.google.maps.Polyline({
         strokeColor: "#E64398",
         strokeOpacity: 0.3,
@@ -126,8 +61,49 @@ export default {
       });
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
-    },
-    // 4. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
+
+      // 1. 검색창 띄우기
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      console.log(input);
+      const searchBox = window.google.maps.places.SearchBox(input);
+      console.log( searchBox );
+
+      /*
+      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+      // Bias the SearchBox results towards current map's viewport.
+      // 2. 검색어에 따라 지도의 바운더리를 바꾼다
+      this.map.addListener("bounds_changed", () => {
+        searchBox.setBounds(this.map.getBounds());
+      });
+
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+      // For each place, get the icon, name and location.
+        const bounds = new window.google.maps.LatLngBounds();
+        places.forEach((place) => {
+          if (!place.geometry || !place.geometry.location) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }          
+        });
+        this.map.fitBounds(bounds);
+      });
+      */
+    }, 
     addPoint(event) {
       const path = this.polyLine.getPath();
       path.push( event.latLng );
@@ -138,7 +114,7 @@ export default {
   },
   mounted() {
     window.google && window.google.maps
-      ? this.initMap()
+      ? this.showMap()
       : this.addGoogleMapScript();
   }
 }
