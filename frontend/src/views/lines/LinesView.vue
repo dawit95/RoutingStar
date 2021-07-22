@@ -11,7 +11,6 @@ import Map from '@/components/lines/Map.vue'
 export default {
  name: 'LinesView',
  components: { Map },
- data () {},
 }
 </script>
 
