@@ -33,6 +33,7 @@
                 prepend-icon="mdi-comment"
               ></v-textarea>
               <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
+              {{ pointItem.lat }} {{ pointItem.lng }}
             </v-list-item-content>
           </v-list-item>
 
@@ -169,7 +170,18 @@ export default {
       path.push( event.latLng );
       console.log(event)
       // console.log( event.latLng.lat());
-      new window.google.maps.Marker( { position:event.latLng, map:this.map});
+      const marker = new window.google.maps.Marker({
+        position:event.latLng, 
+        map:this.map,
+        animation: window.google.maps.Animation.DROP
+        });
+      marker.addListener('click', function () {
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout((function() {
+          marker.setAnimation(null)
+        }).bind(marker), 1400)
+      })
+      // const infowindow = new window.google.maps.InfoWindow({})
       this.addPointItem(event)
     },
     addPointItem (event) {
@@ -183,6 +195,15 @@ export default {
       }
       this.pointList.push(newPoint)
     },
+    // populateInfoWindow(marker) {
+    //   if(window.info.marker != marker) {
+    //     window.info.setCountent('');
+    //     window.info.setContent(marker.content)
+    //   }
+    // },
+    // setBounce(marker) {
+    //   marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    // },
   },
   mounted() {
     window.google && window.google.maps
