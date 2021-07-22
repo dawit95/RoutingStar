@@ -23,14 +23,31 @@
         <v-icon>mdi-bell</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          icon
+        >        
+        <v-icon >mdi-account</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            value="true"
+            v-for="(item, index) in items"
+            :key="index"
+            @click="selectSection(item)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+         </v-menu>
     </v-app-bar>
+
     <v-sheet
       id="scrolling-techniques-2"
       class="overflow-y-auto"
@@ -40,3 +57,31 @@
     </v-sheet>
   </v-card>
 </template>
+
+
+<script>
+  export default {
+    name: 'Header',
+    data: () => ({
+      items: [
+        { title: 'Click Me 0' },
+        { title: 'Click Me 1' },
+        { title: 'Click Me 2' },
+      ],
+    }),
+    methods: {
+      selectSection(item) {
+      switch (item.title) {
+        case 'Click Me 0':
+          console.log('Click Me')
+          break
+        case 'Click Me 1':
+          console.log('Profile')
+          break
+        case 'Click Me 2':
+          console.log('Logout')
+      }
+    }
+    }
+  }
+</script>
