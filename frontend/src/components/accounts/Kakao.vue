@@ -27,7 +27,7 @@ export default {
           console.log(authObj)
           const token = authObj.access_token
           localStorage.setItem("access-token", token)
-          this.$router.push({ name: 'About' })
+          this.$router.push({ name: 'App' })
           
           // 3. 토큰으로  API 호출
           window.Kakao.API.request({
