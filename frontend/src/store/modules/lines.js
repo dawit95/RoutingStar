@@ -17,15 +17,15 @@ const mutations= {
 }
 
 const actions = {
-  addPointItem ({ commit }, event) {
+  addPointItem ({ commit }, payload) {
     // console.log('작동함 ㅇㅇ')
     let newPoint = {
       image : null,
-      lat : event.latLng.lat(),
-      lng : event.latLng.lng(),
+      lat : payload.event.latLng.lat(),
+      lng : payload.event.latLng.lng(),
       content: null,
       thumbnail : false,
-      // marker: marker,
+      marker: payload.marker,
     }
     commit('ADD_POINT_ITEM', newPoint)
   },
