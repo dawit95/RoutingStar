@@ -191,13 +191,23 @@ export default {
       console.log(this.SearchWord)
       console.log(this.map)
       console.log(this.polyLine)
-      console.log(this.lat)
-      console.log(this.lng)
+      console.log(this.lat) // null
+      console.log(this.lng) // null
       console.log(this.image)
-      console.log(this.pointInfo)
-      console.log(this.pointList)
+      console.log(this.pointInfo) // null
+      console.log(this.pointList) // 좌표정보 포함됨
     },
   },
+  // beforeRouteLeave (to, from, next) {
+  //   alert('!!!!!');
+  //   next("/");
+  //   // const answer = window.confirm('저장되지 않은 작업이 있습니다! 정말 나갈까요?');
+  //   // if (answer) {
+  //   // next();
+  //   // } else {
+  //   // next(false);
+  //   // }
+  // },
   mounted() {
     window.google && window.google.maps
       ? this.initMap()
