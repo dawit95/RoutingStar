@@ -17,16 +17,21 @@
       </v-flex>
 
       <v-divider></v-divider>
-
     </v-layout>
+    <v-btn @click='createMap'>Submit</v-btn>
   </v-container>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'Map',
   components: {
 
+  },
+  computed: {
+    ...mapGetters(['pointedItems', 'latLstItems', 'lngLstItems'])
   },
   data() {
     return {
@@ -59,8 +64,45 @@ export default {
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
     
     initMap() {
-      this.map = new window.google.maps.Map(document.getElementById("map"), {
-        mapId: "8e0a97af9386fef",
+
+      // console.log(this.$store.getters.latLstItems)
+      // console.log(this.$store.getters.lngLstItems)
+      // 중심은 우선 첫번째 요소로 선택
+      if (this.$store.getters.latLstItems.length) {
+          console.log(this.$store.getters.latLstItems.length)
+          this.map = new window.google.maps.Map(document.getElementById("map"), {
+          mapId: "8e0a97af9386fef",
+          center: { lat:this.$store.getters.latLstItems[0], lng: this.$store.getters.lngLstItems[0] },
+          zoom: 16,
+          streetViewControl: false,
+          mapTypeControl: false,
+          zoomControl: false,
+          fullscreenControl: false,
+          })
+          // 좌표
+          const flightPlanCoordinates = []
+          for (var j in this.latLstItems) {
+            const myLatLng = {lat: this.latLstItems[j], lng: this.lngLstItems[j]}
+            flightPlanCoordinates.push(myLatLng)
+            new window.google.maps.Marker({
+            position: myLatLng,
+            map: this.map,
+          });        
+          // 선(rotue) 
+          const flightPath = new window.google.maps.Polyline({
+            path: flightPlanCoordinates,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+          });
+          flightPath.setMap(this.map);
+
+          }
+
+      } else {
+        this.map = new window.google.maps.Map(document.getElementById("map"), {
+          mapId: "8e0a97af9386fef",
         center: { lat:37.501, lng: 127.039 },
         zoom: 16,
         streetViewControl: false,
@@ -69,6 +111,7 @@ export default {
         fullscreenControl: false,
         // mapTypeId: "roadmap",
       });
+    }
       // 1. 검색창 만들기
       // Create the search box and link it to the UI element.
       const input = document.getElementById("pac-input");
@@ -86,6 +129,7 @@ export default {
         const places = searchBox.getPlaces();
         // 검색된 단어 (엔터 후) 찍어보기
         // console.log(this.SearchWord.word)
+        // console.log(places)
         if (places.length == 0) {
           return;
         }
@@ -251,6 +295,10 @@ export default {
       })
       // console.log(marker)
       this.$store.dispatch('addPointItem', {event, marker})
+      console.log(event)
+      console.log(marker)
+      // this.$store.dispatch('addPointItem', marker)
+
       this.refreshPolyline();
     },
     removePoint(marker) {
@@ -274,6 +322,23 @@ export default {
         path.push( new window.google.maps.LatLng( point.lat, point.lng));
       }
     },
+
+    // 새로운 게시물을 생성했을 때 구글맵에 재요청을 보내서 다시 그려지는지 확인
+    createMap() {
+      // console.log(this.pointedItems)
+      let lat_lst = []
+      let lng_lst = []
+      for (var i in this.pointedItems){
+        console.log(this.pointedItems[i])
+        lat_lst.push(this.pointedItems[i].lat)
+        lng_lst.push(this.pointedItems[i].lng)
+      }
+      // console.log(lat_lst)
+      // console.log(lng_lst)
+      // 초기화
+      this.$store.dispatch('addLatLngLst', {lat_lst, lng_lst})
+      this.initMap();
+    }
   },
   mounted() {
     window.google && window.google.maps
