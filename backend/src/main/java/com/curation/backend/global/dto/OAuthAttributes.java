@@ -33,7 +33,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
-                .profileImg((String) attributes.get("profileImg"))
+                .profileImg((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
