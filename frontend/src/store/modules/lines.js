@@ -13,6 +13,7 @@ const getters = {
 const mutations= {
   ADD_POINT_ITEM(state, newPoint) {
     state.pointList.push(newPoint)
+    console.log(state.pointList)
   }
 }
 

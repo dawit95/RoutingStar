@@ -1,25 +1,17 @@
 <template>
-  <v-container fluid grid-list-md>
-    <v-layout row swap>
-
-      <v-flex xs12>
-        <div>
-          <!-- 검색창 -->
-          <input v-model="SearchWord.word"
-            id="pac-input"
-            class="controls"
-            type="text"
-            placeholder="Search Box"
-          />
-          <!-- 맵 -->
-          <div id="map"></div>
-        </div>
-      </v-flex>
-
-      <v-divider></v-divider>
-
-    </v-layout>
-  </v-container>
+  <v-flex xs12>
+    <div>
+      <!-- 검색창 -->
+      <input v-model="SearchWord.word"
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Search Box"
+      />
+      <!-- 맵 -->
+      <div id="map"></div>
+    </div>
+  </v-flex>
 </template>
 
 <script>
