@@ -35,10 +35,7 @@ export default {
       },
       map: null,
       polyLine: null,
-      lat: '',
-      lng: '',
-      image: null,
-      pointInfo: '',
+
     }
   },
   methods: {
@@ -157,6 +154,7 @@ export default {
           marker.setAnimation(null)
         }).bind(marker), 1400)
       })
+      console.log(marker)
       this.$store.dispatch('addPointItem', event)
     },
   },
