@@ -38,3 +38,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### 보안 ###
+application-oauth.properties
