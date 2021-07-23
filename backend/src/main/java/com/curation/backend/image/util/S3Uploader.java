@@ -3,6 +3,7 @@ package com.curation.backend.image.util;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.curation.backend.image.dto.ImgResponseDto;
 import com.curation.backend.image.exception.ImageUploadException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +31,14 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException, ImageUploadException {
+    public ImgResponseDto upload(MultipartFile multipartFile, String dirName) throws IOException, ImageUploadException {
         File uploadFile = convert(multipartFile).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
 
-        return upload(uploadFile, dirName);
+        String img = upload(uploadFile, dirName);
+        ImgResponseDto imgResponseDto = new ImgResponseDto();
+        imgResponseDto.setImg(img);
+
+        return imgResponseDto;
     }
 
     private String upload(File uploadFile, String dirName) {
