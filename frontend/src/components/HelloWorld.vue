@@ -52,6 +52,7 @@
       >
         <h2 class="headline font-weight-bold mb-3">
           Important Links
+          잠시 수정
         </h2>
 
         <v-row justify="center">
