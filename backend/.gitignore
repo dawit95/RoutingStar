@@ -1,3 +1,6 @@
+### key값 ###
+src/main/resources/application-credentials.properties
+
 HELP.md
 .gradle
 .idea
