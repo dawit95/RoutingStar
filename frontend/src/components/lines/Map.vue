@@ -18,6 +18,7 @@
 
       <v-divider></v-divider>
 
+<<<<<<< HEAD
       <v-flex xs12>
         <v-list
           outlined
@@ -38,6 +39,8 @@
         </v-list>
         <v-btn @click="createPointList">Submit</v-btn>
       </v-flex>
+=======
+>>>>>>> c2834bf7db966fc836d787f8468f6531aeb91538
     </v-layout>
   </v-container>
 
@@ -56,11 +59,7 @@ export default {
       },
       map: null,
       polyLine: null,
-      lat: '',
-      lng: '',
-      image: null,
-      pointInfo: '',
-      pointList: [],
+
     }
   },
   methods: {
@@ -168,20 +167,19 @@ export default {
       path.push( event.latLng );
       // console.log(event)
       // console.log( event.latLng.lat());
-      new window.google.maps.Marker( { position:event.latLng, map:this.map});
-      this.addPointItem(event)
-      // console.log(this.SearchWord)
-    },
-    addPointItem (event) {
-      // console.log('작동함 ㅇㅇ')
-      let newPoint = {
-        image : null,
-        lat : event.latLng.lat(),
-        lng : event.latLng.lng(),
-        content: null,
-        thumbnail : false,
-      }
-      this.pointList.push(newPoint)
+      const marker = new window.google.maps.Marker({
+        position:event.latLng,
+        map:this.map,
+        animation: window.google.maps.Animation.DROP
+        });
+      marker.addListener('click', function () {
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout((function() {
+          marker.setAnimation(null)
+        }).bind(marker), 1400)
+      })
+      console.log(marker)
+      this.$store.dispatch('addPointItem', event)
     },
     createPointList () {
       // const mapItem = {
