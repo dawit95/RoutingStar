@@ -48,21 +48,55 @@ const routes = [
   },
 ]
 
+
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
-// router.beforeRouteLeave((Home, Lines, next) => {
-//   alert('!!!!!');
-//   next("/");
-//   // const answer = window.confirm('저장되지 않은 작업이 있습니다! 정말 나갈까요?');
-//   // if (answer) {
-//   // next();
-//   // } else {
-//   // next(false);
-//   // }
-// })
+router.beforeEach((to, from, next) => {
+  console.log(to.name)
+  console.log(from.name)
+  // console.log(next)
+  // next( {name: 'PostView'})
+  next()
+
+
+  if (to.name === 'Nav' && from.name === 'Lines') {
+    const result = confirm('뒤로 가면 데이터가 삭제됩니다.')
+    if (result) {
+      next(-1)
+    } else {
+      next('/nav')
+    } 
+  } else if (to.name === 'LoginView' && from.name === 'Lines') {
+    const result = confirm('뒤로 가면 데이터가 삭제됩니다.')
+    if (result) {
+      next(-1)
+    } else {
+      next('/')
+    } 
+  }
+  // if (from.name === 'Lines' && to.name === 'LoginView') {
+  // //   next({ name : 'PostView' })
+  //   next('/')
+  
+});
+
+// router.beforeEach((to, from, next) => {
+  //     // console.log(to)
+  //     // console.log(from)
+//     console.log(next)
+
+//     if (from.name === 'Lines' && to.name === 'LoginView') {
+//       console.log('aaaaaaaa')
+      // alert('뒤로 가면 데이터가 삭제됩니다.')
+      // next ({ name: 'LoginView'})
+      // return
+//     }
+//   }
+// )
 
 export default router
