@@ -18,28 +18,6 @@
 
       <v-divider></v-divider>
 
-      <v-flex xs12>
-        <v-list
-          outlined
-          v-for="pointItem in pointList"
-          :key="pointItem.id"
-        >
-          <v-list-item outlined ma-0 pa-0>
-            <v-list-item-content>
-              <v-file-input label="첨부파일"></v-file-input>
-              <v-textarea
-                label="장소에대한 짧은설명"
-                rows="1"
-                prepend-icon="mdi-comment"
-              ></v-textarea>
-              <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
-            </v-list-item-content>
-          </v-list-item>
-
-        </v-list>
-
-      </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -57,11 +35,7 @@ export default {
       },
       map: null,
       polyLine: null,
-      lat: '',
-      lng: '',
-      image: null,
-      pointInfo: '',
-      pointList: [],
+
     }
   },
   methods: {
@@ -167,21 +141,21 @@ export default {
     addPoint(event) {
       const path = this.polyLine.getPath();
       path.push( event.latLng );
-      console.log(event)
+      // console.log(event)
       // console.log( event.latLng.lat());
-      new window.google.maps.Marker( { position:event.latLng, map:this.map});
-      this.addPointItem(event)
-    },
-    addPointItem (event) {
-      // console.log('작동함 ㅇㅇ')
-      let newPoint = {
-        image : null,
-        lat : event.latLng.lat(),
-        lng : event.latLng.lng(),
-        content: null,
-        thumbnail : false,
-      }
-      this.pointList.push(newPoint)
+      const marker = new window.google.maps.Marker({
+        position:event.latLng,
+        map:this.map,
+        animation: window.google.maps.Animation.DROP
+        });
+      marker.addListener('click', function () {
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout((function() {
+          marker.setAnimation(null)
+        }).bind(marker), 1400)
+      })
+      console.log(marker)
+      this.$store.dispatch('addPointItem', event)
     },
   },
   mounted() {
