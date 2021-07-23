@@ -6,11 +6,19 @@ import Header from '@/components/common/Header.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  // Accounts
   {
     path: '/',
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
+  {
+    path: '/acocunts/profile/:username:',
+    name: 'Profile',
+    component: ProfileView,
+  },
+
+  // Common
   {
     path: '/Header',
     name: 'Header',
@@ -41,6 +49,8 @@ const routes = [
     name: 'Nav',
     component: () => import('@/components/common/Nav')
   },
+  
+  // Routes
   {
     path: '/Lines',
     name: 'Lines',
