@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <Map/>
-    <PointList />
-  </div>
+  <v-container fluid grid-list-md>
+    <v-layout row swap>
+      <Map/>
+      <v-divider></v-divider>
+      <PointList />
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
