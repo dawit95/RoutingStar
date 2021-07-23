@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
                 //antMatchers의 url은 frontend와 함께 정리하여 변환.
                 .antMatchers("/api/**").hasRole(Role.USER.name())
-                .antMatchers("/auth/**","oauth2/**").permitAll()
+                .antMatchers("/auth/**","/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
