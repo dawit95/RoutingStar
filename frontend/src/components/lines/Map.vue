@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <v-container fluid grid-list-md>
     <v-layout row swap>
 
@@ -20,6 +21,21 @@
     </v-layout>
     <v-btn @click='createMap'>Submit</v-btn>
   </v-container>
+=======
+  <v-flex xs12>
+    <div>
+      <!-- 검색창 -->
+      <input v-model="SearchWord.word"
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Search Box"
+      />
+      <!-- 맵 -->
+      <div id="map"></div>
+    </div>
+  </v-flex>
+>>>>>>> 6d38dcd4f46f584d5913b16101886bb9676f9d5a
 </template>
 
 <script>
