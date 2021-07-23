@@ -35,13 +35,12 @@
               <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
             </v-list-item-content>
           </v-list-item>
-
         </v-list>
-
+        <v-btn @click="createPointList">Submit</v-btn>
       </v-flex>
-
     </v-layout>
   </v-container>
+
 </template>
 
 <script>
@@ -167,10 +166,11 @@ export default {
     addPoint(event) {
       const path = this.polyLine.getPath();
       path.push( event.latLng );
-      console.log(event)
+      // console.log(event)
       // console.log( event.latLng.lat());
       new window.google.maps.Marker( { position:event.latLng, map:this.map});
       this.addPointItem(event)
+      // console.log(this.SearchWord)
     },
     addPointItem (event) {
       // console.log('작동함 ㅇㅇ')
@@ -183,7 +183,31 @@ export default {
       }
       this.pointList.push(newPoint)
     },
+    createPointList () {
+      // const mapItem = {
+      //   SearchWord: this.SearchWord,
+      //   map: this.map
+      // }
+      console.log(this.SearchWord)
+      console.log(this.map)
+      console.log(this.polyLine)
+      console.log(this.lat) // null
+      console.log(this.lng) // null
+      console.log(this.image)
+      console.log(this.pointInfo) // null
+      console.log(this.pointList) // 좌표정보 포함됨
+    },
   },
+  // beforeRouteLeave (to, from, next) {
+  //   alert('!!!!!');
+  //   next("/");
+  //   // const answer = window.confirm('저장되지 않은 작업이 있습니다! 정말 나갈까요?');
+  //   // if (answer) {
+  //   // next();
+  //   // } else {
+  //   // next(false);
+  //   // }
+  // },
   mounted() {
     window.google && window.google.maps
       ? this.initMap()
