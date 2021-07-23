@@ -25,6 +25,7 @@ const actions = {
       lng : event.latLng.lng(),
       content: null,
       thumbnail : false,
+      // marker: marker,
     }
     commit('ADD_POINT_ITEM', newPoint)
   },
