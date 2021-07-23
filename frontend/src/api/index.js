@@ -2,5 +2,12 @@
 
 export default {
   URL: '',
-  ROUTES: {},
+  ROUTES: {
+    login() {
+      return '/'
+    },
+    profile(username) {
+      return `accounts/profile/${username}`
+    }
+  },
 }
