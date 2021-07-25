@@ -7,6 +7,7 @@ import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
 import com.curation.backend.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -66,4 +67,10 @@ public class Route extends BaseTime {
 
     @Column
     private boolean deleted = Boolean.FALSE;
+
+    @Builder
+    public Route(String thumbnail, String routeDescription) {
+        this.thumbNail = thumbnail;
+        this.routeDescription = routeDescription;
+    }
 }
