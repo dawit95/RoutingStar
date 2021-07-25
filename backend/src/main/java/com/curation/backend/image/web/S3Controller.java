@@ -20,9 +20,9 @@ public class S3Controller {
     private final S3Uploader s3Uploader;
 
     @PostMapping("/place")
-    public ImgResponseDto upload(@RequestParam("data")MultipartFile multipartFile) throws IOException, ImageUploadException {
-        logger.trace("/api/v1/img/place is called!!!!!! " + multipartFile.isEmpty());
-        return s3Uploader.upload(multipartFile, "static");
+    public ImgResponseDto upload(@RequestBody MultipartFile image, @RequestBody boolean isThumbnail) throws IOException, ImageUploadException {
+        logger.trace("/api/v1/img/place is called!!!!!! " + image.isEmpty());
+        return s3Uploader.upload(image, "static");
     }
 
 }
