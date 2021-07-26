@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <v-container fluid grid-list-md>
     <v-layout row swap>
 
@@ -21,21 +20,6 @@
     </v-layout>
     <v-btn @click='createMap'>Submit</v-btn>
   </v-container>
-=======
-  <v-flex xs12>
-    <div>
-      <!-- 검색창 -->
-      <input v-model="SearchWord.word"
-        id="pac-input"
-        class="controls"
-        type="text"
-        placeholder="Search Box"
-      />
-      <!-- 맵 -->
-      <div id="map"></div>
-    </div>
-  </v-flex>
->>>>>>> 6d38dcd4f46f584d5913b16101886bb9676f9d5a
 </template>
 
 <script>
@@ -72,15 +56,9 @@ export default {
       script.defer = true;
       document.head.appendChild(script);
     },
-    // This example adds a search box to a map, using the Google Place Autocomplete
-    // feature. People can enter geographical searches. The search box will return a
-    // pick list containing a mix of places and predicted search terms.
-    // This example requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
     
+    // 1. Map 세팅
     initMap() {
-
       // console.log(this.$store.getters.latLstItems)
       // console.log(this.$store.getters.lngLstItems)
       // 중심은 우선 첫번째 요소로 선택
@@ -113,71 +91,41 @@ export default {
             strokeWeight: 2,
           });
           flightPath.setMap(this.map);
-
           }
 
       } else {
         this.map = new window.google.maps.Map(document.getElementById("map"), {
           mapId: "8e0a97af9386fef",
-        center: { lat:37.501, lng: 127.039 },
-        zoom: 16,
-        streetViewControl: false,
-        mapTypeControl: false,
-        zoomControl: false,
-        fullscreenControl: false,
-        // mapTypeId: "roadmap",
+          center: { lat:37.501, lng: 127.039 },
+          zoom: 16,
+          streetViewControl: false,
+          mapTypeControl: false,
+          zoomControl: false,
+          fullscreenControl: false,
+          // mapTypeId: "roadmap",
       });
     }
-      // 1. 검색창 만들기
+      // 3. 검색창 만들기
       // Create the search box and link it to the UI element.
       const input = document.getElementById("pac-input");
       const searchBox = new window.google.maps.places.SearchBox(input);
       this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
       // Bias the SearchBox results towards current map's viewport.
-      // 2.검색어에 따라 바운더리를 바꾼다
+      // 4.검색어에 따라 바운더리를 바꾼다
       this.map.addListener("bounds_changed", () => {
         searchBox.setBounds(this.map.getBounds());
       });
-      // let markers = [];
-      // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
       searchBox.addListener("places_changed", () => {
         const places = searchBox.getPlaces();
-        // 검색된 단어 (엔터 후) 찍어보기
-        // console.log(this.SearchWord.word)
-        // console.log(places)
         if (places.length == 0) {
           return;
         }
-        // // Clear out the old markers.
-        // markers.forEach((marker) => {
-        //   marker.setMap(null);
-        // });
-        // markers = [];
-        // For each place, get the icon, name and location.
         const bounds = new window.google.maps.LatLngBounds();
         places.forEach((place) => {
           if (!place.geometry || !place.geometry.location) {
             console.log("Returned place contains no geometry");
             return;
           }
-        //   const icon = {
-        //     url: place.icon,
-        //     size: new google.maps.Size(71, 71),
-        //     origin: new google.maps.Point(0, 0),
-        //     anchor: new google.maps.Point(17, 34),
-        //     scaledSize: new google.maps.Size(25, 25),
-        //   };
-        //   // Create a marker for each place.
-          // markers.push(
-          //   new google.maps.Marker({
-          //     map,
-          //     icon,
-          //     title: place.name,
-          //     position: place.geometry.location,
-          //   })
-          // );
-
           if (place.geometry.viewport) {
             // Only geocodes have viewport.
             bounds.union(place.geometry.viewport);
@@ -188,7 +136,7 @@ export default {
         this.map.fitBounds(bounds);
       });
 
-      // 3. 폴리라인(루트 라인)을 만든다
+      // 5. 폴리라인(루트 라인)을 만든다
       this.polyLine = new window.google.maps.Polyline({
         strokeColor: "#E64398",
         strokeOpacity: 0.3,
@@ -197,100 +145,8 @@ export default {
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
     
-
-      // 폴리라인의 vertex 삭제 구현
-      /**
-       * A menu that lets a user delete a selected vertex of a path.
-       */
-      class DeleteMenu extends window.google.maps.OverlayView {
-        div_;
-        divListener_;
-        constructor() {
-          super();
-          this.div_ = document.createElement("div");
-          this.div_.className = "delete-menu";
-          this.div_.innerHTML = "Delete";
-          const menu = this;
-          window.google.maps.event.addDomListener(this.div_, "click", () => {
-            menu.removeVertex();
-          });
-        }
-        onAdd() {
-          const deleteMenu = this;
-          const map = this.getMap();
-          this.getPanes().floatPane.appendChild(this.div_);
-          // mousedown anywhere on the map except on the menu div will close the
-          // menu.
-          this.divListener_ = window.google.maps.event.addDomListener(
-            map.getDiv(),
-            "mousedown",
-            (e) => {
-              if (e.target != deleteMenu.div_) {
-                deleteMenu.close();
-              }
-            },
-            true
-          );
-        }
-        onRemove() {
-          if (this.divListener_) {
-            window.google.maps.event.removeListener(this.divListener_);
-          }
-          this.div_.parentNode.removeChild(this.div_);
-          // clean up
-          this.set("position", null);
-          this.set("path", null);
-          this.set("vertex", null);
-        }
-        close() {
-          this.setMap(null);
-        }
-        draw() {
-          const position = this.get("position");
-          const projection = this.getProjection();
-
-          if (!position || !projection) {
-            return;
-          }
-          const point = projection.fromLatLngToDivPixel(position);
-          this.div_.style.top = point.y + "px";
-          this.div_.style.left = point.x + "px";
-        }
-        /**
-         * Opens the menu at a vertex of a given path.
-         */
-        open(map, path, vertex) {
-          this.set("position", path.getAt(vertex));
-          this.set("path", path);
-          this.set("vertex", vertex);
-          this.setMap(map);
-          this.draw();
-        }
-        /**
-         * Deletes the vertex from the path.
-         */
-        removeVertex() {
-          const path = this.get("path");
-          const vertex = this.get("vertex");
-
-          if (!path || vertex == undefined) {
-            this.close();
-            return;
-          }
-          path.removeAt(vertex);
-          this.close();
-        }
-      }
-      const deleteMenu = new DeleteMenu();
-      window.google.maps.event.addListener(this.polyLine, "contextmenu", (e) => {
-        // Check if click was on a vertex control point
-        if (e.vertex == undefined) {
-          return;
-        }
-        deleteMenu.open(this.map, this.polyLine.getPath(), e.vertex);
-      });
     },
-    // 4. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
+    // 5. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
     addPoint(event) {
       const marker = new window.google.maps.Marker({
         position:event.latLng,
@@ -317,6 +173,7 @@ export default {
 
       this.refreshPolyline();
     },
+    // 6. 마커 삭제 구현 (마커 리스트를 제거한 뒤 다시 맵 refresh)
     removePoint(marker) {
       const latLng = marker.getPosition();
       const lat = latLng.lat();
@@ -429,22 +286,4 @@ a {
   font-weight: 300;
 }
 
-.delete-menu {
-  position: absolute;
-  background: white;
-  padding: 3px;
-  color: #666;
-  font-weight: bold;
-  border: 1px solid #999;
-  font-family: sans-serif;
-  font-size: 12px;
-  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.3);
-  margin-top: -10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.delete-menu:hover {
-  background: #eee;
-}
 </style>
