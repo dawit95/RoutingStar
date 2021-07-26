@@ -7,7 +7,6 @@
           role="group"
           aria-label="Basic example"
         >
-          <button class="btn btn-secondary" @click="add">Add</button>
           <button class="btn btn-secondary" @click="replace">Replace</button>
         </div>
 
@@ -76,9 +75,6 @@ export default {
     }
   },
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan " + id, id: id++ });
-    },
     replace: function() {
       this.list = [{ name: "Edgard", id: id++ }];
     },
