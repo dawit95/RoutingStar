@@ -7,6 +7,8 @@ import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
 import com.curation.backend.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +20,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SQLDelete(sql = "UPDATE route set deleted = true where id = ?")
 @Where(clause = "deleted = false")
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @Entity
 public class Route extends BaseTime {
@@ -36,7 +37,7 @@ public class Route extends BaseTime {
     @Column(nullable = false)
     private String routeDescription;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 

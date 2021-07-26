@@ -1,20 +1,19 @@
 package com.curation.backend.route.web;
 
-import com.curation.backend.place.domain.Place;
-import com.curation.backend.place.dto.PlaceRequestDto;
+import com.curation.backend.route.dto.RouteDetailResponseDto;
+import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/route")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
 public class RouteController {
@@ -23,9 +22,21 @@ public class RouteController {
 
     private final RouteService routeService;
 
-    @PostMapping("")
+    @PostMapping("/route")
     public Long addRoute(@RequestBody RouteRequestDto route) throws Exception {
-        logger.trace(route.getPlaces().size() + "만큼 들어왔다.");
         return routeService.save(route, route.getPlaces());
+    }
+
+    @GetMapping("/routes/{id}")
+    public ResponseEntity<List<RouteListResponseDto>> followingRouteList(@PathVariable("id") Long id) {
+        List<RouteListResponseDto> list = routeService.followingRouteList(id);
+
+        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/route/{id}")
+    public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("id") Long id) {
+        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
+        return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
     }
 }

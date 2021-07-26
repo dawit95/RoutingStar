@@ -1,12 +1,12 @@
 package com.curation.backend.user.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter @Setter
 @NoArgsConstructor
 @Entity
 public class FollowFollowing {
@@ -23,11 +23,19 @@ public class FollowFollowing {
     @JoinColumn(name = "following_id")
     private User following;
 
-    public void setFollower(User follower) {
+/*
+    public void setUser(User user) {
+        if(this.user != null)   this.user.getRoutes().remove(this);
 
+        this.user = user;
+        user.getRoutes().add(this);
     }
+ */
 
-    public void setFollowing(User following) {
 
+    @Builder
+    public FollowFollowing(User follower, User following) {
+        this.follower = follower;
+        this.following = following;
     }
 }
