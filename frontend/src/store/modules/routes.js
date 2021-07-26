@@ -36,26 +36,17 @@ const mutations= {
 }
 
 const actions = {
-  addPointItem ({ commit }, payload) {
-    // console.log(payload)
-    let newPoint = {
-      image : null,
-      lat : payload.event.latLng.lat(),
-      lng : payload.event.latLng.lng(),
-      content: null,
-      thumbnail : false,
-      marker: payload.marker,
-    }
+  addPointItem ({ commit }, newPoint) {
+    // console.log('잘 작동함 ㅇㅇ')
+    // console.log(newPoint)
     commit('ADD_POINT_ITEM', newPoint)
   },
-  addLatLngLst ({ commit }, payload) {
+  addLatLngLst ({ commit }, latLngLst) {
     // console.log(payload)
-    let latLngLst = {
-      latLst: payload.lat_lst,
-      lngLst: payload.lng_lst,
-    }
     // console.log(latLngtLst.latLst)
     commit('ADD_LAT_LNG_LST', latLngLst)
+    console.log('dsfsfdds')
+    console.log(latLngLst)
     },
   }
 
