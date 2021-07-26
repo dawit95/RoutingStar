@@ -34,9 +34,9 @@ public class S3Uploader {
     public ImgResponseDto upload(MultipartFile multipartFile, String dirName) throws IOException, ImageUploadException {
         File uploadFile = convert(multipartFile).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
 
-        String img = upload(uploadFile, dirName);
+        String image = upload(uploadFile, dirName);
         ImgResponseDto imgResponseDto = new ImgResponseDto();
-        imgResponseDto.setImg(img);
+        imgResponseDto.setImage(image);
 
         return imgResponseDto;
     }
