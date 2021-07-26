@@ -1,16 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LinesView from '@/views/lines/LinesView.vue'
+import LinesView from '@/views/routes/RoutesView.vue'
 import Header from '@/components/common/Header.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // Accounts
   {
     path: '/',
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
+  // 회원가입 전까지는 위의 프로필로 테스트
+  // path: '/acocunts/profile/:username',
+  {
+    path: '/accounts/profile/',
+    name: 'ProfileView',
+    component: () => import('@/views/accounts/ProfileView.vue')
+  },
+
+  // Common
   {
     path: '/Header',
     name: 'Header',
@@ -41,9 +51,11 @@ const routes = [
     name: 'Nav',
     component: () => import('@/components/common/Nav')
   },
+  
+  // Routes
   {
-    path: '/Lines',
-    name: 'Lines',
+    path: '/routes',
+    name: 'Routes',
     component: LinesView,
   },
 ]

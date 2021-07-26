@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'App',
+  name: 'Map_backup',
   props: {
     msg: String
   },
