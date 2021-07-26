@@ -58,6 +58,11 @@ const routes = [
     name: 'Routes',
     component: LinesView,
   },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('@/views/Test'),
+  },
 ]
 
 
