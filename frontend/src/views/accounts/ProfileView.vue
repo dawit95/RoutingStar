@@ -1,7 +1,7 @@
 <template>
-  <div>
-    
-  </div>
+
+    <h1>This Is ProfileView</h1>
+
 </template>
 
 <script>
@@ -16,9 +16,9 @@ export default {
   methods: {
 
   },
-  mounted() {
+  // mounted() {
 
-  }
+  // }
 }
 </script>
 

@@ -12,10 +12,12 @@ const routes = [
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
+  // 회원가입 전까지는 위의 프로필로 테스트
+  // path: '/acocunts/profile/:username',
   {
-    path: '/acocunts/profile/:username:',
-    name: 'Profile',
-    component: ProfileView,
+    path: '/accounts/profile/',
+    name: 'ProfileView',
+    component: () => import('@/views/accounts/ProfileView.vue')
   },
 
   // Common
