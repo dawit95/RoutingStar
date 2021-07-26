@@ -14,7 +14,7 @@ import Map from '@/components/routes/Map.vue'
 import MapPointForm from '@/components/routes/MapPointForm.vue'
 
 export default {
- name: 'RoutesView',
+ name: 'PostRouteView',
  components: { Map, MapPointForm },
 }
 </script>
