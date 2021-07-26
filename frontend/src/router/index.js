@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LinesView from '@/views/lines/LinesView.vue'
+import LinesView from '@/views/routes/RoutesView.vue'
 import Header from '@/components/common/Header.vue'
 
 Vue.use(VueRouter)
@@ -54,8 +54,8 @@ const routes = [
   
   // Routes
   {
-    path: '/Lines',
-    name: 'Lines',
+    path: '/routes',
+    name: 'Routes',
     component: LinesView,
   },
 ]
