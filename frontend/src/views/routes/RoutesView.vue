@@ -10,11 +10,11 @@
 
 <script>
 // components
-import Map from '@/components/lines/Map.vue'
-import MapPointForm from '@/components/lines/MapPointForm.vue'
+import Map from '@/components/routes/Map.vue'
+import MapPointForm from '@/components/routes/MapPointForm.vue'
 
 export default {
- name: 'LinesView',
+ name: 'RoutesView',
  components: { Map, MapPointForm },
 }
 </script>
