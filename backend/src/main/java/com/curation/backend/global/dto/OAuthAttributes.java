@@ -26,15 +26,14 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-//        if("naver".equals(registrationId)) {
-//            return ofNaver("id", attributes);
-//        }
-
-        if("kakao".equals(registrationId)){
-            return ofKakao("id", attributes);
+        switch (registrationId){
+            case "google":
+                return ofGoogle(userNameAttributeName, attributes);
+            case "kakao":
+                return ofKakao("id", attributes);
+            default:
+                throw new RuntimeException();
         }
-
-        return ofGoogle(userNameAttributeName, attributes);
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {

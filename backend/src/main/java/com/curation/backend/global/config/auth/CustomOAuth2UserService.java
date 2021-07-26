@@ -29,8 +29,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
-        logger.trace(userRequest.getAdditionalParameters().toString());
+        logger.trace("유저 요청 : {}",userRequest.getAdditionalParameters().toString());
+        logger.trace("유저객체 : {}",oAuth2User);
 
         //플랫폼 구분
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
@@ -39,9 +39,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         //user정보 구분할 user name
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
-        logger.trace(userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri());
+        logger.trace("userRequest : {}",userRequest);
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        logger.trace("만든 oauth객채 : {}",attributes);
 
         User user = saveOrUpdate(attributes);
 
