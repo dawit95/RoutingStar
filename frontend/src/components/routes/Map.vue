@@ -166,7 +166,15 @@ export default {
         }).bind(marker), 1400)
       })
       // console.log(marker)
-      this.$store.dispatch('addPointItem', {event, marker})
+      let newPoint = {
+        image : null,
+        lat : event.latLng.lat(),
+        lng : event.latLng.lng(),
+        content: null,
+        thumbnail : false,
+        marker: marker,
+      }
+      this.$store.dispatch('addPointItem', newPoint)
       console.log(event)
       console.log(marker)
       // this.$store.dispatch('addPointItem', marker)
@@ -209,7 +217,11 @@ export default {
       // console.log(lat_lst)
       // console.log(lng_lst)
       // 초기화
-      this.$store.dispatch('addLatLngLst', {lat_lst, lng_lst})
+      let latLngLst = {
+        latLst: lat_lst,
+        lngLst: lng_lst,
+      }
+      this.$store.dispatch('addLatLngLst', latLngLst)
       this.initMap();
     }
   },
