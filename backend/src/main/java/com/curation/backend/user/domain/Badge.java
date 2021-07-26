@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter @Setter
 @NoArgsConstructor
 @Entity
 public class Badge {

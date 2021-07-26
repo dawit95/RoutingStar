@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ImgResponseDto {
-    private String img;
+    private String image;
     private String thumbnail;
 }

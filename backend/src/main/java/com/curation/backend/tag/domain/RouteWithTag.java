@@ -1,9 +1,13 @@
 package com.curation.backend.tag.domain;
 
 import com.curation.backend.route.domain.Route;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class RouteWithTag {
 

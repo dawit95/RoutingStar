@@ -1,6 +1,5 @@
 package com.curation.backend.image.web;
 
-import com.curation.backend.image.dto.ImgRequestDto;
 import com.curation.backend.image.dto.ImgResponseDto;
 import com.curation.backend.image.exception.ImageUploadException;
 import com.curation.backend.image.util.S3Uploader;
