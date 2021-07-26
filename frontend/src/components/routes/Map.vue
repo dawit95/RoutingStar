@@ -63,7 +63,7 @@ export default {
       // console.log(this.$store.getters.lngLstItems)
       // 중심은 우선 첫번째 요소로 선택
       if (this.$store.getters.latLstItems.length) {
-          console.log(this.$store.getters.latLstItems.length)
+          // console.log(this.$store.getters.latLstItems.length)
           this.map = new window.google.maps.Map(document.getElementById("map"), {
           mapId: "8e0a97af9386fef",
           center: { lat:this.$store.getters.latLstItems[0], lng: this.$store.getters.lngLstItems[0] },
@@ -166,9 +166,17 @@ export default {
         }).bind(marker), 1400)
       })
       // console.log(marker)
-      this.$store.dispatch('addPointItem', {event, marker})
-      console.log(event)
-      console.log(marker)
+      let newPoint = {
+        image : null,
+        lat : event.latLng.lat(),
+        lng : event.latLng.lng(),
+        content: null,
+        thumbnail : false,
+        marker: marker,
+      }
+      this.$store.dispatch('addPointItem', newPoint)
+      // console.log(event)
+      // console.log(marker)
       // this.$store.dispatch('addPointItem', marker)
 
       this.refreshPolyline();
@@ -202,14 +210,19 @@ export default {
       let lat_lst = []
       let lng_lst = []
       for (var i in this.pointedItems){
-        console.log(this.pointedItems[i])
+        // console.log(this.pointedItems[i])
         lat_lst.push(this.pointedItems[i].lat)
         lng_lst.push(this.pointedItems[i].lng)
       }
       // console.log(lat_lst)
       // console.log(lng_lst)
       // 초기화
-      this.$store.dispatch('addLatLngLst', {lat_lst, lng_lst})
+      let latLngLst = {
+        latLst: lat_lst,
+        lngLst: lng_lst,
+      }
+      this.$store.dispatch('addLatLngLst', latLngLst)
+      this.$store.dispatch('sendImagesArray')
       this.initMap();
     }
   },

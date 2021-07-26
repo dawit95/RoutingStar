@@ -4,6 +4,7 @@ const state = {
   pointList: [],
   latLst: [],
   lngLst: [],
+  imgLst: [],
 }
 
 const getters = {
@@ -15,7 +16,10 @@ const getters = {
   },
   lngLstItems(state) {
     return state.lngLst
-  }
+  },
+  imgList(state) {
+    return state.imgLst
+  },
 }
 
 const mutations= {
@@ -32,31 +36,57 @@ const mutations= {
     }
     // console.log(state.latLst)
     // console.log(state.lngLst)
-  }
+  },
+  ADD_IMAGE(state, newPoint) {
+    state.imgLst.push(newPoint.image)
+  },
+  SEND_IMAGES_ARRAY(state) {
+    console.log(state)
+  },
+  // UPDATE_IMAGE(state, payload) {
+  //   console.log(payload.fd)
+  //   const imageData = payload.fd
+  //   console.log(payload.idx)
+  //   state.imgLst.push(imageData)
+  //   console.log(state.imgLst)
+  // }
 }
 
+import axios from 'axios'
 const actions = {
-  addPointItem ({ commit }, payload) {
-    // console.log(payload)
-    let newPoint = {
-      image : null,
-      lat : payload.event.latLng.lat(),
-      lng : payload.event.latLng.lng(),
-      content: null,
-      thumbnail : false,
-      marker: payload.marker,
-    }
+  addPointItem ({ commit }, newPoint) {
+    // console.log('잘 작동함 ㅇㅇ')
+    // console.log(newPoint)
     commit('ADD_POINT_ITEM', newPoint)
+    commit('ADD_IMAGE', newPoint)
   },
-  addLatLngLst ({ commit }, payload) {
+  addLatLngLst ({ commit }, latLngLst) {
     // console.log(payload)
-    let latLngLst = {
-      latLst: payload.lat_lst,
-      lngLst: payload.lng_lst,
-    }
     // console.log(latLngtLst.latLst)
     commit('ADD_LAT_LNG_LST', latLngLst)
-    },
+  },
+  sendImagesArray ({ commit }) {
+    // console.log('작동함 ㅇㅇ')
+    // commit('SEND_IMAGES_ARRAY', event)
+    axios({
+      method: 'post',
+      url: 'http://192.168.1.215:9091/api/v1/img/place',
+      data: state.imgLst,
+      headers: {'Content-Type': 'multipart/form-data'}
+    })
+      .then(res => {
+        commit('SEND_IMAGES_ARRAY')
+        console.log('보내짐')
+        console.log(res)
+      })
+      .catch(err => {
+        console.log('안보내짐')
+        console.log(err)
+      })
+  },
+  // updateImage({commit}, payload) {
+  //   commit('UPDATE_IMAGE', payload)
+  // },
   }
 
 export default {
