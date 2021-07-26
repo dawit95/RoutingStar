@@ -38,9 +38,7 @@ const mutations= {
     // console.log(state.lngLst)
   },
   ADD_IMAGE(state, newPoint) {
-    // console.log('이미지 하나 추가요~')
     state.imgLst.push(newPoint.image)
-    // console.log(state.imgLst)
   },
   SEND_IMAGES_ARRAY(state) {
     console.log(state)
@@ -73,7 +71,7 @@ const actions = {
     axios({
       method: 'post',
       url: 'http://192.168.1.215:9091/api/v1/img/place',
-      data: state.imgLst[0],
+      data: state.imgLst,
       headers: {'Content-Type': 'multipart/form-data'}
     })
       .then(res => {
