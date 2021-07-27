@@ -3,6 +3,7 @@ package com.curation.backend.user.domain;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteStorage;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @SQLDelete(sql = "UPDATE user set deleted = true where id = ?")
 @Where(clause = "deleted = false")
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @Entity
 public class User extends BaseTime {
@@ -43,9 +44,11 @@ public class User extends BaseTime {
     @OneToMany(mappedBy = "user")
     List<Route> routes = new ArrayList<>();
 
+    //내가 팔로잉 하는 사람들
     @OneToMany(mappedBy = "following")
     private List<FollowFollowing> followings = new ArrayList<>();
 
+    //나를 팔로우하는 사람들
     @OneToMany(mappedBy = "follower")
     private List<FollowFollowing> followers = new ArrayList<>();
 
