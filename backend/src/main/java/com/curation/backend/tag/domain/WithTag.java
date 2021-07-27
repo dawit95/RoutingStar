@@ -1,5 +1,6 @@
 package com.curation.backend.tag.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +23,8 @@ public class WithTag {
     @OneToMany(mappedBy = "withTag")
     private List<RouteWithTag> routeWithTags = new ArrayList<>();
 
+    @Builder
+    public WithTag(String title) {
+        this.title = title;
+    }
 }
