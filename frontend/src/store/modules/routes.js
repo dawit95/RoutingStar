@@ -70,8 +70,8 @@ const actions = {
     // commit('SEND_IMAGES_ARRAY', event)
     axios({
       method: 'post',
-      url: 'http://192.168.1.215:9091/api/v1/img/place',
-      data: state.imgLst,
+      url: 'http://192.168.1.214:9091/api/v1/img/place',
+      data: state.imgLst[0],
       headers: {'Content-Type': 'multipart/form-data'}
     })
       .then(res => {
