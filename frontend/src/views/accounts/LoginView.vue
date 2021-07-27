@@ -2,6 +2,7 @@
   <div>
     <Google />
     <Kakao />
+    <v-btn>JWT 연동</v-btn>
   </div>
 </template>
 
