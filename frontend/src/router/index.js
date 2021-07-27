@@ -6,6 +6,12 @@ import Header from '@/components/common/Header.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  // My Profile
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import('@/views/myPage/MyPage.vue')
+  },
   // Accounts
   {
     path: '/',
