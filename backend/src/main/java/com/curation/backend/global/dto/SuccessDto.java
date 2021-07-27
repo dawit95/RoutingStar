@@ -4,6 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ExceptionResponseDto {
-    private ErrorDto error;
+public class SuccessDto {
+    private Object success;
 }

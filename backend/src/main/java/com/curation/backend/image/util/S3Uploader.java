@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -31,14 +33,22 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public ImgResponseDto upload(MultipartFile multipartFile, String dirName) throws IOException, ImageUploadException {
-        File uploadFile = convert(multipartFile).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
+    public List<ImgResponseDto> upload(List<MultipartFile> files, String dirName) throws IOException, ImageUploadException {
 
-        String image = upload(uploadFile, dirName);
-        ImgResponseDto imgResponseDto = new ImgResponseDto();
-        imgResponseDto.setImage(image);
+        List<ImgResponseDto> imgResponseDtoList = new ArrayList<>();
 
-        return imgResponseDto;
+        for(MultipartFile file : files) {
+            File uploadFile = convert(file).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
+
+            String image = upload(uploadFile, dirName);
+            ImgResponseDto imgResponseDto = new ImgResponseDto();
+            imgResponseDto.setImage(image);
+
+            imgResponseDtoList.add(imgResponseDto);
+        }
+
+
+        return imgResponseDtoList;
     }
 
     private String upload(File uploadFile, String dirName) {

@@ -2,6 +2,8 @@ package com.curation.backend.route.dto;
 
 import com.curation.backend.place.dto.PlaceResponseDto;
 import com.curation.backend.route.domain.Route;
+import com.curation.backend.tag.dto.WhatTagResponseDto;
+import com.curation.backend.tag.dto.WithTagResponseDto;
 import com.curation.backend.user.dto.UserResponseDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +24,9 @@ public class RouteDetailResponseDto {
     private LocalDateTime modifiedAt;
     private List<PlaceResponseDto> places;
     private UserResponseDto user;
+    private List<WhatTagResponseDto> whatTags;
+    private List<WithTagResponseDto> withTags;
+
 
 
     public RouteDetailResponseDto(Route entity) {
@@ -31,6 +36,8 @@ public class RouteDetailResponseDto {
         this.modifiedAt = entity.getModifiedAt();
         this.places = entity.getRoutePlaces().stream().map(PlaceResponseDto::new).collect(Collectors.toList());
         this.user = new UserResponseDto(entity.getUser());
+        this.whatTags = entity.getRouteWhatTags().stream().map(e -> new WhatTagResponseDto(e.getWhatTag())).collect(Collectors.toList());
+        this.withTags = entity.getRouteWithTags().stream().map(e -> new WithTagResponseDto(e.getWithTag())).collect(Collectors.toList());
     }
 
 }

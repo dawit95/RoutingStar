@@ -1,11 +1,13 @@
 package com.curation.backend.tag.domain;
 
 import com.curation.backend.route.domain.Route;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"whatTag_id", "route_id"}))
 @Getter
 @NoArgsConstructor
 @Entity
@@ -37,4 +39,9 @@ public class RouteWhatTag {
         this.whatTag.getRouteWhatTags().add(this);
     }
 
+    @Builder
+    public RouteWhatTag(Route route, WhatTag whatTag) {
+        this.route = route;
+        this.whatTag = whatTag;
+    }
 }

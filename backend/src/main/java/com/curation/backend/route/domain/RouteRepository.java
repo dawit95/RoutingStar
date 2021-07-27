@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
-    public List<Route> findByUserIdIn(List<Long> id);
+    public List<Route> findByUserIdInOrderByCreatedAtDesc(List<Long> id);
 }
