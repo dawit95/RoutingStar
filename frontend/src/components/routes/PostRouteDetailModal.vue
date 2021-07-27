@@ -80,20 +80,20 @@ export default {
     return {
       // 모달 띄우기 위한 조건
       dialog: false,
-      // 모달에 작성되는 데이터의 조건
-      rules: [v => v.length <= 25 || '25자 이상입니다'],
-      isHovering: false,
       // 모달에 작성되는 데이터
       RouteDetailData: {
         routeDiscription: '',
       },
+      // 모달에 작성되는 데이터의 조건
+      rules: [v => v.length <= 25 || '25자 이상입니다'],
+      isHovering: false,
     }
   },
   computed: {
     // defaultUrl () {
     //   return "@/assets/temp_image_for_test.png"
     // }
-  }
+  },
 }
 </script>
 
