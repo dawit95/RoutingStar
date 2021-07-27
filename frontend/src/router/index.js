@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LinesView from '@/views/routes/RoutesView.vue'
 import Header from '@/components/common/Header.vue'
+import PostRouteView from '@/views/post/PostRouteView.vue'
 
 Vue.use(VueRouter)
 
@@ -37,11 +37,6 @@ const routes = [
     component: () => import('@/views/search/SearchView')
   },
   {
-    path: '/post',
-    name: 'PostView',
-    component: () => import('@/views/post/PostView')
-  },
-  {
     path: '/home',
     name: 'HomeView',
     component: () => import('@/views/home/HomeView')
@@ -54,9 +49,9 @@ const routes = [
   
   // Routes
   {
-    path: '/routes',
-    name: 'Routes',
-    component: LinesView,
+    path: '/post',
+    name: 'PostRouteView',
+    component: PostRouteView,
   },
   {
     path: '/test',

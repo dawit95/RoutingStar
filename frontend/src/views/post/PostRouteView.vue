@@ -3,7 +3,10 @@
     <v-layout row swap>
       <Map/>
       <v-divider></v-divider>
-      <MapPointForm />
+      <MapPointForm/>
+    </v-layout>
+    <v-layout>
+      <PostRouteDetailModal/>
     </v-layout>
   </v-container>
 </template>
@@ -12,10 +15,15 @@
 // components
 import Map from '@/components/routes/Map.vue'
 import MapPointForm from '@/components/routes/MapPointForm.vue'
+import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
 
 export default {
- name: 'RoutesView',
- components: { Map, MapPointForm },
+ name: 'PostRouteView',
+ components: { 
+    Map, 
+    MapPointForm,
+    PostRouteDetailModal,
+  },
 }
 </script>
 
