@@ -8,11 +8,11 @@ import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.tag.domain.*;
+import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.FollowFollowing;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
-import com.curation.backend.user.dto.UserRequestDto;
-import com.curation.backend.user.dto.UserResponseDto;
 import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -33,13 +32,13 @@ public class RouteService {
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
 
-    private final UserService userService;
+    private final TagService tagService;
 
 
     Logger logger = LoggerFactory.getLogger(RouteService.class);
 
     @Transactional
-    public Long save(RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto) throws Exception {
+    public Long save(RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws Exception {
 
         Route route = routeRequestDto.toEntity();
         User user = userRepository.findById(routeRequestDto.getId()).get();
@@ -54,9 +53,13 @@ public class RouteService {
         }
         placeRepository.saveAll(routePlaces);
 
+        tagService.addWhatTag(whatTagIds, route);
+        tagService.addWithTag(withTagIds, route);
+
         return route.getId();
     }
 
+    @Transactional(readOnly = true)
     public List<RouteListResponseDto> followingRouteList(Long id) {
         User user = userRepository.findById(id).get();
         List<FollowFollowing> followList = user.getFollowers();
@@ -64,7 +67,7 @@ public class RouteService {
         List<Long> list = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         list.add(id);
 
-        return routeRepository.findByUserIdIn(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        return routeRepository.findByUserIdInOrderByCreatedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 
     public RouteDetailResponseDto getDetail(Long id) {

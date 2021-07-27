@@ -24,7 +24,7 @@ public class RouteController {
 
     @PostMapping("/route")
     public Long addRoute(@RequestBody RouteRequestDto route) throws Exception {
-        return routeService.save(route, route.getPlaces());
+        return routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
     }
 
     @GetMapping("/routes/{id}")
@@ -40,3 +40,33 @@ public class RouteController {
         return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
     }
 }
+
+/*
+{
+  "id": 1,
+  "places": [
+    {
+      "lang": "123.12",
+      "lat": "231.56",
+      "placeImg": "첫번째 장소의 이미지",
+      "placeOrder": 1,
+      "title": "첫번째 장소인 카페!"
+    },
+    {
+      "lang": "567.12",
+      "lat": "892.12",
+      "placeImg": "두번째 장소의 이미지",
+      "placeOrder": 2,
+      "title": "두번째 장소인 산책로!"
+    }
+  ],
+  "routeDescription": "루트에 대한 설명",
+  "thumbnail": "루트의 썸네일",
+  "whatTag": [
+    1,3,5
+  ],
+  "withTag": [
+    2,3,1
+  ]
+}
+ */

@@ -14,6 +14,8 @@ public class RouteRequestDto {
     private String routeDescription;
     private Long id;
     private List<PlaceRequestDto> places;
+    private List<Long> whatTag;
+    private List<Long> withTag;
 
     public Route toEntity() {
         return Route.builder().thumbnail(thumbnail).routeDescription(routeDescription).build();

@@ -3,9 +3,7 @@ package com.curation.backend.user.domain;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteStorage;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

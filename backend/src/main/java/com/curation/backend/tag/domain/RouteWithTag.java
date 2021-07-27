@@ -1,11 +1,13 @@
 package com.curation.backend.tag.domain;
 
 import com.curation.backend.route.domain.Route;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"withTag_id", "route_id"}))
 @Getter
 @NoArgsConstructor
 @Entity
@@ -27,7 +29,7 @@ public class RouteWithTag {
     }
 
     @ManyToOne
-    @JoinColumn(name = "whatTag_id")
+    @JoinColumn(name = "withTag_id")
     private WithTag withTag;
 
     public void setWithTag(WithTag withTag) {
@@ -35,6 +37,12 @@ public class RouteWithTag {
 
         this.withTag = withTag;
         this.withTag.getRouteWithTags().add(this);
+    }
+
+    @Builder
+    public RouteWithTag(Route route, WithTag withTag) {
+        this.route = route;
+        this.withTag = withTag;
     }
 
 }
