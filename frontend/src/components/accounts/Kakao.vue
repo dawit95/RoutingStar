@@ -17,6 +17,17 @@ export default {
     }
   },
   methods: {
+    // 나중에 수정해야하는 카카오 로그인 부분
+    // kakaoLogins() {
+    //   axios ({
+    //     method: 'post',
+    //     url: 'http://192.168.1.51:8000/oauth2/authorization/kakao',
+    //   })
+    //   .then(res => {
+    //     window.open(res)
+    //     console.log(res)})
+    //   .catch(err => console.log(err))
+    // }
     kakaoLogin() {
       // 2. 인증코드로 토큰요청
       window.Kakao.Auth.login({

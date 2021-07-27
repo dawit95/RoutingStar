@@ -25,7 +25,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import axios from 'axios'
 export default {
   name: 'MapPointForm',
   data () {
@@ -63,11 +63,33 @@ export default {
     },
     check() {
       const ins = this.$store.getters.imgList.length
-      const fd = new FormData()
+      const files = new FormData()
       for (var x = 0; x < ins; x++) {
-        const image =  this.$store.getters.imgList[x]
-        fd.append('image[' + x + ']', image)
+        if (this.$store.getters.imgList[x] === null) {
+          // const image =  x
+          files.append('files['+ x + ']', null)
+        } else {
+          const image =  this.$store.getters.imgList[x]
+          files.append('files', image)
+        }
       }
+      // const check = files.get('files')
+      // console.log(check)
+      // this.$store.getters.imgList[0] = check
+      axios({
+        method: 'post',
+        url: 'http://192.168.1.214:9091/api/v1/img/place',
+        data: files,
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
+      .then(res => {
+        console.log('보내짐')
+        console.log(res)
+      })
+      .catch(err => {
+        console.log('안보내짐')
+        console.log(err)
+      })
     },
   },
   computed: {
