@@ -40,7 +40,7 @@ export default {
       },
       map: null,
       polyLine: null,
-
+      pointListPk: 0,
     }
   },
   methods: {
@@ -167,6 +167,7 @@ export default {
       })
       // console.log(marker)
       let newPoint = {
+        pk: this.pointListPk,
         image : null,
         lat : event.latLng.lat(),
         lng : event.latLng.lng(),
@@ -174,6 +175,7 @@ export default {
         thumbnail : false,
         marker: marker,
       }
+      this.pointListPk = this.pointListPk + 1
       this.$store.dispatch('addPointItem', newPoint)
       // console.log(event)
       // console.log(marker)
