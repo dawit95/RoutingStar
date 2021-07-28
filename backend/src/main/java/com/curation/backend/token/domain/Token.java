@@ -1,4 +1,4 @@
-package com.curation.backend.global.token.domain;
+package com.curation.backend.token.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,11 +3,10 @@ package com.curation.backend.global.config.security;
 import com.curation.backend.global.config.auth.CustomOAuth2UserService;
 import com.curation.backend.global.filter.JwtAuthFilter;
 import com.curation.backend.global.handler.CustomOAuth2SuccessHandler;
-import com.curation.backend.global.token.service.TokenService;
+import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.Role;
+import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,12 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final TokenService tokenService;
-
-    Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+    private final UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        logger.trace("http:",http.toString());
         http
                 .cors()
                 .and()
@@ -38,11 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                    .antMatchers("/h2-console/**").permitAll()
                     //antMatchers의 url은 frontend와 함께 정리하여 변환.
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .antMatchers("/auth/**","/oauth2/**").permitAll()
-                    .antMatchers("/token/**").permitAll()
+                    .antMatchers("/token/**","/test").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .logout()
@@ -53,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .userInfoEndpoint()
                             .userService(customOAuth2UserService);
 
-        http.addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
