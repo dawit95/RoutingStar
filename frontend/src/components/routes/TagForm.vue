@@ -3,21 +3,7 @@
     <h2>여기는 태그폼이 들어갈 자리입니다</h2>
     <!-- 태그는 번호로 DB에 저장되는 것으로 논의 -->
     <v-container>
-      <H3>With WHO?</H3>
-      <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
-        <button 
-          class="button mx-3" 
-          :class="{grayscale:!whatTag.isSelcted}" 
-          @click="setWhatTag(whatTag.tagnum); setWhatTagButtonClass(whatTag.idx)"
-        >
-          <span class="button span">
-            {{ whatTag.tag }}
-          </span>
-        </button>
-      </div>
-    </v-container>
-    <v-container>
-      <H3>What?</H3>
+      <H3>누구랑??</H3>
       <div v-for="withTag in withTagObj" :key="withTag.idx" class="d-inline" style="flex">
         <button 
           class="button mx-3" 
@@ -26,6 +12,20 @@
         >
           <span class="button span">
             {{ withTag.tag }}
+          </span>
+        </button>
+      </div>
+    </v-container>
+    <v-container>
+      <H3>무었을???</H3>
+      <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
+        <button 
+          class="button mx-3" 
+          :class="{grayscale:!whatTag.isSelcted}" 
+          @click="setWhatTag(whatTag.tagnum); setWhatTagButtonClass(whatTag.idx)"
+        >
+          <span class="button span">
+            {{ whatTag.tag }}
           </span>
         </button>
       </div>
