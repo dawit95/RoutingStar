@@ -19,11 +19,12 @@ public class ResponseGenerateService {
         return exceptionResponseDto;
     }
 
-    public SuccessResponseDto generateSuccessResponse(Object success) {
+    public SuccessResponseDto generateSuccessResponse(Object data) {
         SuccessResponseDto successResponseDto = new SuccessResponseDto();
 
-//        SuccessDto successDto = SuccessDto.
-        return null;
+        SuccessDto successDto = SuccessDto.builder().success(data).build();
+        successResponseDto.setSuccessDto(successDto);
+        return successResponseDto;
     }
 
 }
