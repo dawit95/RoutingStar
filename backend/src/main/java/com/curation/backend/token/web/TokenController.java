@@ -1,7 +1,8 @@
-package com.curation.backend.global.token.web;
+package com.curation.backend.token.web;
 
-import com.curation.backend.global.token.domain.Token;
-import com.curation.backend.global.token.service.TokenService;
+import com.curation.backend.token.domain.Token;
+import com.curation.backend.token.service.TokenService;
+import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class TokenController {
     private final TokenService tokenService;
+    private final UserRepository userRepository;
 
     @GetMapping("/token/expired")
     public String auth() {
@@ -28,6 +30,8 @@ public class TokenController {
             String img = tokenService.getProfileImg(token);
             String name = tokenService.getNickName(token);
             Token newToken = tokenService.generateToken(email,img,name, "USER");
+
+
 
             response.addHeader("Auth", newToken.getToken());
             response.addHeader("Refresh", newToken.getRefreshToken());

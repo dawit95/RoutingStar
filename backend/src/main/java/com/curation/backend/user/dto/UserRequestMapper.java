@@ -16,8 +16,7 @@ public class UserRequestMapper {
     public UserDto toDto(OAuth2User oAuth2User) {
         var attributes = oAuth2User.getAttributes();
         logger.debug("oAuth2User.getAttributes() : {}",attributes);
-//        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        logger.debug("서브가 있는지 없는지 없을땐 이거 : {}",attributes.get("sub"));
+
         if(attributes.get("sub")!=null){
             return UserDto.builder()
                     .email((String)attributes.get("email"))

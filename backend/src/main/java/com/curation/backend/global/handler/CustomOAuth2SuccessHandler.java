@@ -1,7 +1,8 @@
 package com.curation.backend.global.handler;
 
-import com.curation.backend.global.token.domain.Token;
-import com.curation.backend.global.token.service.TokenService;
+import com.curation.backend.token.domain.Token;
+import com.curation.backend.token.service.TokenService;
+import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.dto.UserDto;
 import com.curation.backend.user.dto.UserRequestMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * OAuth2의 인증 공급자로부터 인증이 성공한 후 취득한 사용자 정보를 처리하는 핸들러
@@ -31,6 +31,7 @@ import java.util.Arrays;
 @Component
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final TokenService tokenService;
+    private final UserRepository userRepository;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
 
@@ -42,15 +43,18 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
-        logger.trace("authentication : {}",authentication);
-
-        // 최초 로그인이라면 회원가입 처리를 한다.
+        logger.debug("authentication : {}",authentication);
 
         Token token = tokenService.generateToken(userDto.getEmail(),userDto.getProfileImg(), userDto.getName(), "USER");
-        logger.trace("{}", token);
+        logger.debug("{}", token);
+
+        // 최초 로그인이라면 회원가입 처리를 한다.
+        if(!userRepository.existsByEmail(userDto.getEmail())){
+            
+        }
 
         writeTokenResponse(response, token);
-        logger.trace("{}", Arrays.toString(response.getHeaderNames().toArray(new String[0])));
+
     }
 
     private void writeTokenResponse(HttpServletResponse response, Token token)

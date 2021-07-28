@@ -1,10 +1,7 @@
-package com.curation.backend.global.token.service;
+package com.curation.backend.token.service;
 
-import com.curation.backend.global.token.domain.Token;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.curation.backend.token.domain.Token;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -59,9 +56,14 @@ public class TokenService {
             return claims.getBody()
                     .getExpiration()
                     .after(new Date());
-        } catch (Exception e) {
-            return false;
+        } catch (ExpiredJwtException e) {
+            logger.debug("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            logger.debug("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            logger.debug("JWT 토큰이 잘못되었습니다.");
         }
+        return false;
     }
 
     public String getUid(String token) {
