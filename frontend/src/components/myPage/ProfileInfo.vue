@@ -1,6 +1,5 @@
 <template>
-    <v-app>
-      <v-container>
+      <v-container >
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
           <v-col md="3">
@@ -39,12 +38,10 @@
           </v-col>          
         </v-row>
 
-        <v-row class="d-flex justify-center">
+        <v-row class="d-flex justify-center mb-4">
           <div class="mt-4 title">user description</div>
         </v-row>
-
     </v-container>
-  </v-app>
 </template>
 
 <script>
