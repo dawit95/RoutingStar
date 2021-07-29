@@ -4,6 +4,7 @@
     <!-- 상위컴포넌트에서 하위컴포넌트를 수정해서 사용하고 싶을 때 slot 사용하는 것으로
          상위컴포넌트의 내용이 하위컴포넌트로 가게 됨
          동그라미 클릭하면(PARENT) 안에서 이미지 첨부하는(CHILD) 구조 
+         https://medium.com/free-code-camp/how-to-build-a-flexible-image-uploader-component-using-vue-js-2-0-5ee7fc77516
      -->
     <div @click="launchFilePicker()">
       <slot name="activator"></slot>
