@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       currentMenu: {},
-      // 나와 관련된 routes들을 저장하고 위에서 로직을 통해 thumbnail 나타내주기
+      // 나와 관련된 routes들을 저장하고 위에서 로직을 통해 thumbnail 나타내주기\
+      // 참조: https://www.youtube.com/watch?v=pUwyeWLOnP4
       savedRoutes: {},
 
     }
