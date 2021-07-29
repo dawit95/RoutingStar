@@ -4,7 +4,7 @@
     <a href="http://192.168.1.51:8080/oauth2/authorization/google">google2</a>
     <a href="http://localhost:8080/oauth2/authorization/google">google3</a>
 
-    <a href="http://192.168.1.51:8080/oauth2/authorization/kakao">google2</a>
+    <a href="http://192.168.1.51:8000/oauth2/authorization/kakao">google2</a>
     <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
 </div>
 </template>
