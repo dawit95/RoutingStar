@@ -69,6 +69,11 @@ const routes = [
     name: 'draggable',
     component: () => import('@/views/draggable'),
   },
+  {
+    path: '/error',
+    name: 'ErrorView',
+    component: () => import('@/views/ErrorView'),
+  },
 ]
 
 
