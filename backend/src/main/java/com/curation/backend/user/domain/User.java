@@ -41,6 +41,9 @@ public class User extends BaseTime {
     @Column(nullable = true)
     private String fileName;
 
+    @Column(nullable = true)
+    private String refreshToken;
+
     @OneToMany(mappedBy = "user")
     List<Route> routes = new ArrayList<>();
 
@@ -80,6 +83,11 @@ public class User extends BaseTime {
         this.name = name;
         this.profileImg = profileImg;
 
+        return this;
+    }
+
+    public User updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
         return this;
     }
 
