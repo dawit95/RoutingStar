@@ -1,5 +1,7 @@
 package com.curation.backend.user.web;
 
+import com.curation.backend.route.domain.Route;
+import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.tag.domain.WhatTag;
 import com.curation.backend.tag.domain.WhatTagRepository;
 import com.curation.backend.tag.domain.WithTag;
@@ -22,6 +24,8 @@ public class UserController {
     private final WhatTagRepository whatTagRepository;
     private final WithTagRepository withTagRepository;
     private final FollowerFollowingRepository followerFollowingRepository;
+    private final LikeRepository likeRepository;
+    private final RouteRepository routeRepository;
 
     @GetMapping("")
     public void test() {
@@ -70,5 +74,13 @@ public class UserController {
         followFollowings.add(FollowFollowing.builder().follower(user4).following(user2).build());
 
         followerFollowingRepository.saveAll(followFollowings);
+
+    }
+
+    @GetMapping("/like")
+    public void test2() {
+        User user = userRepository.findById(Long.valueOf(1)).get();
+        Route route = routeRepository.findById(Long.valueOf(1)).get();
+        likeRepository.save(Like.builder().user(user).route(route).build());
     }
 }
