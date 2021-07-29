@@ -168,7 +168,7 @@ export default {
       // console.log(marker)
       let newPoint = {
         pk: this.pointListPk,
-        image : null,
+        image : '',
         lat : event.latLng.lat(),
         lng : event.latLng.lng(),
         content: null,
