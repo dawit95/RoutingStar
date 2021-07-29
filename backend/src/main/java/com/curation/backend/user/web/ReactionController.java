@@ -29,6 +29,16 @@ public class ReactionController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
+    @GetMapping("/store/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> setStoreReaction(@PathVariable Long userId, @PathVariable Long routeId) throws NoUserException, NoRouteException {
+
+        String message = reactionService.setStore(userId, routeId);
+
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(message);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
+    }
+
     @ExceptionHandler(NoUserException.class)
     public ResponseEntity<ExceptionResponseDto> noUserHandler() {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
