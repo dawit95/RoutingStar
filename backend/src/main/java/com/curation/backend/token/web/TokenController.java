@@ -4,6 +4,8 @@ import com.curation.backend.token.domain.Token;
 import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +18,12 @@ public class TokenController {
     private final TokenService tokenService;
     private final UserRepository userRepository;
 
+    Logger logger = LoggerFactory.getLogger(TokenController.class);
+
     @GetMapping("/token/expired")
-    public String auth() {
+    public String auth()
+    {
+        logger.trace("token/expired요청함 : ");
         throw new RuntimeException();
     }
 
@@ -39,6 +45,9 @@ public class TokenController {
 
             return "HAPPY NEW TOKEN";
         }
+
+
+        logger.trace("token/refresh 요청함 : {}",token);
 
         throw new RuntimeException();
     }
