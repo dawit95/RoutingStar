@@ -56,14 +56,19 @@
                 >
                   Close
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                   color="blue darken-1"
                   text
                   @click="dialog = false"
                 >
                   Save
-                </v-btn>
+                </v-btn> -->
               </v-card-actions>
+              
+              <v-layout>
+                <CreateRouteSuccessModal/>
+              </v-layout>
+            
             </v-card>
           </v-dialog>
         </v-row>
@@ -73,11 +78,13 @@
 
 <script>
 import TagForm from '@/components/routes/TagForm.vue'
+import CreateRouteSuccessModal from '@/components/routes/CreateRouteSuccessModal.vue'
 
 export default {
   name: 'PostRouteDetailModal',
   components: {
-    TagForm
+    TagForm,
+    CreateRouteSuccessModal,
   },
   data() {
     return {
