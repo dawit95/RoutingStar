@@ -1,5 +1,12 @@
 package com.curation.backend.user.web;
 
+import com.curation.backend.tag.domain.WhatTag;
+import com.curation.backend.tag.domain.WhatTagRepository;
+import com.curation.backend.tag.domain.WithTag;
+import com.curation.backend.tag.domain.WithTagRepository;
+import com.curation.backend.user.domain.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
