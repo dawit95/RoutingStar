@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                         .logoutSuccessUrl("/")
                 .and()
-                .oauth2Login().loginPage("/token/expired")
+                .oauth2Login()
                     .successHandler(customOAuth2SuccessHandler)
                         .userInfoEndpoint()
                             .userService(customOAuth2UserService);

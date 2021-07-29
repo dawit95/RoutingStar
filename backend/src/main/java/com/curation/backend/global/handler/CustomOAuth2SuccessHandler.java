@@ -2,6 +2,7 @@ package com.curation.backend.global.handler;
 
 import com.curation.backend.token.domain.Token;
 import com.curation.backend.token.service.TokenService;
+import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.dto.UserDto;
 import com.curation.backend.user.dto.UserRequestMapper;
@@ -43,15 +44,21 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
-        logger.debug("authentication : {}",authentication);
+
+//        // 최초 로그인이라면 회원가입 처리를 한다.
+//        if(!userRepository.existsByEmail(userDto.getEmail())){
+//
+//        }
 
         Token token = tokenService.generateToken(userDto.getEmail(),userDto.getProfileImg(), userDto.getName(), "USER");
         logger.debug("{}", token);
 
-        // 최초 로그인이라면 회원가입 처리를 한다.
-        if(!userRepository.existsByEmail(userDto.getEmail())){
-            
-        }
+        //회원 테이블에 삽입
+        User user = userRepository.findByEmail(userDto.getEmail()).get();
+        logger.trace(user.getRefreshToken() + "is before!!!");
+        user.updateRefreshToken(token.getRefreshToken());
+        userRepository.save(user);
+        logger.trace(user.getRefreshToken() + "is after!!!");
 
         writeTokenResponse(response, token);
 

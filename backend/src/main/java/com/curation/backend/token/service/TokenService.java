@@ -32,6 +32,8 @@ public class TokenService {
         claims.put("name",name);
         claims.put("role", role);
 
+        Claims claims_re = Jwts.claims().setSubject(uid);
+
         Date now = new Date();
         return new Token(
                 Jwts.builder()
@@ -41,7 +43,7 @@ public class TokenService {
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact(),
                 Jwts.builder()
-                        .setClaims(claims)
+                        .setClaims(claims_re)
                         .setIssuedAt(now)
                         .setExpiration(new Date(now.getTime() + refreshPeriod))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
