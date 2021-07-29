@@ -20,10 +20,7 @@ public class ResponseGenerateService {
     }
 
     public SuccessResponseDto generateSuccessResponse(Object data) {
-        SuccessResponseDto successResponseDto = new SuccessResponseDto();
-
-        SuccessDto successDto = SuccessDto.builder().success(data).build();
-        successResponseDto.setSuccessDto(successDto);
+        SuccessResponseDto successResponseDto = SuccessResponseDto.builder().success(data).build();
         return successResponseDto;
     }
 
