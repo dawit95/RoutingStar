@@ -2,6 +2,8 @@ package com.curation.backend.image.web;
 
 import com.curation.backend.global.dto.ErrorDto;
 import com.curation.backend.global.dto.ExceptionResponseDto;
+import com.curation.backend.global.dto.SuccessDto;
+import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.image.dto.ImgResponseDto;
 import com.curation.backend.image.exception.ImageUploadException;
@@ -29,13 +31,16 @@ public class S3Controller {
     private final ResponseGenerateService responseGenerateService;
 
     @PostMapping("/place")
-    public List<ImgResponseDto> upload(@RequestPart List<MultipartFile> files) throws IOException, ImageUploadException {
+    public ResponseEntity<SuccessResponseDto> upload(@RequestPart MultipartFile files) throws IOException, ImageUploadException {
         logger.trace("in!!");
-        logger.trace(String.valueOf(files.size()) + "is cnt!!!");
+
         if(files == null)    logger.trace("is null");
         else                 logger.trace("is not null");
 
-        return s3Uploader.upload(files, "static");
+        ImgResponseDto imgResponseDto = s3Uploader.upload(files, "static");
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(imgResponseDto);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
     @ExceptionHandler(NullPointerException.class)

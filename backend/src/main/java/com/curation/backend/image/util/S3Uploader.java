@@ -33,22 +33,15 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public List<ImgResponseDto> upload(List<MultipartFile> files, String dirName) throws IOException, ImageUploadException {
+    public ImgResponseDto upload(MultipartFile files, String dirName) throws IOException, ImageUploadException {
 
-        List<ImgResponseDto> imgResponseDtoList = new ArrayList<>();
+        File uploadFile = convert(files).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
 
-        for(MultipartFile file : files) {
-            File uploadFile = convert(file).orElseThrow(() -> new ImageUploadException("이미지 업로드에 실패합니다."));
+        String image = upload(uploadFile, dirName);
+        ImgResponseDto imgResponseDto = new ImgResponseDto();
+        imgResponseDto.setImage(image);
 
-            String image = upload(uploadFile, dirName);
-            ImgResponseDto imgResponseDto = new ImgResponseDto();
-            imgResponseDto.setImage(image);
-
-            imgResponseDtoList.add(imgResponseDto);
-        }
-
-
-        return imgResponseDtoList;
+        return imgResponseDto;
     }
 
     private String upload(File uploadFile, String dirName) {
