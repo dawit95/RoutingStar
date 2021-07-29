@@ -1,12 +1,14 @@
 package com.curation.backend.route.domain;
 
 import com.curation.backend.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "route_id"}))
 @Getter
 @NoArgsConstructor
 @Entity
@@ -17,18 +19,16 @@ public class RouteStorage {
     private Long id;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(targetEntity = Route.class)
-    @JoinColumn
+    @JoinColumn(name = "route_id")
     private Route route;
 
-    public void setUser(User user) {
-
-    }
-
-    public void setRoute(Route route) {
-
+    @Builder
+    public RouteStorage(User user, Route route) {
+        this.user = user;
+        this.route = route;
     }
 }
