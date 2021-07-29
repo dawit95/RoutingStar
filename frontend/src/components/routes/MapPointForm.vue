@@ -3,11 +3,15 @@
     <draggable>
       <v-list
         outlined
-        v-for="pointItem in pointedItems"
-        :key="pointItem.id"
+        v-for="(pointItem, idx) in pointedItems"
+        :key="idx"
       >
+
+
         <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
-        <v-icon right large style="cursor: pointer;" @click="deleteItem(pointItem)">mdi-alpha-x-circle-outline</v-icon>
+
+        <v-icon right large style="cursor: pointer;" @click="deleteItem(pointItem, idx)">mdi-alpha-x-circle-outline</v-icon>
+        {{idx}}
         <v-list-item outlined ma-0 pa-0 @click="forcheck(pointItem)">
           <v-list-item-content>
             <input @change="onFileSelected(pointItem)" accept="image/*" type="file">
@@ -15,6 +19,8 @@
             <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
           </v-list-item-content>
         </v-list-item>
+
+
       </v-list>
     </draggable>
     <button @click="tmp_complete">확인용 버튼</button>
@@ -23,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import axios from 'axios'
 import draggable from 'vuedraggable'
 
@@ -122,12 +128,48 @@ export default {
     dataInitCheck() {
       console.log(this.$store.getters.pointedItems)
     },
-    deleteItem(pointItem) {
-      console.log(pointItem)
-    }
+    deleteItem(pointItem, idx) {
+      // console.log(idx)
+      // console.log(pointItem.pk)
+      // console.log(this.$store.getters.pointedItems)
+      // const pk = pointItem.pk
+      // const pointItems = this.$store.getters.pointedItems
+      // this.$store.getters.pointedItems.splice(idx)
+      // this.$delete(this.$store.getters.pointedItems, idx)
+      // this.$store.getters.pointedItems = this.$store.getters.pointedItems.filter(item => item.pk !== idx)
+      // this.$store.state.routes.pointList = this.$store.state.routes.pointList.filter(item => item.pk !== idx)
+      // this.$store.state.routes.pointList
+
+      const marker = pointItem.marker
+      this.removePoint(marker)
+      this.$store.state.routes.pointList.splice(idx,1)
+    },
+
+    removePoint(marker) {
+      const latLng = marker.getPosition();
+      const lat = latLng.lat();
+      const lng = latLng.lng();
+      const pointedItems = this.$store.getters.pointedItems
+      console.log(pointedItems)
+      const idx = pointedItems.findIndex( (e) => e.lat == lat && e.lng == lng );
+      if ( idx != -1 ) {
+        marker.setMap(null);
+        pointedItems.splice(idx,1);
+        this.refreshPolyline();
+      }
+    },
+    refreshPolyline() {
+      const path = this.polyLine.getPath();
+      const pointedItems = this.$store.getters.pointedItems
+      path.clear();
+      for( const point of pointedItems ) {
+        path.push( new window.google.maps.LatLng( point.lat, point.lng));
+      }
+    },
   },
   computed: {
-    ...mapGetters(['pointedItems', 'imgList'])
+    ...mapGetters(['pointedItems', 'imgList']),
+    ...mapState(['pointList',])
   }
 }
 </script>
