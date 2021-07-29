@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * OAuth2의 인증 공급자로부터 인증이 성공한 후 취득한 사용자 정보를 처리하는 핸들러
@@ -61,7 +62,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         logger.trace(user.getRefreshToken() + "is after!!!");
 
         writeTokenResponse(response, token);
-
+        logger.trace("reponse uri : {}", Arrays.toString(response.getHeaderNames().toArray(new String[0])));
     }
 
     private void writeTokenResponse(HttpServletResponse response, Token token)
