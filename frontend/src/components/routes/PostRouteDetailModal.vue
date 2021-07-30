@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>REVIEW DETAIL PAGE</h1>
+    <!-- vuetify modal을 사용하였습니다 (dialog) -->
     <v-container>
         <v-row justify="center">
           <v-dialog
@@ -19,11 +20,13 @@
                 <span class="text-h3">Route Detail</span>
               </v-card-title>
               
+              <!-- 썸네일 이미지 보여주는 란 (루트가 올라간) -->
+              <!-- 현재 임시 이미지로 대체되어 있음 -->
               <v-container>
                 <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" src="@/assets/temp_image_for_test.png" alt="...">
               </v-container>
 
-
+              <!-- 설명 작성 란 -->
               <v-card-text>
                 <v-container>
                   <v-row>
@@ -53,14 +56,19 @@
                 >
                   Close
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                   color="blue darken-1"
                   text
                   @click="dialog = false"
                 >
                   Save
-                </v-btn>
+                </v-btn> -->
               </v-card-actions>
+              
+              <v-layout>
+                <CreateRouteSuccessModal/>
+              </v-layout>
+            
             </v-card>
           </v-dialog>
         </v-row>
@@ -70,11 +78,13 @@
 
 <script>
 import TagForm from '@/components/routes/TagForm.vue'
+import CreateRouteSuccessModal from '@/components/routes/CreateRouteSuccessModal.vue'
 
 export default {
   name: 'PostRouteDetailModal',
   components: {
-    TagForm
+    TagForm,
+    CreateRouteSuccessModal,
   },
   data() {
     return {
