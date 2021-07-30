@@ -13,16 +13,3 @@ function createInstance() {
 }
 
 export { createInstance }
-
-
-// export default {
-//   URL: '',
-//   ROUTES: {
-//     login() {
-//       return '/'
-//     },
-//     profile(username) {
-//       return `accounts/profile/${username}`
-//     }
-//   },
-// }
