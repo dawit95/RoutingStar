@@ -3,22 +3,22 @@
     <draggable>
       <v-list
         outlined
-        v-for="pointItem in pointedItems"
-        :key="pointItem.id"
+        v-for="(pointItem, idx) in pointedItems"
+        :key="idx"
       >
         <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
-        <v-list-item outlined ma-0 pa-0 @click="forcheck(pointItem)">
-        <!-- <v-list-item outlined ma-0 pa-0> -->
-          <v-list-item-content>
-            <!-- <v-file-input :change="pointItem.image" label="첨부파일"></v-file-input> -->
-            <!-- <input @change="upload" multiple accept="image/*" type="file" id="file" class="inputfile" /> -->
-            <!-- <input @change="onFileSelected(pointItem)" accept="image/*" type="file"> -->
-            <input @change="onFileSelected2(pointItem)" accept="image/*" type="file">
 
+        <v-icon right large style="cursor: pointer;" @click="deleteItem(pointItem, idx)">mdi-alpha-x-circle-outline</v-icon>
+        {{pointItem.pk}}
+        <v-list-item outlined ma-0 pa-0 @click="forcheck(pointItem)">
+          <v-list-item-content>
+            <input @change="onFileSelected(pointItem)" accept="image/*" type="file">
             <v-textarea v-model="pointItem.content" @click="activePoint(pointItem)" @mouseout="stopPoint(pointItem)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
             <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
           </v-list-item-content>
         </v-list-item>
+
+
       </v-list>
     </draggable>
     <button @click="tmp_complete">확인용 버튼</button>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import axios from 'axios'
 import draggable from 'vuedraggable'
 
@@ -44,26 +44,12 @@ export default {
   },
   methods: {
     activePoint(item) {
-      item.marker.setAnimation(window.google.maps.Animation.BOUNCE);
+      item.marker.location.setAnimation(window.google.maps.Animation.BOUNCE);
     },
     stopPoint(item) {
-      item.marker.setAnimation(null);
+      item.marker.location.setAnimation(null);
     },
-    // upload(e){
-    //   var file = e.target.files;
-    //   let url = URL.createObjectURL(file[0]);
-    //   this.image = url
-    // },
-
-    // onFileSelected(pointItem) {
-    //   // 이미지 파일업로드되면 FormData로 만들기
-    //   this.selectedFile = event.target.files[0]
-    //   const fd = new FormData()
-    //   fd.append('image', this.selectedFile, this.selectedFile.name)
-    //   const idx = this.$store.getters.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
-    //   this.$store.getters.imgList[idx] = fd
-    // },
-    onFileSelected2(pointItem) {
+    onFileSelected(pointItem) {
       this.selectedFile = event.target.files[0]
       const idx = this.$store.getters.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
       this.$store.getters.imgList[idx] = this.selectedFile
@@ -80,9 +66,6 @@ export default {
           files.append('files', image)
         }
       }
-      // const check = files.get('files')
-      // console.log(check)
-      // this.$store.getters.imgList[0] = check
       axios({
         method: 'post',
         url: 'http://192.168.1.214:9091/api/v1/img/place',
@@ -142,10 +125,55 @@ export default {
     },
     dataInitCheck() {
       console.log(this.$store.getters.pointedItems)
-    }
+    },
+    deleteItem(pointItem, idx) {
+      // console.log(idx)
+      // console.log(pointItem.pk)
+      // console.log(this.$store.getters.pointedItems)
+      // const pk = pointItem.pk
+      // const pointItems = this.$store.getters.pointedItems
+      // this.$store.getters.pointedItems.splice(idx)
+      // this.$delete(this.$store.getters.pointedItems, idx)
+      // this.$store.getters.pointedItems = this.$store.getters.pointedItems.filter(item => item.pk !== idx)
+      // this.$store.state.routes.pointList = this.$store.state.routes.pointList.filter(item => item.pk !== idx)
+      // this.$store.state.routes.pointList
+      const marker = pointItem.marker
+      this.removePoint(marker, idx)
+      // this.$store.state.routes.pointList.splice(idx,1)
+    },
+
+    removePoint(marker, idx) {
+      if ( idx != -1 ) {
+        marker.location.setMap(null);
+        console.log('delete')
+        console.log(marker.pk)
+        // marker.setMap(null);
+        // pointedItems.splice(idx,1);
+        // const newPointList = this.$store.state.routes.pointList.filter(item => item.point.pk !== marker.pk)
+        const oldList = this.$store.state.routes.pointList
+        const newPointList = oldList.filter((point) => {
+          return point.pk !== marker.pk
+        })
+        this.$store.state.routes.pointList = newPointList
+        this.refreshPolyline();
+      }
+      // console.log(pointedItems)
+    },
+    refreshPolyline() {
+      const path = this.$store.state.routes.polyLine.getPath();
+      const pointedItems = this.$store.getters.pointedItems
+      path.clear();
+      for( const point of pointedItems ) {
+        path.push( new window.google.maps.LatLng( point.lat, point.lng));
+      }
+    },
+    // isSelected(idx) {
+    //   console.log(idx)
+    // },
   },
   computed: {
-    ...mapGetters(['pointedItems', 'imgList'])
+    ...mapGetters(['pointedItems', 'imgList']),
+    ...mapState(['pointList',])
   }
 }
 </script>
