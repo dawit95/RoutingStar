@@ -5,6 +5,7 @@ const state = {
   latLst: [],
   lngLst: [],
   imgLst: [],
+  polyLine: null,
 }
 
 const getters = {
