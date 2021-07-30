@@ -39,7 +39,6 @@ export default {
         word: '',
       },
       map: null,
-      polyLine: null,
       pointListPk: 0,
     }
   },
@@ -137,12 +136,12 @@ export default {
       });
 
       // 5. 폴리라인(루트 라인)을 만든다
-      this.polyLine = new window.google.maps.Polyline({
+      this.$store.state.routes.polyLine = new window.google.maps.Polyline({
         strokeColor: "#E64398",
         strokeOpacity: 0.3,
         strokeWeight: 8,
       });
-      this.polyLine.setMap(this.map);
+      this.$store.state.routes.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
     
     },
@@ -173,7 +172,10 @@ export default {
         lng : event.latLng.lng(),
         content: null,
         thumbnail : false,
-        marker: marker,
+        marker: {
+          location: marker,
+          pk: this.pointListPk,
+        },
       }
       this.pointListPk = this.pointListPk + 1
       this.$store.dispatch('addPointItem', newPoint)
@@ -198,7 +200,7 @@ export default {
       }
     },
     refreshPolyline() {
-      const path = this.polyLine.getPath();
+      const path = this.$store.state.routes.polyLine.getPath();
       const pointedItems = this.$store.getters.pointedItems
       path.clear();
       for( const point of pointedItems ) {
