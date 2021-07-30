@@ -8,7 +8,11 @@
 
 <script>
 import Header from '@/components/common/Header.vue'
+import { getFeedList } from '@/api/home.js'
+
 import Nav from '@/components/common/Nav.vue'
+
+
 
 export default {
   name: 'HomeView',
@@ -21,7 +25,13 @@ export default {
       console.log('home')
       this.value = 2
     }
-  }
+  },
+  created () {
+    getFeedList (
+      (res) => {console.log(res)},
+      (err) => {console.log(err)}
+    )
+  },
 }
 </script>
 
