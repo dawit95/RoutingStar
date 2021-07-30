@@ -6,12 +6,10 @@
         v-for="(pointItem, idx) in pointedItems"
         :key="idx"
       >
-
-
         <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
 
         <v-icon right large style="cursor: pointer;" @click="deleteItem(pointItem, idx)">mdi-alpha-x-circle-outline</v-icon>
-        {{idx}}
+        {{pointItem.pk}}
         <v-list-item outlined ma-0 pa-0 @click="forcheck(pointItem)">
           <v-list-item-content>
             <input @change="onFileSelected(pointItem)" accept="image/*" type="file">
@@ -46,10 +44,10 @@ export default {
   },
   methods: {
     activePoint(item) {
-      item.marker.setAnimation(window.google.maps.Animation.BOUNCE);
+      item.marker.location.setAnimation(window.google.maps.Animation.BOUNCE);
     },
     stopPoint(item) {
-      item.marker.setAnimation(null);
+      item.marker.location.setAnimation(null);
     },
     onFileSelected(pointItem) {
       this.selectedFile = event.target.files[0]
@@ -139,33 +137,39 @@ export default {
       // this.$store.getters.pointedItems = this.$store.getters.pointedItems.filter(item => item.pk !== idx)
       // this.$store.state.routes.pointList = this.$store.state.routes.pointList.filter(item => item.pk !== idx)
       // this.$store.state.routes.pointList
-
       const marker = pointItem.marker
-      this.removePoint(marker)
-      this.$store.state.routes.pointList.splice(idx,1)
+      this.removePoint(marker, idx)
+      // this.$store.state.routes.pointList.splice(idx,1)
     },
 
-    removePoint(marker) {
-      const latLng = marker.getPosition();
-      const lat = latLng.lat();
-      const lng = latLng.lng();
-      const pointedItems = this.$store.getters.pointedItems
-      console.log(pointedItems)
-      const idx = pointedItems.findIndex( (e) => e.lat == lat && e.lng == lng );
+    removePoint(marker, idx) {
       if ( idx != -1 ) {
-        marker.setMap(null);
-        pointedItems.splice(idx,1);
+        marker.location.setMap(null);
+        console.log('delete')
+        console.log(marker.pk)
+        // marker.setMap(null);
+        // pointedItems.splice(idx,1);
+        // const newPointList = this.$store.state.routes.pointList.filter(item => item.point.pk !== marker.pk)
+        const oldList = this.$store.state.routes.pointList
+        const newPointList = oldList.filter((point) => {
+          return point.pk !== marker.pk
+        })
+        this.$store.state.routes.pointList = newPointList
         this.refreshPolyline();
       }
+      // console.log(pointedItems)
     },
     refreshPolyline() {
-      const path = this.polyLine.getPath();
+      const path = this.$store.state.routes.polyLine.getPath();
       const pointedItems = this.$store.getters.pointedItems
       path.clear();
       for( const point of pointedItems ) {
         path.push( new window.google.maps.LatLng( point.lat, point.lng));
       }
     },
+    // isSelected(idx) {
+    //   console.log(idx)
+    // },
   },
   computed: {
     ...mapGetters(['pointedItems', 'imgList']),
