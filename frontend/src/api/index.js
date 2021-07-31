@@ -8,21 +8,8 @@ function createInstance() {
     headers: {
       "Content-Type": "application/json" 
     }
-  }),  
+  })  
   return instance
 }
 
 export { createInstance }
-
-
-// export default {
-//   URL: '',
-//   ROUTES: {
-//     login() {
-//       return '/'
-//     },
-//     profile(username) {
-//       return `accounts/profile/${username}`
-//     }
-//   },
-// }
