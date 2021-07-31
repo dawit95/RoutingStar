@@ -1,6 +1,6 @@
-import createInstance from "./index.js"
+// import createInstance from "./index.js"
 
-const instance = createInstance()
+// const instance = createInstance()
 
 // 서버 주소 결정되면 요청 보내기
 // function getFeedList(success, fail){

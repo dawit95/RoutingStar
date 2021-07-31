@@ -56,13 +56,13 @@ export default {
       script.defer = true;
       document.head.appendChild(script);
     },
-    
+    // D:\SNS\frontend\src\store\modules\routes.js
     // 1. Map 세팅
     initMap() {
       // console.log(this.$store.getters.latLstItems)
       // console.log(this.$store.getters.lngLstItems)
       // 중심은 우선 첫번째 요소로 선택
-      if (this.$store.getters.latLstItems.length) {
+      if (this.$store.state.getters.latLstItems.length) {
           // console.log(this.$store.getters.latLstItems.length)
           this.map = new window.google.maps.Map(document.getElementById("map"), {
           mapId: "8e0a97af9386fef",
