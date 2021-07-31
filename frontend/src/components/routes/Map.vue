@@ -23,15 +23,11 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-
+import {mapGetters, mapMutations, mapActions} from 'vuex'
+  
 export default {
   name: 'Map',
-  components: {
-
-  },
-  computed: {
-    ...mapGetters(['pointedItems', 'latLstItems', 'lngLstItems'])
+  components: {  
   },
   data() {
     return {
@@ -39,11 +35,16 @@ export default {
         word: '',
       },
       map: null,
-      polyLine: null,
       pointListPk: 0,
     }
   },
+  computed: {
+    ...mapGetters(['pointedItems', 'latLstItems', 'lngLstItems', 'polyLine'])
+  },
   methods: {
+    ...mapMutations(['SET_POLYLINE',]),
+    // 위에거 actions로 정리 할거면 정리할것
+    ...mapActions(['addPointItem', 'addLatLngLst', 'sendImagesArray', 'refreshPolyline']),
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
     addGoogleMapScript() {
@@ -59,26 +60,30 @@ export default {
     // D:\SNS\frontend\src\store\modules\routes.js
     // 1. Map 세팅
     initMap() {
-      // console.log(this.$store.getters.latLstItems)
-      // console.log(this.$store.getters.lngLstItems)
       // 중심은 우선 첫번째 요소로 선택
+<<<<<<< HEAD
       if (this.$store.state.getters.latLstItems.length) {
           // console.log(this.$store.getters.latLstItems.length)
           this.map = new window.google.maps.Map(document.getElementById("map"), {
+=======
+      if (this.latLstItems.length) {
+        this.map = new window.google.maps.Map(document.getElementById("map"), 
+        {
+>>>>>>> 84c0a8138163b6ee7f6fb320815954d8c3ffa6f2
           mapId: "8e0a97af9386fef",
-          center: { lat:this.$store.getters.latLstItems[0], lng: this.$store.getters.lngLstItems[0] },
+          center: { lat:this.latLstItems[0], lng:this.lngLstItems[0] },
           zoom: 16,
           streetViewControl: false,
           mapTypeControl: false,
           zoomControl: false,
           fullscreenControl: false,
-          })
-          // 좌표
-          const flightPlanCoordinates = []
-          for (var j in this.latLstItems) {
-            const myLatLng = {lat: this.latLstItems[j], lng: this.lngLstItems[j]}
-            flightPlanCoordinates.push(myLatLng)
-            new window.google.maps.Marker({
+        })
+        // 좌표
+        const flightPlanCoordinates = []
+        for (var j in this.latLstItems) {
+          const myLatLng = {lat: this.latLstItems[j], lng: this.lngLstItems[j]}
+          flightPlanCoordinates.push(myLatLng)
+          new window.google.maps.Marker({
             position: myLatLng,
             map: this.map,
           });        
@@ -91,10 +96,11 @@ export default {
             strokeWeight: 2,
           });
           flightPath.setMap(this.map);
-          }
+        }
 
       } else {
-        this.map = new window.google.maps.Map(document.getElementById("map"), {
+        this.map = new window.google.maps.Map(document.getElementById("map"), 
+        {
           mapId: "8e0a97af9386fef",
           center: { lat:37.501, lng: 127.039 },
           zoom: 16,
@@ -103,14 +109,12 @@ export default {
           zoomControl: false,
           fullscreenControl: false,
           // mapTypeId: "roadmap",
-      });
-    }
+        });
+      }
       // 3. 검색창 만들기
-      // Create the search box and link it to the UI element.
       const input = document.getElementById("pac-input");
       const searchBox = new window.google.maps.places.SearchBox(input);
       this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
-      // Bias the SearchBox results towards current map's viewport.
       // 4.검색어에 따라 바운더리를 바꾼다
       this.map.addListener("bounds_changed", () => {
         searchBox.setBounds(this.map.getBounds());
@@ -127,7 +131,6 @@ export default {
             return;
           }
           if (place.geometry.viewport) {
-            // Only geocodes have viewport.
             bounds.union(place.geometry.viewport);
           } else {
             bounds.extend(place.geometry.location);
@@ -137,14 +140,15 @@ export default {
       });
 
       // 5. 폴리라인(루트 라인)을 만든다
-      this.polyLine = new window.google.maps.Polyline({
-        strokeColor: "#E64398",
-        strokeOpacity: 0.3,
-        strokeWeight: 8,
-      });
+      this.SET_POLYLINE(new window.google.maps.Polyline
+        ({
+          strokeColor: "#E64398",
+          strokeOpacity: 0.3,
+          strokeWeight: 8,
+        })
+      )
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
-    
     },
     // 5. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
     addPoint(event) {
@@ -152,12 +156,12 @@ export default {
         position:event.latLng,
         map:this.map,
         animation: window.google.maps.Animation.DROP
-        });
+      });
+      // 마커 더블클릭시 삭제
       marker.addListener('dblclick', (e) => {
-        // console.log('작동함 ㅇㅇ')
         console.log(e.latLng)
         this.removePoint(marker)
-      })
+      });
       // 마커 클릭시 바운스효과
       marker.addListener('click', function () {
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
@@ -165,22 +169,21 @@ export default {
             marker.setAnimation(null)
         }).bind(marker), 1400)
       })
-      // console.log(marker)
       let newPoint = {
         pk: this.pointListPk,
-        image : null,
+        image : '',
         lat : event.latLng.lat(),
         lng : event.latLng.lng(),
         content: null,
         thumbnail : false,
-        marker: marker,
+        marker: {
+          location: marker,
+          pk: this.pointListPk,
+        },
       }
       this.pointListPk = this.pointListPk + 1
-      this.$store.dispatch('addPointItem', newPoint)
-      // console.log(event)
-      // console.log(marker)
-      // this.$store.dispatch('addPointItem', marker)
-
+      // Store actions로 연동
+      this.addPointItem(newPoint)
       this.refreshPolyline();
     },
     // 6. 마커 삭제 구현 (마커 리스트를 제거한 뒤 다시 맵 refresh)
@@ -188,8 +191,7 @@ export default {
       const latLng = marker.getPosition();
       const lat = latLng.lat();
       const lng = latLng.lng();
-      const pointedItems = this.$store.getters.pointedItems
-      console.log(pointedItems)
+      const pointedItems = this.pointedItems
       const idx = pointedItems.findIndex( (e) => e.lat == lat && e.lng == lng );
       if ( idx != -1 ) {
         marker.setMap(null);
@@ -199,32 +201,26 @@ export default {
     },
     refreshPolyline() {
       const path = this.polyLine.getPath();
-      const pointedItems = this.$store.getters.pointedItems
+      const pointedItems = this.pointedItems
       path.clear();
       for( const point of pointedItems ) {
         path.push( new window.google.maps.LatLng( point.lat, point.lng));
       }
     },
-
+    
     // 새로운 게시물을 생성했을 때 구글맵에 재요청을 보내서 다시 그려지는지 확인
     createMap() {
-      // console.log(this.pointedItems)
       let lat_lst = []
       let lng_lst = []
       for (var i in this.pointedItems){
-        // console.log(this.pointedItems[i])
         lat_lst.push(this.pointedItems[i].lat)
         lng_lst.push(this.pointedItems[i].lng)
       }
-      // console.log(lat_lst)
-      // console.log(lng_lst)
-      // 초기화
       let latLngLst = {
         latLst: lat_lst,
         lngLst: lng_lst,
       }
-      this.$store.dispatch('addLatLngLst', latLngLst)
-      this.$store.dispatch('sendImagesArray')
+      this.addLatLngLst(latLngLst)
       this.initMap();
     }
   },
