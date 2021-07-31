@@ -8,7 +8,7 @@ function createInstance() {
     headers: {
       "Content-Type": "application/json" 
     }
-  }),  
+  })  
   return instance
 }
 
