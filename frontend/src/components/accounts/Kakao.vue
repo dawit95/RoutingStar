@@ -23,11 +23,9 @@ export default {
     //     method: 'post',
     //     url: 'http://192.168.1.51:8000/oauth2/authorization/kakao',
     //   })
-    //   .then(res => {
-    //     window.open(res)
-    //     console.log(res)})
+    //   .then(res => console.log(res))
     //   .catch(err => console.log(err))
-    // }
+    // },
     kakaoLogin() {
       // 2. 인증코드로 토큰요청
       window.Kakao.Auth.login({
