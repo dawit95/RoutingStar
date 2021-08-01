@@ -14,4 +14,4 @@ function createInstance() {
   return instance;
 }
 
-export { createInstance };
+export { createInstance }
