@@ -3,13 +3,10 @@
     <a href="https://192.168.1.51:8080/oauth2/authorization/google">google1</a>
     <a href="http://192.168.1.51:8080/oauth2/authorization/google">google2</a>
     <a href="http://localhost:8080/oauth2/authorization/google">google3</a>
-<<<<<<< HEAD
 
     <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">google2</a>
-=======
     <a href="http://192.168.1.51:8000/oauth2/authorization/kakao">google2</a>
 
->>>>>>> 84c0a8138163b6ee7f6fb320815954d8c3ffa6f2
     <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
 </div>
 </template>

@@ -1,7 +1,7 @@
 // routes.js
 
 const state = {
-  pointList: [],
+  pointedItems: [],
   latLst: [],
   lngLst: [],
   imgLst: [],
@@ -10,7 +10,7 @@ const state = {
 
 const getters = {
   pointedItems(state) {
-    return state.pointList
+    return state.pointedItems
   },
   latLstItems(state) {
     return state.latLst
@@ -34,7 +34,7 @@ const mutations= {
     }
   },
   ADD_POINT_ITEM(state, newPoint) {
-    state.pointList.push(newPoint)
+    state.pointedItems.push(newPoint)
   },
   ADD_IMAGE(state, newPoint) {
     state.imgLst.push(newPoint.image)
@@ -46,12 +46,20 @@ const mutations= {
     state.polyLine = polyline
     // console.log(state)
   },
-  REFRESH_POINT_LIST(state, newPointList) {
-    state.pointList = newPointList
+  REFRESH_POINTED_ITEMS(state, newPointedItems) {
+    state.pointedItems = newPointedItems
+  },
+  UPDATE_DRAGGERBLE_ITEMS(state, event) {
+    var tmp = state.pointedItems[event.newIndex]
+    state.pointedItems[event.newIndex] = state.pointedItems[event.oldIndex]
+    state.pointedItems[event.oldIndex] = tmp
   }
 }
 
 // import axios from 'axios'
+// actions는 Backend API와 통신하여 Data fetching과 같은 작업 수행
+// 동기적인 작업 뿐 만 아니라 비동기적인 작업을 포함 가능
+// 항상 Context가 인자로 넘어온다, 오직 mutation 매서드를 commit 호출해서 조작 가능
 const actions = {
   addLatLngLst ({ commit }, latLngLst) {
     // console.log(payload)
@@ -64,9 +72,12 @@ const actions = {
     commit('ADD_POINT_ITEM', newPoint)
     commit('ADD_IMAGE', newPoint)
   },
-  refreshPointList ( { commit }, newPointList) {
-    commit('REFRESH_POINT_LIST', newPointList)
-  }
+  refreshPointItems ( { commit }, newPointedItems) {
+    commit('REFRESH_POINTED_ITEMS', newPointedItems)
+  },
+  updateDraggerbleItems ( { commit }, event ) {
+    commit('UPDATE_DRAGGERBLE_ITEMS', event)
+  },
 }
 
 export default {
