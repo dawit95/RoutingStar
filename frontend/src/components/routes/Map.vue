@@ -43,8 +43,8 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
-    // 위에거 actions로 정리 할거면 정리할것
-    ...mapActions(['addPointItem', 'addLatLngLst', 'sendImagesArray', 'refreshPolyline']),
+    ...mapActions(['addPointItem', 'addLatLngLst', 'sendImagesArray']),
+
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
     addGoogleMapScript() {
@@ -61,21 +61,16 @@ export default {
     // 1. Map 세팅
     initMap() {
       // 중심은 우선 첫번째 요소로 선택
-<<<<<<< HEAD
-      if (this.$store.state.getters.latLstItems.length) {
-          // console.log(this.$store.getters.latLstItems.length)
-          this.map = new window.google.maps.Map(document.getElementById("map"), {
-=======
       if (this.latLstItems.length) {
-        this.map = new window.google.maps.Map(document.getElementById("map"), 
+        this.map = new window.google.maps.Map(document.getElementById("map"),
         {
->>>>>>> 84c0a8138163b6ee7f6fb320815954d8c3ffa6f2
           mapId: "8e0a97af9386fef",
-          center: { lat:this.latLstItems[0], lng:this.lngLstItems[0] },
+          // 경로의 중앙에 포커스가 위치하도록 설정하였음
+          center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
           zoom: 16,
           streetViewControl: false,
           mapTypeControl: false,
-          zoomControl: false,
+          zoomControl: true,
           fullscreenControl: false,
         })
         // 좌표
@@ -106,7 +101,7 @@ export default {
           zoom: 16,
           streetViewControl: false,
           mapTypeControl: false,
-          zoomControl: false,
+          zoomControl: true,
           fullscreenControl: false,
           // mapTypeId: "roadmap",
         });
@@ -164,11 +159,11 @@ export default {
       });
       // 마커 클릭시 바운스효과
       marker.addListener('click', function () {
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
         setTimeout((function() {
-            marker.setAnimation(null)
+          marker.setAnimation(null)
         }).bind(marker), 1400)
-      })
+      });
       let newPoint = {
         pk: this.pointListPk,
         image : '',
