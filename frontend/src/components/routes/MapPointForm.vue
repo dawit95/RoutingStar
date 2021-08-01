@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12>
-    <draggable>
+    <draggable @update="onUpdated">
       <v-list
         outlined
         v-for="(pointItem, idx) in pointedItems"
@@ -8,7 +8,7 @@
       >
         <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
 
-        <v-icon right large style="cursor: pointer;" @click="deleteItem(pointItem, idx)">mdi-alpha-x-circle-outline</v-icon>
+        <v-icon right large style="cursor: pointer;" @click="removePoint(pointItem.marker, idx)">mdi-alpha-x-circle-outline</v-icon>
         {{pointItem.pk}}
         <v-list-item outlined ma-0 pa-0 @click="forcheck(pointItem)">
           <v-list-item-content>
@@ -18,7 +18,6 @@
           </v-list-item-content>
         </v-list-item>
 
-
       </v-list>
     </draggable>
     <button @click="tmp_complete">확인용 버튼</button>
@@ -27,7 +26,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapActions, } from 'vuex'
+import { mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
 
 export default {
@@ -45,8 +44,14 @@ export default {
     ...mapGetters(['pointedItems', 'imgList', 'polyLine']),
   },
   methods: {
-    ...mapActions(['refreshPointList']),
+    // 일단 데이터의 조작만 있고, 모든 데이터의 input이 완료된 이후에 백앤드와 통신하니
+    // 일단은 mutations함수를 사용하였습니다.
+    ...mapMutations(['UPDATE_DRAGGERBLE_ITEMS','REFRESH_POINTED_ITEMS']),
 
+    onUpdated(event) {
+      this.UPDATE_DRAGGERBLE_ITEMS(event);
+      this.refreshPolyline();
+    },
     activePoint(item) {
       item.marker.location.setAnimation(window.google.maps.Animation.BOUNCE);
     },
@@ -59,6 +64,27 @@ export default {
       this.selectedFile = event.target.files[0]
       const idx = this.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
       this.imgList[idx] = this.selectedFile
+    },
+    // deleteItem 함수는 삭제하고 각각 component에서 조건에 맞게 포인트를 삭제한 후에
+    // 삭제된 pointedItems를 변수로 설정 후 mutation 함수로 state에 반영하는 것으로 바꿈
+    removePoint(marker, idx) {
+      if ( idx != -1 ) {
+        marker.location.setMap(null);
+        const oldItems = this.pointedItems
+        const newPointedItems = oldItems.filter((point) => {
+          return point.pk !== marker.pk
+        })
+        this.REFRESH_POINTED_ITEMS(newPointedItems)
+        this.refreshPolyline();
+      }
+    },
+    refreshPolyline() {
+      const path = this.polyLine.getPath();
+      const pointedItems = this.pointedItems
+      path.clear();
+      for( const point of pointedItems ) {
+        path.push( new window.google.maps.LatLng( point.lat, point.lng));
+      }
     },
     // 완료버튼이 눌러진다면
     // 임시로 여기다 두고, api 파일 소화 후 이동 예정 이동 후 PostRouteDetail과 연동
@@ -93,31 +119,6 @@ export default {
     },
     forcheck(item) {
       console.log(`${item.pk}번째로 생성된 마커의 pk`)
-    },
-    deleteItem(pointItem, idx) {
-      const marker = pointItem.marker
-      this.removePoint(marker, idx)
-    },
-    removePoint(marker, idx) {
-      if ( idx != -1 ) {
-        marker.location.setMap(null);
-        const oldList = this.pointedItems
-        const newPointList = oldList.filter((point) => {
-          return point.pk !== marker.pk
-        })
-        this.refreshPointList(newPointList)
-        // this.$store.dispatch('refreshPointList', newPointList)
-        this.refreshPolyline();
-      }
-      // console.log(pointedItems)
-    },
-    refreshPolyline() {
-      const path = this.polyLine.getPath();
-      const pointedItems = this.pointedItems
-      path.clear();
-      for( const point of pointedItems ) {
-        path.push( new window.google.maps.LatLng( point.lat, point.lng));
-      }
     },
   },
 }
