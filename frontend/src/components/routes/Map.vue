@@ -3,19 +3,21 @@
     <v-layout row swap>
 
       <v-flex xs12>
-        <!-- 검색창 -->
-        <div id="pac-container">
-          <input v-model="SearchWord.word"
-            id="pac-input"
-            class="controls"
-            type="text"
-            placeholder="Search Box"
-          />
-        </div>
+        <div class="pac-card" id="pac-card">
+          <!-- 검색창 -->
+          <div id="pac-container">
+            <input v-model="SearchWord.word"
+              id="pac-input"
+              class="controls"
+              type="text"
+              placeholder="Search Box"
+            />
+          </div>
 
-        <!-- 맵 -->
-        <div>
-          <div id="map"></div>
+          <!-- 맵 -->
+          <div>
+            <div id="map"></div>
+          </div>
         </div>
       </v-flex>
 
@@ -203,27 +205,11 @@ export default {
         path.push( new window.google.maps.LatLng( point.lat, point.lng));
       }
     },
-    
-    // 새로운 게시물을 생성했을 때 구글맵에 재요청을 보내서 다시 그려지는지 확인
-    createMap() {
-      let lat_lst = []
-      let lng_lst = []
-      for (var i in this.pointedItems){
-        lat_lst.push(this.pointedItems[i].lat)
-        lng_lst.push(this.pointedItems[i].lng)
-      }
-      let latLngLst = {
-        latLst: lat_lst,
-        lngLst: lng_lst,
-      }
-      this.addLatLngLst(latLngLst)
-      this.initMap();
-    },
   },
   watch: {
     isFreeze: function() {
       if (this.isFreeze) {
-        this.createMap()
+        this.initMap()
       }
     }
   },
@@ -274,7 +260,7 @@ a {
   padding-bottom: 12px;
   margin-right: 12px;
 }
-#pac-input {
+.pac-input {
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
