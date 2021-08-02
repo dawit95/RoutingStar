@@ -10,7 +10,7 @@
             max-width="80%"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="freezeMap">
                 NEXT
               </v-btn>
             </template>
@@ -108,6 +108,12 @@ export default {
   },
   methods: {
     ...mapActions(['createRouteDescription']),
+
+    // 모달이 열리면 map이 freeze된다 (그림 그려서 좌표 찾기 위함)
+    freezeMap(event) {
+      console.log(event)
+      this.$emit('freeze-map', event)
+    },
   }
 }
 </script>
@@ -123,3 +129,4 @@ export default {
   }
 
 </style>
+ 
