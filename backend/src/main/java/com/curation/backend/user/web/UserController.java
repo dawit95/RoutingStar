@@ -82,5 +82,14 @@ public class UserController {
         User user = userRepository.findById(Long.valueOf(1)).get();
         Route route = routeRepository.findById(Long.valueOf(1)).get();
         likeRepository.save(Like.builder().user(user).route(route).build());
+
+        User user1 = userRepository.findById(Long.valueOf(2)).get();
+        Route route1 = routeRepository.findById(Long.valueOf(1)).get();
+        likeRepository.save(Like.builder().user(user1).route(route1).build());
     }
 }
+
+
+
+
+
