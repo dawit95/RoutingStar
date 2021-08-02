@@ -5,11 +5,6 @@
     <a href="http://localhost:8080/oauth2/authorization/google">google3</a>
 
     <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">google2</a>
-<<<<<<< HEAD
-=======
-    <a href="http://192.168.1.51:8000/oauth2/authorization/kakao">google2</a>
-
->>>>>>> fe9e1958e80eafaa461124731f50f530395ad7c7
     <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
 </div>
 </template>
