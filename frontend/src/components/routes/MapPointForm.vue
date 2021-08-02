@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12>
+  <v-flex xs12 class="big-box">
     <draggable @update="onUpdated">
       <v-list
         outlined
@@ -14,30 +14,36 @@
           <v-list-item-content>
             <input @change="onFileSelected(pointItem)" accept="image/*" type="file">
             <v-textarea v-model="pointItem.content" @click="activePoint(pointItem)" @mouseout="stopPoint(pointItem)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
-            <v-btn>썸네일 활용유무(선택시 이미지 썸네일로 적용)</v-btn>
           </v-list-item-content>
+          <v-switch @click="refreshThumbnailBtn(pointItem)" :disabled="!pointItem.thumbnail && isthumbail" :v-model="pointItem.thumbnail" inset color="indigo darken-3"></v-switch>
         </v-list-item>
-
       </v-list>
     </draggable>
-    <button @click="tmp_complete">확인용 버튼</button>
+    <button @click="complete">확인용 버튼</button>
   </v-flex>
 </template>
 
 <script>
-import axios from 'axios'
-import { mapGetters, mapMutations, } from 'vuex'
+// import axios from 'axios'
+import { mapActions, mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
+import { dragscroll } from 'vue-dragscroll'
 
 export default {
   name: 'MapPointForm',
   components: {
     draggable,
   },
+  directives: {
+    dragscroll
+  },
   data () {
     return {
-      isActive: false,
+      // 썸네일이 골라졌는지 유무
+      isthumbail: false,
       selectedFile: null,
+      switch1: true,
+      switch2: false,
     }
   },
   computed: {
@@ -47,7 +53,7 @@ export default {
     // 일단 데이터의 조작만 있고, 모든 데이터의 input이 완료된 이후에 백앤드와 통신하니
     // 일단은 mutations함수를 사용하였습니다.
     ...mapMutations(['UPDATE_DRAGGERBLE_ITEMS','REFRESH_POINTED_ITEMS']),
-
+    ...mapActions(['complete', 'updateThumbnailImage']),
     onUpdated(event) {
       this.UPDATE_DRAGGERBLE_ITEMS(event);
       this.refreshPolyline();
@@ -88,42 +94,67 @@ export default {
     },
     // 완료버튼이 눌러진다면
     // 임시로 여기다 두고, api 파일 소화 후 이동 예정 이동 후 PostRouteDetail과 연동
-    tmp_complete() {
-      const ins = this.pointedItems.length
-      for (var x = 0; x < ins; x++) {
-        const files = new FormData()
-        const pk = this.pointedItems[x].pk
-        console.log(pk)
-        if (this.imgList[pk] === null) {
-          continue
-        } else {
-          const image =  this.imgList[pk]
-          files.append('files', image)
-          axios({
-            method: 'post',
-            url:'http://192.168.1.214:8000/api/v1/img/place',
-            data: files,
-            headers: {'Content-Type': 'multipart/form-data'}
-          })
-          .then(res => {
-            console.log('보내짐')
-            const responseData = res.data.successDto.success.image
-            this.pointedItems[pk].image = responseData
-          })
-          .catch(err => {
-            console.log('안보내짐')
-            console.log(err)
-          })
-        }
-      }
-    },
+
+    // postPointImages() {
+    //   const ins = this.pointedItems.length
+    //   for (var x = 0; x < ins; x++) {
+    //     const files = new FormData()
+    //     const pk = this.pointedItems[x].pk
+    //     // console.log(pk)
+    //     if (this.imgList[pk] === null) {
+    //       continue
+    //     } else {
+    //       const image =  this.imgList[pk]
+    //       files.append('files', image)
+    //       axios({
+    //         method: 'post',
+    //         url:'http://192.168.1.214:8000/api/v1/img/place',
+    //         data: files,
+    //         headers: {'Content-Type': 'multipart/form-data'}
+    //       })
+    //       .then(res => {
+    //         console.log('보내짐')
+    //         const responseData = res.data.successDto.success.image
+    //         this.pointedItems[pk].image = responseData
+    //       })
+    //       .catch(err => {
+    //         console.log('안보내짐')
+    //         console.log(err)
+    //       })
+    //     }
+    //   }
+    // },
     forcheck(item) {
       console.log(`${item.pk}번째로 생성된 마커의 pk`)
     },
+    refreshThumbnailBtn(pointItem) {
+      // 썸네일 설정, 취소
+      // 썸네일인 경우 => 썸네일 취소
+      if (this.isthumbail) {
+        this.isthumbail = !this.isthumbail
+        pointItem.thumbnail = false
+      // 썸네일이 아닌경우 => 썸네일로 지정
+      } else if (this.isthumbail === false) {
+        this.isthumbail = !this.isthumbail
+        pointItem.thumbnail = true
+
+        const idx = this.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
+        if (this.imgList[idx] !== '') {
+          this.updateThumbnailImage(this.imgList[idx])
+        } else if (this.imgList[idx] === '') {
+          console.log('썸네일 이미지를 지정해주세요')
+          alert('장소에대한 이미지를 추가해주세요!')
+        }
+      }
+    }
   },
 }
 </script>
 
 <style>
-
+.big-box {
+  width: 300px;
+  height: 300px;
+  overflow: scroll;
+}
 </style>

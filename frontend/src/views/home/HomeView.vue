@@ -2,7 +2,7 @@
   <v-app>
     <!-- <Header /> -->
     <!-- state를 통해 정보를 가져왔다 가정하고 card 제작 -->
-      <v-card
+      <!-- <v-card
     class="mx-auto"
     color="#26c6da"
     dark
@@ -52,45 +52,14 @@
         </v-row>
       </v-list-item>
     </v-card-actions>
-  </v-card>
-    <!-- <v-container>
-      <v-row justify="space-around">
-        <v-card>
-          <v-img height="200px" src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg">
-          <v-toolbar-title class="mt-3 ml-3">
-            <v-avatar size="56">
-              <img
-                alt="user"
-                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
-              >
-            </v-avatar>
-              <span class="white--text">
-
-              John Doe
-              </span>
-
-          </v-toolbar-title>
-
-          
-        </v-img>
-        
-        </v-card>
-                <v-row
-          align="center"
-          justify="end"
-        >
-          <v-icon class="mr-1">
-            mdi-heart
-          </v-icon>
-          <span class="subheading mr-2">256</span>
-          <span class="mr-1">·</span>
-          <v-icon class="mr-1">
-            mdi-share-variant
-          </v-icon>
-          <span class="subheading">45</span>
-        </v-row>
-      </v-row>
-    </v-container> -->
+  </v-card> -->
+   
+   <div v-for="(item, $index) in list" :key="$index">
+    <!-- Hacker News item loop -->
+    {{item}}
+    </div>
+<!-- infiniteHandler method 실행 -->
+<infinite-loading @infinite="infiniteHandler"></infinite-loading>
 
     <Nav />
   </v-app>
@@ -98,18 +67,23 @@
 
 <script>
 // import Header from '@/components/common/Header.vue'
+// infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
+import InfiniteLoading from 'vue-infinite-loading'
 import { getFeedList } from '@/api/home.js'
 
 import Nav from '@/components/common/Nav.vue'
-// import axios from 'axios'
+import axios from 'axios'
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
 // 2. mapGetters에서 필터링 해주기
+// infinte scroll 실험
+const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
 
 export default {
   name: 'HomeView',
   components: {
     Nav,
+    InfiniteLoading,
     // Header,
   },
   data() {
@@ -122,7 +96,8 @@ export default {
       // like: False,
       // save: False,
       // description: '',
-
+      page: 1,
+      list: [],
     }
   },
   mounted () {
@@ -142,6 +117,24 @@ export default {
       (err) => {console.log(err)}
     )  
   },
+  methods: {
+    infiniteHandler($state) {
+      axios.get(api, {
+        params: {
+          page: this.page,
+        },
+      }).then(({ data }) => {
+        console.log(data)
+        if (data.hits.length) {
+          this.page += 1;
+          this.list.push(...data.hits);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
+    },
+  }
 }
 </script>
 

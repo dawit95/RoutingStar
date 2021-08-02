@@ -11,11 +11,10 @@ export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
-      XYfromlatlng: []
     }
   },
   computed: {
-    ...mapGetters(['pointedItems'])
+    ...mapGetters(['pointedItems', 'xyPoints'])
   },
   methods: {
     addCanvasScript() {
@@ -40,59 +39,34 @@ export default {
       var layer = new window.Konva.Layer();
 
       var redLine = new window.Konva.Line({
-        points: points,
+        points: this.xyPoints,
         stroke: 'red',
         strokeWidth: 15,
         lineCap: 'round',
         lineJoin: 'round',
       });
 
+      // 심심하니까 애니메이션 넣어보자
+      var period = 2000;
+      var anim = new window.Konva.Animation(function (frame) {
+        var scale = Math.sin((frame.time * 2 * Math.PI) / period) + 0.001;
+        // scale x and y
+        redLine.scale({ x: scale, y: scale });
+      }, layer);
 
-      // // dashed line
-      // var greenLine = new window.Konva.Line({
-      //   points: [5, 70, 140, 23, 250, 60, 300, 20],
-      //   stroke: 'green',
-      //   strokeWidth: 2,
-      //   lineJoin: 'round',
-      //   /*
-      //    * line segments with a length of 33px
-      //    * with a gap of 10px
-      //    */
-      //   dash: [33, 10],
-      // });
-
-      // // complex dashed and dotted line
-      // var blueLine = new window.Konva.Line({
-      //   points: [5, 70, 140, 23, 250, 60, 300, 20],
-      //   stroke: 'blue',
-      //   strokeWidth: 10,
-      //   lineCap: 'round',
-      //   lineJoin: 'round',
-      //   /*
-      //    * line segments with a length of 29px with a gap
-      //    * of 20px followed by a line segment of 0.001px (a dot)
-      //    * followed by a gap of 20px
-      //    */
-      //   dash: [29, 20, 0.001, 20],
-      // });
+      anim.start();
+      anim.stop();
 
       /*
        * since each line has the same point array, we can
        * adjust the position of each one using the
        * move() method
        */
-      redLine.move({
-        x: 10,
-        y: 20,
-      });
-      // greenLine.move({
-      //   x: 0,
-      //   y: 55,
+      // redLine.move({
+      //   x: -300,
+      //   y: -50,
       // });
-      // blueLine.move({
-      //   x: 0,
-      //   y: 105,
-      // });
+      
 
       layer.add(redLine);
       // layer.add(greenLine);
@@ -100,16 +74,8 @@ export default {
 
       // add the layer to the stage
       stage.add(layer);
-      this.getXYfromlatlng()
     },
-    getXYfromlatlng() {
-      for (const point of this.pointedItems) {
-        let lat = point.lat
-        let lng = point.lng
-        this.XYfromlatlng.push(lat)
-        this.XYfromlatlng.push(lng)
-      }
-    },
+    // map divistion 사이즈에 따른 리사
   },
   mounted() {
     window.Konva
