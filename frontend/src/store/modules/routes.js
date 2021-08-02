@@ -2,22 +2,15 @@
 
 const state = {
   pointedItems: [],
-  latLst: [],
-  lngLst: [],
   imgLst: [],
   polyLine: null,
   routeDescription: '',
+  xyPoints: [],
 }
 
 const getters = {
   pointedItems(state) {
     return state.pointedItems
-  },
-  latLstItems(state) {
-    return state.latLst
-  },
-  lngLstItems(state) {
-    return state.lngLst
   },
   imgList(state) {
     return state.imgLst
@@ -27,16 +20,13 @@ const getters = {
   },
   routeDescription(state) {
     return state.routeDescription
-  }
+  },
+  xyPoints(state) {
+    return state.xyPoints
+  },
 }
 
 const mutations= {
-  ADD_LAT_LNG_LST(state, latLngLst) {
-    for (var i in latLngLst.latLst){
-      state.latLst.push(latLngLst.latLst[i])
-      state.lngLst.push(latLngLst.lngLst[i])
-    }
-  },
   ADD_POINT_ITEM(state, newPoint) {
     state.pointedItems.push(newPoint)
   },
@@ -61,6 +51,9 @@ const mutations= {
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
   },
+  SET_XY_POINTS(state, points) {
+    state.xyPoints = points
+  },
 }
 
 // import axios from 'axios'
@@ -68,11 +61,6 @@ const mutations= {
 // 동기적인 작업 뿐 만 아니라 비동기적인 작업을 포함 가능
 // 항상 Context가 인자로 넘어온다, 오직 mutation 매서드를 commit 호출해서 조작 가능
 const actions = {
-  addLatLngLst ({ commit }, latLngLst) {
-    // console.log(payload)
-    // console.log(latLngtLst.latLst)
-    commit('ADD_LAT_LNG_LST', latLngLst)
-  },
   addPointItem ({ commit }, newPoint) {
     // console.log('잘 작동함 ㅇㅇ')
     // console.log(newPoint)
@@ -87,8 +75,10 @@ const actions = {
   },
   createRouteDescription( { commit }, event) {
     commit('CREATE_ROUTE_DESCRIPTION', event)
-    console.log(event)
-  }
+  },
+  setXYPoints( {commit}, points) {
+    commit('SET_XY_POINTS', points)
+  },
 }
 
 export default {

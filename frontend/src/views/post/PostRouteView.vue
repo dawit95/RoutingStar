@@ -1,12 +1,12 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row swap>
-      <Map/>
+      <Map :isFreeze="isFreeze"/>
       <v-divider></v-divider>
       <MapPointForm/>
     </v-layout>
     <v-layout>
-      <PostRouteDetailModal/>
+      <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
     </v-layout>
   </v-container>
 </template>
@@ -19,11 +19,26 @@ import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
 
 export default {
  name: 'PostRouteView',
+ data() {
+   return {
+     isFreeze: false
+   }
+ },
  components: { 
     Map, 
     MapPointForm,
     PostRouteDetailModal,
   },
+  methods: {
+    // 모달이 열리면 map freeze하기
+    freezeMap() {
+      this.isFreeze = true
+    },
+    // 모달이 닫히면 map freeze 풀기=
+    recoverFreezeMap() {
+      this.isFreeze = false
+    }
+  }
 }
 </script>
 
