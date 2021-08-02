@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="google-signin-client_id" content="655865136644-dsfvi5t40a39aluob4t0tgt3g4l8sohi.apps.googleusercontent.com">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <!-- 카카오 로그인 -->
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?&appkey=0c6121d667946c4583e303b2760cca80&libraries=services"></script>
+    <!-- 구글 로그인 -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
