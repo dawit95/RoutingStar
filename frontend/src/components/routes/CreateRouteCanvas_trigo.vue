@@ -28,8 +28,63 @@ export default {
     },
     initCanvas() {
       console.log(this.pointedItems)
+//      var width = window.innerWidth;
+//      var height = window.innerHeight;
+
+      //https://stackoverflow.com/questions/16266809/convert-from-latitude-longitude-to-x-y
+
       var width = 800
       var height = 400
+
+      var lats = []
+      var lngs = []
+      for ( const point of this.pointedItems ) {
+          lats.push(point.lat)
+          lngs.push(point.lng)
+      }
+      const minLat = Math.min(...lats)
+      const maxLat = Math.max(...lats)
+      const minLng = Math.min(...lngs)
+      const maxLng = Math.max(...lngs)
+
+      const radius = 6371;
+
+      function toGlobalXY(lat, lng) {
+          let x = radius * lng * Math.cos((minLat + maxLat)/2);
+          let y = radius * lat;
+          return { x:x, y:y } 
+      }
+
+      const leftTop = toGlobalXY(minLat, minLng);
+      const rightBottom = toGlobalXY(maxLat, maxLng);
+
+      console.log(leftTop)
+      console.log(rightBottom)
+
+      function toScreen(lat, lng) {
+          let pos = toGlobalXY(lat, lng);
+          pos.perX = ((pos.x - leftTop.x)/(rightBottom.x - leftTop.x));
+          pos.perY = ((pos.y - leftTop.y)/(rightBottom.y - leftTop.y));
+
+          return {
+              x: minX + (maxX - minX) * pos.perX,
+              y: minY + (maxY - minY) * pos.perY
+          }
+      }
+
+      const minX = width * 0.1
+      const maxX = width * 0.9
+      const minY = height * 0.1
+      const maxY = height * 0.9
+
+      var points = []
+
+      for ( const point of this.pointedItems ) {
+          const pos = toScreen(point.lat, point.lng)
+          points.push(pos.x);
+          points.push(pos.y)
+      }
+      console.log(points)
 
       var stage = new window.Konva.Stage({
         container: 'container',
@@ -46,6 +101,7 @@ export default {
         lineCap: 'round',
         lineJoin: 'round',
       });
+
 
 
       // // dashed line

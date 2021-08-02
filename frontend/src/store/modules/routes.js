@@ -6,6 +6,7 @@ const state = {
   lngLst: [],
   imgLst: [],
   polyLine: null,
+  routeDescription: '',
 }
 
 const getters = {
@@ -23,7 +24,10 @@ const getters = {
   },
   polyLine(state) {
     return state.polyLine
-  } 
+  },
+  routeDescription(state) {
+    return state.routeDescription
+  }
 }
 
 const mutations= {
@@ -53,7 +57,10 @@ const mutations= {
     var tmp = state.pointedItems[event.newIndex]
     state.pointedItems[event.newIndex] = state.pointedItems[event.oldIndex]
     state.pointedItems[event.oldIndex] = tmp
-  }
+  },
+  CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
+    state.routeDescription = routeDescription
+  },
 }
 
 // import axios from 'axios'
@@ -78,6 +85,10 @@ const actions = {
   updateDraggerbleItems ( { commit }, event ) {
     commit('UPDATE_DRAGGERBLE_ITEMS', event)
   },
+  createRouteDescription( { commit }, event) {
+    commit('CREATE_ROUTE_DESCRIPTION', event)
+    console.log(event)
+  }
 }
 
 export default {
