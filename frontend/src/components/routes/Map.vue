@@ -59,7 +59,7 @@ export default {
     addGoogleMapScript() {
       const script = document.createElement("script");
 
-      script.onload = () => this.initMap();
+      script.onload = () => this.initMap(false);
       script.src =
         "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&libraries=places&region=KR&language=ko&v=weekly";
       // script.async = true;
@@ -67,7 +67,7 @@ export default {
       document.head.appendChild(script);
     },
     // 1. Map 세팅
-    initMap() {
+    initMap( freeze ) {
       // 중심은 우선 첫번째 요소로 선택
       if (this.pointedItems.length) {
         this.map = new window.google.maps.Map(document.getElementById("map"),
@@ -109,8 +109,31 @@ export default {
         });
       }
 
+      if(freeze === true) {
+        this.freezeBound()
+      } else {
+        this.attachSearch()
+      }
+
+      // 5. 폴리라인(루트 라인)을 만든다
+      this.SET_POLYLINE(new window.google.maps.Polyline
+        ({
+          strokeColor: "#E64398",
+          strokeOpacity: 0.3,
+          strokeWeight: 8,
+        })
+      )
+      this.polyLine.setMap(this.map);
+      this.map.addListener("click", this.addPoint);
+    },
+    freezeBound() {
+        const bounds = this.refreshPolyline()
+        this.map.fitBounds(bounds);      
+    },
+    attachSearch() {
       // 3. 검색창 만들기
       const input = document.getElementById("pac-input");
+      console.log(input)
       const searchBox = new window.google.maps.places.SearchBox(input);
       this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
       // 4.검색어에 따라 바운더리를 바꾼다
@@ -136,17 +159,6 @@ export default {
         });
         this.map.fitBounds(bounds);
       });
-
-      // 5. 폴리라인(루트 라인)을 만든다
-      this.SET_POLYLINE(new window.google.maps.Polyline
-        ({
-          strokeColor: "#E64398",
-          strokeOpacity: 0.3,
-          strokeWeight: 8,
-        })
-      )
-      this.polyLine.setMap(this.map);
-      this.map.addListener("click", this.addPoint);
     },
     // 5. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
     addPoint(event) {
@@ -200,22 +212,31 @@ export default {
     refreshPolyline() {
       const path = this.polyLine.getPath();
       const pointedItems = this.pointedItems
+      const bounds = new window.google.maps.LatLngBounds();
+
       path.clear();
       for( const point of pointedItems ) {
-        path.push( new window.google.maps.LatLng( point.lat, point.lng));
+        let latLng = new window.google.maps.LatLng( point.lat, point.lng)
+        path.push(latLng)
+        bounds.extend(latLng)
       }
+      return bounds
     },
+
+    //
+
+
   },
   watch: {
     isFreeze: function() {
       if (this.isFreeze) {
-        this.initMap()
+        this.initMap(true)
       }
     }
   },
   mounted() {
     window.google && window.google.maps
-      ? this.initMap()
+      ? this.initMap(false)
       : this.addGoogleMapScript();
   },
 }
@@ -260,7 +281,7 @@ a {
   padding-bottom: 12px;
   margin-right: 12px;
 }
-.pac-input {
+#pac-input {
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
