@@ -53,7 +53,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="dialog = false"
+                  @click="dialog = false; recoverFreezeMap()"
                 >
                   Close
                 </v-btn>
@@ -111,9 +111,11 @@ export default {
 
     // 모달이 열리면 map이 freeze된다 (그림 그려서 좌표 찾기 위함)
     freezeMap(event) {
-      console.log(event)
       this.$emit('freeze-map', event)
     },
+    recoverFreezeMap(event) {
+      this.$emit('recover-freeze-map', event)
+    }
   }
 }
 </script>

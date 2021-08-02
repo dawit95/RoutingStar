@@ -6,7 +6,7 @@
       <MapPointForm/>
     </v-layout>
     <v-layout>
-      <PostRouteDetailModal @freeze-map="freezeMap"/>
+      <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
     </v-layout>
   </v-container>
 </template>
@@ -33,8 +33,11 @@ export default {
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true
-      console.log(this.isFreeze)
     },
+    // 모달이 닫히면 map freeze 풀기=
+    recoverFreezeMap() {
+      this.isFreeze = false
+    }
   }
 }
 </script>
