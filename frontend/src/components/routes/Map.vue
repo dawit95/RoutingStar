@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
-    ...mapActions(['addPointItem', 'sendImagesArray']),
+    ...mapActions(['addPointItem', 'sendImagesArray', 'setXYPoints']),
 
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
@@ -247,7 +247,9 @@ export default {
       }      
       overlay.setMap(this.map)
 
-      console.log(overlay.points)
+      // console.log(overlay.points)
+      this.setXYPoints(overlay.points)
+
     },
 
     // freeze된 바운드에서 xy좌표값을 가져온다

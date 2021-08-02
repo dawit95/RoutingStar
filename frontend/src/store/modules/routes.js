@@ -5,6 +5,7 @@ const state = {
   imgLst: [],
   polyLine: null,
   routeDescription: '',
+  xyPoints: [],
 }
 
 const getters = {
@@ -19,7 +20,10 @@ const getters = {
   },
   routeDescription(state) {
     return state.routeDescription
-  }
+  },
+  xyPoints(state) {
+    return state.xyPoints
+  },
 }
 
 const mutations= {
@@ -47,6 +51,9 @@ const mutations= {
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
   },
+  SET_XY_POINTS(state, points) {
+    state.xyPoints = points
+  },
 }
 
 // import axios from 'axios'
@@ -68,8 +75,10 @@ const actions = {
   },
   createRouteDescription( { commit }, event) {
     commit('CREATE_ROUTE_DESCRIPTION', event)
-    console.log(event)
-  }
+  },
+  setXYPoints( {commit}, points) {
+    commit('SET_XY_POINTS', points)
+  },
 }
 
 export default {
