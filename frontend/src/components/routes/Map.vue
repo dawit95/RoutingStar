@@ -165,6 +165,7 @@ export default {
       });
       let newPoint = {
         pk: this.pointListPk,
+        imageUpload: false,
         image : '',
         lat : event.latLng.lat(),
         lng : event.latLng.lng(),
