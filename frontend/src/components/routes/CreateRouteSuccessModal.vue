@@ -17,7 +17,11 @@
           <v-card-title class="text-h5 grey lighten-2">
             완성 시 나오는 페이지 입니다.
           </v-card-title>
-
+          
+          <v-layout>
+            <CreateRouteCanvas/>
+          </v-layout>
+          
           <v-card-text>
             당신만의 루팅스타가 생성 완료되었습니다. 
           </v-card-text>
@@ -41,8 +45,13 @@
 </template>
 
 <script>
+import CreateRouteCanvas from '@/components/routes/CreateRouteCanvas.vue'
+
 export default {
   name: 'CreateRouteSuccessModal',
+  components: {
+    CreateRouteCanvas
+  },
   data () {
     return {
       dialog2: false,
