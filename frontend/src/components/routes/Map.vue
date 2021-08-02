@@ -126,10 +126,6 @@ export default {
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
     },
-    freezeBound() {
-        const bounds = this.refreshPolyline()
-        this.map.fitBounds(bounds);      
-    },
     attachSearch() {
       // 3. 검색창 만들기
       const input = document.getElementById("pac-input");
@@ -223,7 +219,39 @@ export default {
       return bounds
     },
 
-    //
+    // 맵 멈추고 바운드 재정렬, polyline에서 xy값 좌표 떼오기
+    freezeBound() {
+      const bounds = this.refreshPolyline()
+      this.map.fitBounds(bounds);      
+
+      var overlay = new window.google.maps.OverlayView() 
+      overlay.pointedItems = this.pointedItems
+      overlay.points = []
+
+      overlay.draw = function() {}
+      overlay.onAdd = function() {
+        let projection = this.getProjection()
+        let region = projection.getVisibleRegion()
+        let ne = projection.fromLatLngToDivPixel(region.latLngBounds.getNorthEast())
+        let sw = projection.fromLatLngToDivPixel(region.latLngBounds.getSouthWest())
+
+        let left = sw.x
+        let top = ne.y
+
+        for( const point of this.pointedItems ) {
+          let latLng = new window.google.maps.LatLng( point.lat, point.lng)
+          var pixel =  projection.fromLatLngToDivPixel(latLng); 
+          this.points.push(pixel.x - left)
+          this.points.push(pixel.y - top)
+        }
+      }      
+      overlay.setMap(this.map)
+
+      console.log(overlay.points)
+    },
+
+    // freeze된 바운드에서 xy좌표값을 가져온다
+
 
 
   },
