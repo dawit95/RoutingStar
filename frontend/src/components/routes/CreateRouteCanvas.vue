@@ -40,7 +40,7 @@ export default {
       var layer = new window.Konva.Layer();
 
       var redLine = new window.Konva.Line({
-        points: points,
+        points: [],
         stroke: 'red',
         strokeWidth: 15,
         lineCap: 'round',
