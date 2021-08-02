@@ -15,7 +15,14 @@
             <input @change="onFileSelected(pointItem)" accept="image/*" type="file">
             <v-textarea v-model="pointItem.content" @click="activePoint(pointItem)" @mouseout="stopPoint(pointItem)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
           </v-list-item-content>
-          <v-switch @click="refreshThumbnailBtn(pointItem)" :disabled="!pointItem.thumbnail && isthumbail" :v-model="pointItem.thumbnail" inset color="indigo darken-3"></v-switch>
+          <label>Thumbnail설정</label>
+          <v-switch
+          id="thumbnail_switch"
+          @click="refreshThumbnailBtn(pointItem)"
+          :label="pointItem.thumbnail ? thumbnailTxt : ''" 
+          :disabled="(!pointItem.thumbnail && isthumbail) || !pointItem.imageUpload"
+          :v-model="pointItem.thumbnail"
+          inset color="indigo darken-3"></v-switch>
         </v-list-item>
       </v-list>
     </draggable>
@@ -42,8 +49,7 @@ export default {
       // 썸네일이 골라졌는지 유무
       isthumbail: false,
       selectedFile: null,
-      switch1: true,
-      switch2: false,
+      thumbnailTxt: '',
     }
   },
   computed: {
@@ -70,6 +76,7 @@ export default {
       this.selectedFile = event.target.files[0]
       const idx = this.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
       this.imgList[idx] = this.selectedFile
+      pointItem.imageUpload = true
     },
     // deleteItem 함수는 삭제하고 각각 component에서 조건에 맞게 포인트를 삭제한 후에
     // 삭제된 pointedItems를 변수로 설정 후 mutation 함수로 state에 반영하는 것으로 바꿈
@@ -133,17 +140,18 @@ export default {
       if (this.isthumbail) {
         this.isthumbail = !this.isthumbail
         pointItem.thumbnail = false
-      // 썸네일이 아닌경우 => 썸네일로 지정
+        this.thumbnailTxt = ''
+      // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
       } else if (this.isthumbail === false) {
-        this.isthumbail = !this.isthumbail
-        pointItem.thumbnail = true
-
         const idx = this.pointedItems.findIndex((e) => e.lat == pointItem.lat && e.lng == pointItem.lng );
         if (this.imgList[idx] !== '') {
+          this.isthumbail = !this.isthumbail
+          pointItem.thumbnail = true
+          this.thumbnailTxt = '썸네일 이미지가 등록되었습니다.'
           this.updateThumbnailImage(this.imgList[idx])
         } else if (this.imgList[idx] === '') {
-          console.log('썸네일 이미지를 지정해주세요')
           alert('장소에대한 이미지를 추가해주세요!')
+          pointItem.thumbnail = false
         }
       }
     }
