@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/h2-console/**").permitAll()
+                    .antMatchers("/h2-console/**","/error","/favicon.ico").permitAll()
                     //antMatchers의 url은 frontend와 함께 정리하여 변환.
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .antMatchers("/auth/**","/oauth2/**").permitAll()
@@ -46,9 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                    .successHandler(customOAuth2SuccessHandler)
-                        .userInfoEndpoint()
-                            .userService(customOAuth2UserService);
+                    .userInfoEndpoint()
+                        .userService(customOAuth2UserService)
+                    .and()
+                        .successHandler(customOAuth2SuccessHandler);
 
         http.addFilterBefore(new JwtAuthFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class);
     }

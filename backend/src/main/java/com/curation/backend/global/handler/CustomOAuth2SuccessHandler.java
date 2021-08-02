@@ -8,7 +8,6 @@ import com.curation.backend.user.dto.UserDto;
 import com.curation.backend.user.dto.UserRequestMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -46,20 +45,13 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
 
-//        // 최초 로그인이라면 회원가입 처리를 한다.
-//        if(!userRepository.existsByEmail(userDto.getEmail())){
-//
-//        }
-
         Token token = tokenService.generateToken(userDto.getEmail(),userDto.getProfileImg(), userDto.getName(), "USER");
         logger.debug("{}", token);
 
         //회원 테이블에 삽입
         User user = userRepository.findByEmail(userDto.getEmail()).get();
-        logger.trace(user.getRefreshToken() + "is before!!!");
         user.updateRefreshToken(token.getRefreshToken());
         userRepository.save(user);
-        logger.trace(user.getRefreshToken() + "is after!!!");
 
         writeTokenResponse(response, token);
         logger.trace("reponse uri : {}", Arrays.toString(response.getHeaderNames().toArray(new String[0])));
@@ -73,8 +65,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         response.addHeader("Refresh", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
 
-        var writer = response.getWriter();
-        writer.println(objectMapper.writeValueAsString(token));
-        writer.flush();
+//        var writer = response.getWriter();
+//        writer.println(objectMapper.writeValueAsString(token));
+//        writer.flush();
     }
 }
