@@ -34,6 +34,13 @@ public class RouteController {
         return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/routes")
+    public ResponseEntity<List<RouteListResponseDto>> likeRouteList() {
+        List<RouteListResponseDto> list = routeService.likeRouteList();
+        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
+
+    }
+
     @GetMapping("/route/{id}")
     public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("id") Long id) {
         RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);

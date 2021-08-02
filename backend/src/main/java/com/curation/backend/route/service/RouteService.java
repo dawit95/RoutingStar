@@ -10,17 +10,17 @@ import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.tag.domain.*;
 import com.curation.backend.tag.service.TagService;
-import com.curation.backend.user.domain.FollowFollowing;
-import com.curation.backend.user.domain.User;
-import com.curation.backend.user.domain.UserRepository;
+import com.curation.backend.user.domain.*;
 import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +31,7 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
 
     private final TagService tagService;
 
@@ -72,6 +73,10 @@ public class RouteService {
 
     public RouteDetailResponseDto getDetail(Long id) {
         return new RouteDetailResponseDto(routeRepository.findById(id).get());
+    }
+
+    public List<RouteListResponseDto> likeRouteList() {
+        return routeRepository.findAllOrderByLikeCount().stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 }
 
