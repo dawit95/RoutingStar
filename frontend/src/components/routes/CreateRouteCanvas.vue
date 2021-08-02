@@ -46,6 +46,17 @@ export default {
         lineJoin: 'round',
       });
 
+      // 심심하니까 애니메이션 넣어보자
+      var period = 2000;
+      var anim = new window.Konva.Animation(function (frame) {
+        var scale = Math.sin((frame.time * 2 * Math.PI) / period) + 0.001;
+        // scale x and y
+        redLine.scale({ x: scale, y: scale });
+      }, layer);
+
+      anim.start();
+      anim.stop();
+
       /*
        * since each line has the same point array, we can
        * adjust the position of each one using the

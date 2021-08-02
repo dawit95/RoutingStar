@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="text-center">
-      <v-dialog v-model="dialog2" width="500">
+      <v-dialog v-model="dialog2" persistent width="600">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             color="blue darken-1"
