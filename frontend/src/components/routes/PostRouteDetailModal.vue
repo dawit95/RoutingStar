@@ -31,7 +31,8 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field 
+                      <v-text-field
+                        @change="createRouteDescription"
                         label="Description" 
                         hint="25자 내외의 짧은 설명을 기록해주세요"
                         v-model="RouteDetailData.routeDescription"
@@ -79,6 +80,7 @@
 <script>
 import TagForm from '@/components/routes/TagForm.vue'
 import CreateRouteSuccessModal from '@/components/routes/CreateRouteSuccessModal.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'PostRouteDetailModal',
@@ -92,7 +94,7 @@ export default {
       dialog: false,
       // 모달에 작성되는 데이터
       RouteDetailData: {
-        routeDiscription: '',
+        routeDescription: '',
       },
       // 모달에 작성되는 데이터의 조건
       rules: [v => v.length <= 25 || '25자 이상입니다'],
@@ -104,6 +106,9 @@ export default {
     //   return "@/assets/temp_image_for_test.png"
     // }
   },
+  methods: {
+    ...mapActions(['createRouteDescription']),
+  }
 }
 </script>
 
