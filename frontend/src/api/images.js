@@ -27,5 +27,6 @@ function postThumbnailImage(file, success, fail) {
   .then(success)
   .catch(fail)
 }
+
 export { postPointImages, postThumbnailImage };
 
