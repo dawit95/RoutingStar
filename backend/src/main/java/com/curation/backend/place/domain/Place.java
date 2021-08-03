@@ -4,7 +4,6 @@ import com.curation.backend.route.domain.Route;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -24,13 +23,16 @@ public class Place {
     private String lat;
 
     @Column(nullable = false)
-    private String lang;
+    private String lng;
 
     @Column(nullable = true)
-    private Long placeOrder;
+    private Long createdOrder;
 
     @Column
     private String placeImg;
+
+    @Column
+    private Boolean isThumbnail = Boolean.FALSE;
 
     @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
@@ -44,11 +46,12 @@ public class Place {
     }
 
     @Builder
-    public Place(String title, String lat, String lang, String placeImg, Long placeOrder) {
+    public Place(String title, String lat, String lang, String placeImg, Long createdOrder, Boolean isThumbnail) {
         this.title = title;
         this.lat = lat;
-        this.lang = lang;
+        this.lng = lang;
         this.placeImg = placeImg;
-        this.placeOrder = placeOrder;
+        this.createdOrder = createdOrder;
+        this.isThumbnail = isThumbnail;
     }
 }
