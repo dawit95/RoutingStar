@@ -22,11 +22,8 @@ public class TagService {
         List<WhatTag> whatTags = whatTagRepository.findByIdIn(whatTagIds);
         List<RouteWhatTag> routeWhatTags = new ArrayList<>();
         for(WhatTag what : whatTags) {
-            RouteWhatTag routeWhatTag = new RouteWhatTag();
-
+            RouteWhatTag routeWhatTag = RouteWhatTag.builder().whatTag(what).route(route).build();
             routeWhatTag.setWhatTag(what);
-            routeWhatTag.setRoute(route);
-
             routeWhatTagRepository.save(routeWhatTag);
         }
     }
@@ -36,13 +33,18 @@ public class TagService {
 
         List<RouteWithTag> routeWithTags = new ArrayList<>();
         for(WithTag with : withTags) {
-            RouteWithTag routeWithTag = new RouteWithTag();
-
+            RouteWithTag routeWithTag = RouteWithTag.builder().withTag(with).route(route).build();
             routeWithTag.setWithTag(with);
-            routeWithTag.setRoute(route);
-
             routeWithTagRepository.save(routeWithTag);
         }
+    }
+
+    public void deleteWhatTag(Long id) {
+        routeWhatTagRepository.deleteAllByRouteId(id);
+    }
+
+    public void deleteWithTag(Long id) {
+        routeWithTagRepository.deleteAllByRouteId(id);
     }
 
 }

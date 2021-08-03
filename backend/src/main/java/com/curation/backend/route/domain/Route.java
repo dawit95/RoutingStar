@@ -3,6 +3,7 @@ package com.curation.backend.route.domain;
 import com.curation.backend.comment.domain.Comment;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.place.domain.Place;
+import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
@@ -73,5 +74,14 @@ public class Route extends BaseTime {
     public Route(String thumbnail, String routeDescription) {
         this.thumbNail = thumbnail;
         this.routeDescription = routeDescription;
+    }
+
+    public void delete() {
+        this.deleted = Boolean.TRUE;
+    }
+
+    public void modify(RouteRequestDto route) {
+        this.thumbNail = route.getThumbnail();
+        this.routeDescription = route.getRouteDescription();
     }
 }

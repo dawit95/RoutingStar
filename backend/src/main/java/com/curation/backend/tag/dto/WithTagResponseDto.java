@@ -10,7 +10,7 @@ public class WithTagResponseDto {
     private String title;
 
     public WithTagResponseDto(WithTag entity) {
-        this.id = id;
+        this.id = entity.getId();
         this.title = entity.getTitle();
     }
 }

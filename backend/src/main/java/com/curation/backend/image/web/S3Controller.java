@@ -37,7 +37,7 @@ public class S3Controller {
         if(files == null)    logger.trace("is null");
         else                 logger.trace("is not null");
 
-        ImgResponseDto imgResponseDto = s3Uploader.upload(files, "static");
+        ImgResponseDto imgResponseDto = s3Uploader.upload(files, "");
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(imgResponseDto);
 
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
