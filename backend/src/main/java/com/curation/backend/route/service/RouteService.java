@@ -73,8 +73,9 @@ public class RouteService {
         return routeRepository.findByUserIdInOrderByCreatedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 
-    public RouteDetailResponseDto getDetail(Long id) {
-        return new RouteDetailResponseDto(routeRepository.findById(id).get());
+    public RouteDetailResponseDto getDetail(Long id) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+        return new RouteDetailResponseDto(route.get());
     }
 
     public List<RouteListResponseDto> likeRouteList() {
@@ -104,6 +105,12 @@ public class RouteService {
         tagService.addWithTag(withTagIds, route.get());
 
         return id;
+    }
+
+    public void deleteRoute(Long id) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+        route.get().delete();
+        routeRepository.save(route.get());
     }
 }
 
