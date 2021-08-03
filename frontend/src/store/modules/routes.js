@@ -2,7 +2,7 @@
 // import { createRoute } from '@/api/routes.js'
 
 const state = {
-  pointedItems: [],
+  place: [],
   imgLst: [],
   polyLine: null,
   routeDescription: '',
@@ -12,8 +12,8 @@ const state = {
 }
 
 const getters = {
-  pointedItems(state) {
-    return state.pointedItems
+  place(state) {
+    return state.place
   },
   imgList(state) {
     return state.imgLst
@@ -37,7 +37,7 @@ const getters = {
 
 const mutations= {
   ADD_POINT_ITEM(state, newPoint) {
-    state.pointedItems.push(newPoint)
+    state.place.push(newPoint)
   },
   ADD_IMAGE(state, newPoint) {
     state.imgLst.push(newPoint.image)
@@ -49,13 +49,13 @@ const mutations= {
     state.polyLine = polyline
     // console.log(state)
   },
-  REFRESH_POINTED_ITEMS(state, newPointedItems) {
-    state.pointedItems = newPointedItems
+  REFRESH_POINTED_ITEMS(state, newPlace) {
+    state.place = newPlace
   },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
-    var tmp = state.pointedItems[event.newIndex]
-    state.pointedItems[event.newIndex] = state.pointedItems[event.oldIndex]
-    state.pointedItems[event.oldIndex] = tmp
+    var tmp = state.place[event.newIndex]
+    state.place[event.newIndex] = state.place[event.oldIndex]
+    state.place[event.oldIndex] = tmp
   },
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
@@ -82,8 +82,8 @@ const actions = {
     commit('ADD_POINT_ITEM', newPoint)
     commit('ADD_IMAGE', newPoint)
   },
-  refreshPointItems ( { commit }, newPointedItems) {
-    commit('REFRESH_POINTED_ITEMS', newPointedItems)
+  refreshPointItems ( { commit }, newPlace) {
+    commit('REFRESH_POINTED_ITEMS', newPlace)
   },
   updateDraggerbleItems ( { commit }, event ) {
     commit('UPDATE_DRAGGERBLE_ITEMS', event)
