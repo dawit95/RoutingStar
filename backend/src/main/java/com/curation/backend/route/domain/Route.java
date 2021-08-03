@@ -8,12 +8,9 @@ import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
 import com.curation.backend.user.domain.User;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -33,7 +30,7 @@ public class Route extends BaseTime {
     private Long id;
 
     @Column(nullable = false)
-    private String thumbNail;
+    private String routeImg;
 
     @Column(nullable = false)
     private String routeDescription;
@@ -72,7 +69,7 @@ public class Route extends BaseTime {
 
     @Builder
     public Route(String thumbnail, String routeDescription) {
-        this.thumbNail = thumbnail;
+        this.routeImg = thumbnail;
         this.routeDescription = routeDescription;
     }
 
@@ -81,7 +78,7 @@ public class Route extends BaseTime {
     }
 
     public void modify(RouteRequestDto route) {
-        this.thumbNail = route.getThumbnail();
+        this.routeImg = route.getRouteImg();
         this.routeDescription = route.getRouteDescription();
     }
 }
