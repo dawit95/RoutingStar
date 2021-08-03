@@ -8,7 +8,7 @@
         <button 
           class="button mx-3" 
           :class="{grayscale:!withTag.isSelcted}" 
-          @click="setWithTag(withTag.tagnum); setWithTagButtonClass(withTag.idx)"
+          @click="addWithTag(withTag.tagnum); addWithTagButtonClass(withTag.idx);"
         >
           <span class="button span">
             {{ withTag.tag }}
@@ -22,7 +22,7 @@
         <button 
           class="button mx-3" 
           :class="{grayscale:!whatTag.isSelcted}" 
-          @click="setWhatTag(whatTag.tagnum); setWhatTagButtonClass(whatTag.idx)"
+          @click="addWhatTag(whatTag.tagnum); addWhatTagButtonClass(whatTag.idx);"
         >
           <span class="button span">
             {{ whatTag.tag }}
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'TagForm',
   data() {
@@ -62,8 +64,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setWhatTag', 'setWithTag']),
+
     // 태그 데이터에 있으면 삭제 없으면 추가
-    setWhatTag(tagnum) {
+    addWhatTag(tagnum) {
       if (this.whatTag.includes(tagnum)) {
         const idx = this.whatTag.indexOf(tagnum)
         this.whatTag.splice(idx, 1)
@@ -71,8 +75,9 @@ export default {
         this.whatTag.push(tagnum)
       }
       console.log(this.whatTag)
+      this.setWhatTag(this.whatTag)
     },
-    setWithTag(tagnum) {
+    addWithTag(tagnum) {
       if (this.withTag.includes(tagnum)) {
         const idx = this.withTag.indexOf(tagnum)
         this.withTag.splice(idx, 1)
@@ -80,11 +85,12 @@ export default {
         this.withTag.push(tagnum)
       }
       console.log(this.withTag)
+      this.setWithTag(this.withTag)
     },
-    setWhatTagButtonClass(idx) {
+    addWhatTagButtonClass(idx) {
       this.whatTagObj[idx].isSelcted = !this.whatTagObj[idx].isSelcted
     },
-    setWithTagButtonClass(idx) {
+    addWithTagButtonClass(idx) {
       this.withTagObj[idx].isSelcted = !this.withTagObj[idx].isSelcted
     },
   },
