@@ -107,6 +107,15 @@ export default {
     }
   },
   created () {
+  if (this.$route.query.access && this.$route.query.refresh){
+    const token = 
+      {
+        access: this.$route.query.access,
+        refresh: this.$route.query.refresh
+      }
+      this.$store.dispatch('createUser', token)
+    }
+
     // main page 들어오자마자 피드 정보들 받아오기
     // 참조: https://jasonwatmore.com/post/2020/07/23/vue-axios-http-get-request-examples
     // 현재 내가 로그인되있어서 user pk가 가지고 있다면
