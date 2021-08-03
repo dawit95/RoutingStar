@@ -8,6 +8,7 @@ import com.curation.backend.user.dto.UserDto;
 import com.curation.backend.user.dto.UserRequestMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -53,8 +54,13 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         user.updateRefreshToken(token.getRefreshToken());
         userRepository.save(user);
 
-        writeTokenResponse(response, token);
-        logger.trace("reponse uri : {}", Arrays.toString(response.getHeaderNames().toArray(new String[0])));
+        //response 에 token 정보 주입
+//        writeTokenResponse(response, token);
+
+        //유저에게 돌려보네기 upload시 우리 서버로
+        String redirect_uri = "http://localhost:8080/home?access="+token.getToken()+"&refresh="+token.getRefreshToken();
+        response.sendRedirect(redirect_uri);
+
     }
 
     private void writeTokenResponse(HttpServletResponse response, Token token)
