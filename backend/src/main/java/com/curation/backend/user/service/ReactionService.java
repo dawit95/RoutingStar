@@ -5,15 +5,18 @@ import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.domain.RouteStorage;
 import com.curation.backend.route.domain.RouteStorageRepository;
 import com.curation.backend.route.exception.NoRouteException;
-import com.curation.backend.user.domain.Like;
-import com.curation.backend.user.domain.LikeRepository;
-import com.curation.backend.user.domain.User;
-import com.curation.backend.user.domain.UserRepository;
+import com.curation.backend.user.domain.*;
+import com.curation.backend.user.dto.FFResponseDto;
+import com.curation.backend.user.dto.FollowerResponseDto;
+import com.curation.backend.user.dto.FollowingResponseDto;
 import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +26,7 @@ public class ReactionService {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
     private final RouteStorageRepository routeStorageRepository;
+    private final FollowerFollowingRepository followerFollowingRepository;
 
     private Logger logger = LoggerFactory.getLogger(ReactionService.class);
 
@@ -64,5 +68,16 @@ public class ReactionService {
         }
 
         return message;
+    }
+
+    public FFResponseDto countOfFollow(Long userId) throws NoUserException, NoRouteException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("해당하는 사용자가 없습니다."));
+
+        //userID가 follower인 모든 테이블에서 followingID만 뽑아 담은 list.
+        List<FollowerResponseDto> followerList = followerFollowingRepository.findAllByFollower(user).stream().map(FollowerResponseDto::new).collect(Collectors.toList());;
+        List<FollowingResponseDto> followingList = followerFollowingRepository.findAllByFollowing(user).stream().map(FollowingResponseDto::new).collect(Collectors.toList());;
+
+        FFResponseDto ffResponseDto = new FFResponseDto(followerList,followingList);
+        return ffResponseDto;
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class FollowFollowing {
+public class FollowerFollowing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +36,9 @@ public class FollowFollowing {
 
 
     @Builder
-    public FollowFollowing(User follower, User following) {
+    public FollowerFollowing(User follower, User following) {
         this.follower = follower;
         this.following = following;
     }
+
 }
