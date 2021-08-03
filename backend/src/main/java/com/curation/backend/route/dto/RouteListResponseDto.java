@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class RouteListResponseDto {
 
     private Long id;
-    private String thumbnail;
+    private String routeImg;
     private String routeDescription;
     private LocalDateTime modifiedAt;
     private UserResponseDto user;
@@ -22,7 +22,7 @@ public class RouteListResponseDto {
 
     public RouteListResponseDto(Route entity) {
         this.id = entity.getId();
-        this.thumbnail = entity.getThumbNail();
+        this.routeImg = entity.getRouteImg();
         this.routeDescription = entity.getRouteDescription();
         this.modifiedAt = entity.getModifiedAt();
         this.user = new UserResponseDto(entity.getUser());

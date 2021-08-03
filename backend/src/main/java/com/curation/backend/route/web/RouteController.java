@@ -28,21 +28,28 @@ public class RouteController {
     private final ResponseGenerateService responseGenerateService;
 
     @PostMapping("/route")
-    public Long addRoute(@RequestBody RouteRequestDto route) throws Exception {
-        return routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
+    public ResponseEntity<SuccessResponseDto> addRoute(@RequestBody RouteRequestDto route) throws Exception {
+        Long id = routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(id);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
     @GetMapping("/routes/{userId}")
-    public ResponseEntity<List<RouteListResponseDto>> followingRouteList(@PathVariable("userId") Long id) {
+    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) {
         List<RouteListResponseDto> list = routeService.followingRouteList(id);
-
-        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
     @GetMapping("/routes")
-    public ResponseEntity<List<RouteListResponseDto>> likeRouteList() {
+    public ResponseEntity<SuccessResponseDto> likeRouteList() {
         List<RouteListResponseDto> list = routeService.likeRouteList();
-        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
 
     }
 
@@ -65,6 +72,11 @@ public class RouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
+//    @GetMapping("/route/storage/{routeId}")
+//    public ResponseEntity<SuccessResponseDto> getRouteStorageDetail(@PathVariable("routeId") Long id) {
+//
+//    }
+
     @ExceptionHandler(NoRouteException.class)
     public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
@@ -80,98 +92,69 @@ public class RouteController {
   "id": 1,
   "places": [
     {
-      "lang": "123.12",
-      "lat": "231.56",
-      "placeImg": "첫번째 장소의 이미지",
-      "placeOrder": 1,
-      "title": "첫번째 장소인 카페!"
+      "createdOrder": 1,
+      "isThumbnail": true,
+      "lat": "12.3",
+      "lng": "45.2",
+      "placeImg": "첫번째 사진이지롱",
+      "title": "여기는 카페에요"
     },
     {
-      "lang": "567.12",
-      "lat": "892.12",
-      "placeImg": "두번째 장소의 이미지",
-      "placeOrder": 2,
-      "title": "두번째 장소인 산책로!"
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": "45.2222",
+      "lng": "666.123",
+      "placeImg": "두번째 사진이지롱",
+      "title": "여기는 존맛 밥집"
     }
   ],
-  "routeDescription": "루트에 대한 설명",
-  "thumbnail": "루트의 썸네일",
+  "routeDescription": "우리동네 최고 코스에요",
+  "routeImg": "루트 사진이 들어가있음",
   "whatTag": [
-    1,3,5
+    1,2,3
   ],
   "withTag": [
-    2,3,1
+    4,5,6
   ]
 }
  */
-
 
 /*
 {
   "id": 1,
   "places": [
     {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "새로생겨서 다시 등록",
-      "placeOrder": 1,
-      "title": "여기 강추강추"
+      "createdOrder": 1,
+      "isThumbnail": false,
+      "lat": "772.12",
+      "lng": "452.123",
+      "placeImg": "수정한 이미지 1",
+      "title": "여기는 영화관"
     },
     {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "하하호호 사진",
-      "placeOrder": 2,
-      "title": "카페 최고최고"
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": "7.123",
+      "lng": "8.23",
+      "placeImg": "수정한 이미지 2",
+      "title": "여기는 영화관"
     },
     {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "세번째 사진",
-      "placeOrder": 3,
-      "title": "여기는 밥집"
+      "createdOrder": 3,
+      "isThumbnail": true,
+      "lat": "478.1",
+      "lng": "98.1",
+      "placeImg": "수정한 이미지 3",
+      "title": "여기는 영화관"
     }
   ],
-  "routeDescription": "string",
-  "thumbnail": "string",
+  "routeDescription": "수정해버리기 이 코스는 우리동네 맛집코스",
+  "routeImg": "루트 사진도 수정함",
   "whatTag": [
-    4, 3, 1
-  ],{
-  "id": 1,
-  "places": [
-    {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "새로생겨서 다시 등록",
-      "placeOrder": 1,
-      "title": "여기 강추강추"
-    },
-    {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "하하호호 사진",
-      "placeOrder": 2,
-      "title": "카페 최고최고"
-    },
-    {
-      "lang": "999.9",
-      "lat": "111.1",
-      "placeImg": "세번째 사진",
-      "placeOrder": 3,
-      "title": "여기는 밥집"
-    }
-  ],
-  "routeDescription": "string",
-  "thumbnail": "string",
-  "whatTag": [
-    4, 3, 1
+    1,1,3
   ],
   "withTag": [
-    3, 4
-  ]
-}
-  "withTag": [
-    3, 4
+    4,2,6,5
   ]
 }
  */

@@ -9,11 +9,12 @@ public class PlaceRequestDto {
 
     private String title;
     private String lat;
-    private String lang;
-    private Long placeOrder;
+    private String lng;
+    private Long createdOrder;
     private String placeImg;
+    private Boolean isThumbnail = false;
 
     public Place toEntity() {
-        return Place.builder().title(title).lat(lat).lang(lang).placeImg(placeImg).placeOrder(placeOrder).build();
+        return Place.builder().title(title).lat(lat).lang(lng).placeImg(placeImg).createdOrder(createdOrder).isThumbnail(isThumbnail).build();
     }
 }

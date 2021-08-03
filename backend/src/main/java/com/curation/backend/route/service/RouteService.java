@@ -9,14 +9,20 @@ import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
+import com.curation.backend.tag.domain.*;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.*;
+import com.curation.backend.user.exception.NoUserException;
+import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,9 +45,9 @@ public class RouteService {
     public Long save(RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws Exception {
 
         Route route = routeRequestDto.toEntity();
-        User user = userRepository.findById(routeRequestDto.getId()).get();
+        Optional<User> user= Optional.ofNullable(userRepository.findById(routeRequestDto.getId())).orElseThrow(() -> new NoUserException("없는 사용자입니다."));
 
-        route.setUser(user);
+        route.setUser(user.get());
         routeRepository.save(route);
 
         List<Place> routePlaces = placesRequestDto.stream().map(e -> e.toEntity()).collect(Collectors.toList());
