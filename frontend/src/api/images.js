@@ -10,11 +10,22 @@ function postPointImages(files, success, fail) {
   instance
   .post('http://192.168.1.214:8000/api/v1/img/place', files, {
     headers: {
-      "Content-Type": `multipart/form-data`,
+      'Content-Type': 'multipart/form-data',
     }
   })
   .then(success)
   .catch(fail)
 }
 
-export {postPointImages, }
+function postThumbnailImage(file, success, fail) {
+  instance
+  .post('http://192.168.1.214:8000/api/v1/img/place', file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  })
+  .then(success)
+  .catch(fail)
+}
+export { postPointImages, postThumbnailImage };
+
