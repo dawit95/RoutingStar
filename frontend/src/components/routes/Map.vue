@@ -239,11 +239,11 @@ export default {
         let left = sw.x
         let top = ne.y
 
-        for( const point of this.pointedItems ) {
-          let latLng = new window.google.maps.LatLng( point.lat, point.lng)
-          var pixel =  projection.fromLatLngToDivPixel(latLng); 
-          this.points.push(pixel.x - left)
-          this.points.push(pixel.y - top)
+        for ( const point of this.pointedItems ) {
+            let latLng = new window.google.maps.LatLng( point.lat, point.lng )
+            var pixel = projection.fromLatLngToDivPixel(latLng)
+
+            this.points.push( { x:pixel.x - left, y:pixel.y - top} )
         }
       }      
       overlay.setMap(this.map)
