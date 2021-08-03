@@ -10,14 +10,14 @@ import java.util.List;
 @Getter @Setter
 public class RouteRequestDto {
 
-    private String thumbnail;
-    private String routeDescription;
     private Long id;
+    private String routeImg;
+    private String routeDescription;
     private List<PlaceRequestDto> places;
     private List<Long> whatTag;
     private List<Long> withTag;
 
     public Route toEntity() {
-        return Route.builder().thumbnail(thumbnail).routeDescription(routeDescription).build();
+        return Route.builder().thumbnail(routeImg).routeDescription(routeDescription).build();
     }
 }

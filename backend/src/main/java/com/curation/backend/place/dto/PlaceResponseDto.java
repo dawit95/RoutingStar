@@ -10,16 +10,18 @@ public class PlaceResponseDto {
     private Long id;
     private String title;
     private String lat;
-    private String lang;
-    private Long placeOrder;
+    private String lng;
+    private Long createdOrder;
     private String placeImg;
+    private Boolean isThumbnail;
 
     public PlaceResponseDto(Place entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.lat = entity.getLat();
-        this.lang = entity.getLang();
-        this.placeOrder = entity.getPlaceOrder();
+        this.lng = entity.getLng();
+        this.createdOrder = entity.getCreatedOrder();
         this.placeImg = entity.getPlaceImg();
+        this.isThumbnail = entity.getIsThumbnail();
     }
 }
