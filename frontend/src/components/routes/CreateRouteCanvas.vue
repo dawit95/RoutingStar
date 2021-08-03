@@ -25,23 +25,35 @@ export default {
       document.head.appendChild(script);
     },
     drawPolyLine() {
-      const pointArray = []
-      for (let j=0; j<this.xyPoints.length; j++) {
-        if (j % 2 === 0) {
-          // let tmpx = this.xyPoints[j]
-          // let tmpy = this.xyPoints[j+1]
-        }
-      }
-      var canvas = new window.fabric.Canvas("canvas");
+      var canvas = new window.fabric.Canvas("canvas", {width:800, height:400 });
+      console.log(canvas.getWidth())
       console.log(this.xyPoints)
       var canvasPolyline = new window.fabric.Polyline(
-        pointArray,
+        this.xyPoints,
         {
-          stroke: 'white'
+          stroke: 'white',
+          fill: 'rgba(0,0,0,0)',
+          strokeWidth: 10,
         })
+
+      const canvasWidth = 600
+      const canvasHeight = 400
+      const margin = 0.8
+
+      var bounds = canvasPolyline.getBoundingRect()
+      var widthRatio = bounds.width / canvasWidth
+      var heightRatio = bounds.height / canvasHeight
+
+      if ( widthRatio > heightRatio ) {
+        canvasPolyline.scaleToWidth( canvasWidth * margin )  
+      } else {
+        canvasPolyline.scaleToHeight( canvasHeight * margin)  
+      }
       canvas.add(canvasPolyline)
+      canvasPolyline.center()
     },
   },
+
   mounted() {
     window.fabric
       ? this.drawPolyLine()
