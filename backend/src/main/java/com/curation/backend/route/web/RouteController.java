@@ -1,6 +1,7 @@
 package com.curation.backend.route.web;
 
 import com.curation.backend.global.dto.ExceptionResponseDto;
+import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
@@ -31,8 +32,8 @@ public class RouteController {
         return routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
     }
 
-    @GetMapping("/routes/{id}")
-    public ResponseEntity<List<RouteListResponseDto>> followingRouteList(@PathVariable("id") Long id) {
+    @GetMapping("/routes/{userId}")
+    public ResponseEntity<List<RouteListResponseDto>> followingRouteList(@PathVariable("userId") Long id) {
         List<RouteListResponseDto> list = routeService.followingRouteList(id);
 
         return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
@@ -45,15 +46,23 @@ public class RouteController {
 
     }
 
-    @GetMapping("/route/{id}")
-    public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("id") Long id) {
+    @GetMapping("/route/{routeId}")
+    public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
         RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
         return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
     }
 
-    @PutMapping("/route/{id}")
-    public Long modifyRoute(@PathVariable("id") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
+    @PutMapping("/route/{routeId}")
+    public Long modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
         return routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
+    }
+
+    @DeleteMapping("/route/{routeId}")
+    public ResponseEntity<SuccessResponseDto> deleteRoute(@PathVariable("routeId") Long id) throws NoRouteException {
+        routeService.deleteRoute(id);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse("성공적으로 삭제되었습니다.");
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
     @ExceptionHandler(NoRouteException.class)
@@ -127,7 +136,40 @@ public class RouteController {
   "thumbnail": "string",
   "whatTag": [
     4, 3, 1
+  ],{
+  "id": 1,
+  "places": [
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "새로생겨서 다시 등록",
+      "placeOrder": 1,
+      "title": "여기 강추강추"
+    },
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "하하호호 사진",
+      "placeOrder": 2,
+      "title": "카페 최고최고"
+    },
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "세번째 사진",
+      "placeOrder": 3,
+      "title": "여기는 밥집"
+    }
   ],
+  "routeDescription": "string",
+  "thumbnail": "string",
+  "whatTag": [
+    4, 3, 1
+  ],
+  "withTag": [
+    3, 4
+  ]
+}
   "withTag": [
     3, 4
   ]
