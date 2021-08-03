@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="container"></div>
+    <canvas id="canvas"></canvas>
   </div>
 </template>
 
@@ -20,67 +20,33 @@ export default {
     addCanvasScript() {
       const script = document.createElement("script");
 
-      script.onload = () => this.initCanvas();
-      script.src = "https://unpkg.com/konva@8.1.1/konva.min.js";
-      // script.async = true;
+      script.onload = () => this.drawPolyLine();
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js";
       document.head.appendChild(script);
     },
-    initCanvas() {
-      console.log(this.pointedItems)
-      var width = 800
-      var height = 400
-
-      var stage = new window.Konva.Stage({
-        container: 'container',
-        width: width,
-        height: height,
-      });
-
-      var layer = new window.Konva.Layer();
-
-      var redLine = new window.Konva.Line({
-        points: this.xyPoints,
-        stroke: 'red',
-        strokeWidth: 15,
-        lineCap: 'round',
-        lineJoin: 'round',
-      });
-
-      // 심심하니까 애니메이션 넣어보자
-      var period = 2000;
-      var anim = new window.Konva.Animation(function (frame) {
-        var scale = Math.sin((frame.time * 2 * Math.PI) / period) + 0.001;
-        // scale x and y
-        redLine.scale({ x: scale, y: scale });
-      }, layer);
-
-      anim.start();
-      anim.stop();
-
-      /*
-       * since each line has the same point array, we can
-       * adjust the position of each one using the
-       * move() method
-       */
-      // redLine.move({
-      //   x: -300,
-      //   y: -50,
-      // });
-      
-
-      layer.add(redLine);
-      // layer.add(greenLine);
-      // layer.add(blueLine);
-
-      // add the layer to the stage
-      stage.add(layer);
+    drawPolyLine() {
+      const pointArray = []
+      for (let j=0; j<this.xyPoints.length; j++) {
+        if (j % 2 === 0) {
+          // let tmpx = this.xyPoints[j]
+          // let tmpy = this.xyPoints[j+1]
+        }
+      }
+      var canvas = new window.fabric.Canvas("canvas");
+      console.log(this.xyPoints)
+      var canvasPolyline = new window.fabric.Polyline(
+        pointArray,
+        {
+          stroke: 'white'
+        })
+      canvas.add(canvasPolyline)
     },
-    // map divistion 사이즈에 따른 리사
   },
   mounted() {
-    window.Konva
-      ? this.initCanvas()
+    window.fabric
+      ? this.drawPolyLine()
       : this.addCanvasScript();
+
   }
 }
 </script>
@@ -92,4 +58,10 @@ body {
         overflow: hidden;
         background-color: #f0f0f0;
       }
+
+#canvas {
+  width: 800px;
+  height: 400px;
+  background-color: green;
+}
 </style>

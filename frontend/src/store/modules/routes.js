@@ -6,6 +6,8 @@ const state = {
   polyLine: null,
   routeDescription: '',
   xyPoints: [],
+  whatTag: [],
+  withTag: [],
 }
 
 const getters = {
@@ -24,6 +26,12 @@ const getters = {
   xyPoints(state) {
     return state.xyPoints
   },
+  whatTag(state) {
+    return state.whatTag
+  },
+  withTag(state) {
+    return state.withTag
+  }
 }
 
 const mutations= {
@@ -54,6 +62,12 @@ const mutations= {
   SET_XY_POINTS(state, points) {
     state.xyPoints = points
   },
+  SET_WHAT_TAG(state, whatTag) {
+    state.whatTag = whatTag
+  },
+  SET_WITH_TAG(state, withTag) {
+    state.withTag = withTag
+  },
 }
 
 // import axios from 'axios'
@@ -79,6 +93,12 @@ const actions = {
   setXYPoints( {commit}, points) {
     commit('SET_XY_POINTS', points)
   },
+  setWhatTag( {commit}, whatTag) {
+    commit('SET_WHAT_TAG', whatTag)
+  },
+  setWithTag( {commit}, withTag) {
+    commit('SET_WITH_TAG', withTag)
+  }
 }
 
 export default {
