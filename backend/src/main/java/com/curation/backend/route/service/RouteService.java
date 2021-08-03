@@ -9,19 +9,14 @@ import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
-import com.curation.backend.tag.domain.*;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.*;
-import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,7 +60,7 @@ public class RouteService {
     @Transactional(readOnly = true)
     public List<RouteListResponseDto> followingRouteList(Long id) {
         User user = userRepository.findById(id).get();
-        List<FollowFollowing> followList = user.getFollowers();
+        List<FollowerFollowing> followList = user.getFollowers();
 
         List<Long> list = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         list.add(id);

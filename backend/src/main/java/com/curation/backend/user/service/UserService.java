@@ -1,6 +1,6 @@
 package com.curation.backend.user.service;
 
-import com.curation.backend.user.domain.FollowFollowing;
+import com.curation.backend.user.domain.FollowerFollowing;
 import com.curation.backend.user.domain.FollowerFollowingRepository;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
@@ -28,8 +28,8 @@ public class UserService {
         Optional<User> follower = userRepository.findById(followerId);
         Optional<User> following = userRepository.findById(followingId);
 
-        FollowFollowing followFollowing = FollowFollowing.builder().follower(follower.get()).following(following.get()).build();
+        FollowerFollowing followerFollowing = FollowerFollowing.builder().follower(follower.get()).following(following.get()).build();
 
-        followerFollowingRepository.save(followFollowing);
+        followerFollowingRepository.save(followerFollowing);
     }
 }
