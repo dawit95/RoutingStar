@@ -1,4 +1,5 @@
 // routes.js
+import { createRoute } from '@/api/routes.js'
 
 const state = {
   pointedItems: [],
@@ -98,7 +99,10 @@ const actions = {
   },
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
-  }
+  },
+  // createRoute(params) => {
+  //   createRoute(params)
+  // }
 }
 
 export default {
