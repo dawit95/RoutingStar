@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="898a9032-de21-47a5-b4c7-daf7eacae0c5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/config/TestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/config/TestApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/config/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/config/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/handler/CustomOAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/global/handler/CustomOAuth2SuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/image/util/S3Uploader.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/image/util/S3Uploader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/image/web/S3Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/image/web/S3Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/place/domain/PlaceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/place/domain/PlaceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/domain/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/domain/Route.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/service/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/service/RouteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/web/RouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/route/web/RouteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/domain/RouteWhatTagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/domain/RouteWhatTagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/domain/RouteWithTagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/domain/RouteWithTagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/dto/WithTagResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/dto/WithTagResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/curation/backend/tag/service/TagService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1627868825444</updated>
       <workItem from="1627868827054" duration="13532000" />
-      <workItem from="1627951319471" duration="4982000" />
+      <workItem from="1627951319471" duration="7583000" />
     </task>
     <servers />
   </component>
