@@ -66,14 +66,14 @@ public class UserController {
         withTagRepository.saveAll(withTags);
 
         //팔로우-팔로잉 설정
-        List<FollowFollowing> followFollowings = new ArrayList<>();
-        followFollowings.add(FollowFollowing.builder().follower(user1).following(user3).build());
-        followFollowings.add(FollowFollowing.builder().follower(user1).following(user4).build());
-        followFollowings.add(FollowFollowing.builder().follower(user2).following(user4).build());
-        followFollowings.add(FollowFollowing.builder().follower(user4).following(user1).build());
-        followFollowings.add(FollowFollowing.builder().follower(user4).following(user2).build());
+        List<FollowerFollowing> followerFollowings = new ArrayList<>();
+        followerFollowings.add(FollowerFollowing.builder().follower(user1).following(user3).build());
+        followerFollowings.add(FollowerFollowing.builder().follower(user1).following(user4).build());
+        followerFollowings.add(FollowerFollowing.builder().follower(user2).following(user4).build());
+        followerFollowings.add(FollowerFollowing.builder().follower(user4).following(user1).build());
+        followerFollowings.add(FollowerFollowing.builder().follower(user4).following(user2).build());
 
-        followerFollowingRepository.saveAll(followFollowings);
+        followerFollowingRepository.saveAll(followerFollowings);
 
     }
 

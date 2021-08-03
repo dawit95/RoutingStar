@@ -7,7 +7,6 @@ import com.curation.backend.route.domain.RouteStorage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -49,11 +48,11 @@ public class User extends BaseTime {
 
     //내가 팔로잉 하는 사람들
     @OneToMany(mappedBy = "following")
-    private List<FollowFollowing> followings = new ArrayList<>();
+    private List<FollowerFollowing> followings = new ArrayList<>();
 
     //나를 팔로우하는 사람들
     @OneToMany(mappedBy = "follower")
-    private List<FollowFollowing> followers = new ArrayList<>();
+    private List<FollowerFollowing> followers = new ArrayList<>();
 
     @ManyToOne(targetEntity = Badge.class)
     @JoinColumn(name = "badge_id")
