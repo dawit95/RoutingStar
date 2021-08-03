@@ -8,6 +8,7 @@ import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.tag.domain.*;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.*;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -77,6 +79,31 @@ public class RouteService {
 
     public List<RouteListResponseDto> likeRouteList() {
         return routeRepository.findAllOrderByLikeCount().stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long modifyRoute(Long id, RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+
+        route.get().modify(routeRequestDto);
+
+        //기존에 연결되어 있던 것들 모두 삭제 필요
+        placeRepository.deleteAllByRouteId(id);
+        tagService.deleteWhatTag(id);
+        tagService.deleteWithTag(id);
+
+        List<Place> routePlaces = placesRequestDto.stream().map(e -> e.toEntity()).collect(Collectors.toList());
+
+        for(Place p : routePlaces) {
+            p.setRoute(route.get());
+        }
+
+        placeRepository.saveAll(routePlaces);
+
+        tagService.addWhatTag(whatTagIds, route.get());
+        tagService.addWithTag(withTagIds, route.get());
+
+        return id;
     }
 }
 

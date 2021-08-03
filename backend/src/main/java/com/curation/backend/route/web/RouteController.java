@@ -1,8 +1,11 @@
 package com.curation.backend.route.web;
 
+import com.curation.backend.global.dto.ExceptionResponseDto;
+import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +24,7 @@ public class RouteController {
     Logger logger = LoggerFactory.getLogger(RouteController.class);
 
     private final RouteService routeService;
+    private final ResponseGenerateService responseGenerateService;
 
     @PostMapping("/route")
     public Long addRoute(@RequestBody RouteRequestDto route) throws Exception {
@@ -45,6 +49,20 @@ public class RouteController {
     public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("id") Long id) {
         RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
         return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/route/{id}")
+    public Long modifyRoute(@PathVariable("id") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
+        return routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
+    }
+
+    @ExceptionHandler(NoRouteException.class)
+    public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        String message = "해당하는 루트가 없습니다.";
+
+        ExceptionResponseDto exceptionResponseDto = responseGenerateService.generateExceptionResponse(httpStatus, message);
+        return new ResponseEntity<ExceptionResponseDto>(exceptionResponseDto, httpStatus);
     }
 }
 
@@ -74,6 +92,44 @@ public class RouteController {
   ],
   "withTag": [
     2,3,1
+  ]
+}
+ */
+
+
+/*
+{
+  "id": 1,
+  "places": [
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "새로생겨서 다시 등록",
+      "placeOrder": 1,
+      "title": "여기 강추강추"
+    },
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "하하호호 사진",
+      "placeOrder": 2,
+      "title": "카페 최고최고"
+    },
+    {
+      "lang": "999.9",
+      "lat": "111.1",
+      "placeImg": "세번째 사진",
+      "placeOrder": 3,
+      "title": "여기는 밥집"
+    }
+  ],
+  "routeDescription": "string",
+  "thumbnail": "string",
+  "whatTag": [
+    4, 3, 1
+  ],
+  "withTag": [
+    3, 4
   ]
 }
  */
