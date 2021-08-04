@@ -33,7 +33,7 @@
             <v-btn
               color="primary"
               text
-              @click="postRoute"
+              @click="createRoute"
             >
               Check!
             </v-btn>
@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['postRoute']),
+    ...mapActions(['createRoute']),
 
   }
 
