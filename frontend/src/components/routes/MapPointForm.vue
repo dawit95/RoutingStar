@@ -4,7 +4,7 @@
       <v-list
         outlined
         v-for="(place, idx) in places"
-        :key="idx"
+        :key="place.createdOrder"
       >
         <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
 
@@ -61,6 +61,7 @@ export default {
     ...mapMutations(['UPDATE_DRAGGERBLE_ITEMS','REFRESH_PLACES']),
     ...mapActions(['complete', 'updateThumbnailImage']),
     onUpdated(event) {
+      console.log(event)
       this.UPDATE_DRAGGERBLE_ITEMS(event);
       this.refreshPolyline();
     },
