@@ -68,12 +68,12 @@ export default {
     },
     // 1. Map 세팅
     initMap( freeze ) {
-      // 중심은 우선 첫번째 요소로 선택
-      if (this.places.length) {
+      // 맵이 중복으로 만들어지는 걸 막기 위해 함수를 분리
+      if ( this.map === null ) {
         this.map = new window.google.maps.Map(document.getElementById("map"),
         {
           mapId: "8e0a97af9386fef",
-          // 경로의 중앙에 포커스가 위치하도록 설정하였음
+          // 경로의 중앙에 포커스가 위치하도록 설정하였음(초기는 멀캠)
           // center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
           center: { lat: 37.501, lng: 127.039 },
           zoom: 16,
@@ -82,62 +82,34 @@ export default {
           zoomControl: true,
           fullscreenControl: false,
         })
-        // 좌표
-        for (const place of this.places) {
-          let lat = place.lat
-          let lng = place.lng
-          const tmp = {lat: lat, lng: lng}
-          new window.google.maps.Marker({
-            position: tmp,
-            map: this.map,
-          });        
-        }
-        // 선(rotue) 
+        // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
+        this.SET_POLYLINE(new window.google.maps.Polyline
+          ({
+            strokeColor: "#E64398",
+            strokeOpacity: 0.3,
+            strokeWeight: 8,
+          })
+        )
         this.polyLine.setMap(this.map);
-
-      } else {
-        this.map = new window.google.maps.Map(document.getElementById("map"), 
-        {
-          mapId: "8e0a97af9386fef",
-          center: { lat:37.501, lng: 127.039 },
-          zoom: 16,
-          streetViewControl: false,
-          mapTypeControl: false,
-          zoomControl: true,
-          fullscreenControl: false,
-          // mapTypeId: "roadmap",
-        });
+        this.map.addListener("click", this.addPoint);
       }
-
+      // 실제 Google Map 객체를 생성하는 것은 null 일때만 
+      // 루트를 그릴 때 freeze 상태라면 bound 조정하고, 아니라면 검색창 붙인다
       if(freeze === true) {
         this.freezeBound()
       } else {
         this.attachSearch()
+        this.refreshPolyline()
       }
-
-      // 5. 폴리라인(루트 라인)을 만든다
-      this.SET_POLYLINE(new window.google.maps.Polyline
-        ({
-          strokeColor: "#E64398",
-          strokeOpacity: 0.3,
-          strokeWeight: 8,
-        })
-      )
-      this.polyLine.setMap(this.map);
-      this.map.addListener("click", this.addPoint);
-      
-      // if (this.places.length) {
-      //   const bounds = this.refreshPolyline()
-      //   this.map.fitBounds(bounds);
-      // }
     },
+
+    // 3. 검색창 붙이기
     attachSearch() {
-      // 3. 검색창 만들기
-      const input = document.getElementById("pac-input");
-      console.log(input)
-      const searchBox = new window.google.maps.places.SearchBox(input);
-      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
-      // 4.검색어에 따라 바운더리를 바꾼다
+      let input = document.getElementById("pac-input");
+      let searchBox = new window.google.maps.places.SearchBox(input)
+      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].clear()
+      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input)
+      // 검색어에 따라 바운더리를 바꾼다
       this.map.addListener("bounds_changed", () => {
         searchBox.setBounds(this.map.getBounds());
       });
@@ -161,11 +133,15 @@ export default {
         this.map.fitBounds(bounds);
       });
     },
-    // 5. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
-    addPoint(event) {
-      const marker = new window.google.maps.Marker({
-        position:event.latLng,
-        map:this.map,
+    
+    // 4. place를 생성(마커)
+    makePlace(latLng) {
+      let pk = this.pointListPk
+      this.pointListPk = this.pointListPk + 1
+
+      let marker = new window.google.maps.Marker({
+        position: latLng,
+        map: this.map,
         animation: window.google.maps.Animation.DROP
       });
       // 마커 더블클릭시 삭제
@@ -180,25 +156,31 @@ export default {
           marker.setAnimation(null)
         }).bind(marker), 1400)
       });
-      let newPlace = {
-        createdOrder: this.pointListPk,
+
+      return {
+        createdOrder: pk,
         imageUpload: false,
         placeImg : '',
-        lat : event.latLng.lat(),
-        lng : event.latLng.lng(),
+        lat : latLng.lat(),
+        lng : latLng.lng(),
         content: null,
         isThumbnail : false,
         marker: {
           location: marker,
-          createdOrder: this.pointListPk,
+          createdOrder: pk,
         },
       }
-      this.pointListPk = this.pointListPk + 1
-      // Store actions로 연동
+    },
+     
+    addPoint(event) {
+      let newPlace = this.makePlace(event.latLng)
+
+      // Store actions로 연동 & 루트 새로고침
       this.addPlace(newPlace)
       this.refreshPolyline();
     },
-    // 6. 마커 삭제 구현 (마커 리스트를 제거한 뒤 다시 맵 refresh)
+
+    // 5. 마커 삭제(place를 리스트에서 제거한 뒤 다시 맵 refresh)
     removePoint(marker) {
       const latLng = marker.getPosition();
       const lat = latLng.lat();
@@ -212,6 +194,8 @@ export default {
         this.refreshPolyline();
       }
     },
+
+    // 6. 루트를 새로고침
     refreshPolyline() {
       const path = this.polyLine.getPath();
       const places = this.places
@@ -226,7 +210,7 @@ export default {
       return bounds
     },
 
-    // 맵 멈추고 바운드 재정렬, polyline에서 xy값 좌표 떼오기
+    // 7. 루트 이미지 생성 위해 맵 멈추고 바운드 재정렬, polyline에서 xy값 좌표 떼오기
     freezeBound() {
       const bounds = this.refreshPolyline()
       const path = this.polyLine.getPath();
