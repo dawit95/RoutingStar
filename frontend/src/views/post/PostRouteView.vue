@@ -1,13 +1,12 @@
 <template>
+  <v-layout row swap>
+    <Header />
+    <Map :isFreeze="isFreeze"/>
+    <v-divider></v-divider>
+    <MapPointFormS3/>
 
-    <v-layout row swap>
-      <Header />
-      <Map :isFreeze="isFreeze"/>
-      <v-divider></v-divider>
-      <MapPointFormS3/>
-
-      <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
-    </v-layout>
+    <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
+  </v-layout>
 
 </template>
 
