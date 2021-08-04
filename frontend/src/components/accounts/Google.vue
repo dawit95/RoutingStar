@@ -1,18 +1,18 @@
 <template>
 <div>
-    <a href="https://192.168.1.51:8080/oauth2/authorization/google">google1</a>
+    <!-- <a href="https://192.168.1.51:8080/oauth2/authorization/google">google1</a>
     <a href="http://192.168.1.51:8080/oauth2/authorization/google">google2</a>
-    <a href="http://localhost:8080/oauth2/authorization/google">google3</a>
+    <a href="http://localhost:8080/oauth2/authorization/google">google3</a> -->
 
     <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">google2</a>
     <button @click="test">TEST</button>
-    <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
+    <!-- <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin> -->
 </div>
 </template>
 
 <script>
 
-import GoogleLogin from 'vue-google-login';
+// import GoogleLogin from 'vue-google-login';
 import axios from 'axios'
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
  
@@ -31,7 +31,7 @@ const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
         }
   },
   components: {
-    GoogleLogin,
+    // GoogleLogin,
   },
   methods: {
     // onSuccess(googleUser) {

@@ -54,12 +54,12 @@
     </v-card-actions>
   </v-card> -->
    
-   <div v-for="(item, $index) in list" :key="$index">
+   <!-- <div v-for="(item, $index) in list" :key="$index"> -->
     <!-- Hacker News item loop -->
-    {{item}}
-    </div>
+    <!-- {{item}} -->
+    <!-- </div> -->
 <!-- infiniteHandler method 실행 -->
-<infinite-loading @infinite="infiniteHandler"></infinite-loading>
+<!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
 
     <Nav />
   </v-app>
@@ -68,11 +68,12 @@
 <script>
 // import Header from '@/components/common/Header.vue'
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
-import InfiniteLoading from 'vue-infinite-loading'
-import { getFeedList } from '@/api/home.js'
-
+// import InfiniteLoading from 'vue-infinite-loading'
 import Nav from '@/components/common/Nav.vue'
+// import { login } from '@/api/user.js'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
 // 2. mapGetters에서 필터링 해주기
@@ -83,7 +84,7 @@ export default {
   name: 'HomeView',
   components: {
     Nav,
-    InfiniteLoading,
+    // InfiniteLoading,
     // Header,
   },
   data() {
@@ -106,25 +107,41 @@ export default {
       this.value = 2
     }
   },
+  computed: {
+    ...mapGetters(['readUser']),
+    // readUser
+  },
   created () {
-  if (this.$route.query.access && this.$route.query.refresh){
+    // const jwt = require('jsonwebtoken')
+    // const decodeAccessToken = jwt.decode(this.$route.query.access)
+    // const decodeAccessToken = jwt.decode(this.$route.query.access.headers['at-jwt-access-token']);
+   
+  // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
+  // 로그인된 사용자이면 trigger 역할만 해줄 뿐 넘겨줄 객체는 없음
+  if (this.readUser.access) {
+    this.$store.dispatch('fetchLoginedFeeds', this.$store.state.accounts.jwt)
+  }
+
+  else if (this.$route.query.access && this.$route.query.refresh){
     const token = 
       {
         access: this.$route.query.access,
         refresh: this.$route.query.refresh
       }
       this.$store.dispatch('createUser', token)
-    }
-
+    } 
+  else {
+      console.log(this.readUser)
+      axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
+      .then((res) => {console.log(res)})
+      .catch((err) => {console.log(err)})
+  }
     // main page 들어오자마자 피드 정보들 받아오기
     // 참조: https://jasonwatmore.com/post/2020/07/23/vue-axios-http-get-request-examples
     // 현재 내가 로그인되있어서 user pk가 가지고 있다면
     // likes, routes_storage, routes에 요청을 보내야 필요한 정보를 모두 얻을 수 있음
     // store/home.js 생성 후 state 에 정보 저장
-    getFeedList(
-      (res) => {console.log(res)},
-      (err) => {console.log(err)}
-    )  
+
   },
   methods: {
     infiniteHandler($state) {
