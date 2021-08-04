@@ -22,7 +22,6 @@ public class UserService {
         return userRepository.findById(id).map(UserResponseDto::new);
     }
 
-
     @Transactional
     public void follow(long followerId, long followingId) {
         Optional<User> follower = userRepository.findById(followerId);
@@ -31,5 +30,12 @@ public class UserService {
         FollowerFollowing followerFollowing = FollowerFollowing.builder().follower(follower.get()).following(following.get()).build();
 
         followerFollowingRepository.save(followerFollowing);
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponseDto getUserInfo(Long id) {
+        return userRepository.findById(id)
+                .map(UserResponseDto::new)
+                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
     }
 }

@@ -16,6 +16,11 @@ public class TokenService {
     Logger logger = LoggerFactory.getLogger(TokenService.class);
 
     private String secretKey = "token-secret-key";
+    private static final String AUTHORITIES_KEY = "auth";
+    private static final String BEARER_TYPE = "bearer";
+    // 인증 token 10분, 리프레쉬 토큰 = 3주;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60L * 10L;            // 10분
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60L * 60L * 24L * 7L * 3L;  // 3주
 
     @PostConstruct
     protected void init() {
@@ -23,9 +28,7 @@ public class TokenService {
     }
 
     public Token generateToken(Long id, String uid, String profileImg, String name, String role) {
-        // 인증 token 10분, 리프레쉬 토큰 = 3주;
-        long tokenPeriod = 1000L * 60L * 10L;
-        long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;
+
 
         Claims claims = Jwts.claims().setSubject(uid);
         claims.put("pk", id);
@@ -40,13 +43,13 @@ public class TokenService {
                 Jwts.builder()
                         .setClaims(claims)
                         .setIssuedAt(now)
-                        .setExpiration(new Date(now.getTime() + tokenPeriod))
+                        .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact(),
                 Jwts.builder()
                         .setClaims(claims_re)
                         .setIssuedAt(now)
-                        .setExpiration(new Date(now.getTime() + refreshPeriod))
+                        .setExpiration(new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_TIME))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact());
     }
@@ -56,6 +59,7 @@ public class TokenService {
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token);
+            logger.trace("jwt 유효성 검증 return값 확인 : {}",claims.getBody().getExpiration().after(new Date()));
             return claims.getBody()
                     .getExpiration()
                     .after(new Date());
