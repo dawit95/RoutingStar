@@ -20,8 +20,8 @@ const getters = {
 const mutations= {
   // POST_POINT_IMAGES(state, data) {
   //   // console.log(state)
-  //   // console.log(routes.state.pointedItems[data.x])
-  //   routes.state.pointedItems[data.x] = data.responseData
+  //   // console.log(routes.state.places[data.x])
+  //   routes.state.places[data.x] = data.responseData
   // },
   UPDATE_ROUTE_IMG(state, routeImg) {
     state.routeImg = routeImg
@@ -36,10 +36,10 @@ const mutations= {
 
 const actions = {
   complete({ commit }) {
-    const ins = routes.state.pointedItems.length
+    const ins = routes.state.places.length
     for (var x = 0; x < ins; x++) {
       const files = new FormData()
-      const pk = routes.state.pointedItems[x].pk
+      const pk = routes.state.places[x].pk
       // 첨부파일이 없다면 패스
       if (routes.state.imgLst[pk] === null) {
         continue
@@ -50,7 +50,7 @@ const actions = {
         postPointImages(files, (response) => {
           console.log(x)
           const responseData = response.data.success.image
-          routes.state.pointedItems[pk].image = responseData
+          routes.state.places[pk].image = responseData
           // commit('POST_POINT_IMAGES', {responseData, pk})
         }, (error) => {
           console.log(error)
