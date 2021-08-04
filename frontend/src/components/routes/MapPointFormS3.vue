@@ -1,18 +1,22 @@
 <template>
-  <v-flex xs12 class="big-box">
+  <v-flex xs12 class="big-box rounded-lg">
     <draggable class="card-box" @update="onUpdated">
       <v-list
         outlined
         v-for="(place, idx) in places"
         :key="place.createdOrder"
+        class="rounded-lg"
       >
-        <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+        <!-- <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon> -->
 
-        <v-icon right large style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-alpha-x-circle-outline</v-icon>
-        {{place.createdOrder}}
+        <v-card flat class="d-flex justify-end">
+          <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
+        </v-card>
+    
         <v-list-item outlined ma-0 pa-0 @click="forcheck(place)">
           <v-list-item-content>
-            <input @change="onFileSelected(place)" accept="image/*" type="file">
+              <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file">
+              <!-- <img style="width:50px;" id="preview-image" :src="fileList[place.createdOrder]" alt=""> -->
             <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
           </v-list-item-content>
           <v-switch
@@ -25,7 +29,7 @@
         </v-list-item>
       </v-list>
     </draggable>
-    <v-btn @click="postPointImages">확인용 버튼</v-btn>
+    <!-- <v-btn @click="postPointImages">확인용 버튼</v-btn> -->
   </v-flex>
 </template>
 
@@ -53,6 +57,7 @@ export default {
       albumBucketName: 'routingstar-photo-album',
       bucketRegion: 'ap-northeast-2',
       IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
+      fileList: [0,0,0,0,0,0,0,0,0,0],
     }
   },
   computed: {
@@ -83,6 +88,27 @@ export default {
       this.selectedFile = event.target.files[0]
       this.imgList[place.createdOrder] = this.selectedFile
       place.imageUpload = true
+
+      // FileReader 인스턴스 생성
+      // const reader = new FileReader()
+      // 이미지가 로드가 된 경우
+      // reader.onload = e => {
+      //   const previewImage = document.getElementById("preview-image")
+      //   previewImage.src = e.target.result
+      // }
+      // reader가 이미지 읽도록 하기
+      // reader.readAsDataURL(this.selectedFile)
+
+      // var fileReader = new FileReader();
+      // fileReader.onload = e => {
+      //   var img = {
+      //     url: e.target.result,
+      //   };
+      //   this.fileList[place.createdOrder] = img
+      // }
+      // // reader가 이미지 읽도록 하기
+      // fileReader.readAsDataURL(this.selectedFile);
+      // console.log(this.fileList)
     },
     postPointImages() {
       // console.log(this.imgList)
@@ -238,9 +264,22 @@ export default {
   width: 300px;
   height: 300px;
   overflow: scroll;
-  margin: 0 10px 0 10px;
+  margin: 0 15px 0 15px;
+  background-color: #2A355D;
 }
 .card-box {
-  margin: 0 10px 0 10px;
+  margin: 10px 10px 0 10px;
+}
+input[type=file]::file-selector-button {
+  border: 2px solid #2A355D;
+  padding: .2em .4em;
+  border-radius: .2em;
+  background-color: #B4DFE5;
+  transition: 1s;
+}
+
+input[type=file]::file-selector-button:hover {
+  background-color: #FBE8A6;
+
 }
 </style>
