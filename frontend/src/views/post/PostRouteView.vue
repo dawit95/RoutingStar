@@ -1,14 +1,14 @@
 <template>
-  <v-container fluid grid-list-md>
+
     <v-layout row swap>
+      <Header />
       <Map :isFreeze="isFreeze"/>
       <v-divider></v-divider>
       <MapPointFormS3/>
-    </v-layout>
-    <v-layout>
+
       <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
     </v-layout>
-  </v-container>
+
 </template>
 
 <script>
@@ -16,6 +16,7 @@
 import Map from '@/components/routes/Map.vue'
 import MapPointFormS3 from '@/components/routes/MapPointFormS3.vue'
 import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
+import Header from '@/components/common/Header.vue'
 
 export default {
  name: 'PostRouteView',
@@ -28,6 +29,7 @@ export default {
     Map, 
     MapPointFormS3,
     PostRouteDetailModal,
+    Header,
   },
   methods: {
     // 모달이 열리면 map freeze하기
