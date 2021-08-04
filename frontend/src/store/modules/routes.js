@@ -54,6 +54,15 @@ const mutations= {
   REFRESH_PLACES(state, newPlaces) {
     state.places = newPlaces
   },
+  // UPDATE_DRAGGERBLE_ITEMS(state, event) {
+  //   var ary = [...state.places]
+
+  //   var tmp = ary[event.newIndex]
+  //   ary[event.newIndex] = ary[event.oldIndex]
+  //   ary[event.oldIndex] = tmp
+
+  //   state.places = ary;
+  // },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
     console.log(state.places)
 
