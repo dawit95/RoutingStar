@@ -1,10 +1,9 @@
-package com.curation.backend.global;
+package com.curation.backend.place.web;
 
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
-import com.curation.backend.route.dto.RouteListResponseDto;
-import com.curation.backend.route.service.RouteService;
-import com.curation.backend.user.exception.NoUserException;
+import com.curation.backend.place.dto.PlacePositionDto;
+import com.curation.backend.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/userTest")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/place")
 @RestController
-public class TestController {
-    private final RouteService routeService;
+public class PlaceController {
+
+    private final PlaceService placeService;
     private final ResponseGenerateService responseGenerateService;
 
-    @GetMapping("/routes/{userId}")
-    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) throws NoUserException {
-        List<RouteListResponseDto> list = routeService.followingRouteList(id);
+    @GetMapping("/{routeId}")
+    public ResponseEntity<SuccessResponseDto> getPlacePosition (@PathVariable("routeId") Long id) {
+        List<PlacePositionDto> list = placeService.getPlacePosition(id);
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);

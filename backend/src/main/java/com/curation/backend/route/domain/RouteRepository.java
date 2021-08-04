@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
-    public List<Route> findByUserIdInOrderByCreatedAtDesc(List<Long> id);
+    public List<Route> findByUserIdInOrderByModifiedAtDesc(List<Long> id);
 
     @Query("select r from Route as r left join Like as l on r.id = l.route.id group by r.id order by count(r.id) desc ")
     Collection<Route> findAllOrderByLikeCount();

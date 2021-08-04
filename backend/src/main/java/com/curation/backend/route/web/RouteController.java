@@ -8,6 +8,7 @@ import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
+import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{userId}")
-    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) {
+    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) throws NoUserException {
         List<RouteListResponseDto> list = routeService.followingRouteList(id);
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
@@ -54,14 +55,18 @@ public class RouteController {
     }
 
     @GetMapping("/route/{routeId}")
-    public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
+    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
         RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
-        return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
     @PutMapping("/route/{routeId}")
-    public Long modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
-        return routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
+    public ResponseEntity<SuccessResponseDto> modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
+        Long routeId = routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeId);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
     @DeleteMapping("/route/{routeId}")
@@ -71,11 +76,6 @@ public class RouteController {
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
-
-//    @GetMapping("/route/storage/{routeId}")
-//    public ResponseEntity<SuccessResponseDto> getRouteStorageDetail(@PathVariable("routeId") Long id) {
-//
-//    }
 
     @ExceptionHandler(NoRouteException.class)
     public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
