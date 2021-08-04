@@ -2,28 +2,34 @@ import { createInstance } from "./index.js";
 
 const instance = createInstance()
 
-function login(user, success, fail){
-    // 토큰이 있는지 없는지 큰 if 문으로 조건 줘야함
+function login(token, success, fail){
 
-    // 라이브러리 호출
-    const jwt = require('jsonwebtoken')
-    const decodeAccessToken = jwt.decode(this.$store.jwt.access)
-    // const decodeAccessToken = jwt.decode(this.$route.query.access.headers['at-jwt-access-token']);
-    // console.log('decodeAccessToken data', decodeAccessToken)
-    // console.log()
-    // console.log(Date.now()/1000 + 60)
-    if(decodeAccessToken.exp < Date.now()/1000 + 60)
-    {
-      headers = {
-        'access_token': this.$store.jwt.access,
-        'refresh_token': this.$store.jwt.refresh
+  const jwt = require('jsonwebtoken')
+  const decodeAccessToken = jwt.decode(token.access)
+  if ( decodeAccessToken.exp < Date.now()/1000 + 60)  {
+    instance
+    .get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, {
+      headers: {
+        'access_token': token.access,
+        'refresh_token': token.refresh
       }
-    } else {
-      headers = {
-        'access_token': this.$store.jwt.access,
-      }   
-    }
-}
+    })
+    // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
+    .then((success) => console.log(success))
+    .catch((fail) => console.log(fail))
+  } else {
+    instance
+    .get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, {
+      headers: {
+        'access_token': token.access,
+      }
+    })
+    // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
+    .then(success, (success) => console.log('success: ', success))
+    .catch(fail, (fail) => console.log(fail))
+    }   
+  }
+
 
 function logout() {
 

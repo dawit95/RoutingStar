@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
 
 import accounts from './modules/accounts.js'
 import profile from './modules/profile.js'
@@ -15,6 +16,12 @@ export default new Vuex.Store({
   // },
   // actions: {
   // },
+  plugins: [
+    createPersistedState()],
+    // {
+  //     storage: window.sessionStorage,
+  //   }),
+  // ],
   modules: {
     accounts,
     profile,
