@@ -45,7 +45,8 @@ public class RouteService {
     public Long save(RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws Exception {
 
         Route route = routeRequestDto.toEntity();
-        Optional<User> user= Optional.ofNullable(userRepository.findById(routeRequestDto.getId())).orElseThrow(() -> new NoUserException("없는 사용자입니다."));
+        Optional<User> user = Optional.ofNullable(userRepository.findById(routeRequestDto.getId()).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
+
 
         route.setUser(user.get());
         routeRepository.save(route);
@@ -64,14 +65,14 @@ public class RouteService {
     }
 
     @Transactional(readOnly = true)
-    public List<RouteListResponseDto> followingRouteList(Long id) {
-        User user = userRepository.findById(id).get();
-        List<FollowerFollowing> followList = user.getFollowers();
+    public List<RouteListResponseDto> followingRouteList(Long id) throws NoUserException {
+        Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
+        List<FollowerFollowing> followList = user.get().getFollowers();
 
         List<Long> list = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         list.add(id);
 
-        return routeRepository.findByUserIdInOrderByCreatedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        return routeRepository.findByUserIdInOrderByModifiedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 
     public RouteDetailResponseDto getDetail(Long id) throws NoRouteException {
