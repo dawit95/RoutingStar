@@ -15,7 +15,6 @@
             <input @change="onFileSelected(place)" accept="image/*" type="file">
             <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
           </v-list-item-content>
-          <label>Thumbnail설정</label>
           <v-switch
           id="thumbnail_switch"
           @click="refreshThumbnailBtn(place)"
@@ -26,7 +25,7 @@
         </v-list-item>
       </v-list>
     </draggable>
-    <button @click="complete">확인용 버튼</button>
+    <button @click="complete()">확인용 버튼</button>
   </v-flex>
 </template>
 
@@ -121,7 +120,8 @@ export default {
     //       })
     //       .then(res => {
     //         console.log('보내짐')
-    //         const responseData = res.data.successDto.success.image
+    //         const responseData = res.data.success.image
+    //         console.log(responseData)
     //         this.pointedItems[pk].image = responseData
     //       })
     //       .catch(err => {
@@ -130,6 +130,7 @@ export default {
     //       })
     //     }
     //   }
+    //   console.log(this.pointedItems)
     // },
     forcheck(item) {
       console.log(`${item.pk}번째로 생성된 마커의 pk`)

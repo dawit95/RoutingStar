@@ -52,10 +52,31 @@ const mutations= {
   REFRESH_PLACES(state, newPlace) {
     state.places = newPlace
   },
+  // UPDATE_DRAGGERBLE_ITEMS(state, event) {
+  //   var ary = [...state.pointedItems]
+
+  //   var tmp = ary[event.newIndex]
+  //   ary[event.newIndex] = ary[event.oldIndex]
+  //   ary[event.oldIndex] = tmp
+
+  //   state.pointedItems = ary;
+  // },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
-    var tmp = state.places[event.newIndex]
-    state.places[event.newIndex] = state.places[event.oldIndex]
-    state.places[event.oldIndex] = tmp
+   var selected = state.pointedItems[event.oldIndex]
+   var step = event.oldIndex
+   if( event.newIndex < event.oldIndex) {
+     // 앞으로 온 경우
+     for( ; step > event.newIndex ; step-- ) {
+       state.pointedItems[step] = state.pointedItems[step-1]
+     }
+   } else {
+     // 뒤로 간 경우
+     for(  ; step < event.newIndex ; step++ ) {
+       state.pointedItems[step] = state.pointedItems[step+1]
+     }
+   }
+   state.pointedItems[event.newIndex] = selected
+  //  console.log(state.pointedItems)
   },
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
