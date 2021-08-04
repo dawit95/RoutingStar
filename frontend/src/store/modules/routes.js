@@ -131,13 +131,30 @@ const actions = {
     commit('SET_WITH_TAG', withTag)
   },
   createRoute() {
+    // console.log('불렸음')
+    // console.log(state.places)
+    // console.log(state.routeDescription)
+    // console.log(images.state.routeImg)
+    // console.log(state.whatTag)
+    // console.log(state.withTag)
+    
+    const places = state.places
+    const routeDescription = state.routeDescription
+    const routeImg = images.state.routeImg
+    const whatTag = state.whatTag
+    const withTag = state.withTag
+    const CircularJSON = require('circular-json')
     postRoute(
       // params: { places, routeDescription, routeImg, whatTag, withTag }
-      getters.places,
-      getters.routeDescription,
-      images.getters.routeImg,
-      getters.whatTag,
-      getters.withTag,
+      CircularJSON.stringify(
+      {
+        places: places,
+        routeDescription: routeDescription,
+        routeImg: routeImg,
+        whatTag: whatTag,
+        withTag: withTag,
+        id: 1
+      }),
       () => {
         console.log('success')
       },(error) => {
