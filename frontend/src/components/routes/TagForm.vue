@@ -10,6 +10,8 @@
           :class="{grayscale:!withTag.isSelcted}" 
           @click="addWithTag(withTag.tagnum); addWithTagButtonClass(withTag.idx);"
         >
+
+        
           <span class="button span">
             {{ withTag.tag }}
           </span>
