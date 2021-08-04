@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12 class="big-box">
-    <draggable @update="onUpdated">
+    <draggable class="card-box" @update="onUpdated">
       <v-list
         outlined
         v-for="(place, idx) in places"
@@ -233,10 +233,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .big-box {
   width: 300px;
   height: 300px;
   overflow: scroll;
+  margin: 0 10px 0 10px;
+}
+.card-box {
+  margin: 0 10px 0 10px;
 }
 </style>
