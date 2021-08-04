@@ -1,7 +1,6 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row swap>
-
       <v-flex xs12>
         <div class="pac-card" id="pac-card">
           <!-- 검색창 -->
@@ -118,7 +117,7 @@ export default {
       // 5. 폴리라인(루트 라인)을 만든다
       this.SET_POLYLINE(new window.google.maps.Polyline
         ({
-          strokeColor: "#E64398",
+          strokeColor: "#2A355D",
           strokeOpacity: 0.3,
           strokeWeight: 8,
         })
