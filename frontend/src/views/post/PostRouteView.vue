@@ -37,6 +37,7 @@ export default {
     // 모달이 닫히면 map freeze 풀기=
     recoverFreezeMap() {
       this.isFreeze = false
+      console.log(this.isFreeze)
     }
   }
 }
