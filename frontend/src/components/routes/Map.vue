@@ -48,11 +48,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pointedItems', 'polyLine'])
+    ...mapGetters(['places', 'polyLine'])
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
-    ...mapActions(['addPointItem', 'sendImagesArray', 'setXYPoints']),
+    ...mapActions(['addPlace', 'sendImagesArray', 'setXYPoints']),
 
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
@@ -69,7 +69,7 @@ export default {
     // 1. Map 세팅
     initMap( freeze ) {
       // 중심은 우선 첫번째 요소로 선택
-      if (this.pointedItems.length) {
+      if (this.places.length) {
         this.map = new window.google.maps.Map(document.getElementById("map"),
         {
           mapId: "8e0a97af9386fef",
@@ -83,9 +83,9 @@ export default {
           fullscreenControl: false,
         })
         // 좌표
-        for (const point of this.pointedItems) {
-          let lat = point.lat
-          let lng = point.lng
+        for (const place of this.places) {
+          let lat = place.lat
+          let lng = place.lng
           const tmp = {lat: lat, lng: lng}
           new window.google.maps.Marker({
             position: tmp,
@@ -137,12 +137,12 @@ export default {
         searchBox.setBounds(this.map.getBounds());
       });
       searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (places.length == 0) {
+        const searchPlaces = searchBox.getPlaces();
+        if (searchPlaces.length == 0) {
           return;
         }
         const bounds = new window.google.maps.LatLngBounds();
-        places.forEach((place) => {
+        searchPlaces.forEach((place) => {
           if (!place.geometry || !place.geometry.location) {
             console.log("Returned place contains no geometry");
             return;
@@ -175,22 +175,22 @@ export default {
           marker.setAnimation(null)
         }).bind(marker), 1400)
       });
-      let newPoint = {
-        pk: this.pointListPk,
+      let newPlace = {
+        createdOrder: this.pointListPk,
         imageUpload: false,
-        image : '',
+        placeImg : '',
         lat : event.latLng.lat(),
         lng : event.latLng.lng(),
         content: null,
-        thumbnail : false,
+        isThumbnail : false,
         marker: {
           location: marker,
-          pk: this.pointListPk,
+          createdOrder: this.pointListPk,
         },
       }
       this.pointListPk = this.pointListPk + 1
       // Store actions로 연동
-      this.addPointItem(newPoint)
+      this.addPlace(newPlace)
       this.refreshPolyline();
     },
     // 6. 마커 삭제 구현 (마커 리스트를 제거한 뒤 다시 맵 refresh)
@@ -198,22 +198,22 @@ export default {
       const latLng = marker.getPosition();
       const lat = latLng.lat();
       const lng = latLng.lng();
-      const pointedItems = this.pointedItems
-      const idx = pointedItems.findIndex( (e) => e.lat == lat && e.lng == lng );
+      const places = this.places
+      const idx = places.findIndex( (e) => e.lat == lat && e.lng == lng );
       if ( idx != -1 ) {
         marker.setMap(null);
-        pointedItems.splice(idx,1);
+        places.splice(idx,1);
         this.refreshPolyline();
       }
     },
     refreshPolyline() {
       const path = this.polyLine.getPath();
-      const pointedItems = this.pointedItems
+      const places = this.places
       const bounds = new window.google.maps.LatLngBounds();
 
       path.clear();
-      for( const point of pointedItems ) {
-        let latLng = new window.google.maps.LatLng( point.lat, point.lng)
+      for( const place of places ) {
+        let latLng = new window.google.maps.LatLng( place.lat, place.lng)
         path.push(latLng)
         bounds.extend(latLng)
       }
@@ -226,7 +226,7 @@ export default {
       this.map.fitBounds(bounds);      
 
       var overlay = new window.google.maps.OverlayView() 
-      overlay.pointedItems = this.pointedItems
+      overlay.places = this.places
       overlay.points = []
 
       overlay.draw = function() {}
@@ -239,11 +239,11 @@ export default {
         let left = sw.x
         let top = ne.y
 
-        for( const point of this.pointedItems ) {
-          let latLng = new window.google.maps.LatLng( point.lat, point.lng)
-          var pixel =  projection.fromLatLngToDivPixel(latLng); 
-          this.points.push(pixel.x - left)
-          this.points.push(pixel.y - top)
+        for ( const place of this.places ) {
+            let latLng = new window.google.maps.LatLng( place.lat, place.lng )
+            var pixel = projection.fromLatLngToDivPixel(latLng)
+
+            this.points.push( { x:pixel.x - left, y:pixel.y - top} )
         }
       }      
       overlay.setMap(this.map)

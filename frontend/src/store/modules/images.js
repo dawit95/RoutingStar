@@ -2,19 +2,28 @@
 // import postPointImages from '@/api/images.js'
 
 const state = {
+  routeImg: '',
   thumbnailImage: '',
 }
 
 const getters = {
-
+  routeImg(state) {
+    return state.routeImg
+  },
+  thumbnailImage(state) {
+    return state.thumbnailImage
+  }
 }
 
 const mutations= {
   // POST_POINT_IMAGES(state, responseData) {
   //   state.pointedItems[pk].image = responseData
   // },
-  UPDATE_THUMBNAIL_IMAGE(state, thumbnailImg) {
-    state.thumbnailImage = thumbnailImg
+  UPDATE_ROUTE_IMG(state, routeImg) {
+    state.routeImg = routeImg
+  },
+  UPDATE_THUMBNAIL_IMAGE(state, thumbnailImage) {
+    state.thumbnailImage = thumbnailImage
   }
 }
 
@@ -36,9 +45,13 @@ const actions = {
   //     }
   //   }
   // },
-  updateThumbnailImage({ commit }, thumbnailImg) {
-    commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImg)
+  updateRouteImg({ commit }, routeImg) {
+    commit('UPDATE_ROUTE_IMG', routeImg)
+  },
+  updateThumbnailImage({ commit }, thumbnailImage) {
+    commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImage)
   }
+
 }
 
 export default {
