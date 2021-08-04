@@ -1,14 +1,14 @@
-// //api/routes.js
-// import { createInstance } from './index.js'
+//api/routes.js
+import { createInstance } from './index.js'
 
-// const instance = createInstance();
+const instance = createInstance();
 
-// function createRoute(places, routeDescription, thumbnail, whatTag, withTag, success, fail) {
-//   instance
-//   .post('route', { params } )
-//   .then(success)
-//   .catch(fail);
+function postRoute(places, routeDescription, routeImg, whatTag, withTag, success, fail) {
+  instance
+  .post('route', { params: { places, routeDescription, routeImg, whatTag, withTag } } )
+  .then(success)
+  .catch(fail);
 
-// }
+}
 
-// export { createRoute }
+export { postRoute }
