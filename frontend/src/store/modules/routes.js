@@ -1,5 +1,7 @@
-// routes.js
-// import { createRoute } from '@/api/routes.js'
+// store/modules/routes.js
+
+import { postRoute } from '@/api/routes.js'
+import images from './images'
 
 const state = {
   places: [],
@@ -53,6 +55,7 @@ const mutations= {
     state.places = newPlace
   },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
+    console.log(event)
     var tmp = state.places[event.newIndex]
     state.places[event.newIndex] = state.places[event.oldIndex]
     state.places[event.oldIndex] = tmp
@@ -100,9 +103,21 @@ const actions = {
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
   },
-  // createRoute(params) => {
-  //   createRoute(params)
-  // }
+  createRoute() {
+    postRoute(
+      // params: { places, routeDescription, routeImg, whatTag, withTag }
+      getters.places,
+      getters.routeDescription,
+      images.getters.routeImg,
+      getters.whatTag,
+      getters.withTag,
+      () => {
+        console.log('success')
+      },(error) => {
+        console.log(error)
+      }
+    );
+  },
 }
 
 export default {
