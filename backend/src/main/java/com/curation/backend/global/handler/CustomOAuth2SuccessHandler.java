@@ -8,7 +8,6 @@ import com.curation.backend.user.dto.UserDto;
 import com.curation.backend.user.dto.UserRequestMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -20,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * OAuth2의 인증 공급자로부터 인증이 성공한 후 취득한 사용자 정보를 처리하는 핸들러
@@ -46,11 +44,12 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
 
-        Token token = tokenService.generateToken(userDto.getEmail(),userDto.getProfileImg(), userDto.getName(), "USER");
+        User user = userRepository.findByEmail(userDto.getEmail()).get();
+
+        Token token = tokenService.generateToken(user.getId(), userDto.getEmail(),userDto.getProfileImg(), userDto.getName(), "USER");
         logger.debug("{}", token);
 
         //회원 테이블에 삽입
-        User user = userRepository.findByEmail(userDto.getEmail()).get();
         user.updateRefreshToken(token.getRefreshToken());
         userRepository.save(user);
 

@@ -2,6 +2,7 @@ package com.curation.backend.token.web;
 
 import com.curation.backend.token.domain.Token;
 import com.curation.backend.token.service.TokenService;
+import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -35,8 +36,8 @@ public class TokenController {
             String email = tokenService.getUid(token);
             String img = tokenService.getProfileImg(token);
             String name = tokenService.getNickName(token);
-            Token newToken = tokenService.generateToken(email,img,name, "USER");
-
+            User user = userRepository.findByEmail(email).get();
+            Token newToken = tokenService.generateToken(user.getId(), email, img, name, "USER");
 
 
             response.addHeader("Auth", newToken.getToken());
