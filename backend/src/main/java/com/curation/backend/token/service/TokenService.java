@@ -22,12 +22,13 @@ public class TokenService {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public Token generateToken(String uid, String profileImg, String name, String role) {
+    public Token generateToken(Long id, String uid, String profileImg, String name, String role) {
         // 인증 token 10분, 리프레쉬 토큰 = 3주;
         long tokenPeriod = 1000L * 60L * 10L;
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;
 
         Claims claims = Jwts.claims().setSubject(uid);
+        claims.put("pk", id);
         claims.put("img", profileImg);
         claims.put("name",name);
         claims.put("role", role);
