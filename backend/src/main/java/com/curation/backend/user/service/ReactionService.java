@@ -73,9 +73,9 @@ public class ReactionService {
     public FFResponseDto countOfFollow(Long userId) throws NoUserException, NoRouteException {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("해당하는 사용자가 없습니다."));
 
-        //userID가 follower인 모든 테이블에서 followingID만 뽑아 담은 list.
-        List<FollowerResponseDto> followerList = followerFollowingRepository.findAllByFollower(user).stream().map(FollowerResponseDto::new).collect(Collectors.toList());;
-        List<FollowingResponseDto> followingList = followerFollowingRepository.findAllByFollowing(user).stream().map(FollowingResponseDto::new).collect(Collectors.toList());;
+        //userID가 follow한 것 == 유저의 following  list.
+        List<FollowingResponseDto> followingList = followerFollowingRepository.findAllByFollower(user).stream().map(FollowingResponseDto::new).collect(Collectors.toList());;
+        List<FollowerResponseDto> followerList = followerFollowingRepository.findAllByFollowing(user).stream().map(FollowerResponseDto::new).collect(Collectors.toList());;
 
         FFResponseDto ffResponseDto = new FFResponseDto(followerList,followingList);
         return ffResponseDto;
