@@ -22,7 +22,6 @@ public class UserService {
         return userRepository.findById(id).map(UserResponseDto::new);
     }
 
-
     @Transactional
     public void follow(long followerId, long followingId) {
         Optional<User> follower = userRepository.findById(followerId);
