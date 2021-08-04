@@ -3,7 +3,7 @@
     <v-layout row swap>
       <Map :isFreeze="isFreeze"/>
       <v-divider></v-divider>
-      <MapPointForm/>
+      <MapPointFormS3/>
     </v-layout>
     <v-layout>
       <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
@@ -14,7 +14,7 @@
 <script>
 // components
 import Map from '@/components/routes/Map.vue'
-import MapPointForm from '@/components/routes/MapPointForm.vue'
+import MapPointFormS3 from '@/components/routes/MapPointFormS3.vue'
 import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
 
 export default {
@@ -26,7 +26,7 @@ export default {
  },
  components: { 
     Map, 
-    MapPointForm,
+    MapPointFormS3,
     PostRouteDetailModal,
   },
   methods: {
@@ -37,6 +37,7 @@ export default {
     // 모달이 닫히면 map freeze 풀기=
     recoverFreezeMap() {
       this.isFreeze = false
+      console.log(this.isFreeze)
     }
   }
 }

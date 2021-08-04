@@ -1,5 +1,7 @@
 // images.js
-// import postPointImages from '@/api/images.js'
+import { postPointImages, postThumbnailImage } from '@/api/images.js'
+import routes from '@/store/modules/routes.js'
+
 
 const state = {
   routeImg: '',
@@ -16,42 +18,69 @@ const getters = {
 }
 
 const mutations= {
-  // POST_POINT_IMAGES(state, responseData) {
-  //   state.pointedItems[pk].image = responseData
+  // POST_POINT_IMAGES(state, data) {
+  //   // console.log(state)
+  //   // console.log(routes.state.places[data.x])
+  //   routes.state.places[data.x] = data.responseData
   // },
   UPDATE_ROUTE_IMG(state, routeImg) {
     state.routeImg = routeImg
   },
   UPDATE_THUMBNAIL_IMAGE(state, thumbnailImage) {
     state.thumbnailImage = thumbnailImage
+  },
+  POST_THUMBNAIL_IMAGE(state, responseThumbnailImg) {
+    state.thumbnailImage = responseThumbnailImg
   }
 }
 
 const actions = {
-  // complete({ commit }) {
-  //   const ins = state.pointedItems.length
-  //   for (var x = 0; x < ins; x++) {
-  //     const files = new FormData()
-  //     const pk = state.pointedItems[x].pk
-  //     if (state.imgList[pk] === null) {
-  //       continue
-  //     } else {
-  //       const image =  state.imgList[pk]
-  //       files.append('files', image)
-  //       postPointImages(files, (res) => {
-  //         const responseData = res.data.successDto.success.image
-  //         commit('POST_POINT_IMAGES', responseData)
-  //       }, (error) => console.log(error))
-  //     }
-  //   }
-  // },
+  complete({ commit }) {
+    const ins = routes.state.places.length
+    for (var x = 0; x < ins; x++) {
+      const files = new FormData()
+      const pk = routes.state.places[x].pk
+      // 첨부파일이 없다면 패스
+      if (routes.state.imgLst[pk] === null) {
+        continue
+        // 첨부파일이 있다면
+      } else if (routes.state.imgLst[pk] !== null) {
+        const imagefile =  routes.state.imgLst[pk]
+        files.append('files', imagefile)
+        postPointImages(files, (response) => {
+          console.log(x)
+          const responseData = response.data.success.image
+          routes.state.places[pk].image = responseData
+          // commit('POST_POINT_IMAGES', {responseData, pk})
+        }, (error) => {
+          console.log(error)
+        })
+      }
+    }
+    const file = new FormData()
+    file.append('file', state.thumbnailImage)
+    postThumbnailImage(file, (res) => {
+      commit('POST_THUMBNAIL_IMAGE', res.data.success.image)
+    }, (error) => {
+      console.log(error)
+    })
+  },
   updateRouteImg({ commit }, routeImg) {
     commit('UPDATE_ROUTE_IMG', routeImg)
   },
-  updateThumbnailImage({ commit }, thumbnailImage) {
-    commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImage)
-  }
-
+  updateThumbnailImage({ commit }, thumbnailImg) {
+    commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImg)
+  },
+  // complete2({ commit }, thumbnailImage) {
+  //   const file = new FormData()
+  //   file.append('file', thumbnailImage)
+  //   postThumbnailImage(file, (res) => {
+  //     console.log(res)
+  //     commit('POST_THUMBNAIL_IMAGE', res.data.success.image)
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }
 }
 
 export default {
