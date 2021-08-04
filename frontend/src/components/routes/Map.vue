@@ -309,7 +309,7 @@ a {
 }
 
 .pac-card {
-  margin: 10px 10px 0 0;
+  margin: 0 0 0 0;
   border-radius: 2px 0 0 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
