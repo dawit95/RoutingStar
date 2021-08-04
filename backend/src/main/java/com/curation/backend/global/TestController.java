@@ -28,4 +28,12 @@ public class TestController {
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
+
+    @GetMapping("/mypage/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> myRouteList(@PathVariable("userId") Long id) {
+        List<RouteListResponseDto> list = routeService.myRouteList(id);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
 }

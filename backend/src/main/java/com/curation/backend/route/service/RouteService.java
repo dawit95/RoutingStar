@@ -9,20 +9,18 @@ import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
-import com.curation.backend.tag.domain.*;
 import com.curation.backend.tag.service.TagService;
-import com.curation.backend.user.domain.*;
+import com.curation.backend.user.domain.FollowerFollowing;
+import com.curation.backend.user.domain.LikeRepository;
+import com.curation.backend.user.domain.User;
+import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.exception.NoUserException;
-import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,6 +110,11 @@ public class RouteService {
         Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
         route.get().delete();
         routeRepository.save(route.get());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RouteListResponseDto> myRouteList(Long id) {
+        return routeRepository.findAllByUserId(id).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 }
 
