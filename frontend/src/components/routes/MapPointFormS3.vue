@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12 class="big-box">
-    <draggable @update="onUpdated">
+    <draggable class="card-box" @update="onUpdated">
       <v-list
         outlined
         v-for="(place, idx) in places"
@@ -37,7 +37,7 @@ import { dragscroll } from 'vue-dragscroll'
 import AWS from 'aws-sdk'
 
 export default {
-  name: 'MapPointForm',
+  name: 'MapPointFormS3',
   components: {
     draggable,
   },
@@ -85,28 +85,28 @@ export default {
       place.imageUpload = true
     },
     postPointImages() {
-      console.log(this.imgList)
+      // console.log(this.imgList)
       const ins = this.places.length
       for (var x = 0; x < ins; x++) {
-        console.log(x + '번째 인덱스의 pk')
+        // console.log(x + '번째 인덱스의 pk')
         const pointItemPk = this.places[x].createdOrder
-        console.log(pointItemPk)
+        // console.log(pointItemPk)
         // 첨부파일이 없다면 pass
         if (this.imgList[pointItemPk] === '') {
           continue
           // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
         } else {
-          console.log('오키오키요')
           const image = this.imgList[pointItemPk]
           // S3로 업로드 후 반환값(이미지URL)을 저장
           this.upload(image, x, false)
         }
       }
-      setTimeout(()=>{console.log(this.places)}, 5000)
+      // setTimeout(()=>{console.log(this.places)}, 5000)
     },
     // 완료버튼이 눌러진다면
     // 임시로 여기다 두고, api 파일 소화 후 이동 예정 이동 후 PostRouteDetail과 연동
-    upload(image, x, thumbnail) {
+    upload(image, x, thumbnailcheck) {
+      // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
       AWS.config.update({
         region: this.bucketRegion,
         credentials: new AWS.CognitoIdentityCredentials({
@@ -128,12 +128,9 @@ export default {
         if (err) {
           return alert("There was an error uploading your photo: ", err.message);
         }
-        // alert("Successfully uploaded photo.");
-        // const idx = this.places.findIndex((e) => e.pk === pointItemPk)
-        // console.log(idx, pointItemPk)
-        if (thumbnail) {
+        if (thumbnailcheck) {
           this.$store.state.thumbnailImage = data.Location
-          console.log(this.$store.state.thumbnailImage)
+          // console.log(this.$store.state.thumbnailImage)
         } else {
           this.places[x].placeImg = data.Location
         }
@@ -212,7 +209,6 @@ export default {
         path.push( new window.google.maps.LatLng( point.lat, point.lng));
       }
     },
-    
     forcheck(place) {
       console.log(`${place.createdOrder}번째로 생성된 마커의 pk`)
     },
@@ -225,7 +221,6 @@ export default {
         this.thumbnailLabel = ''
       // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
       } else if (this.isthumbail === false) {
-        // const idx = this.places.findIndex((e) => e.lat == place.lat && e.lng == place.lng );
         this.isthumbail = !this.isthumbail
         place.isThumbnail = true
         this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
@@ -238,10 +233,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .big-box {
   width: 300px;
   height: 300px;
   overflow: scroll;
+  margin: 0 10px 0 10px;
+}
+.card-box {
+  margin: 0 10px 0 10px;
 }
 </style>
