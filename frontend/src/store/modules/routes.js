@@ -55,10 +55,28 @@ const mutations= {
     state.places = newPlace
   },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
-    console.log(event)
-    var tmp = state.places[event.newIndex]
-    state.places[event.newIndex] = state.places[event.oldIndex]
-    state.places[event.oldIndex] = tmp
+    console.log(state.places)
+
+    var selected = state.places[event.oldIndex]
+    var step = event.oldIndex
+    if( event.newIndex < event.oldIndex) {
+      // 앞으로 온 경우
+      for( ; step > event.newIndex ; step-- ) {
+        state.places[step] = state.places[step-1]
+      }
+    } else {
+      // 뒤로 간 경우
+      for(  ; step < event.newIndex ; step++ ) {
+        state.places[step] = state.places[step+1]
+      }
+    }
+    state.places[event.newIndex] = selected
+    console.log(state.places)
+
+    // 이전 코드
+  //  var temp = state.places[event.oldIndex]
+  //  state.places[event.oldIndex] = state.places[event.newIndex]
+  //  state.places[event.newIndex] = temp
   },
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
