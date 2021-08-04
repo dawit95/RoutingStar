@@ -1,5 +1,7 @@
-// routes.js
-// import { createRoute } from '@/api/routes.js'
+// store/modules/routes.js
+
+import { postRoute } from '@/api/routes.js'
+import images from './images'
 
 const state = {
   places: [],
@@ -49,13 +51,41 @@ const mutations= {
     state.polyLine = polyline
     // console.log(state)
   },
-  REFRESH_PLACES(state, newPlace) {
-    state.places = newPlace
+  REFRESH_PLACES(state, newPlaces) {
+    state.places = newPlaces
   },
+  // UPDATE_DRAGGERBLE_ITEMS(state, event) {
+  //   var ary = [...state.places]
+
+  //   var tmp = ary[event.newIndex]
+  //   ary[event.newIndex] = ary[event.oldIndex]
+  //   ary[event.oldIndex] = tmp
+
+  //   state.places = ary;
+  // },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
-    var tmp = state.places[event.newIndex]
-    state.places[event.newIndex] = state.places[event.oldIndex]
-    state.places[event.oldIndex] = tmp
+    console.log(state.places)
+
+    var selected = state.places[event.oldIndex]
+    var step = event.oldIndex
+    if( event.newIndex < event.oldIndex) {
+      // 앞으로 온 경우
+      for( ; step > event.newIndex ; step-- ) {
+        state.places[step] = state.places[step-1]
+      }
+    } else {
+      // 뒤로 간 경우
+      for(  ; step < event.newIndex ; step++ ) {
+        state.places[step] = state.places[step+1]
+      }
+    }
+    state.places[event.newIndex] = selected
+    console.log(state.places)
+
+    // 이전 코드
+  //  var temp = state.places[event.oldIndex]
+  //  state.places[event.oldIndex] = state.places[event.newIndex]
+  //  state.places[event.newIndex] = temp
   },
   CREATE_ROUTE_DESCRIPTION(state, routeDescription) {
     state.routeDescription = routeDescription
@@ -82,8 +112,8 @@ const actions = {
     commit('ADD_PLACE', newPlace)
     commit('ADD_IMAGE', newPlace)
   },
-  refreshPlaces ( { commit }, newPlace) {
-    commit('REFRESH_PLACES', newPlace)
+  refreshPlaces ( { commit }, newPlaces) {
+    commit('REFRESH_PLACES', newPlaces)
   },
   updateDraggerbleItems ( { commit }, event ) {
     commit('UPDATE_DRAGGERBLE_ITEMS', event)
@@ -100,9 +130,38 @@ const actions = {
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
   },
-  // createRoute(params) => {
-  //   createRoute(params)
-  // }
+  createRoute() {
+    // console.log('불렸음')
+    // console.log(state.places)
+    // console.log(state.routeDescription)
+    // console.log(images.state.routeImg)
+    // console.log(state.whatTag)
+    // console.log(state.withTag)
+    
+    const places = state.places
+    const routeDescription = state.routeDescription
+    const routeImg = images.state.routeImg
+    const whatTag = state.whatTag
+    const withTag = state.withTag
+    const CircularJSON = require('circular-json')
+    postRoute(
+      // params: { places, routeDescription, routeImg, whatTag, withTag }
+      CircularJSON.stringify(
+      {
+        places: places,
+        routeDescription: routeDescription,
+        routeImg: routeImg,
+        whatTag: whatTag,
+        withTag: withTag,
+        id: 1
+      }),
+      () => {
+        console.log('success')
+      },(error) => {
+        console.log(error)
+      }
+    );
+  },
 }
 
 export default {

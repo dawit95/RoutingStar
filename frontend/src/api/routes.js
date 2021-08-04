@@ -1,14 +1,16 @@
-// //api/routes.js
-// import { createInstance } from './index.js'
+//api/routes.js
+// 아무일도 처리하지 않은 api 선언
+import { createInstance } from './index.js'
 
-// const instance = createInstance();
+const instance = createInstance();
 
-// function createRoute(places, routeDescription, thumbnail, whatTag, withTag, success, fail) {
-//   instance
-//   .post('route', { params } )
-//   .then(success)
-//   .catch(fail);
+// { params: { places, routeDescription, routeImg, whatTag, withTag } }
+function postRoute(param, success, fail) {
+  instance
+  .post('route', param )
+  .then(success)
+  .catch(fail);
 
-// }
+}
 
-// export { createRoute }
+export { postRoute }

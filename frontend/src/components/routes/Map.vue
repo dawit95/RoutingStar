@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
-    ...mapActions(['addPlace', 'sendImagesArray', 'setXYPoints']),
+    ...mapActions(['addPlace', 'sendImagesArray', 'setXYPoints', 'refreshPlaces']),
 
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
@@ -125,6 +125,11 @@ export default {
       )
       this.polyLine.setMap(this.map);
       this.map.addListener("click", this.addPoint);
+      
+      // if (this.places.length) {
+      //   const bounds = this.refreshPolyline()
+      //   this.map.fitBounds(bounds);
+      // }
     },
     attachSearch() {
       // 3. 검색창 만들기
@@ -203,6 +208,7 @@ export default {
       if ( idx != -1 ) {
         marker.setMap(null);
         places.splice(idx,1);
+        this.refreshPlaces(places)
         this.refreshPolyline();
       }
     },
@@ -223,6 +229,9 @@ export default {
     // 맵 멈추고 바운드 재정렬, polyline에서 xy값 좌표 떼오기
     freezeBound() {
       const bounds = this.refreshPolyline()
+      const path = this.polyLine.getPath();
+      // bound 찾았으면 폴리라인 중복을 위해 path clear
+      path.clear();
       this.map.fitBounds(bounds);      
 
       var overlay = new window.google.maps.OverlayView() 
@@ -239,6 +248,7 @@ export default {
         let left = sw.x
         let top = ne.y
 
+        // freeze된 바운드에서 xy좌표값을 가져온다
         for ( const place of this.places ) {
             let latLng = new window.google.maps.LatLng( place.lat, place.lng )
             var pixel = projection.fromLatLngToDivPixel(latLng)
@@ -247,21 +257,22 @@ export default {
         }
       }      
       overlay.setMap(this.map)
-
       // console.log(overlay.points)
       this.setXYPoints(overlay.points)
 
-    },
-
-    // freeze된 바운드에서 xy좌표값을 가져온다
-
-
-
+      // 좌표 확인했으면 없엔다
+      for ( var i = 0; i < overlay.points.length; i++ ) {
+        overlay.points[i].setMap(null)
+      }
+      overlay.points.length = 0;
+    }
   },
   watch: {
     isFreeze: function() {
       if (this.isFreeze) {
         this.initMap(true)
+      } else {
+        this.initMap(false)
       }
     }
   },
