@@ -38,8 +38,6 @@ const actions = {
   fetchLoginedFeeds({commit}, token) {
     console.log('commit 전')
     console.log(token)
-    // console.log(a)
-    // console.log(this.readUser)
     login(token, (res) => {
       console.log('commit 후')
       const fetechedFeeds = res.data
