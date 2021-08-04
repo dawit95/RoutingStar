@@ -11,6 +11,12 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: () => import('@/views/myPage/MyPage.vue')
+
+    // follow / unfollow API 다르게 설정
+    // 다른 유저가 내가 팔로잉 한 유저인지 아닌지만 확인 한다
+    // 데이터와의 비교는 빽에서 한다
+
+
   },
   // Accounts
   {
