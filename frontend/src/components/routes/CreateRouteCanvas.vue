@@ -14,7 +14,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pointedItems', 'xyPoints'])
+    ...mapGetters(['places', 'xyPoints'])
   },
   methods: {
     addCanvasScript() {
