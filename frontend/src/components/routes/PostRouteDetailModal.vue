@@ -53,7 +53,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="dialog = false; recoverFreezeMap()"
+                  @click="onDialogClose"
                 >
                   Close
                 </v-btn>
@@ -115,6 +115,10 @@ export default {
     },
     recoverFreezeMap(event) {
       this.$emit('recover-freeze-map', event)
+    },
+    onDialogClose() {
+      this.dialog = false
+      this.recoverFreezeMap()
     }
   }
 }

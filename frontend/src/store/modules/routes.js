@@ -51,8 +51,8 @@ const mutations= {
     state.polyLine = polyline
     // console.log(state)
   },
-  REFRESH_PLACES(state, newPlace) {
-    state.places = newPlace
+  REFRESH_PLACES(state, newPlaces) {
+    state.places = newPlaces
   },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
     console.log(state.places)
@@ -103,8 +103,8 @@ const actions = {
     commit('ADD_PLACE', newPlace)
     commit('ADD_IMAGE', newPlace)
   },
-  refreshPlaces ( { commit }, newPlace) {
-    commit('REFRESH_PLACES', newPlace)
+  refreshPlaces ( { commit }, newPlaces) {
+    commit('REFRESH_PLACES', newPlaces)
   },
   updateDraggerbleItems ( { commit }, event ) {
     commit('UPDATE_DRAGGERBLE_ITEMS', event)

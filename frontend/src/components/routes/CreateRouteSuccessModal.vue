@@ -33,7 +33,7 @@
             <v-btn
               color="primary"
               text
-              @click="dialog = false"
+              @click="postRoute"
             >
               Check!
             </v-btn>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import CreateRouteCanvas from '@/components/routes/CreateRouteCanvas.vue'
 
 export default {
@@ -56,6 +57,10 @@ export default {
     return {
       dialog2: false,
     }
+  },
+  methods: {
+    ...mapActions(['postRoute']),
+
   }
 
 }
