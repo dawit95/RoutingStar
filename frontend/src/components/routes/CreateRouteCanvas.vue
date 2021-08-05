@@ -1,6 +1,8 @@
 <template>
   <div>
     <canvas id="canvas"></canvas>
+    <button @click="canvasToPng">임시</button>
+    <img v-bind:src="imgDataUrl" alt="">
   </div>
 </template>
 
@@ -11,6 +13,7 @@ export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
+      imgDataUrl: ''
     }
   },
   computed: {
@@ -51,6 +54,11 @@ export default {
       }
       canvas.add(canvasPolyline)
       canvasPolyline.center()
+    },
+    canvasToPng() {
+      var canvas = document.getElementById("canvas")
+      this.imgDataUrl = canvas.toDataURL("image/png");
+      console.log(this.imgDataUrl)
     },
   },
 
