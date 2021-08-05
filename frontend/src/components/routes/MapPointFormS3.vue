@@ -13,20 +13,21 @@
           <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
         </v-card>
     
-        <v-list-item outlined ma-0 pa-0 @click="forcheck(place)">
-          <v-list-item-content>
+        <v-list-item outlined @click="forcheck(place)">
+          <v-list-item-content class="py-0">
               <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file">
               <!-- <img style="width:50px;" id="preview-image" :src="fileList[place.createdOrder]" alt=""> -->
             <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
           </v-list-item-content>
+        </v-list-item>
           <v-switch
+          class="switch-prop"
           id="thumbnail_switch"
           @click="refreshThumbnailBtn(place)"
-          :label="place.isThumbnail ? thumbnailLabel : ''" 
+          :label="place.isThumbnail ? thumbnailLabel : '썸네일로 설정하기!'" 
           :disabled="(!place.isThumbnail && isthumbail) || !place.imageUpload"
           :v-model="place.isThumbnail"
           inset color="indigo darken-3"></v-switch>
-        </v-list-item>
       </v-list>
     </draggable>
     <!-- <v-btn @click="postPointImages">확인용 버튼</v-btn> -->
@@ -264,8 +265,22 @@ export default {
   width: 300px;
   height: 300px;
   overflow: scroll;
-  margin: 0 15px 0 15px;
+  margin: 0 20px 0 15px;
   background-color: #2A355D;
+}
+.big-box::-webkit-scrollbar {
+  width: 10px;
+}
+.big-box::-webkit-scrollbar-thumb {
+  background-color: #B4DFE5;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+.big-box::-webkit-scrollbar-track {
+  background-color: #2A355D;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }
 .card-box {
   margin: 10px 10px 0 10px;
@@ -280,6 +295,9 @@ input[type=file]::file-selector-button {
 
 input[type=file]::file-selector-button:hover {
   background-color: #FBE8A6;
+}
 
+.switch-prop {
+  margin: 0 0 0 10px;
 }
 </style>
