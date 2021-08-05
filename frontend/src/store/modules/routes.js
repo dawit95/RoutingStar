@@ -4,6 +4,7 @@ import { postRoute } from '@/api/routes.js'
 import images from './images'
 import router from '@/router'
 
+
 const state = {
   places: [],
   imgList: [],
@@ -132,25 +133,32 @@ const actions = {
     commit('SET_WITH_TAG', withTag)
   },
   createRoute() {
-    // console.log('불렸음')
-    // console.log(state.places)
-    // console.log(state.routeDescription)
-    // console.log(images.state.routeImg)
-    // console.log(state.whatTag)
-    // console.log(state.withTag)
-    
-    const places = state.places
+    const newPlaces = []
+    for (const place of state.places) {
+      const tmpPlace = {
+        createdOrder: place.createdOrder,
+        imageUpload: place.imageUpload,
+        placeImg : place.placeImg,
+        lat : place.lat,
+        lng : place.lng,
+        content: place.content,
+        isThumbnail : place.isThumbnail,
+      }
+      newPlaces.push(tmpPlace)
+    }
+
     const routeDescription = state.routeDescription
     const routeImg = images.state.routeImg
     const whatTag = state.whatTag
     const withTag = state.withTag
+
     const CircularJSON = require('circular-json')
     console.log('시작했다')
-    postRoute(
       // params: { places, routeDescription, routeImg, whatTag, withTag }
+    postRoute(
       CircularJSON.stringify(
       {
-        places: places,
+        places: newPlaces,
         routeDescription: routeDescription,
         routeImg: routeImg,
         whatTag: whatTag,
