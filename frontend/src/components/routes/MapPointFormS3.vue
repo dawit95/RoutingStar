@@ -7,9 +7,10 @@
         :key="place.createdOrder"
         class="rounded-lg"
       >
-        <!-- <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon> -->
 
-        <v-card flat class="d-flex justify-end">
+        <v-card @click="forcheck(place)" flat class="d-flex">
+          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+          <v-spacer></v-spacer>
           <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
         </v-card>
     
