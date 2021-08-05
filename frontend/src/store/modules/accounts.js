@@ -36,7 +36,17 @@ const actions = {
   createUser({commit}, token) {
     console.log(token)
     commit('CREATE_USER', token)
-  },
+    const jwt = require('jsonwebtoken')
+    const decodeAccessToken = jwt.decode(token.access)
+    const config = {
+      headers: {
+        'access_token': token.access,
+      }
+    }
+    axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
+      .catch((fail) => console.log('fail: ', fail))
+    },
   fetchAccess({commit}, accessToken) {
     commit('FETCH_ACCESS', accessToken)
   },
