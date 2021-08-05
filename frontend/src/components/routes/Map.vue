@@ -100,22 +100,6 @@ export default {
         this.attachSearch()
         this.refreshPolyline()
       }
-
-      // 5. 폴리라인(루트 라인)을 만든다
-      this.SET_POLYLINE(new window.google.maps.Polyline
-        ({
-          strokeColor: "#2A355D",
-          strokeOpacity: 0.3,
-          strokeWeight: 8,
-        })
-      )
-      this.polyLine.setMap(this.map);
-      this.map.addListener("click", this.addPoint);
-      
-      // if (this.places.length) {
-      //   const bounds = this.refreshPolyline()
-      //   this.map.fitBounds(bounds);
-      // }
     },
 
     // 3. 검색창 붙이기
