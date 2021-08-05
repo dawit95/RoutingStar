@@ -1,8 +1,10 @@
 <template>
 <v-card>
   <v-bottom-navigation 
-  absolute grow color="teal"
-  :value="value">
+  absolute grow color="#FBE8A6"
+  :value="value" dark
+  background-color="#101423"
+  >
     <v-btn @click="moveToSearch">
       <span>Search</span>
       <v-icon>mdi-magnify</v-icon>
@@ -20,8 +22,7 @@
   </v-bottom-navigation>
 
   <v-sheet align-self-end>
-    <v-container style="height: 800px;">
-
+    <v-container class="background-color" style="width: 100%; height: 600px;">
     </v-container>
   </v-sheet>
 </v-card>
@@ -50,5 +51,7 @@ export default {
 </script>
 
 <style>
-
+.background-color {
+  background-color: #101423;;
+}
 </style>

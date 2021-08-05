@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-container pa-0>
     <!-- <Header /> -->
     <!-- state를 통해 정보를 가져왔다 가정하고 card 제작 -->
       <!-- <v-card
@@ -60,9 +60,9 @@
     <!-- </div> -->
 <!-- infiniteHandler method 실행 -->
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
-
+    <Header />
     <Nav />
-  </v-app>
+  </v-container>
 </template>
 
 <script>
@@ -70,6 +70,7 @@
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
 // import InfiniteLoading from 'vue-infinite-loading'
 import Nav from '@/components/common/Nav.vue'
+import Header from '@/components/common/Header.vue'
 // import { login } from '@/api/user.js'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
@@ -85,7 +86,7 @@ export default {
   components: {
     Nav,
     // InfiniteLoading,
-    // Header,
+    Header,
   },
   data() {
     return {
@@ -102,8 +103,9 @@ export default {
     }
   },
   mounted () {
-    if (this.name === 'Home') {
+    if (this.name === 'HomeView') {
       console.log('home')
+      // this.$router.push({name: 'HomeView'})
       this.value = 2
     }
   },
@@ -164,6 +166,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
