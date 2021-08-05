@@ -1,22 +1,27 @@
 <template>
   <div>
     <canvas id="canvas"></canvas>
+    <v-btn @click="canvasToPng">루트 그림으로 변환 확인</v-btn>
+    <img v-bind:src="imgDataUrl" alt="">
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, } from 'vuex'
 
 export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
+      imgDataUrl: ''
     }
   },
   computed: {
     ...mapGetters(['places', 'xyPoints'])
   },
   methods: {
+    ...mapActions(['updateRouteImg',]),
+
     addCanvasScript() {
       const script = document.createElement("script");
 
@@ -51,7 +56,15 @@ export default {
       }
       canvas.add(canvasPolyline)
       canvasPolyline.center()
+      this.canvasToPng()
+      this.updateRouteImg(this.imgDataUrl)
     },
+    canvasToPng() {
+      var canvas = document.getElementById("canvas")
+      this.imgDataUrl = canvas.toDataURL("image/png");
+      console.log(this.imgDataUrl)
+    },
+
   },
 
   mounted() {
