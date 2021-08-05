@@ -27,6 +27,7 @@ const mutations= {
   //   routes.state.places[data.x] = data.responseData
   // },
   UPDATE_ROUTE_IMG(state, routeImg) {
+    console.log(`여기는 MUTATION${routeImg}`)
     state.routeImg = routeImg
   },
   UPDATE_THUMBNAIL_IMAGE(state, thumbnailImage) {
@@ -124,6 +125,7 @@ const actions = {
     // })
   },
   updateRouteImg({ commit }, routeImg) {
+    console.log(`여기는 actions${routeImg}`)
     commit('UPDATE_ROUTE_IMG', routeImg)
   },
   // updateThumbnailImage({ commit }, thumbnailImg) {

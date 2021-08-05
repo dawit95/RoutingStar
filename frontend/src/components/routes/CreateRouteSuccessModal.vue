@@ -14,8 +14,8 @@
           </v-btn>
         </template>
 
-        <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
+        <v-card id="createRouteSuccessModal">
+          <v-card-title class="text-h5 textColor">
             완성 시 나오는 페이지 입니다.
           </v-card-title>
           
@@ -24,7 +24,9 @@
           </v-layout>
           
           <v-card-text>
-            당신만의 루팅스타가 생성 완료되었습니다. 
+            <p class="textColor">
+              당신만의 루팅스타가 생성 완료되었습니다.
+            </p>
           </v-card-text>
 
           <v-divider></v-divider>
@@ -36,7 +38,7 @@
               text
               @click="createRoute"
             >
-              Check!
+              Complete!
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -68,6 +70,12 @@ export default {
 </script>
 
 <style>
+#createRouteSuccessModal {
+  background-color: #101423;
+}
 
+.textColor {
+  color: #D2FDFF;
+}
 
 </style>
