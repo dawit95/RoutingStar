@@ -105,16 +105,19 @@ const actions = {
       params: { Bucket: state.albumBucketName }
     });
 
+    // const photoKey = payload.image.name
+    const date = new Date().getTime();
     s3.upload({
-      Key: payload.image.name,
+      Key: `${date + payload.image.name}`,
       Body: payload.image,
-      ContentType: 'image/jpeg',
+      ContentType: payload.image.type,
       ACL: 'public-read'
     }, (err, data) => {
       if (err) {
         console.log(err)
         return alert("There was an error uploading your photo: ", err.message);
       }
+      console.log(data)
       if (payload.bool) {
         // commit('UPDATE_THUMBNAIL_IMAGE', data.Location)
         state.thumbnailImage = data.Locaiton
