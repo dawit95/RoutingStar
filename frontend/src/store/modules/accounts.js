@@ -23,16 +23,13 @@ const mutations= {
     state.jwt = token
   },
   // access 토큰 갱신용
-  // RENEW_ACCESS(state, access){
-  //   state.jwt.access = access
-  // },
-  FETCH_ACCESS(state, accesstoken){
-    console.log(accesstoken)
-    state.jwt.access = accesstoken
+  RENEW_ACCESS(state, access){
+    state.jwt.access = access
   },
-  // FETCH_LOGINED_FEEDS(state, fetechedFeeds){
-  //   state.feeds = fetechedFeeds
-  // }
+  FETCH_LOGINED_FEEDS(state, fetechedFeeds){
+    console.log('commiteed', fetechedFeeds)
+    state.feeds = fetechedFeeds
+  }
 }
 
 const actions = {
@@ -43,7 +40,7 @@ const actions = {
   fetchAccess({commit}, accessToken) {
     commit('FETCH_ACCESS', accessToken)
   },
-  fetchLoginedFeeds(token) {
+  fetchLoginedFeeds({commit}, token) {
     console.log('commit 전')
     console.log(token)
 
@@ -59,44 +56,33 @@ const actions = {
       console.log('갱신해야함')
       const config = {
         headers: {
-          'access_token': this.jwt.access,
-          'refresh_token': this.jwt.refresh,
+          'access_token': token.access,
+          'refresh_token': token.refresh,
         }
       }
-      axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
-        // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
-        .then(res => {console.log(res)})
-        .catch((fail) => console.log(fail))
+      axios.all([axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config),
+                axios.get(`http://i5a309.p.ssafy.io:8000/token/refresh`), config])
+            .then(axios.spread((res1, res2) => {console.log('갱신해야함성공:', res1, res2)}))
+            .catch((err) => console.log(err))
+      // axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      //   // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
+      //   .then(res => {console.log(res)})
+      //   .catch((fail) => console.log(fail))
     } else {
       console.log('갱신안해도됨')
       const config = {
         headers: {
-          'access_token': this.jwt.access,
+          'access_token': token.access,
         }
       }
       axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
-        .then(res => {console.log(res)})
+        .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
         .catch((fail) => console.log('fail: ', fail))
         }   
       }
-
-
-    // const fetechedFeeds = login(token)
-    // console.log('fetechfeeds:', fetechedFeeds)
-    // console.log(fetechedFeeds.then(success => {console.log(success)})
-      // console.log('success:', success)
-    // }))
-    // console.log(fetechedFeeds.then().data)
-    // console.log(fetechedFeeds.PromiseResult)
-    // 만약 access token을 갱신해야된다면 commit 요청을 두 개 보내자(access toekn if문으로 확인) 
-    // commit('FETCH_LOGINED_FEEDS', fetechedFeeds)
-
    }
-// }
 
 
 export default {
   state, getters, mutations, actions
 }
-
-// export { returnLogin }   

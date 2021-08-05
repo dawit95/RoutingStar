@@ -126,7 +126,7 @@ export default {
   console.log(this.jwt)
   if (this.jwt.access) {
     console.log('token이 이미 저장이 되어있음')
-    this.$store.dispatch('fetchLoginedFeeds', this.$store.state.accounts.jwt)
+    this.$store.dispatch('fetchLoginedFeeds', this.jwt)
   }
   else if (this.$route.query.access && this.$route.query.refresh){
     console.log('token을 지금 처음 저장함')
