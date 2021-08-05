@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**","/error","/favicon.ico").permitAll()
                 //antMatchers의 url은 frontend와 함께 정리하여 변환.
                 .antMatchers("/auth/**","/oauth2/**").permitAll()
-                .antMatchers("/token/**","/test").permitAll()
+                .antMatchers("/token/**","/api/v1/**").permitAll()
 
                 .antMatchers("/userTest/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
@@ -79,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/**",
                         "/v2/api-docs",
                         "/webjars/**",
-                        "/webjars/springfox-swagger-ui/*.{js,css}",
-                        "/api/v1/**");
+                        "/webjars/springfox-swagger-ui/*.{js,css}");
     }
 }
