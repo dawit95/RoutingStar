@@ -9,7 +9,7 @@ const state = {
 
 
 const getters = {
-  readUser(state) {
+  jwt(state) {
     return state.jwt
   },
 
@@ -17,10 +17,16 @@ const getters = {
 }
 
 const mutations= {
+  // 전체 토큰 받아오기(처음 로그인)
   CREATE_USER(state, token){
     state.jwt = token
   },
+  // access 토큰 갱신용
+  // RENEW_ACCESS(state, access){
+  //   state.jwt.access = access
+  // },
   FETCH_ACCESS(state, accesstoken){
+    console.log(accesstoken)
     state.jwt.access = accesstoken
   },
   FETCH_LOGINED_FEEDS(state, fetechedFeeds){
@@ -30,6 +36,7 @@ const mutations= {
 
 const actions = {
   createUser({commit}, token) {
+    console.log(token)
     commit('CREATE_USER', token)
   },
   fetchAccess({commit}, accessToken) {
@@ -38,17 +45,16 @@ const actions = {
   fetchLoginedFeeds({commit}, token) {
     console.log('commit 전')
     console.log(token)
-    login(token, (res) => {
-      console.log('commit 후')
-      const fetechedFeeds = res.data
-      commit('FETCH_LOGINED_FEEDS', fetechedFeeds)
-    },
-      (success) => 
-    {
-      console.log(success)
-    },
-      (err) => {console.log(err)}
-    )
+    const fetechedFeeds = login(token)
+    console.log('fetechfeeds:', fetechedFeeds)
+    // console.log(fetechedFeeds.then(success => {console.log(success)})
+      // console.log('success:', success)
+    // }))
+    console.log(fetechedFeeds.then().data)
+    // console.log(fetechedFeeds.PromiseResult)
+    // 만약 access token을 갱신해야된다면 commit 요청을 두 개 보내자(access toekn if문으로 확인) 
+    commit('FETCH_LOGINED_FEEDS', fetechedFeeds)
+
    }
 }
 
