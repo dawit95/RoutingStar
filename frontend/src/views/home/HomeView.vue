@@ -60,7 +60,7 @@
     <!-- </div> -->
 <!-- infiniteHandler method 실행 -->
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
-
+      <v-btn @click="renew">갱신용</v-btn>
     <Nav />
   </v-app>
 </template>
@@ -72,7 +72,7 @@
 import Nav from '@/components/common/Nav.vue'
 // import { login } from '@/api/user.js'
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, } from 'vuex'
 
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
@@ -108,7 +108,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['readUser']),
+    ...mapGetters(['jwt']),
     // readUser
   },
   created () {
@@ -118,11 +118,15 @@ export default {
    
   // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
   // 로그인된 사용자이면 trigger 역할만 해줄 뿐 넘겨줄 객체는 없음
-  if (this.readUser.access) {
+  console.log('created')
+  console.log(this.$route.query.access)
+  console.log(this.jwt)
+  if (this.jwt.access) {
+    console.log('token이 이미 저장이 되어있음')
     this.$store.dispatch('fetchLoginedFeeds', this.$store.state.accounts.jwt)
   }
-
   else if (this.$route.query.access && this.$route.query.refresh){
+    console.log('token을 지금 처음 저장함')
     const token = 
       {
         access: this.$route.query.access,
@@ -131,7 +135,8 @@ export default {
       this.$store.dispatch('createUser', token)
     } 
   else {
-      console.log(this.readUser)
+      console.log('token이 없음')
+      // console.log(this.readUser)
       axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
       .then((res) => {console.log(res)})
       .catch((err) => {console.log(err)})
@@ -160,6 +165,30 @@ export default {
         }
       });
     },
+    renew() {
+      // console.log(this.jwt),
+    console.log(this.jwt.refresh)
+    console.log(this.jwt.access)
+    axios.post(`http://i5a309.p.ssafy.io:8000/token/refresh`, {
+      headers: {
+        'access_token': this.jwt.access,
+        'refresh_token': this.jwt.refresh
+      }
+    })
+    // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
+    .then(res => {console.log(res)})
+      // const token = 
+      // {
+      //   access: res.success.access,
+      //   refresh: this.jwt.refresh
+      // }
+      // this.$store.dispatch('createUser', token)})
+    // .then((res)=>commit('FETCH_ACCESS', res))
+    
+    .catch((fail) => console.log(fail))
+    
+      
+    }
   }
 }
 </script>
