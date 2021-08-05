@@ -51,9 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
+                //front-end CI/CD 구현시 변경될 uri
+//                .logoutSuccessUrl("http://i5a309.p.ssafy.io:8080/home")
 
                 .and()
                 .oauth2Login()
+                //front-end CI/CD 구현시 변경될 uri
+//                .loginPage("http://i5a309.p.ssafy.io:8080/")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
 
