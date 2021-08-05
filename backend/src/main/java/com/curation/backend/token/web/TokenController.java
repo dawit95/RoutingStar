@@ -53,10 +53,10 @@ public class TokenController {
 
                 Token newToken = tokenService.generateToken(user.getId(), email, img, name, "USER");
 
-                response.addHeader("access_token", newToken.getAccess_token());
-                response.setContentType("application/json;charset=UTF-8");
+//                response.addHeader("access_token", newToken.getAccess_token());
+//                response.setContentType("application/json;charset=UTF-8");
                 HttpStatus status = HttpStatus.OK;
-                SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(id);
+                SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(newToken.getAccess_token());
 
                 return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
             }
