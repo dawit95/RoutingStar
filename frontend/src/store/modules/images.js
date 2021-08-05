@@ -1,7 +1,7 @@
 // images.js
 import { postPointImages, postThumbnailImage } from '@/api/images.js'
 import routes from '@/store/modules/routes.js'
-// import AWS from 'aws-sdk'
+import AWS from 'aws-sdk'
 
 const state = {
   routeImg: '',
@@ -93,35 +93,35 @@ const actions = {
     console.log('썸네일 업로드 들어옴')
     console.log(payload.image, payload.num, payload.bool)
     // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
-    // AWS.config.update({
-    //   region: state.bucketRegion,
-    //   credentials: new AWS.CognitoIdentityCredentials({
-    //   IdentityPoolId: state.IdentityPoolId,
-    //   })
-    // });
+    AWS.config.update({
+      region: state.bucketRegion,
+      credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: state.IdentityPoolId,
+      })
+    });
 
-    // var s3 = new AWS.S3({
-    //   apiVersion: "2006-03-01",
-    //   params: { Bucket: state.albumBucketName }
-    // });
+    var s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: { Bucket: state.albumBucketName }
+    });
 
-    // s3.upload({
-    //   Key: image.name,
-    //   Body: image,
-    //   ContentType: 'image/jpeg',
-    //   ACL: 'public-read'
-    // }, (err, data) => {
-    //   if (err) {
-    //     console.log(err)
-    //     return alert("There was an error uploading your photo: ", err.message);
-    //   }
-    //   if (thumbnailcheck) {
-    //     // commit('UPDATE_THUMBNAIL_IMAGE', data.Location)
-    //     state.thumbnailImage = data.Locaiton
-    //   } else {
-    //     routes.state.places[x].placeImg = data.Location
-    //   }
-    // })
+    s3.upload({
+      Key: payload.image.name,
+      Body: payload.image,
+      ContentType: 'image/jpeg',
+      ACL: 'public-read'
+    }, (err, data) => {
+      if (err) {
+        console.log(err)
+        return alert("There was an error uploading your photo: ", err.message);
+      }
+      if (payload.bool) {
+        // commit('UPDATE_THUMBNAIL_IMAGE', data.Location)
+        state.thumbnailImage = data.Locaiton
+      } else {
+        routes.state.places[payload.num].placeImg = data.Location
+      }
+    })
   },
   updateRouteImg({ commit }, routeImg) {
     commit('UPDATE_ROUTE_IMG', routeImg)
