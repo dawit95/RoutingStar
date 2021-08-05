@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 public class TokenController {
@@ -35,7 +37,7 @@ public class TokenController {
         throw new RuntimeException();
     }
 
-    @PostMapping("/token/refresh")
+    @GetMapping("/token/refresh")
     public ResponseEntity<SuccessResponseDto> refreshAuth(HttpServletRequest request, HttpServletResponse response) throws NoUserException {
         String access_token = request.getHeader("access_token");
         String refresh_token = request.getHeader("refresh_token");
@@ -59,13 +61,16 @@ public class TokenController {
                 SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(newToken.getAccess_token());
 
                 return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+            } else {
+                logger.trace("저장된 re와 보낸 re가 불일치 합니다.");
+                logger.trace("저장된 re {}",user.getRefreshToken());
+                logger.trace("보낸 re {}",refresh_token);
+                throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
             }
-            logger.trace("저장된 re와 보낸 re가 불일치 합니다.");
-            logger.trace("저장된 re {}",user.getRefreshToken());
-            logger.trace("보낸 re {}",refresh_token);
+        } else {
+            //JWT요청이 잘못옴
+            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
         }
-        //JWT요청이 잘못옴
-        throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
     }
 
 }
