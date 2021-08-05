@@ -31,7 +31,7 @@ export default {
       var canvasPolyline = new window.fabric.Polyline(
         this.xyPoints,
         {
-          stroke: 'white',
+          stroke: '#D2FDFF',
           fill: 'rgba(0,0,0,0)',
           strokeWidth: 10,
         })
@@ -68,12 +68,11 @@ body {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: #f0f0f0;
+        background-color: #2A355D;
       }
 
 #canvas {
   width: 800px;
   height: 400px;
-  background-color: green;
 }
 </style>
