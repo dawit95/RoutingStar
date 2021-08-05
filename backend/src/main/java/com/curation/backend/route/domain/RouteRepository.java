@@ -15,4 +15,8 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     Collection<Route> findAllOrderByLikeCount();
 
     List<Route> findAllByUserId(Long id);
+
+
+    List<Route> findByIdInAndUserIdNotIn(List<Long> routeIds, List<Long> userIds);
+    List<Route> findByIdInAndUserIdIn(List<Long> routeIds, List<Long> userIds);
 }

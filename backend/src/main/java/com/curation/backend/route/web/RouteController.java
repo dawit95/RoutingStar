@@ -6,6 +6,7 @@ import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.route.dto.RouteSearchRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
 import com.curation.backend.user.exception.NoUserException;
@@ -85,7 +86,21 @@ public class RouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @PostMapping("/routes/")
+    @PostMapping("/following/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> searchFollowingRoute(@PathVariable("userId") Long id, @RequestBody RouteSearchRequestDto routeSearchRequestDto) throws NoUserException {
+        List<RouteListResponseDto> list = routeService.searchFollowingRoute(id, routeSearchRequestDto.getWhatTag(), routeSearchRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @PostMapping("/nonfollowing/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> searchNonFollowingRoute(@PathVariable("userId") Long id, @RequestBody RouteSearchRequestDto routeSearchRequestDto) throws NoUserException {
+        List<RouteListResponseDto> list = routeService.searchNonFollowingRoute(id, routeSearchRequestDto.getWhatTag(), routeSearchRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
 
     @ExceptionHandler(NoRouteException.class)
     public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
@@ -121,17 +136,17 @@ public class RouteController {
   "routeDescription": "우리동네 최고 코스에요",
   "routeImg": "루트 사진이 들어가있음",
   "whatTag": [
-    1,2,3
+    1, 2, 3
   ],
   "withTag": [
-    4,5,6
+    1, 2, 7
   ]
 }
  */
 
 /*
 {
-  "id": 1,
+  "id": 3,
   "places": [
     {
       "createdOrder": 1,
@@ -161,10 +176,49 @@ public class RouteController {
   "routeDescription": "수정해버리기 이 코스는 우리동네 맛집코스",
   "routeImg": "루트 사진도 수정함",
   "whatTag": [
-    1,1,3
+    2
   ],
   "withTag": [
-    4,2,6,5
+    3
+  ]
+}
+
+
+{
+  "id": 2,
+  "places": [
+    {
+      "createdOrder": 1,
+      "isThumbnail": false,
+      "lat": "772.12",
+      "lng": "452.123",
+      "placeImg": "수정한 이미지 1",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": "7.123",
+      "lng": "8.23",
+      "placeImg": "수정한 이미지 2",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 3,
+      "isThumbnail": true,
+      "lat": "478.1",
+      "lng": "98.1",
+      "placeImg": "수정한 이미지 3",
+      "title": "여기는 영화관"
+    }
+  ],
+  "routeDescription": "3번째로 올린 글",
+  "routeImg": "루트 사진도 수정함",
+  "whatTag": [
+    5, 2
+  ],
+  "withTag": [
+    1, 4
   ]
 }
  */
