@@ -267,18 +267,19 @@ export default {
   overflow: scroll;
   margin: 0 20px 0 15px;
   background-color: #2A355D;
+  overflow-x: hidden;
 }
 .big-box::-webkit-scrollbar {
   width: 10px;
 }
 .big-box::-webkit-scrollbar-thumb {
-  background-color: #B4DFE5;
+  background-color: #2A355D;
   background-clip: padding-box;
   border-radius: 10px;
   border: 2px solid transparent;
 }
 .big-box::-webkit-scrollbar-track {
-  background-color: #2A355D;
+  background-color: grey;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px white;
 }
