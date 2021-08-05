@@ -8,7 +8,10 @@ import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.route.dto.RouteSearchRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
+import com.curation.backend.tag.domain.RouteWhatTagRepository;
+import com.curation.backend.tag.domain.RouteWithTagRepository;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.FollowerFollowing;
 import com.curation.backend.user.domain.LikeRepository;
@@ -33,6 +36,8 @@ public class RouteService {
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+    private final RouteWhatTagRepository routeWhatTagRepository;
+    private final RouteWithTagRepository routeWithTagRepository;
 
     private final TagService tagService;
 
@@ -116,6 +121,52 @@ public class RouteService {
     @Transactional(readOnly = true)
     public List<RouteListResponseDto> myRouteList(Long id) {
         return routeRepository.findAllByUserId(id).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RouteListResponseDto> searchNonFollowingRoute(Long id, List<Long> whatTag, List<Long> withTag) throws NoUserException {
+        Long whatTagSize = Long.valueOf(whatTag.size());
+        Long withTagSize = Long.valueOf(withTag.size());
+
+        List<Long> whatTagIdList = routeWhatTagRepository.findByWhatTag(whatTag, whatTagSize);
+        List<Long> withTagIdList = routeWithTagRepository.findByWithTag(withTag, withTagSize);
+
+        whatTagIdList.retainAll(withTagIdList);
+
+        logger.trace(String.valueOf(whatTagIdList) + "is distinct route!!!");
+
+        Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
+        List<FollowerFollowing> followList = user.get().getFollowers();
+
+        List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
+        followerList.add(id);
+
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdNotIn(whatTagIdList, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Transactional(readOnly = true)
+    public List<RouteListResponseDto> searchFollowingRoute(Long id, List<Long> whatTag, List<Long> withTag) throws NoUserException {
+        Long whatTagSize = Long.valueOf(whatTag.size());
+        Long withTagSize = Long.valueOf(withTag.size());
+
+        List<Long> whatTagIdList = routeWhatTagRepository.findByWhatTag(whatTag, whatTagSize);
+        List<Long> withTagIdList = routeWithTagRepository.findByWithTag(withTag, withTagSize);
+
+        whatTagIdList.retainAll(withTagIdList);
+
+        logger.trace(String.valueOf(whatTagIdList) + "is distinct route!!!");
+
+        Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
+        List<FollowerFollowing> followList = user.get().getFollowers();
+
+        List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
+        followerList.add(id);
+
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdIn(whatTagIdList, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+
+        return list;
     }
 }
 
