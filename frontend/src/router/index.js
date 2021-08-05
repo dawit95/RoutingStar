@@ -41,11 +41,6 @@ const routes = [
     name: 'HomeView',
     component: () => import('@/views/home/HomeView')
   },
-  {
-    path: '/nav',
-    name: 'Nav',
-    component: () => import('@/components/common/Nav')
-  },
   
   // Routes
   {
@@ -71,7 +66,7 @@ const routes = [
   // My Page
   {
     path: '/mypage',
-    name: 'MyPage',
+    name: 'MyPageView',
     component: () => import('@/views/myPage/MyPageView.vue')
   
     // follow / unfollow API 다르게 설정
