@@ -60,7 +60,9 @@ public class TokenController {
 
                 return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
             }
-
+            logger.trace("저장된 re와 보낸 re가 불일치 합니다.");
+            logger.trace("저장된 re {}",user.getRefreshToken());
+            logger.trace("보낸 re {}",refresh_token);
         }
         //JWT요청이 잘못옴
         throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
