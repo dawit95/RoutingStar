@@ -5,7 +5,7 @@ import images from './images'
 
 const state = {
   places: [],
-  imgLst: [],
+  imgList: [],
   polyLine: null,
   routeDescription: '',
   xyPoints: [],
@@ -18,7 +18,7 @@ const getters = {
     return state.places
   },
   imgList(state) {
-    return state.imgLst
+    return state.imgList
   },
   polyLine(state) {
     return state.polyLine
@@ -42,7 +42,7 @@ const mutations= {
     state.places.push(newPlace)
   },
   ADD_IMAGE(state, newPlace) {
-    state.imgLst.push(newPlace.image)
+    state.imgList.push(newPlace.image)
   },
   SEND_IMAGES_ARRAY(state) {
     console.log(state)
