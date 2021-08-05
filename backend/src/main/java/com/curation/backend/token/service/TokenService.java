@@ -73,6 +73,10 @@ public class TokenService {
         return false;
     }
 
+    public Long getId(String token){
+        return (Long) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("pk");
+    }
+
     public String getUid(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }

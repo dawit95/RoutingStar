@@ -4,10 +4,12 @@ import com.curation.backend.token.domain.Token;
 import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
+import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,27 +30,31 @@ public class TokenController {
         throw new RuntimeException();
     }
 
-    @GetMapping("/token/refresh")
-    public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader("refresh_token");
+    @PostMapping("/token/refresh")
+    public String refreshAuth(HttpServletRequest request, HttpServletResponse response) throws NoUserException {
+        String access_token = request.getHeader("access_token");
+        String refresh_token = request.getHeader("refresh_token");
 
-        if (token != null && tokenService.verifyToken(token)) {
-            String email = tokenService.getUid(token);
-            String img = tokenService.getProfileImg(token);
-            String name = tokenService.getNickName(token);
-            User user = userRepository.findByEmail(email).get();
-            Token newToken = tokenService.generateToken(user.getId(), email, img, name, "USER");
+        if (refresh_token != null && tokenService.verifyToken(refresh_token)) {
+            String email = tokenService.getUid(access_token);
+            String img = tokenService.getProfileImg(access_token);
+            String name = tokenService.getNickName(access_token);
+            Long id = tokenService.getId(access_token);
 
+            User user = userRepository.findById(id).orElseThrow(() -> new NoUserException("토큰의 사용자가 없습니다."));
 
-            response.addHeader("Auth", newToken.getToken());
-            response.addHeader("Refresh", newToken.getRefreshToken());
-            response.setContentType("application/json;charset=UTF-8");
+            if(user.getRefreshToken().equals(refresh_token)){
+                logger.trace("저장된 re와 보낸 re가 일치 합니다.");
 
-            return "HAPPY NEW TOKEN";
+                Token newToken = tokenService.generateToken(user.getId(), email, img, name, "USER");
+
+                response.addHeader("access_token", newToken.getAccess_token());
+                response.addHeader("refresh_token", refresh_token);
+                response.setContentType("application/json;charset=UTF-8");
+                return "HAPPY NEW TOKEN";
+            }
+
         }
-
-
-        logger.trace("token/refresh 요청함 : {}",token);
 
         throw new RuntimeException();
     }

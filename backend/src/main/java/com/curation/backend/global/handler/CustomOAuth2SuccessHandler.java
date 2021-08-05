@@ -50,14 +50,14 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         logger.debug("{}", token);
 
         //회원 테이블에 삽입
-        user.updateRefreshToken(token.getRefreshToken());
+        user.updateRefreshToken(token.getRefresh_token());
         userRepository.save(user);
 
         //response 에 token 정보 주입
 //        writeTokenResponse(response, token);
 
         //유저에게 돌려보네기 upload시 우리 서버로
-        String redirect_uri = "http://localhost:8080/home?access="+token.getToken()+"&refresh="+token.getRefreshToken();
+        String redirect_uri = "http://localhost:8080/home?access="+token.getAccess_token()+"&refresh="+token.getRefresh_token();
         response.sendRedirect(redirect_uri);
 
     }
@@ -66,8 +66,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        response.addHeader("Auth", token.getToken());
-        response.addHeader("Refresh", token.getRefreshToken());
+        response.addHeader("Auth", token.getAccess_token());
+        response.addHeader("Refresh", token.getRefresh_token());
         response.setContentType("application/json;charset=UTF-8");
 
 //        var writer = response.getWriter();
