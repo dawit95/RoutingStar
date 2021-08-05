@@ -41,11 +41,6 @@ const routes = [
     name: 'HomeView',
     component: () => import('@/views/home/HomeView')
   },
-  {
-    path: '/nav',
-    name: 'Nav',
-    component: () => import('@/components/common/Nav')
-  },
   
   // Routes
   {
