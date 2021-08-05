@@ -85,6 +85,8 @@ public class RouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
+    @PostMapping("/routes/")
+
     @ExceptionHandler(NoRouteException.class)
     public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
