@@ -60,12 +60,12 @@ export default {
   },
   methods: {
     ...mapActions(['createRoute']),
-
   }
 
 }
 </script>
 
 <style>
+
 
 </style>
