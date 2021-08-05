@@ -172,25 +172,17 @@ export default {
       // console.log(this.jwt),
     console.log(this.jwt.refresh)
     console.log(this.jwt.access)
-    axios.post(`http://i5a309.p.ssafy.io:8000/token/refresh`, {
+    const config = {
       headers: {
         'access_token': this.jwt.access,
-        'refresh_token': this.jwt.refresh
+        'refresh_token': this.jwt.refresh,
       }
-    })
+    }
+    
+    axios.get(`http://i5a309.p.ssafy.io:8000/token/refresh`, config)
     // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
-    .then(res => {console.log(res)})
-      // const token = 
-      // {
-      //   access: res.success.access,
-      //   refresh: this.jwt.refresh
-      // }
-      // this.$store.dispatch('createUser', token)})
-    // .then((res)=>commit('FETCH_ACCESS', res))
-    
-    .catch((fail) => console.log(fail))
-    
-      
+    .then(res => {console.log(res)})  
+    .catch((fail) => console.log(fail))  
     }
   }
 }
