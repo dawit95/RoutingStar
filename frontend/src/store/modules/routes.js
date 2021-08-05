@@ -2,10 +2,11 @@
 
 import { postRoute } from '@/api/routes.js'
 import images from './images'
+import router from '@/router'
 
 const state = {
   places: [],
-  imgLst: [],
+  imgList: [],
   polyLine: null,
   routeDescription: '',
   xyPoints: [],
@@ -18,7 +19,7 @@ const getters = {
     return state.places
   },
   imgList(state) {
-    return state.imgLst
+    return state.imgList
   },
   polyLine(state) {
     return state.polyLine
@@ -42,7 +43,7 @@ const mutations= {
     state.places.push(newPlace)
   },
   ADD_IMAGE(state, newPlace) {
-    state.imgLst.push(newPlace.image)
+    state.imgList.push(newPlace.image)
   },
   SEND_IMAGES_ARRAY(state) {
     console.log(state)
@@ -144,6 +145,7 @@ const actions = {
     const whatTag = state.whatTag
     const withTag = state.withTag
     const CircularJSON = require('circular-json')
+    console.log('시작했다')
     postRoute(
       // params: { places, routeDescription, routeImg, whatTag, withTag }
       CircularJSON.stringify(
@@ -157,6 +159,7 @@ const actions = {
       }),
       () => {
         console.log('success')
+        router.push({ name: 'LoginView' })
       },(error) => {
         console.log(error)
       }

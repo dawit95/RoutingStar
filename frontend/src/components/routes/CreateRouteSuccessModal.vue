@@ -8,6 +8,7 @@
             dark
             v-bind="attrs"
             v-on="on"
+            @click="postPointImages"
           >
             Complete!
           </v-btn>
@@ -59,7 +60,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createRoute']),
+    ...mapActions(['createRoute', 'postPointImages']),
 
   }
 
@@ -67,5 +68,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>

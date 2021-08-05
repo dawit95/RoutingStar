@@ -84,7 +84,7 @@ export default {
         // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
         this.SET_POLYLINE(new window.google.maps.Polyline
           ({
-            strokeColor: "#E64398",
+            strokeColor: "#2A355D",
             strokeOpacity: 0.3,
             strokeWeight: 8,
           })
