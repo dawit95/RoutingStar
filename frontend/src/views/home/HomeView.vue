@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-container pa-0>
     <!-- <Header /> -->
     <!-- state를 통해 정보를 가져왔다 가정하고 card 제작 -->
       <!-- <v-card
@@ -62,7 +62,7 @@
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
     <Header />
     <Nav />
-  </v-app>
+  </v-container>
 </template>
 
 <script>
@@ -166,6 +166,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
