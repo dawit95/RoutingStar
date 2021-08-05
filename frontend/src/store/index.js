@@ -17,7 +17,9 @@ export default new Vuex.Store({
   // actions: {
   // },
   plugins: [
-    createPersistedState],
+    createPersistedState({
+      paths: ['accounts'],
+    })],
     // {
   //     storage: window.sessionStorage,
   //   }),
