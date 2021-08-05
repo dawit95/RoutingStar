@@ -39,7 +39,7 @@
 import { mapActions, mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
 import { dragscroll } from 'vue-dragscroll'
-import AWS from 'aws-sdk'
+// import AWS from 'aws-sdk'
 
 export default {
   name: 'MapPointFormS3',
@@ -55,10 +55,6 @@ export default {
       isthumbail: false,
       selectedFile: null,
       thumbnailLabel: '',
-      albumBucketName: 'routingstar-photo-album',
-      bucketRegion: 'ap-northeast-2',
-      IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
-      fileList: [0,0,0,0,0,0,0,0,0,0],
     }
   },
   computed: {
@@ -111,58 +107,58 @@ export default {
       // fileReader.readAsDataURL(this.selectedFile);
       // console.log(this.fileList)
     },
-    postPointImages() {
-      // console.log(this.imgList)
-      const ins = this.places.length
-      for (var x = 0; x < ins; x++) {
-        // console.log(x + '번째 인덱스의 pk')
-        const pointItemPk = this.places[x].createdOrder
-        // console.log(pointItemPk)
-        // 첨부파일이 없다면 pass
-        if (this.imgList[pointItemPk] === '') {
-          continue
-          // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
-        } else {
-          const image = this.imgList[pointItemPk]
-          // S3로 업로드 후 반환값(이미지URL)을 저장
-          this.upload(image, x, false)
-        }
-      }
-      // setTimeout(()=>{console.log(this.places)}, 5000)
-    },
+    // postPointImages() {
+    //   // console.log(this.imgList)
+    //   const ins = this.places.length
+    //   for (var x = 0; x < ins; x++) {
+    //     // console.log(x + '번째 인덱스의 pk')
+    //     const pointItemPk = this.places[x].createdOrder
+    //     // console.log(pointItemPk)
+    //     // 첨부파일이 없다면 pass
+    //     if (this.imgList[pointItemPk] === '') {
+    //       continue
+    //       // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
+    //     } else {
+    //       const image = this.imgList[pointItemPk]
+    //       // S3로 업로드 후 반환값(이미지URL)을 저장
+    //       this.upload(image, x, false)
+    //     }
+    //   }
+    //   // setTimeout(()=>{console.log(this.places)}, 5000)
+    // },
     // 완료버튼이 눌러진다면
     // 임시로 여기다 두고, api 파일 소화 후 이동 예정 이동 후 PostRouteDetail과 연동
-    upload(image, x, thumbnailcheck) {
-      // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
-      AWS.config.update({
-        region: this.bucketRegion,
-        credentials: new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: this.IdentityPoolId,
-        })
-      });
+    // upload(image, x, thumbnailcheck) {
+    //   // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
+    //   AWS.config.update({
+    //     region: this.bucketRegion,
+    //     credentials: new AWS.CognitoIdentityCredentials({
+    //       IdentityPoolId: this.IdentityPoolId,
+    //     })
+    //   });
 
-      var s3 = new AWS.S3({
-        apiVersion: "2006-03-01",
-        params: { Bucket: this.albumBucketName }
-      });
+    //   var s3 = new AWS.S3({
+    //     apiVersion: "2006-03-01",
+    //     params: { Bucket: this.albumBucketName }
+    //   });
 
-      s3.upload({
-        Key: image.name,
-        Body: image,
-        ContentType: 'image/jpeg',
-        ACL: 'public-read'
-      }, (err, data) => {
-        if (err) {
-          return alert("There was an error uploading your photo: ", err.message);
-        }
-        if (thumbnailcheck) {
-          this.$store.state.thumbnailImage = data.Location
-          // console.log(this.$store.state.thumbnailImage)
-        } else {
-          this.places[x].placeImg = data.Location
-        }
-      })
-    },
+    //   s3.upload({
+    //     Key: image.name,
+    //     Body: image,
+    //     ContentType: 'image/jpeg',
+    //     ACL: 'public-read'
+    //   }, (err, data) => {
+    //     if (err) {
+    //       return alert("There was an error uploading your photo: ", err.message);
+    //     }
+    //     if (thumbnailcheck) {
+    //       this.$store.state.thumbnailImage = data.Location
+    //       // console.log(this.$store.state.thumbnailImage)
+    //     } else {
+    //       this.places[x].placeImg = data.Location
+    //     }
+    //   })
+    // },
     // s3에서 파일 가져오기
     // getFiles() {
     //   AWS.config.update({
@@ -252,7 +248,9 @@ export default {
         place.isThumbnail = true
         this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
         // console.log(this.imgList[place.createdOrder])
-        this.upload(this.imgList[place.createdOrder], 0, true)
+        console.log('------------------------------')
+        // this.upload({image: this.imgList[place.createdOrder], num: 0, bool: true})
+        this.$store.images.actions.upload({image: this.imgList[place.createdOrder], num: 0, bool: true})
         // this.updateThumbnailImage(this.imgList[idx])
       }
     }
