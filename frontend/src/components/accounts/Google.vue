@@ -4,8 +4,15 @@
     <a href="http://192.168.1.51:8080/oauth2/authorization/google">google2</a>
     <a href="http://localhost:8080/oauth2/authorization/google">google3</a> -->
 
-    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">google2</a>
-    <button @click="test">TEST</button>
+    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">
+      <v-img class="mx-auto logoTopM" max-height="300" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
+    </a>
+    <div class="rounded-lg">
+
+    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">
+      <v-img class="mx-auto loginButtonM circle" max-height="40" max-width="315" :src="require('../../assets/btn_google_signin_dark_pressed_web@2x.png')" />
+    </a>
+    </div>
     <!-- <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin> -->
 </div>
 </template>
@@ -54,5 +61,7 @@ const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 </script>
 
 <style>
-
+.logoTopM {margin-top: 70px;}
+.loginButtonM {margin-top: 30px;}
+.circle {border-radius: 15px;}
 </style>
