@@ -2,6 +2,7 @@
 
 import { postRoute } from '@/api/routes.js'
 import images from './images'
+import router from '@/router'
 
 const state = {
   places: [],
@@ -144,6 +145,7 @@ const actions = {
     const whatTag = state.whatTag
     const withTag = state.withTag
     const CircularJSON = require('circular-json')
+    console.log('시작했다')
     postRoute(
       // params: { places, routeDescription, routeImg, whatTag, withTag }
       CircularJSON.stringify(
@@ -157,6 +159,7 @@ const actions = {
       }),
       () => {
         console.log('success')
+        router.push({ name: 'LoginView' })
       },(error) => {
         console.log(error)
       }

@@ -33,7 +33,7 @@
             <v-btn
               color="primary"
               text
-              @click="createRoute; goToLoginPage;"
+              @click="createRoute"
             >
               Check!
             </v-btn>
@@ -60,12 +60,6 @@ export default {
   },
   methods: {
     ...mapActions(['createRoute']),
-
-    // 임시 경로입니다
-    goToLoginPage() {
-      this.$router.push({ name: 'LoginView' })
-    }
-
   }
 
 }

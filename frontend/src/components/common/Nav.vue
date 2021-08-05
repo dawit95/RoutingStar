@@ -40,7 +40,7 @@ export default {
       this.$router.push({ name: 'SearchView' })
     },
     moveToPost () {
-      this.$router.push({ name: 'PostView' })
+      this.$router.push({ name: 'PostRouteView' })
     },
     moveToHome () {
       this.$router.push({ name: 'HomeView' })
