@@ -1,5 +1,7 @@
 package com.curation.backend.token.web;
 
+import com.curation.backend.global.dto.SuccessResponseDto;
+import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.token.domain.Token;
 import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.User;
@@ -8,6 +10,8 @@ import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenController {
     private final TokenService tokenService;
     private final UserRepository userRepository;
+    private final ResponseGenerateService responseGenerateService;
 
     Logger logger = LoggerFactory.getLogger(TokenController.class);
 
@@ -31,7 +36,7 @@ public class TokenController {
     }
 
     @PostMapping("/token/refresh")
-    public String refreshAuth(HttpServletRequest request, HttpServletResponse response) throws NoUserException {
+    public ResponseEntity<SuccessResponseDto> refreshAuth(HttpServletRequest request, HttpServletResponse response) throws NoUserException {
         String access_token = request.getHeader("access_token");
         String refresh_token = request.getHeader("refresh_token");
 
@@ -49,14 +54,16 @@ public class TokenController {
                 Token newToken = tokenService.generateToken(user.getId(), email, img, name, "USER");
 
                 response.addHeader("access_token", newToken.getAccess_token());
-                response.addHeader("refresh_token", refresh_token);
                 response.setContentType("application/json;charset=UTF-8");
-                return "HAPPY NEW TOKEN";
+                HttpStatus status = HttpStatus.OK;
+                SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(id);
+
+                return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
             }
 
         }
-
-        throw new RuntimeException();
+        //JWT요청이 잘못옴
+        throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
     }
 
 }
