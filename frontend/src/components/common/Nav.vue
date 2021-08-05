@@ -2,7 +2,8 @@
 <v-card>
   <v-bottom-navigation 
   absolute grow color="teal"
-  :value="value">
+  :value="value"
+  >
     <v-btn @click="moveToSearch">
       <span>Search</span>
       <v-icon>mdi-magnify</v-icon>
@@ -20,8 +21,7 @@
   </v-bottom-navigation>
 
   <v-sheet align-self-end>
-    <v-container style="height: 800px;">
-
+    <v-container style="height: 600px;">
     </v-container>
   </v-sheet>
 </v-card>
