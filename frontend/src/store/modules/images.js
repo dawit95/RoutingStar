@@ -69,7 +69,7 @@ const actions = {
     })
   },
   postPointImages() {
-    console.log('업로드 이미지 들어옴 ㅇㅇ')
+    // console.log('업로드 이미지 들어옴 ㅇㅇ')
     const ins = routes.state.places.length
     for (var x = 0; x < ins; x++) {
       const pointItemPk = routes.state.places[x].createdOrder
@@ -77,7 +77,7 @@ const actions = {
       if (routes.state.imgList[pointItemPk] === '') {
         continue
         // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
-      } else {
+      } else if (routes.state.imgList[pointItemPk] !== '') {
         const image = routes.state.imgList[pointItemPk]
         // S3로 업로드 후 반환값(이미지URL)을 저장
 
@@ -90,9 +90,12 @@ const actions = {
     // }, 3000);
   },
   upload(payload) {
-    console.log('썸네일 업로드 들어옴')
-    console.log(payload.image, payload.num, payload.bool)
+    // console.log('썸네일 업로드 들어옴')
+    // console.log(payload.image, payload.num, payload.bool)
     // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
+    if (payload.image === undefined) {
+      return
+    }
     AWS.config.update({
       region: state.bucketRegion,
       credentials: new AWS.CognitoIdentityCredentials({
@@ -107,6 +110,7 @@ const actions = {
 
     // const photoKey = payload.image.name
     const date = new Date().getTime();
+    console.log(payload.image)
     s3.upload({
       Key: `${date + payload.image.name}`,
       Body: payload.image,
@@ -117,13 +121,7 @@ const actions = {
         console.log(err)
         return alert("There was an error uploading your photo: ", err.message);
       }
-      console.log(data)
-      if (payload.bool) {
-        // commit('UPDATE_THUMBNAIL_IMAGE', data.Location)
-        state.thumbnailImage = data.Locaiton
-      } else {
-        routes.state.places[payload.num].placeImg = data.Location
-      }
+      routes.state.places[payload.num].placeImg = data.Location
     })
   },
   updateRouteImg({ commit }, routeImg) {
