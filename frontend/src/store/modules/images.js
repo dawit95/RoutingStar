@@ -1,11 +1,14 @@
 // images.js
 import { postPointImages, postThumbnailImage } from '@/api/images.js'
 import routes from '@/store/modules/routes.js'
-
+// import AWS from 'aws-sdk'
 
 const state = {
   routeImg: '',
   thumbnailImage: '',
+  albumBucketName: 'routingstar-photo-album',
+  bucketRegion: 'ap-northeast-2',
+  IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
 }
 
 const getters = {
@@ -65,12 +68,67 @@ const actions = {
       console.log(error)
     })
   },
+  postPointImages() {
+    console.log('업로드 이미지 들어옴 ㅇㅇ')
+    const ins = routes.state.places.length
+    for (var x = 0; x < ins; x++) {
+      const pointItemPk = routes.state.places[x].createdOrder
+      // 첨부파일이 없다면 pass
+      if (routes.state.imgList[pointItemPk] === '') {
+        continue
+        // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
+      } else {
+        const image = routes.state.imgList[pointItemPk]
+        // S3로 업로드 후 반환값(이미지URL)을 저장
+
+        // dispatch('upload', {image: image, num: x, bool: false})
+        actions.upload({image: image, num: x, bool: false})
+      }
+    }
+    // setTimeout(() => {
+    //   console.log(routes.state.places)
+    // }, 3000);
+  },
+  upload(payload) {
+    console.log('썸네일 업로드 들어옴')
+    console.log(payload.image, payload.num, payload.bool)
+    // 이미지를 저장하고자하는 S3 버킷지정하기(지역, ID, 버킷이름)
+    // AWS.config.update({
+    //   region: state.bucketRegion,
+    //   credentials: new AWS.CognitoIdentityCredentials({
+    //   IdentityPoolId: state.IdentityPoolId,
+    //   })
+    // });
+
+    // var s3 = new AWS.S3({
+    //   apiVersion: "2006-03-01",
+    //   params: { Bucket: state.albumBucketName }
+    // });
+
+    // s3.upload({
+    //   Key: image.name,
+    //   Body: image,
+    //   ContentType: 'image/jpeg',
+    //   ACL: 'public-read'
+    // }, (err, data) => {
+    //   if (err) {
+    //     console.log(err)
+    //     return alert("There was an error uploading your photo: ", err.message);
+    //   }
+    //   if (thumbnailcheck) {
+    //     // commit('UPDATE_THUMBNAIL_IMAGE', data.Location)
+    //     state.thumbnailImage = data.Locaiton
+    //   } else {
+    //     routes.state.places[x].placeImg = data.Location
+    //   }
+    // })
+  },
   updateRouteImg({ commit }, routeImg) {
     commit('UPDATE_ROUTE_IMG', routeImg)
   },
-  updateThumbnailImage({ commit }, thumbnailImg) {
-    commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImg)
-  },
+  // updateThumbnailImage({ commit }, thumbnailImg) {
+  //   commit('UPDATE_THUMBNAIL_IMAGE', thumbnailImg)
+  // },
   // complete2({ commit }, thumbnailImage) {
   //   const file = new FormData()
   //   file.append('file', thumbnailImage)
