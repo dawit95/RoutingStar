@@ -71,7 +71,7 @@ const routes = [
   // My Page
   {
     path: '/mypage',
-    name: 'MyPage',
+    name: 'MyPageView',
     component: () => import('@/views/myPage/MyPageView.vue')
   
     // follow / unfollow API 다르게 설정
