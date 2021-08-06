@@ -8,12 +8,16 @@
 
 <script>
 import { mapGetters, mapActions, } from 'vuex'
+import AWS from 'aws-sdk'
 
 export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
-      imgDataUrl: ''
+      imgDataUrl: '',
+      albumBucketName: 'routingstar-photo-album',
+      bucketRegion: 'ap-northeast-2',
+      IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
     }
   },
   computed: {
@@ -62,9 +66,34 @@ export default {
     canvasToPng() {
       var canvas = document.getElementById("canvas")
       this.imgDataUrl = canvas.toDataURL("image/png");
-      console.log(this.imgDataUrl)
+      // console.log(this.imgDataUrl)
+      const image = this.imgDataUrl
+      const date = new Date().getTime();
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.IdentityPoolId,
+        })
+      });
+      // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
+      var s3 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: this.albumBucketName }
+      });
+      s3.upload({
+        Key: `routeImage/${date}`,
+        Body: image,
+        ContentType: 'image/png',
+        ACL: 'public-read'
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+          return alert("There was an error uploading your photo: ", err.message);
+        }
+        console.log(`data변환 완료`)
+        console.log(data)
+      })
     },
-
   },
 
   mounted() {
