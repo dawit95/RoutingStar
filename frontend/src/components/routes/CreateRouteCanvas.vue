@@ -13,7 +13,8 @@ export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
-      imgDataUrl: ''
+      imgDataUrl: '',
+      file: '',
     }
   },
   computed: {
@@ -57,14 +58,23 @@ export default {
       canvas.add(canvasPolyline)
       canvasPolyline.center()
       this.canvasToPng()
-      this.updateRouteImg(this.imgDataUrl)
+      this.updateRouteImg(this.file)
     },
     canvasToPng() {
       var canvas = document.getElementById("canvas")
-      this.imgDataUrl = canvas.toDataURL("image/png");
-      console.log(this.imgDataUrl)
+      this.imgDataUrl = canvas.toDataURL("image/png")
+      
+      // base64 암호화뎅 이미지 데이터 디코딩
+      var blobBin = atob(this.imgDataUrl.split(',')[1])
+      var array = []
+      for (var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+      }
+      this.file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+      console.log(this.file)
+      // var formdata = new FormData();	// formData 생성
+      // formdata.append("file", file);	// file data 추가
     },
-
   },
 
   mounted() {
