@@ -60,13 +60,15 @@
 
 
 <script>
+
+
   export default {
     name: 'Header',
     data: () => ({
       items: [
         { title: 'Click Me 0' },
         { title: 'Click Me 1' },
-        { title: 'Click Me 2' },
+        { title: 'Logout' },
       ],
     }),
     methods: {
@@ -78,8 +80,17 @@
         case 'Click Me 1':
           console.log('Profile')
           break
-        case 'Click Me 2':
+          // 토큰 정보 제거 이후에 로그인창으로 이동
+        case 'Logout':
           console.log('Logout')
+          console.log('초기화전:', this.$store.state.accounts.jwt)
+          this.$store.state.accounts.jwt = []
+          this.$store.state.accounts.feeds = ''
+          console.log('초기화후:', this.$store.state.accounts.jwt)
+          localStorage.removeItem('vuex')
+          this.$router.push('/')
+
+
       }
     }
     }
