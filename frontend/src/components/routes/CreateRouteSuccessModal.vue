@@ -20,7 +20,7 @@
           </v-card-title>
           
           <v-layout>
-            <CreateRouteCanvas/>
+            <CreateRouteCanvas :isCompleted="isCompleted"/>
           </v-layout>
           
           <v-card-text>
@@ -36,7 +36,7 @@
             <v-btn
               color="primary"
               text
-              @click="createRoute"
+              @click="onClickComplete"
             >
               Complete!
             </v-btn>
@@ -59,11 +59,18 @@ export default {
   data () {
     return {
       dialog2: false,
+      isCompleted: false,
     }
   },
   methods: {
     ...mapActions(['createRoute', 'postPointImages']),
 
+    // CreateRoute to Png to S3 to axios 오류 해결하기 위해
+    // 먼저 complete 버튼 클릭이 되면 props 보낸다
+    onClickComplete() {
+      this.isCompleted = true
+      console.log('test')
+    },
   }
 
 }
