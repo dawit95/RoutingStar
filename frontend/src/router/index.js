@@ -49,16 +49,6 @@ const routes = [
     component: PostRouteView,
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import('@/views/Test'),
-  },
-  {
-    path: '/draggable',
-    name: 'draggable',
-    component: () => import('@/views/draggable'),
-  },
-  {
     path: '/error',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
