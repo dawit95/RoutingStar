@@ -61,9 +61,9 @@ function searchUserByNickname(keyword, success, fail) {
     .catch(fail);
 }
 
-function getUserInfoByPK(PK, success, fail) {
+function getUserInfoByUserId(UserId, success, fail) {
   instance
-    .get('user/nickname', { params: { PK } })
+    .get('user/nickname', { params: { UserId } })
     .then(success)
     .catch(fail);
 }
@@ -80,7 +80,7 @@ export {
   findByToken,
   searchUserByEmail,
   searchUserByNickname,
-  getUserInfoByPK,
+  getUserInfoByUserId,
   editProfile,
  }    
 

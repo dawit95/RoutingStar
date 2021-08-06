@@ -35,7 +35,7 @@ export default {
       script.src = "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js";
       document.head.appendChild(script);
     },
-    drawPolyLine() {
+    async drawPolyLine() {
       var canvas = new window.fabric.Canvas("canvas", {width:800, height:400 });
       console.log(canvas.getWidth())
       console.log(this.xyPoints)
@@ -62,7 +62,9 @@ export default {
       }
       canvas.add(canvasPolyline)
       canvasPolyline.center()
-      setTimeout(() => this.isPolyLineSet = true, 1000);  
+      // setTimeout(() => this.isPolyLineSet = true, 1000);  
+      await this.canvasToPng()
+      await this.sendToS3()
     },
     canvasToPng() {
       var canvas = document.getElementById("canvas")
