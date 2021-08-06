@@ -277,6 +277,7 @@ export default {
             return alert("There was an error uploading your photo: ", err.message);
           }
           this.$store.state.images.thumbnailImage = data.Location
+          this.$emit('update-tumbnail-image', data.Location)
       })
       }
     },
