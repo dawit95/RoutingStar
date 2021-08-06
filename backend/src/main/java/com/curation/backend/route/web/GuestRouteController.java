@@ -1,31 +1,42 @@
-package com.curation.backend.global;
+package com.curation.backend.route.web;
 
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
+import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
+import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
-import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin("*")
-@RequestMapping("/userTest")
+@RequestMapping("/api/guest")
 @RequiredArgsConstructor
 @RestController
-public class TestController {
+public class GuestRouteController {
+
     private final RouteService routeService;
     private final ResponseGenerateService responseGenerateService;
 
-    @GetMapping("/routes/{userId}")
-    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) throws NoUserException {
-        List<RouteListResponseDto> list = routeService.followingRouteList(id);
+    @GetMapping("/routes")
+    public ResponseEntity<SuccessResponseDto> likeRouteList() {
+        List<RouteListResponseDto> list = routeService.likeRouteList();
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @GetMapping("/route/{routeId}")
+    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
+        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/mypage/routes/{userId}")
@@ -36,4 +47,3 @@ public class TestController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 }
-

@@ -46,30 +46,6 @@ public class RouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @GetMapping("/mypage/routes/{userId}")
-    public ResponseEntity<SuccessResponseDto> myRouteList(@PathVariable("userId") Long id) {
-        List<RouteListResponseDto> list = routeService.myRouteList(id);
-        HttpStatus status = HttpStatus.OK;
-        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
-        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
-    }
-
-    @GetMapping("/routes")
-    public ResponseEntity<SuccessResponseDto> likeRouteList() {
-        List<RouteListResponseDto> list = routeService.likeRouteList();
-        HttpStatus status = HttpStatus.OK;
-        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
-        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
-
-    }
-
-    @GetMapping("/route/{routeId}")
-    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
-        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
-        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
-        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
-    }
-
     @PutMapping("/route/{routeId}")
     public ResponseEntity<SuccessResponseDto> modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
         Long routeId = routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
@@ -100,15 +76,6 @@ public class RouteController {
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
-    }
-
-    @ExceptionHandler(NoRouteException.class)
-    public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
-        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        String message = "해당하는 루트가 없습니다.";
-
-        ExceptionResponseDto exceptionResponseDto = responseGenerateService.generateExceptionResponse(httpStatus, message);
-        return new ResponseEntity<ExceptionResponseDto>(exceptionResponseDto, httpStatus);
     }
 }
 

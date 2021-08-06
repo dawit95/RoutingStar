@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin("*")
 @RequestMapping("/api/v1/img")
 @RequiredArgsConstructor
 @RestController
