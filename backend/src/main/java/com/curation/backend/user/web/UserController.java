@@ -1,31 +1,50 @@
 package com.curation.backend.user.web;
 
+import com.curation.backend.global.dto.SuccessResponseDto;
+import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
+import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.tag.domain.WhatTag;
 import com.curation.backend.tag.domain.WhatTagRepository;
 import com.curation.backend.tag.domain.WithTag;
 import com.curation.backend.tag.domain.WithTagRepository;
 import com.curation.backend.user.domain.*;
+import com.curation.backend.user.dto.UserRequestDto;
+import com.curation.backend.user.exception.NoUserException;
+import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/test")
+@RequestMapping("/api/user")
 @RestController
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final ResponseGenerateService responseGenerateService;
+
     private final WhatTagRepository whatTagRepository;
     private final WithTagRepository withTagRepository;
     private final FollowerFollowingRepository followerFollowingRepository;
     private final LikeRepository likeRepository;
     private final RouteRepository routeRepository;
+
+
+    @PostMapping("/profile")
+    public ResponseEntity<SuccessResponseDto> setUserDetail(@RequestBody UserRequestDto userRequestDto) throws NoUserException, NoRouteException {
+        String message = userService.updateUserInfo(userRequestDto);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(message);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
 
     @GetMapping("")
     public void test() {
@@ -88,16 +107,6 @@ public class UserController {
         likeRepository.save(Like.builder().user(user1).route(route1).build());
     }
 
-//    @PutMapping("/update/{userId}")
-//    public ResponseEntity<SuccessResponseDto> updateUserDetail(@PathVariable Long userId) throws NoUserException, NoRouteException {
-//        User user = userRepository.findById(Long.valueOf(1)).get();
-//        Route route = routeRepository.findById(Long.valueOf(1)).get();
-//        likeRepository.save(Like.builder().user(user).route(route).build());
-//
-//        User user1 = userRepository.findById(Long.valueOf(2)).get();
-//        Route route1 = routeRepository.findById(Long.valueOf(1)).get();
-//        likeRepository.save(Like.builder().user(user1).route(route1).build());
-//    }
 }
 
 
