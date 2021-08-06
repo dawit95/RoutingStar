@@ -21,7 +21,12 @@ const mutations= {
   // 전체 토큰 받아오기(처음 로그인)
   CREATE_USER(state, token){
     console.log('처음 로그인 jwt 저장 commit')
-    state.jwt = token
+    console.log(token)
+    state.jwt.access = token.access
+    state.jwt.refresh = token.refresh
+    console.log(state.jwt)
+    console.log(state.jwt.access)
+    console.log(state.jwt.refresh)
   },
   // access 토큰 갱신용
   RENEW_ACCESS(state, access){
@@ -39,6 +44,7 @@ const actions = {
     commit('CREATE_USER', token)
     const jwt = require('jsonwebtoken')
     const decodeAccessToken = jwt.decode(token.access)
+    console.log('decode', decodeAccessToken)
     const config = {
       headers: {
         'access_token': token.access,
