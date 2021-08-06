@@ -23,7 +23,7 @@
               <!-- 썸네일 이미지 보여주는 란 (루트가 올라간) -->
               <!-- 현재 임시 이미지로 대체되어 있음 -->
               <v-container>
-                <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" src="@/assets/temp_image_for_test.png" alt="...">
+                <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" :src="tempThumbnail" alt="...">
               </v-container>
 
               <!-- 설명 작성 란 -->
@@ -84,6 +84,11 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'PostRouteDetailModal',
+  props: {
+    tempThumbnail: {
+      type: String
+    }
+  },
   components: {
     TagForm,
     CreateRouteSuccessModal,

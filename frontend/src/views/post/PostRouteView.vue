@@ -3,9 +3,9 @@
     <Header />
     <Map :isFreeze="isFreeze"/>
     <v-divider></v-divider>
-    <MapPointFormS3/>
+    <MapPointFormS3 @update-tumbnail-image="updateThumbnailImage"/>
 
-    <PostRouteDetailModal @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
+    <PostRouteDetailModal :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
   </v-layout>
 
 </template>
@@ -21,7 +21,8 @@ export default {
  name: 'PostRouteView',
  data() {
    return {
-     isFreeze: false
+     isFreeze: false,
+     tempThumbnail: '',
    }
  },
  components: { 
@@ -39,6 +40,9 @@ export default {
     recoverFreezeMap() {
       this.isFreeze = false
       console.log(this.isFreeze)
+    },
+    updateThumbnailImage(image) {
+      this.tempThumbnail = image
     }
   }
 }
