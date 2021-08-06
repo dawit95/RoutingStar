@@ -36,8 +36,6 @@ const mutations= {
 
 const actions = {
   createUser({commit}, token) {
-    console.log('createuser')
-    console.log('createuser', token)
     commit('CREATE_USER', token)
     const jwt = require('jsonwebtoken')
     const decodeAccessToken = jwt.decode(token.access)
@@ -46,7 +44,7 @@ const actions = {
         'access_token': token.access,
       }
     }
-    axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+    axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
       .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
       .catch((fail) => console.log('fail: ', fail))
     },
@@ -54,18 +52,12 @@ const actions = {
     commit('FETCH_ACCESS', accessToken)
   },
   fetchLoginedFeeds({commit}, token) {
-    console.log('commit 전')
-    console.log(token)
-
-
     const jwt = require('jsonwebtoken')
     const decodeAccessToken = jwt.decode(token.access)
     console.log('decodepk:', decodeAccessToken.pk)
-    console.log('token', token)
-    console.log('access_token', token.access)
     // 메인 페이지 데이터 받아오기 & access 토큰 받아오기
     // 돌아오는건 access 토큰만이고, data랑 같이 안에
-    if ( decodeAccessToken.exp < Date.now()/1000 + 60) {
+    if ( decodeAccessToken.exp > Date.now()/1000 + 60) {
       console.log('갱신해야함')
       const config = {
         headers: {
@@ -73,9 +65,9 @@ const actions = {
           'refresh_token': token.refresh,
         }
       }
-      axios.all([axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config),
-                axios.get(`http://i5a309.p.ssafy.io:8000/token/refresh`), config])
-            .then(axios.spread((res1, res2) => {commit('FETCH_LOGINED_FEEDS', res1), commit('FETCH_LOGINED_FEEDS', res2)}))
+      axios.all([axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config),
+                axios.get(`http://localhost:8000/token/refresh`, config)])
+            .then(axios.spread((res1, res2) => {console.log(res1, res2.data.success)}))
             .catch((err) => console.log(err))
 
     } else {
@@ -85,9 +77,9 @@ const actions = {
           'access_token': token.access,
         }
       }
-      axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
         .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
-        .catch((fail) => console.log('fail: ', fail))
+        .catch((err) => console.log(err))
         }   
       }
    }
