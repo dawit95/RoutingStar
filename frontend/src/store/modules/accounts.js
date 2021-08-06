@@ -20,21 +20,24 @@ const getters = {
 const mutations= {
   // 전체 토큰 받아오기(처음 로그인)
   CREATE_USER(state, token){
+    console.log('처음 로그인 jwt 저장 commit')
     state.jwt = token
   },
   // access 토큰 갱신용
   RENEW_ACCESS(state, access){
+    console.log('로그인 jwt 갱신 commit')
     state.jwt.access = access
   },
   FETCH_LOGINED_FEEDS(state, fetechedFeeds){
-    console.log('commiteed', fetechedFeeds)
+    console.log('메인페이지 받아오기 commiteed', fetechedFeeds)
     state.feeds = fetechedFeeds
   }
 }
 
 const actions = {
   createUser({commit}, token) {
-    console.log(token)
+    console.log('createuser')
+    console.log('createuser', token)
     commit('CREATE_USER', token)
     const jwt = require('jsonwebtoken')
     const decodeAccessToken = jwt.decode(token.access)
@@ -72,12 +75,9 @@ const actions = {
       }
       axios.all([axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config),
                 axios.get(`http://i5a309.p.ssafy.io:8000/token/refresh`), config])
-            .then(axios.spread((res1, res2) => {console.log('갱신해야함성공:', res1, res2)}))
+            .then(axios.spread((res1, res2) => {commit('FETCH_LOGINED_FEEDS', res1), commit('FETCH_LOGINED_FEEDS', res2)}))
             .catch((err) => console.log(err))
-      // axios.get(`http://i5a309.p.ssafy.io:8000/userTest/routes/${decodeAccessToken.pk}`, config)
-      //   // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
-      //   .then(res => {console.log(res)})
-      //   .catch((fail) => console.log(fail))
+
     } else {
       console.log('갱신안해도됨')
       const config = {
