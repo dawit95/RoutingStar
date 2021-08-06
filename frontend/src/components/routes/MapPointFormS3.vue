@@ -8,14 +8,14 @@
         class="rounded-lg"
       >
 
-        <v-card @click="forcheck(place)" flat class="d-flex">
+        <v-card flat class="d-flex">
           <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
           {{ idx }}
           <v-spacer></v-spacer>
           <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
         </v-card>
     
-        <v-list-item outlined @click="forcheck(place)">
+        <v-list-item outlined>
           <v-list-item-content class="py-0">
               <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file">
               <!-- <img style="width:50px;" id="preview-image" :src="fileList[place.createdOrder]" alt=""> -->
