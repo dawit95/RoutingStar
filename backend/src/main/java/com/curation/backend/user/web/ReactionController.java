@@ -53,4 +53,32 @@ public class ReactionController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
+    @GetMapping("/follow/{userId}/{targetId}")
+    public ResponseEntity<SuccessResponseDto> setFollowReaction(@PathVariable Long userId,@PathVariable Long targetId) throws NoUserException, NoRouteException {
+
+        String message = reactionService.setFollow(userId, targetId);
+
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(message);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(NoUserException.class)
+    public ResponseEntity<ExceptionResponseDto> noUserHandler() {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        String message = "없는 사용자입니다.";
+
+        ExceptionResponseDto exceptionResponseDto = responseGenerateService.generateExceptionResponse(httpStatus, message);
+        return new ResponseEntity<ExceptionResponseDto>(exceptionResponseDto, httpStatus);
+    }
+
+    @ExceptionHandler(NoRouteException.class)
+    public ResponseEntity<ExceptionResponseDto> noRouteHandler() {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        String message = "없는 루트입니다.";
+
+        ExceptionResponseDto exceptionResponseDto = responseGenerateService.generateExceptionResponse(httpStatus, message);
+        return new ResponseEntity<ExceptionResponseDto>(exceptionResponseDto, httpStatus);
+    }
+
 }

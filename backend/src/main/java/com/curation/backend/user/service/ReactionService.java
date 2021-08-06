@@ -59,12 +59,32 @@ public class ReactionService {
 
         //이미 저장되어 있음
         if(routeStorage != null) {
-            likeRepository.deleteById(routeStorage.getId());
+            routeStorageRepository.deleteById(routeStorage.getId());
             message = "루트 저장 취소";
         } else {
             routeStorage = RouteStorage.builder().route(route).user(user).build();
             message = "루트 저장 성공";
             routeStorageRepository.save(routeStorage);
+        }
+
+        return message;
+    }
+
+    public String setFollow(Long userId, Long targetId)  throws NoUserException, NoRouteException {
+        String message = "";
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("당신의 정보가 없습니다.\n회원가입해주세요"));
+        User target = userRepository.findById(targetId).orElseThrow(() -> new NoUserException("해당하는 사용자가 없습니다."));
+
+        FollowerFollowing followerFollowing = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(targetId,userId).orElse(null);
+
+        //이미 저장되어 있음
+        if(followerFollowing != null) {
+            followerFollowingRepository.deleteById(followerFollowing.getId());
+            message = "follow 취소";
+        } else {
+            followerFollowing = followerFollowing.builder().follower(user).following(target).build();
+            message = "follow 성공";
+            followerFollowingRepository.save(followerFollowing);
         }
 
         return message;
@@ -80,4 +100,5 @@ public class ReactionService {
         FFResponseDto ffResponseDto = new FFResponseDto(followerList,followingList);
         return ffResponseDto;
     }
+
 }
