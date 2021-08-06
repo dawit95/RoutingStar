@@ -251,8 +251,8 @@ export default {
     }
   },
   watch: {
-    isFreeze: function() {
-      if (this.isFreeze) {
+    isFreeze: function(isFreeze) {
+      if (isFreeze) {
         this.initMap(true)
       } else {
         this.initMap(false)
