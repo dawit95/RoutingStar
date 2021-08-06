@@ -19,16 +19,21 @@ export default {
       albumBucketName: 'routingstar-photo-album',
       bucketRegion: 'ap-northeast-2',
       IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
-      isPolyLineSet: false,
+    }
+  },
+  props: {
+    isCompleted: {
+      type: Boolean
     }
   },
   computed: {
     ...mapGetters(['places', 'xyPoints'])
   },
   methods: {
-    ...mapActions(['updateRouteImg',]),
+    ...mapActions(['updateRouteImg', 'createRoute']),
 
     addCanvasScript() {
+      console.log("addCanvasScript")
       const script = document.createElement("script");
 
       script.onload = () => this.drawPolyLine();
@@ -36,7 +41,8 @@ export default {
       document.head.appendChild(script);
     },
     drawPolyLine() {
-      var canvas = new window.fabric.Canvas("canvas", {width:800, height:400 });
+      console.log("drawPolyLine")
+      let canvas = new window.fabric.Canvas("canvas", {width:800, height:400 });
       console.log(canvas.getWidth())
       console.log(this.xyPoints)
       var canvasPolyline = new window.fabric.Polyline(
@@ -51,9 +57,9 @@ export default {
       const canvasHeight = 400
       const margin = 0.8
 
-      var bounds = canvasPolyline.getBoundingRect()
-      var widthRatio = bounds.width / canvasWidth
-      var heightRatio = bounds.height / canvasHeight
+      let bounds = canvasPolyline.getBoundingRect()
+      let widthRatio = bounds.width / canvasWidth
+      let heightRatio = bounds.height / canvasHeight
 
       if ( widthRatio > heightRatio ) {
         canvasPolyline.scaleToWidth( canvasWidth * margin )  
@@ -62,24 +68,24 @@ export default {
       }
       canvas.add(canvasPolyline)
       canvasPolyline.center()
-      setTimeout(() => this.isPolyLineSet = true, 1000);  
     },
     canvasToPng() {
-      var canvas = document.getElementById("canvas")
+      console.log('canvasToPng')
+      let canvas = document.getElementById("canvas")
+      console.log(canvas)
       this.imgDataUrl = canvas.toDataURL("image/png")
       
       // base64 암호화뎅 이미지 데이터 디코딩
-      var blobBin = atob(this.imgDataUrl.split(',')[1])
-      var array = []
-      for (var i = 0; i < blobBin.length; i++) {
+      let blobBin = atob(this.imgDataUrl.split(',')[1])
+      let array = []
+      for (let i = 0; i < blobBin.length; i++) {
         array.push(blobBin.charCodeAt(i));
       }
       this.file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
       console.log(this.file)
-      // var formdata = new FormData();	// formData 생성
-      // formdata.append("file", file);	// file data 추가
-    },
+    }, 
     sendToS3() {  
+      console.log('sendToS3')
       const image = this.file
       const date = new Date().getTime();
       AWS.config.update({
@@ -94,24 +100,28 @@ export default {
         params: { Bucket: this.albumBucketName }
       });
       s3.upload({
-        Key: `routeImage/${date}`,
-        Body: image,
-        ContentType: 'image/png',
-        ACL: 'public-read'
-      }, (err, data) => {
-        if (err) {
-          console.log(err)
-          return alert("There was an error uploading your photo: ", err.message);
-        }
-        console.log(`data변환 완료`)
-        this.updateRouteImg(data.Location)
-        console.log(data)
-      })
+          Key: `routeImage/${date}`,
+          Body: image,
+          ContentType: 'image/png',
+          ACL: 'public-read'
+        }, (err, data) => {
+          if (err) {
+            console.log(err)
+            return alert("There was an error uploading your photo: ", err.message);
+          }
+          console.log(`data변환 완료`)
+          this.updateRouteImg(data.Location)
+          console.log(data)
+          
+          // 동기적으로 callback을 활용한다 !!!! 으아아아아 
+          this.createRoute()
+        })
     },
+    
   },
   watch: {
-    isPolyLineSet: function() {
-      if (this.isPolyLineSet) {
+    isCompleted: function(isCompleted) {
+      if (isCompleted) {
         this.canvasToPng()
         this.sendToS3()
       }
