@@ -3,7 +3,7 @@
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
           <v-col md="3">
-          <!-- <image-input v-model="avatar">
+          <image-input v-model="avatar">
             <div slot="activator">
               <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
                 <span>Click to add avatar</span>
@@ -12,7 +12,7 @@
                 <img :src="avatar.imageURL" alt="avatar">
               </v-avatar>
             </div>
-          </image-input> -->
+          </image-input>
           <!-- 이미지 저장할 때 모션 및 메서드로 나중에 submit 으로 대체할 예정 -->
           <v-slide-x-transition>
             <div v-if="avatar && saved == false">
@@ -45,9 +45,10 @@
 </template>
 
 <script>
+import ImageInput from '@/components/myPage/ImageInput.vue'
 
 export default {
-  name: 'ProfileInfo',
+  name: 'EditProfileView',
   data () {
     return {
       avatar: null,
@@ -56,6 +57,7 @@ export default {
     }
   },
   components: {
+    ImageInput: ImageInput
   },
   watch:{
     avatar: {

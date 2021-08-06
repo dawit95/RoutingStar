@@ -1,21 +1,21 @@
 <template>
   <div>
-    <h1>로그인한 유저가 보는 자기 페이지입니다.</h1>
+    <h1>로그인한 유저가 보는 남의 페이지입니다.</h1>
     <ProfileInfo/>
-    <MyRoutesTabs/>
+    <OtherUserRoutesTab/>
 
   </div>
 </template>
 
 <script>
 import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
-import MyRoutesTabs from '@/components/myPage/MyRoutesTabs.vue'
+import OtherUserRoutesTab from '@/components/myPage/OtherUserRoutesTab.vue'
 
 export default {
   name: 'MyPage',
   components: {
     ProfileInfo,
-    MyRoutesTabs,
+    OtherUserRoutesTab,
   },
 }
 </script>
