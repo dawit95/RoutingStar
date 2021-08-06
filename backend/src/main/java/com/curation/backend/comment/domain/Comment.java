@@ -25,9 +25,6 @@ public class Comment extends BaseTime {
     private String content;
 
     @Column(nullable = false)
-    private Long level;
-
-    @Column(nullable = false)
     private Long commentOrder;
 
     @Column(nullable = false)

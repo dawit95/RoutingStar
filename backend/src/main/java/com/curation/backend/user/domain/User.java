@@ -40,7 +40,7 @@ public class User extends BaseTime {
     @Column(nullable = true)
     private String fileName;
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "LONGTEXT")
     private String refreshToken;
 
     @OneToMany(mappedBy = "user")

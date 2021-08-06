@@ -29,7 +29,7 @@ public class Route extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String routeImg;
 
     @Column(nullable = false)
