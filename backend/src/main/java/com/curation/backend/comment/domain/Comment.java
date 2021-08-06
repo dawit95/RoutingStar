@@ -27,9 +27,6 @@ public class Comment extends BaseTime {
     @Column(nullable = false)
     private Long commentOrder;
 
-    @Column(nullable = false)
-    private Long groupNumber;
-
     @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
     Route route;
