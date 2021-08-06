@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**","/oauth2/**").permitAll()
                 .antMatchers("/token/**","/api/v1/**").hasRole(Role.USER.name())
 
-                .antMatchers("/api/guest/**").permitAll()
+                .antMatchers("/api/guest/**","/api/user/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 //front-end CI/CD 구현시 변경될 uri
-//                .loginPage("http://i5a309.p.ssafy.io:8080/")
+                .loginPage("http://localhost:8080/")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
 

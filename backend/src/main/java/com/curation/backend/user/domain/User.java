@@ -3,7 +3,7 @@ package com.curation.backend.user.domain;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteStorage;
-
+import com.curation.backend.user.dto.UserRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,5 +92,11 @@ public class User extends BaseTime {
 
     public String getRoleKey(){
         return this.role.getKey();
+    }
+
+    public void modify(UserRequestDto userRequestDto) {
+        this.name = userRequestDto.getName();
+        this.profileImg = userRequestDto.getProfileImg();
+        this.userDescription = userRequestDto.getUserDescription();
     }
 }
