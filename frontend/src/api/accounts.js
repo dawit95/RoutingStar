@@ -47,9 +47,40 @@ async function findByToken(token, success, fail) {
     .catch(fail);
 }
 
+function searchUserByEmail(keyword, success, fail) {
+  instance
+    .get('search/email', { params: keyword })
+    .then(success)
+    .catch(fail);
+}
+
+function searchUserByNickname(keyword, success, fail) {
+  instance
+    .get('search/nickname', { params: keyword })
+    .then(success)
+    .catch(fail);
+}
+
+function getUserInfoByPK(PK, success, fail) {
+  instance
+    .get('user/nickname', { params: { PK } })
+    .then(success)
+    .catch(fail);
+}
+
+function editProfile(param, success, fail) {
+  instance
+    .post('profile/upload', param)
+    .then(success)
+    .catch(fail);
+}
 
 
-
-
-export { login, logout }    
+export { 
+  findByToken,
+  searchUserByEmail,
+  searchUserByNickname,
+  getUserInfoByPK,
+  editProfile,
+ }    
 
