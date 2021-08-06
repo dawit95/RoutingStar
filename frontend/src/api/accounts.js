@@ -1,6 +1,6 @@
-// import { createInstance } from "./index.js";
+import { createInstance } from "./index.js";
 
-// const instance = createInstance()
+const instance = createInstance()
 
 // function login(token){
 //   const jwt = require('jsonwebtoken')
@@ -39,7 +39,17 @@
 
 // function logout() {
 
-// }
+async function findByToken(token, success, fail) {
+  instance.defaults.headers['auth-token'] = token;
+  await instance
+    .get('account/info')
+    .then(success)
+    .catch(fail);
+}
 
-// export { login, logout }    
+
+
+
+
+export { login, logout }    
 
