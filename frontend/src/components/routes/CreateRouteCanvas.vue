@@ -104,6 +104,7 @@ export default {
           return alert("There was an error uploading your photo: ", err.message);
         }
         console.log(`data변환 완료`)
+        this.updateRouteImg(data.Location)
         console.log(data)
       })
     },
