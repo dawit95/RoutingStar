@@ -124,17 +124,19 @@ export default {
   console.log('created')
   console.log(this.$route.query.access)
   console.log(this.jwt)
-  if (this.jwt.access) {
+  if (this.jwt.access.length > 0) {
     console.log('token이 이미 저장이 되어있음')
     this.$store.dispatch('fetchLoginedFeeds', this.jwt)
   }
   else if (this.$route.query.access && this.$route.query.refresh){
     console.log('token을 지금 처음 저장함')
+    console.log('token 지금 저장하고 난 후')
     const token = 
       {
         access: this.$route.query.access,
         refresh: this.$route.query.refresh
       }
+      console.log('dispatch보내기전', token)
       this.$store.dispatch('createUser', token)
     } 
   else {
