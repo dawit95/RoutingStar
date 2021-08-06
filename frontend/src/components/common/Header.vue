@@ -83,14 +83,10 @@
           // 토큰 정보 제거 이후에 로그인창으로 이동
         case 'Logout':
           console.log('Logout')
-          console.log('초기화전:', this.$store.state.accounts.jwt)
           this.$store.state.accounts.jwt = []
           this.$store.state.accounts.feeds = ''
-          console.log('초기화후:', this.$store.state.accounts.jwt)
           localStorage.removeItem('vuex')
           this.$router.push('/')
-
-
       }
     }
     }
