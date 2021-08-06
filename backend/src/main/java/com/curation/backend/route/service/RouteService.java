@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -131,9 +132,10 @@ public class RouteService {
         List<Long> whatTagIdList = routeWhatTagRepository.findByWhatTag(whatTag, whatTagSize);
         List<Long> withTagIdList = routeWithTagRepository.findByWithTag(withTag, withTagSize);
 
-        whatTagIdList.retainAll(withTagIdList);
+        List<Long> routeIds = getRouteIds(whatTagSize, withTagSize, whatTagIdList, withTagIdList);
 
         logger.trace(String.valueOf(whatTagIdList) + "is distinct route!!!");
+        logger.trace(String.valueOf(whatTagIdList) + "is distinct route about with!!!");
 
         Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
         List<FollowerFollowing> followList = user.get().getFollowers();
@@ -141,7 +143,7 @@ public class RouteService {
         List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         followerList.add(id);
 
-        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdNotIn(whatTagIdList, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdNotIn(routeIds, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
 
         return list;
     }
@@ -154,9 +156,10 @@ public class RouteService {
         List<Long> whatTagIdList = routeWhatTagRepository.findByWhatTag(whatTag, whatTagSize);
         List<Long> withTagIdList = routeWithTagRepository.findByWithTag(withTag, withTagSize);
 
-        whatTagIdList.retainAll(withTagIdList);
+        List<Long> routeIds = getRouteIds(whatTagSize, withTagSize, whatTagIdList, withTagIdList);
 
-        logger.trace(String.valueOf(whatTagIdList) + "is distinct route!!!");
+        logger.trace(String.valueOf(whatTagIdList) + "is distinct route about what!!!");
+        logger.trace(String.valueOf(withTagIdList) + "is distinct route about with!!!");
 
         Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
         List<FollowerFollowing> followList = user.get().getFollowers();
@@ -164,9 +167,23 @@ public class RouteService {
         List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         followerList.add(id);
 
-        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdIn(whatTagIdList, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdIn(routeIds, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
 
         return list;
+    }
+
+    private List<Long> getRouteIds(Long whatTagSize, Long withTagSize, List<Long> whatTagIdList, List<Long> withTagIdList) {
+        List<Long> routeIds = new ArrayList<Long>();
+
+        if (whatTagSize != 0 && withTagSize != 0) {
+            routeIds.addAll(whatTagIdList);
+            routeIds.retainAll(withTagIdList);
+        } else if (whatTagSize != 0 && withTagSize == 0) {
+            routeIds.addAll(whatTagIdList);
+        } else if (whatTagSize == 0 && withTagSize != 0) {
+            routeIds.addAll(withTagIdList);
+        }
+        return routeIds;
     }
 }
 
