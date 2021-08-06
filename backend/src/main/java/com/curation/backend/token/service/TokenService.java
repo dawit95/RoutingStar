@@ -74,7 +74,8 @@ public class TokenService {
     }
 
     public Long getId(String token){
-        return (Long) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("pk");
+        Long pk = Long.parseLong(String.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("pk")));
+        return pk;
     }
 
     public String getUid(String token) {
