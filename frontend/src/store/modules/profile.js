@@ -1,20 +1,29 @@
-// profile.js
+// // profile.js
 
-const state = {
-}
+// import { getUserInfoByUserId } from '@/api/accounts.js'
 
-const getters = {
+// const state = {
+// }
 
-}
+// const getters = {
 
-const mutations= {
+// }
 
-}
+// const mutations= {
 
-const actions = {
+// }
 
-}
+// const actions = {
 
-export default {
-  state, getters, mutations, actions
-}
+//   // fetchUserInfo({ commit }, userId) {
+//   //   getUserInfoByUserId(userId),
+//   //   (res) => {
+//   //     commit('')
+//   //   } 
+//   // }
+
+// }
+
+// export default {
+//   state, getters, mutations, actions
+// }
