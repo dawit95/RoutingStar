@@ -19,6 +19,7 @@ export default {
       albumBucketName: 'routingstar-photo-album',
       bucketRegion: 'ap-northeast-2',
       IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
+      isPolyLineSet: false,
     }
   },
   computed: {
@@ -61,8 +62,7 @@ export default {
       }
       canvas.add(canvasPolyline)
       canvasPolyline.center()
-      this.canvasToPng()
-      this.updateRouteImg(this.file)
+      setTimeout(() => this.isPolyLineSet = true, 1000);  
     },
     canvasToPng() {
       var canvas = document.getElementById("canvas")
@@ -78,7 +78,8 @@ export default {
       console.log(this.file)
       // var formdata = new FormData();	// formData 생성
       // formdata.append("file", file);	// file data 추가
-      
+    },
+    sendToS3() {  
       const image = this.file
       const date = new Date().getTime();
       AWS.config.update({
@@ -107,13 +108,19 @@ export default {
       })
     },
   },
-
+  watch: {
+    isPolyLineSet: function() {
+      if (this.isPolyLineSet) {
+        this.canvasToPng()
+        this.sendToS3()
+      }
+    }
+  },
   mounted() {
     window.fabric
       ? this.drawPolyLine()
       : this.addCanvasScript();
-
-  }
+  },
 }
 </script>
 
