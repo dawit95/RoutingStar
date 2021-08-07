@@ -49,16 +49,6 @@ const routes = [
     component: PostRouteView,
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import('@/views/Test'),
-  },
-  {
-    path: '/draggable',
-    name: 'draggable',
-    component: () => import('@/views/draggable'),
-  },
-  {
     path: '/error',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
@@ -74,6 +64,11 @@ const routes = [
     // 데이터와의 비교는 빽에서 한다
   
   
+  },
+  {
+    path: '/reviseroute',
+    name: 'ReviseRouteView',
+    component: () => import('@/views/revise/ReviseRouteView.vue')
   },
 ]
 
