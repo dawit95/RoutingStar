@@ -8,16 +8,32 @@
         class="rounded-lg"
       >
 
-        <v-card flat class="d-flex">
-          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
-          {{ idx }}
+        <v-card flat class="d-flex justify-end">
+
+
+          <image-input v-model="avatar" :place="place">
+            <div slot="activator">
+              <v-avatar size="50px" v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
+                <span>Image</span>
+              </v-avatar>
+              <v-avatar size="50px" v-ripple v-else class="ml-1">
+                <img :src="place.placeImg" alt="Image">
+              </v-avatar>
+            </div>
+          </image-input>
+
+
+
+          {{place.createdOrder}}
           <v-spacer></v-spacer>
+          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+          <!-- <v-spacer></v-spacer> -->
           <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
         </v-card>
 
         <v-list-item outlined>
           <v-list-item-content class="py-0">
-              <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file">
+              <!-- <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file"> -->
               <!-- <img style="width:50px;" id="preview-image" :src="fileList[place.createdOrder]" alt=""> -->
             <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
           </v-list-item-content>
@@ -26,9 +42,9 @@
           class="switch-prop"
           id="thumbnail_switch"
           @click="refreshThumbnailBtn(place)"
+          :v-model="place.isThumbnail"
           :label="place.isThumbnail ? thumbnailLabel : '썸네일로 설정하기!'" 
           :disabled="(!place.isThumbnail && isthumbail) || !place.imageUpload"
-          :v-model="place.isThumbnail"
           inset color="indigo darken-3"></v-switch>
       </v-list>
     </draggable>
@@ -37,16 +53,18 @@
 </template>
 
 <script>
-// import axios from 'axios'
+
 import { mapActions, mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
 import { dragscroll } from 'vue-dragscroll'
 import AWS from 'aws-sdk'
+import ImageInput from '@/components/revise/ImageInput.vue'
 
 export default {
   name: 'UpdateMapPointForm',
   components: {
     draggable,
+    ImageInput: ImageInput,
   },
   directives: {
     dragscroll
@@ -60,6 +78,7 @@ export default {
       albumBucketName: 'routingstar-photo-album',
       bucketRegion: 'ap-northeast-2',
       IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
+      avatar: null,
     }
   },
   computed: {
@@ -83,11 +102,11 @@ export default {
     // 첨부파일 업로드되면 imgList에 지속 업로드
     // 핀이 등록되면 해당 핀에의해 만들어진 리스트 인덱스를 가져와서 해당 인덱스를 활용하여 imgList에 이미지 넣기
     // 이렇게해야만 사용자가 draggable로 리스트 이동후 파일 첨부를 해도 imgList의 올바른 자리에 사진이 갱신됩니다.
-    onFileSelected(place) {
-      this.selectedFile = event.target.files[0]
-      this.imgList[place.createdOrder] = this.selectedFile
-      place.imageUpload = true
-    },
+    // onFileSelected(place) {
+      // this.selectedFile = event.target.files[0]
+      // this.imgList[place.createdOrder] = this.selectedFile
+      // place.imageUpload = true
+    // },
     // deleteItem 함수는 삭제하고 각각 component에서 조건에 맞게 포인트를 삭제한 후에
     // 삭제된 places를 변수로 설정 후 mutation 함수로 state에 반영하는 것으로 바꿈
     removePoint(marker, idx) {
