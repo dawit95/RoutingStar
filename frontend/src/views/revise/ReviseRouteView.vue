@@ -1,17 +1,16 @@
 <template>
   <v-layout row swap>
     <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places"/>
-    <!-- <UpdateMapPointForm/> -->
-    <MapPointFormS3 @update-tumbnail-image="updateThumbnailImage"/>
+    <UpdateMapPointForm @update-tumbnail-image="updateThumbnailImage"/>
     <PostRouteDetailModal :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
   </v-layout>
 </template>
 
 <script>
 import UpdateMap from '@/components/revise/UpdateMap.vue'
-import MapPointFormS3 from '@/components/routes/MapPointFormS3'
+// import MapPointFormS3 from '@/components/routes/MapPointFormS3'
 import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
-// import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
+import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
 // { lat: 37.501, lng: 127.039 },
 // { lat: 37.501, lng: 127.001 },
 // { lat: 37.500, lng: 127.039 },
@@ -53,7 +52,7 @@ export default {
             "lat": 37.500,
             "lng": 127.039,
             "createdOrder": 3,
-            "placeImg": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTexRTsmITUumVYDuDZStpL0349oRUfJ6McVkN0yl8MhYO4WmGxr23HhLJrbsWIyuZdmjU&usqp=CAU",
+            "placeImg": "https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/thumbnail/1628320246729Intro.jpg",
             "isThumbnail": false
           },
 
@@ -98,8 +97,7 @@ export default {
  },
   components: {
     UpdateMap,
-    // UpdateMapPointForm,
-    MapPointFormS3,
+    UpdateMapPointForm,
     PostRouteDetailModal,
   },
   methods: {
