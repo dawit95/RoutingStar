@@ -45,6 +45,7 @@ export default {
       map: null,
       pointListPk: 0,
       positionLst: [
+        { lat: 37.501, lng: 127.039 },
         { lat: -25.344, lng: 131.036 },
         { lat: -12.525, lng: 13.8786 },
         { lat: 25.3344, lng: 158.036 },
@@ -108,11 +109,25 @@ export default {
             },
           }
           this.addPlace(newPlace)
-          // this.refreshPolyline();
+          
+          this.SET_POLYLINE(new window.google.maps.Polyline
+            ({
+              strokeColor: "#2A355D",
+              strokeOpacity: 0.3,
+              strokeWeight: 8,
+            })
+          )
+          this.polyLine.setMap(this.map);
           marker.addListener('dblclick', (e) => {
             console.log(e.latLng)
-            // this.removePoint(marker)
+            this.removePoint(marker)
             marker.setMap(null);
+          });
+          marker.addListener('click', function () {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+            setTimeout((function() {
+              marker.setAnimation(null)
+            }).bind(marker), 1400)
           });
         }
         // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
@@ -229,6 +244,9 @@ export default {
 
     // 6. 루트를 새로고침
     refreshPolyline() {
+      // console.log('refreshPolyline')
+      // console.log(this.polyLine)
+      // console.log(this.polyLine.getPath())
       const path = this.polyLine.getPath();
       const places = this.places
       const bounds = new window.google.maps.LatLngBounds();
