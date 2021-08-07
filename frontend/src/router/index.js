@@ -65,6 +65,11 @@ const routes = [
   
   
   },
+  {
+    path: '/reviseroute',
+    name: 'ReviseRouteView',
+    component: () => import('@/views/revise/ReviseRouteView.vue')
+  },
 ]
 
 
