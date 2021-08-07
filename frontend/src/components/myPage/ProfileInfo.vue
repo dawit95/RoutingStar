@@ -3,36 +3,38 @@
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
           <v-col md="3">
-          <!-- <image-input v-model="avatar">
             <div slot="activator">
-              <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
-                <span>Click to add avatar</span>
+              <!-- 아래의 if 분기는 프로필 이미지 없을때의 처리 -->
+              <!-- <v-avatar size="150px" v-if="!userInfo.profileImage" class="grey lighten-3 mb-3">
+                <span>프로필 이미지가 들어갈 공간입니다</span>
               </v-avatar>
-              <v-avatar size="150px" v-ripple v-else class="mb-3">
-                <img :src="avatar.imageURL" alt="avatar">
+              <v-avatar size="150px" v-else class="mb-3">
+                <img :src="userInfo.profileImg" alt="profileImage">
+              </v-avatar> -->
+              <v-avatar size="150px" class="grey lighten-3 mb-3">
+                <span>프로필 이미지가 들어갈 공간입니다(테스트용)</span>
               </v-avatar>
             </div>
-          </image-input> -->
-          <!-- 이미지 저장할 때 모션 및 메서드로 나중에 submit 으로 대체할 예정 -->
-          <v-slide-x-transition>
-            <div v-if="avatar && saved == false">
-              <v-btn class="primary" @click="uploadImage" :loading="saving">Save Avatar</v-btn>
-            </div>
-          </v-slide-x-transition>
           </v-col>
+
           <v-col md="9">
             <v-row class="d-flex justify-center">
-              <div>NICKNAME</div>
+              <div>
+                <!-- <h1>{{ userInfo.name }}</h1> -->
+                <h1>NICKNAME</h1>
+              </div>
             </v-row>
           
             <v-row class="d=flex justify-center">
               <v-col md="6">
+                <div class="mt-4 title">Followings</div>
+                <!-- <div class="mt-4 title">{{ followingUserList.length }}</div> -->
                 <div class="mt-4 title">0</div>
-                <div class="mt-4 title">좋아요</div>
               </v-col>
               <v-col>
+                <div class="mt-4 title">Followers</div>
                 <div class="mt-4 title">0</div>
-                <div class="mt-4 title">싫어요</div>
+                <!-- <div class="mt-4 title">{{ followerUserList.length }}</div> -->
               </v-col>
             </v-row>
           </v-col>          
@@ -40,43 +42,24 @@
 
         <v-row class="d-flex justify-center mb-4">
           <div class="mt-4 title">user description</div>
+          <!-- <div class="mt-4 title">{{ userInfo.userDescription }}</div> -->
         </v-row>
     </v-container>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ProfileInfo',
-  data () {
-    return {
-      avatar: null,
-      saving: false,
-      saved: false
-    }
-  },
-  components: {
-  },
-  watch:{
-    avatar: {
-      handler: function() {
-        this.saved = false
-      },
-      deep: true
-    }
+  computed: {
+    ...mapGetters(['userInfo', 'followingUserList', 'followerUserList'])
   },
   methods: {
-    uploadImage() {
-      this.saving = true
-      setTimeout(() => this.savedAvatar(), 1000)
-    },
-    savedAvatar() {
-      this.saving = false
-      this.saved = true
-    }
+    ...mapActions([]),
   }
 }
-</script>
+</script>                                                                               
 
 <style>
 #app {
