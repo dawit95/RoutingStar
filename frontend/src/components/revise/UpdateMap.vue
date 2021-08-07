@@ -35,7 +35,10 @@ export default {
   props: {
     isFreeze: {
       type: Boolean
-    }
+    },
+    resPlacesData: {
+      type: Array
+    },
   },
   data() {
     return {
@@ -46,10 +49,9 @@ export default {
       pointListPk: 0,
       positionLst: [
         { lat: 37.501, lng: 127.039 },
-        { lat: -25.344, lng: 131.036 },
-        { lat: -12.525, lng: 13.8786 },
-        { lat: 25.3344, lng: 158.036 },
-      ]
+        { lat: 37.501, lng: 127.001 },
+        { lat: 37.451, lng: 127.039 },
+      ],
     }
   },
   computed: {
@@ -87,22 +89,23 @@ export default {
           fullscreenControl: false,
         })
         // Map생성시 기존 data에 대한 마커 생성
-        const length = this.positionLst.length
+        const length = this.resPlacesData.length
+        console.log(this.resPlacesData)
         for (let x = 0; x < length; x++) {
           let pk = this.pointListPk
           this.pointListPk = this.pointListPk + 1
           const marker = new window.google.maps.Marker({
-            position: this.positionLst[x],
+            position: { lat: this.resPlacesData[x].lat, lng: this.resPlacesData[x].lng },
             map: this.map
           })
           let newPlace = {
             createdOrder: pk,
             imageUpload: false,
-            placeImg : '',
-            lat : this.positionLst[x].lat,
-            lng : this.positionLst[x].lng,
-            content: null,
-            isThumbnail : false,
+            placeImg : this.resPlacesData[x].placeImg,
+            lat : this.resPlacesData[x].lat,
+            lng : this.resPlacesData[x].lng,
+            content: this.resPlacesData[x].title,
+            isThumbnail : this.resPlacesData[x].isThumbnail,
             marker: {
               location: marker,
               createdOrder: pk,
