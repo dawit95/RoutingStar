@@ -1,6 +1,7 @@
 <template>
 <div>
-    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">
+    <!-- 수정 1. google 2. vuex accounts -->
+    <a href="http://localhost:8000/oauth2/authorization/kakao">
       <v-img class="mx-auto logoTopM" max-height="300" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
     </a>
     <div class="rounded-lg">
