@@ -13,7 +13,7 @@ import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
 import MyRoutesTabs from '@/components/myPage/MyRoutesTabs.vue'
 
 export default {
-  name: 'MyPage',
+  name: 'MyPageView',
   components: {
     ProfileInfo,
     MyRoutesTabs,
