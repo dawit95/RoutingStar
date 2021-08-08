@@ -2,8 +2,10 @@ package com.curation.backend.comment.service;
 
 import com.curation.backend.comment.domain.Comment;
 import com.curation.backend.comment.domain.CommentRepository;
+import com.curation.backend.comment.dto.CommentModifyRequestDto;
 import com.curation.backend.comment.dto.CommentRequestDto;
 import com.curation.backend.comment.dto.CommentResponseDto;
+import com.curation.backend.comment.exception.NoCommentException;
 import com.curation.backend.place.domain.Place;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
@@ -37,11 +39,23 @@ public class CommentService {
 
 
         Comment comment = commentRequestDto.toEntity();
-//        comment.setUser(user.get());
+        comment.setUser(user);
         comment.setRoute(route.get());
 
         commentRepository.save(comment);
 
         return new CommentResponseDto(comment);
+    }
+
+    @Transactional
+    public CommentResponseDto modifyComment(Long id, CommentModifyRequestDto commentModifyRequestDto) throws NoCommentException {
+        Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NoCommentException()));
+        comment.get().modify(commentModifyRequestDto);
+        return new CommentResponseDto(comment.get());
+    }
+
+    public void deleteComment(Long id) throws NoCommentException {
+        Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id).orElseThrow(() -> new NoCommentException()));
+        commentRepository.delete(comment.get());
     }
 }
