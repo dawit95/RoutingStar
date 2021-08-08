@@ -48,8 +48,9 @@ const actions = {
           'refresh_token': token[1],
         }
       }
-      
-      axios.get(`http://localhost:8000/token/refresh`, config)
+     
+      // axios.get(`http://localhost:8000/token/refresh`, config)
+      axios.get(` http://i5a309.p.ssafy.io:8000/api/v1/token/refresh`, config)
         .then((res) => commit('FETCH_LOGINED_TOKEN', res.data.success))
         .catch((res) => {console.log(res)})
 
@@ -82,7 +83,8 @@ const actions = {
           'access_token': token[0],
         }
       }
-      axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      // axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
         .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
         .catch((err) => console.log(err))
         }   
