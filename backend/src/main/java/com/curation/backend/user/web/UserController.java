@@ -9,15 +9,21 @@ import com.curation.backend.tag.domain.WhatTag;
 import com.curation.backend.tag.domain.WhatTagRepository;
 import com.curation.backend.tag.domain.WithTag;
 import com.curation.backend.tag.domain.WithTagRepository;
+import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.*;
 import com.curation.backend.user.dto.UserRequestDto;
+import com.curation.backend.user.dto.UserResponseDto;
 import com.curation.backend.user.exception.NoUserException;
 import com.curation.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +42,30 @@ public class UserController {
     private final LikeRepository likeRepository;
     private final RouteRepository routeRepository;
 
+    private final TokenService tokenService;
+
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @GetMapping("/Info/{targetId}")
+    public ResponseEntity<SuccessResponseDto> getUserInfo(@PathVariable Long targetId, ServletRequest request) throws NoUserException, NoRouteException {
+
+        UserResponseDto userResponseDto =  userService.getUserInfo(targetId);
+        logger.trace("유저는 찾았다. {} ",userResponseDto);
+        String token = ((HttpServletRequest)request).getHeader("access_token");
+        logger.trace("access_token도 잘왔다. 찾았다. {} ",token);
+        if (token != null) {
+            Long userId = tokenService.getId(token);
+
+            FollowerFollowing followerFollowing = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(targetId,userId).orElse(null);
+            logger.trace("{}가 {}의 follow를 눌렀다. {} ",userId,targetId,userResponseDto);
+            //follow정보 저장
+            userResponseDto.setFollowed(followerFollowing != null?true:false);
+        }
+
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(userResponseDto);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
+    }
 
     @PostMapping("/profile")
     public ResponseEntity<SuccessResponseDto> setUserDetail(@RequestBody UserRequestDto userRequestDto) throws NoUserException, NoRouteException {
