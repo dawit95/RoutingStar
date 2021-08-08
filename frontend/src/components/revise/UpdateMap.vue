@@ -55,7 +55,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['places', 'polyLine'])
+    ...mapGetters(['places', 'polyLine', 'imgList'])
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
@@ -98,9 +98,18 @@ export default {
             position: { lat: this.resPlacesData[x].lat, lng: this.resPlacesData[x].lng },
             map: this.map
           })
+          if (this.resPlacesData[x].isThumbnail) {
+            this.$emit('thumbnail-checked')
+            this.$store.state.images.thumbnailImage = this.resPlacesData[x].placeImg
+            this.$store.state.images.thumbnailChecked = true
+            this.$emit('update-tumbnail-image', this.resPlacesData[x].placeImg)
+          }
+          if (this.resPlacesData[x].placeImg !== "") {
+            this.imgList[pk] = this.resPlacesData[x].placeImg
+          }
           let newPlace = {
             createdOrder: pk,
-            imageUpload: false,
+            imageUpload: (this.resPlacesData[x].placeImg !== "" ? true : false),
             placeImg : this.resPlacesData[x].placeImg,
             lat : this.resPlacesData[x].lat,
             lng : this.resPlacesData[x].lng,

@@ -1,19 +1,19 @@
 <template>
   <v-layout row swap>
-    <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places"/>
-    <UpdateMapPointForm @update-tumbnail-image="updateThumbnailImage"/>
-    <PostRouteDetailModal :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
+    <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places" 
+    @thumbnail-checked="thumbnailChecked" @update-tumbnail-image="updateThumbnailImage"/> 
+
+    <UpdateMapPointForm @update-tumbnail-image="updateThumbnailImage" :isthumbail="isthumbail"/>
+
+    <UpdatePostRouteDetailModal :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
   </v-layout>
 </template>
 
 <script>
 import UpdateMap from '@/components/revise/UpdateMap.vue'
 // import MapPointFormS3 from '@/components/routes/MapPointFormS3'
-import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
+import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
-// { lat: 37.501, lng: 127.039 },
-// { lat: 37.501, lng: 127.001 },
-// { lat: 37.500, lng: 127.039 },
 
 export default {
   name: 'ReviseRouteView',
@@ -52,7 +52,7 @@ export default {
             "lat": 37.500,
             "lng": 127.039,
             "createdOrder": 3,
-            "placeImg": "https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/thumbnail/1628320246729Intro.jpg",
+            "placeImg": "https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/routingstar-photo-album/%EA%B7%B8%EB%A6%BC1.jpg",
             "isThumbnail": false
           },
 
@@ -93,12 +93,13 @@ export default {
         ]
       }
     },
+    isthumbail: false,
    }
  },
   components: {
     UpdateMap,
     UpdateMapPointForm,
-    PostRouteDetailModal,
+    UpdatePostRouteDetailModal,
   },
   methods: {
     // 모달이 열리면 map freeze하기
@@ -112,7 +113,10 @@ export default {
     },
     updateThumbnailImage(image) {
       this.tempThumbnail = image
-    }
+    },
+    thumbnailChecked() {
+      this.isthumbail = true
+    },
   }
 }
 </script>
