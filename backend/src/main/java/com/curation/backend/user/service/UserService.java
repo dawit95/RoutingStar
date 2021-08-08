@@ -43,7 +43,7 @@ public class UserService {
 
     @Transactional
     public String updateUserInfo(UserRequestDto userRequestDto) throws NoUserException {
-        String message = "성공적";
+        String message = "";
 
         User user = userRepository.findById(userRequestDto.getId()).orElseThrow(() -> new NoUserException("해당하는 사용자가 없습니다."));
 
@@ -58,6 +58,9 @@ public class UserService {
         }
         user.modify(userRequestDto);
 
+        message = userRequestDto.getName();
         return message;
     }
+
+
 }
