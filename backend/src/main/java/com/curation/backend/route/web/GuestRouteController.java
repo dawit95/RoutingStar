@@ -3,6 +3,7 @@ package com.curation.backend.route.web;
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
+import com.curation.backend.route.dto.RouteDetailWithCommentResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
@@ -33,8 +34,8 @@ public class GuestRouteController {
     }
 
     @GetMapping("/route/{routeId}")
-    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
-        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
+    public ResponseEntity<SuccessResponseDto> routeDetailWithComment(@PathVariable("routeId") Long id) throws NoRouteException {
+        RouteDetailWithCommentResponseDto routeDetailResponseDto = routeService.getDetailWithComment(id);
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }

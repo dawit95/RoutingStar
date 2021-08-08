@@ -20,10 +20,10 @@ public class Place {
     private String title;
 
     @Column(nullable = false)
-    private String lat;
+    private Double lat;
 
     @Column(nullable = false)
-    private String lng;
+    private Double lng;
 
     @Column(nullable = true)
     private Long createdOrder;
@@ -46,7 +46,7 @@ public class Place {
     }
 
     @Builder
-    public Place(String title, String lat, String lang, String placeImg, Long createdOrder, Boolean isThumbnail) {
+    public Place(String title, Double lat, Double lang, String placeImg, Long createdOrder, Boolean isThumbnail) {
         this.title = title;
         this.lat = lat;
         this.lng = lang;

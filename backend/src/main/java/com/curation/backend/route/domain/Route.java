@@ -8,6 +8,9 @@ import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
 import com.curation.backend.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,10 +38,12 @@ public class Route extends BaseTime {
     @Column(nullable = false)
     private String routeDescription;
 
+    @JsonManagedReference
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "route")
     private List<Comment> routeComments = new ArrayList<>();
 
