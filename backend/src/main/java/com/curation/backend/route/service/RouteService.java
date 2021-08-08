@@ -5,10 +5,7 @@ import com.curation.backend.place.domain.PlaceRepository;
 import com.curation.backend.place.dto.PlaceRequestDto;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
-import com.curation.backend.route.dto.RouteDetailResponseDto;
-import com.curation.backend.route.dto.RouteListResponseDto;
-import com.curation.backend.route.dto.RouteRequestDto;
-import com.curation.backend.route.dto.RouteSearchRequestDto;
+import com.curation.backend.route.dto.*;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.tag.domain.RouteWhatTagRepository;
 import com.curation.backend.tag.domain.RouteWithTagRepository;
@@ -36,7 +33,6 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
-    private final LikeRepository likeRepository;
     private final RouteWhatTagRepository routeWhatTagRepository;
     private final RouteWithTagRepository routeWithTagRepository;
 
@@ -50,7 +46,6 @@ public class RouteService {
 
         Route route = routeRequestDto.toEntity();
         Optional<User> user = Optional.ofNullable(userRepository.findById(routeRequestDto.getId()).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
-
 
         route.setUser(user.get());
         routeRepository.save(route);
@@ -184,6 +179,11 @@ public class RouteService {
             routeIds.addAll(withTagIdList);
         }
         return routeIds;
+    }
+
+    public RouteDetailWithCommentResponseDto getDetailWithComment(Long id) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+        return new RouteDetailWithCommentResponseDto(route.get());
     }
 }
 
