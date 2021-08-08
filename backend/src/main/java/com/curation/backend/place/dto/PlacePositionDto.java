@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class PlacePositionDto {
-    private String lat;
-    private String lng;
+    private Double lat;
+    private Double lng;
 
     public PlacePositionDto(Place entity) {
         this.lat = entity.getLat();

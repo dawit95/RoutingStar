@@ -8,8 +8,8 @@ import lombok.Setter;
 public class PlaceRequestDto {
 
     private String title;
-    private String lat;
-    private String lng;
+    private Double lat;
+    private Double lng;
     private Long createdOrder;
     private String placeImg;
     private Boolean isThumbnail = false;
