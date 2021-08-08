@@ -3,6 +3,9 @@ package com.curation.backend.comment.domain;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -22,30 +25,33 @@ public class Comment extends BaseTime {
     private Long id;
 
     @Column(nullable = false)
-    private String content;
+    private String comment;
 
-    @Column(nullable = false)
-    private Long commentOrder;
-
+    @JsonManagedReference
     @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
     Route route;
 
     public void setRoute(Route route) {
-        if(route != null)   this.route.getRouteComments().remove(this);
+        if(this.route != null)   this.route.getRouteComments().remove(this);
 
         this.route = route;
         this.getRoute().getRouteComments().add(this);
     }
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
-
     public void setUser(User user) {
-
+        this.user = user;
     }
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private boolean deleted = Boolean.FALSE;
+
+    @Builder
+    public Comment(String comment) {
+        this.comment = comment;
+    }
 }

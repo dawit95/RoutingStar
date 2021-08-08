@@ -4,6 +4,7 @@ import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteStorage;
 import com.curation.backend.user.dto.UserRequestDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,7 @@ public class User extends BaseTime {
     @Column(nullable = true, columnDefinition = "LONGTEXT")
     private String refreshToken;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<Route> routes = new ArrayList<>();
 

@@ -77,6 +77,14 @@ public class RouteController {
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
+
+    //수정시 사용
+    @GetMapping("/route/{routeId}")
+    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
+        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
+    }
 }
 
 /*
@@ -86,16 +94,16 @@ public class RouteController {
     {
       "createdOrder": 1,
       "isThumbnail": true,
-      "lat": "12.3",
-      "lng": "45.2",
+      "lat": 12.3,
+      "lng": 45.2,
       "placeImg": "첫번째 사진이지롱",
       "title": "여기는 카페에요"
     },
     {
       "createdOrder": 2,
       "isThumbnail": false,
-      "lat": "45.2222",
-      "lng": "666.123",
+      "lat": 45.2222,
+      "lng": 666.123,
       "placeImg": "두번째 사진이지롱",
       "title": "여기는 존맛 밥집"
     }
