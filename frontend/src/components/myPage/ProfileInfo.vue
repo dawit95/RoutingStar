@@ -2,7 +2,7 @@
       <v-container class="profileInfo">
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
-          <v-col class="mb-3 pa-1">
+          <v-col class="my-3 pa-1">
             <div slot="activator">
               <!-- 아래의 if 분기는 프로필 이미지 없을때의 처리 -->
               <!-- <v-avatar size="150px" v-if="!userInfo.profileImage" class="grey lighten-3 mb-3">
