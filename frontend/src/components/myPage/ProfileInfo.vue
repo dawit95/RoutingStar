@@ -1,5 +1,5 @@
 <template>
-      <v-container >
+      <v-container class="profileInfo">
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
           <v-col md="3">
@@ -68,5 +68,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.profileInfo {
+  color: #D2FDFF;
 }
 </style>

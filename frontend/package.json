@@ -10,6 +10,7 @@
   "dependencies": {
     "aws-sdk": "^2.960.0",
     "axios": "^0.21.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "circular-json": "^0.5.9",
     "core-js": "^3.6.5",
     "jsonwebtoken": "^8.5.1",

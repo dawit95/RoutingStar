@@ -1,53 +1,130 @@
 <template>
-<div class="menu" @click="writeOrSave">
-    <!-- <v-row class="d-flex justify-center"> -->
-      <!-- 버튼클릭참조: https://ts2ree.tistory.com/6?category=396091 -->
-      <v-btn class="menu-link" id="1">Normal</v-btn>
-      <v-btn class="menu-link" id="2">Primary</v-btn>
-  
+  <div>
+    <section class="wrapper">
+      <ul class="tabs">
+        <li class="active">Colors</li>
+        <li>Favorite movies</li>
+      </ul>
 
-    
-    <v-container>
-      <v-row dense>
-        <v-col v-for="savedRoute in savedRotues" :key="savedRoute.id">
-          <v-card flat class="text-xs-center ma-2">Hello</v-card>
-        </v-col>
+      <ul class="tab__content">
+        <li class="active">
+          <div class="content__wrapper">
+            <h2 class="text-color">Pick a color</h2>
+            
+            <ul class="colors">
+              <li data-color="#2ecc71"></li>
+              <li data-color="#D64A4B"></li>
+              <li data-color="#8e44ad"></li>
+              <li class="active-color" data-color="#46a1de"></li>
+              <li data-color="#bdc3c7"></li>
+            </ul>
+          </div>
+        </li>
+        
+        <li>
+          <div class="content__wrapper">
+            <h2 class="text-color">Her</h2>
+            
+            <img src="http://lewihussey.com/codepen-img/her.jpg">
+          </div>
+        </li>
+        
+      </ul>
+    </section>
 
-      </v-row>
-    </v-container>
-  
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'MyRoutes',
-  data() {
-    return {
-      currentMenu: {},
-      // 나와 관련된 routes들을 저장하고 위에서 로직을 통해 thumbnail 나타내주기
-      // mapgetters filter 기능으로 나와 관련된 데이터 가져오기
-      // 참조: https://www.youtube.com/watch?v=pUwyeWLOnP4
-      savedRoutes: {},
-
-    }
-  },
-  methods: {
-    writeOrSave(e) {        
-    if (this.currentMenu.classList){ 
-         this.currentMenu.classList.remove('menu-active');
-     }
-    e.target.classList.add('menu-active');
-    this.currentMenu = e.target;
-    console.log(e.target.id)
-
-    }
-  }
 
 }
 </script>
 
 <style>
-  .menu-active {color: green;}
+*{
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	color: rgb(80, 85, 90);
+	padding: 100px 20px;
+}
+
+.bg-color{
+	background-color: #46a1de;
+	transition-duration: .5s;
+}
+
+.text-color{
+	color: #46a1de;
+	transition-duration: .5s;
+}
+
+.wrapper{
+	min-width: 600px;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.tabs{
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	-webkit-transform: translateY(5px);
+	transform: translateY(5px);
+}	
+
+li{
+transition-duration: .25s;
+display: table-cell;
+list-style: none;
+text-align: center;
+padding: 20px 20px 25px 20px;
+position: relative;
+overflow: hidden;
+cursor: pointer;
+color: white;
+}
+
+li:before{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 120%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, .3);
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  transition-duration: .25s;
+  border-radius: 5px 5px 0 0;
+}
+
+li:hover{
+    -webkit-transform: translateY(70%);
+    transform: translateY(70%);
+}
+  
+  li.active{
+  color: rgb(80, 85, 90);  
+}
+li.active:before{
+  transition-duration: .5s;
+  background-color: white;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.tab__content{
+	background-color: white;
+	position: relative;
+	width: 100%;
+	border-radius: 5px;
+}
 
 </style>

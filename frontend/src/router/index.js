@@ -49,16 +49,6 @@ const routes = [
     component: PostRouteView,
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import('@/views/Test'),
-  },
-  {
-    path: '/draggable',
-    name: 'draggable',
-    component: () => import('@/views/draggable'),
-  },
-  {
     path: '/error',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
@@ -82,6 +72,11 @@ const routes = [
     path: '/editProfile',
     name: 'EditProfileView',
     component: () => import('@/views/myPage/EditProfileView.vue')
+  },
+  {
+    path: '/reviseroute',
+    name: 'ReviseRouteView',
+    component: () => import('@/views/revise/ReviseRouteView.vue')
   },
 ]
 
