@@ -119,6 +119,7 @@ export default {
   // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
   if (this.jwt[0]) {
     console.log('token이 이미 저장이 되어있음')
+    this.$store.dispatch('fetchLoginedToken', this.jwt)
     this.$store.dispatch('fetchLoginedFeeds', this.jwt)
   }
   else if (this.$route.query.access && this.$route.query.refresh){
@@ -129,6 +130,7 @@ export default {
         refresh: this.$route.query.refresh
       }
       this.$store.dispatch('createUser', token)
+      this.$store.dispatch('createHome', token)
     } 
   else {
       console.log('token이 없음')
