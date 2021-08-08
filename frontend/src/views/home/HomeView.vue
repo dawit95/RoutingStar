@@ -1,5 +1,8 @@
 <template>
   <v-container pa-0>
+    <div class="white">
+      {{ feeds }}
+    </div>
     <!-- <Header /> -->
     <!-- state를 통해 정보를 가져왔다 가정하고 card 제작 -->
       <!-- <v-card
@@ -111,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['jwt']),
+    ...mapGetters(['jwt', 'feeds']),
     // readUser
   },
   created () {
