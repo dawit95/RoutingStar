@@ -7,7 +7,7 @@
                 role="tab" 
                 aria-selected="true" 
                 aria-controls="panel1" 
-                tabindex="0">내가 작성한 루트</label>
+                tabindex="0">유저가 작성한 루트</label>
           <div id="tab-content1" 
               class="tab-content" 
               role="tabpanel" 
@@ -16,32 +16,7 @@
             <ul>
               <li>
                 <!-- <RouteThumbnail
-                  v-for="route in myRouteList"
-                  :key="route.id"
-                  :route="route"
-                /> -->
-                <RouteThumbnail/>
-              </li>
-            </ul>
-          </div>
-        </li>
-      
-        <li>
-          <input type="radio" name="tabs" id="tab2" />
-          <label for="tab2"
-                role="tab" 
-                aria-selected="false" 
-                aria-controls="panel2" 
-                tabindex="0">내가 저장한 루트</label>
-          <div id="tab-content2" 
-              class="tab-content"
-              role="tabpanel" 
-              aria-labelledby="specification" 
-              aria-hidden="true">
-            <ul>
-              <li>
-                <!-- <RouteThumbnail
-                  v-for="route in followingRouteList"
+                  v-for="route in otherRouteList"
                   :key="route.id"
                   :route="route"
                 /> -->
@@ -63,7 +38,7 @@ export default {
   name: 'MyRoutesTabs',
   components: { RouteThumbnail },
   computed: {
-    ...mapGetters(['myRouteList', 'followingRouteList'])
+    ...mapGetters(['othersRouteList'])
   },
   methods: {
     ...mapActions([''])

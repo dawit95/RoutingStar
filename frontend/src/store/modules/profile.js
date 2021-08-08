@@ -62,6 +62,13 @@ const actions = {
   //   } 
   // }
 
+  // followOtherUser({ getters, dispatch }, userId) {
+  //   axios.post(DRF.URL + DRF.ROUTES.follow(userId), null, getters.config)
+  //     .then(() => dispatch('fetchOtherUserInfo', userId))
+  //     // 팔로우, 팔로잉 리스트도 받아야와야함
+  //     .catch(err => console.error(err))
+  // },
+
 }
 
 export default {

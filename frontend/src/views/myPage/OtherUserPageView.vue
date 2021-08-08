@@ -2,21 +2,40 @@
   <div>
     <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
     <ProfileInfo/>
-    <div class="button mx-8">Edit Profile</div>
+    <div class="button mx-8">Following</div>
+    <!-- <div class="button mx-8">{{ follow }}</div> -->
     <OtherUserRoutesTab/>
 
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
-import MyRoutesTabs from '@/components/myPage/MyRoutesTabs.vue'
+import OtherUserRoutesTab from '@/components/myPage/OtherUserRoutesTab.vue'
 
 export default {
   name: 'OtherUserPageView',
   components: {
     ProfileInfo,
-    MyRoutesTabs,
+    OtherUserRoutesTab,
+  },
+  data() {
+    return {
+      follow: ''
+    }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+  methods: {
+    setFollow() {
+      if (this.userInfo.isFollowed) {
+        this.follow = 'unfollow'
+      } else {
+        this.follow = 'follow'
+      }
+    }
   },
 }
 </script>
