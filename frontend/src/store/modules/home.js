@@ -9,6 +9,9 @@ const state = {
 
 
 const getters = {
+  feeds(state) {
+    return state.feeds
+  },
 
 }
 
@@ -39,7 +42,7 @@ const actions = {
         'access_token': token.access,
       }
     }
-    axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+    axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
       .then(res => commit('CREATE_HOME', res.data.success))
       .catch((fail) => console.log('fail: ', fail))
     },
@@ -55,7 +58,7 @@ const actions = {
           'refresh_token': token[1],
         }
       }
-      axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
       .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
       .catch((err) => console.log(err))
 
@@ -89,7 +92,7 @@ const actions = {
           'access_token': token[0],
         }
       }
-      axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
         .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
         .catch((err) => console.log(err))
         }   
