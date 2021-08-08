@@ -42,7 +42,7 @@ export default {
     },
     drawPolyLine() {
       console.log("drawPolyLine")
-      let canvas = new window.fabric.Canvas("canvas", {width:800, height:400 });
+      let canvas = new window.fabric.Canvas("canvas", {width:400, height:400 });
       console.log(canvas.getWidth())
       console.log(this.xyPoints)
       var canvasPolyline = new window.fabric.Polyline(
@@ -53,9 +53,9 @@ export default {
           strokeWidth: 10,
         })
 
-      const canvasWidth = 600
+      const canvasWidth = 400
       const canvasHeight = 400
-      const margin = 0.8
+      const margin = 0.6
 
       let bounds = canvasPolyline.getBoundingRect()
       let widthRatio = bounds.width / canvasWidth

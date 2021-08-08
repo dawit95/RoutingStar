@@ -1,91 +1,76 @@
 <template>
-      <v-container >
+      <v-container class="profileInfo">
     <!-- 프로필 이미지 / 게시물 / 팔로워 / 팔로우 -->
         <v-row>
-          <v-col md="3">
-          <image-input v-model="avatar">
+          <v-col class="my-3 pa-1">
             <div slot="activator">
-              <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
-                <span>Click to add avatar</span>
+              <!-- 아래의 if 분기는 프로필 이미지 없을때의 처리 -->
+              <!-- <v-avatar size="150px" v-if="!userInfo.profileImage" class="grey lighten-3 mb-3">
+                <span>프로필 이미지가 들어갈 공간입니다</span>
               </v-avatar>
-              <v-avatar size="150px" v-ripple v-else class="mb-3">
-                <img :src="avatar.imageURL" alt="avatar">
+              <v-avatar size="150px" v-else class="mb-3">
+                <img :src="userInfo.profileImg" alt="profileImage">
+              </v-avatar> -->
+              <v-avatar size="100px" class="grey lighten-3 mb-3">
+                <span>프로필 이미지가 들어갈 공간입니다(테스트용)</span>
               </v-avatar>
             </div>
-          </image-input>
-          <!-- 이미지 저장할 때 모션 및 메서드로 나중에 submit 으로 대체할 예정 -->
-          <v-slide-x-transition>
-            <div v-if="avatar && saved == false">
-              <v-btn class="primary" @click="uploadImage" :loading="saving">Save Avatar</v-btn>
-            </div>
-          </v-slide-x-transition>
           </v-col>
-          <v-col md="9">
-            <v-row class="d-flex justify-center">
-              <div>NICKNAME</div>
+
+          <v-col class="mt-1">
+            <v-row class="d-flex justify-center mt-1">
+              <div>
+                <!-- <h1>{{ userInfo.name }}</h1> -->
+                <h4>NICKNAME</h4>
+              </div>
             </v-row>
           
             <v-row class="d=flex justify-center">
-              <v-col md="6">
-                <div class="mt-4 title">0</div>
-                <div class="mt-4 title">좋아요</div>
+              <v-col class="ma-1 pa-1">
+                <div class="mt-1">Followings</div>
+                <!-- <div class="mt-4">{{ followingUserList.length }}</div> -->
+                <div class="mt-1">0</div>
               </v-col>
-              <v-col>
-                <div class="mt-4 title">0</div>
-                <div class="mt-4 title">싫어요</div>
+              <v-col class="ma-1 pa-1">
+                <div class="mt-1">Followers</div>
+                <div class="mt-1">0</div>
+                <!-- <div class="mt-4">{{ followerUserList.length }}</div> -->
               </v-col>
             </v-row>
           </v-col>          
         </v-row>
 
-        <v-row class="d-flex justify-center mb-4">
-          <div class="mt-4 title">user description</div>
+        <v-row class="d-flex justify-center mb-1">
+          <div class="mt-3">user description</div>
+          <!-- <div class="mt-4">{{ userInfo.userDescription }}</div> -->
         </v-row>
     </v-container>
 </template>
 
 <script>
-import ImageInput from '@/components/myPage/ImageInput.vue'
-// D:\SNS\frontend\src\components\myPage\ImageInput.vue
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'ProfileInfo',
-  data () {
-    return {
-      avatar: null,
-      saving: false,
-      saved: false
-    }
-  },
-  components: {
-    ImageInput: ImageInput
-  },
-  watch:{
-    avatar: {
-      handler: function() {
-        this.saved = false
-      },
-      deep: true
-    }
+  computed: {
+    ...mapGetters(['userInfo', 'followingUserList', 'followerUserList'])
   },
   methods: {
-    uploadImage() {
-      this.saving = true
-      setTimeout(() => this.savedAvatar(), 1000)
-    },
-    savedAvatar() {
-      this.saving = false
-      this.saved = true
-    }
+    ...mapActions([]),
   }
 }
-</script>
+</script>                                                                               
 
 <style>
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 2px;
+}
+.profileInfo {
+  color: #D2FDFF;
+  padding: 10px;
+
 }
 </style>
