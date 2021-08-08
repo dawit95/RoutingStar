@@ -22,11 +22,13 @@ const mutations= {
   CREATE_USER(state, token){
     console.log('처음 로그인 jwt 저장 commit')
     console.log(token)
-    state.jwt.access = token.access
-    state.jwt.refresh = token.refresh
-    console.log(state.jwt)
-    console.log(state.jwt.access)
-    console.log(state.jwt.refresh)
+    // state.jwt.access = token.access
+    // state.jwt.refresh = token.refresh
+    state.jwt[0] = token.access
+    state.jwt[1] = token.refresh
+    // console.log(state.jwt)
+    // console.log(state.jwt.access)
+    // console.log(state.jwt.refresh)
   },
   // access 토큰 갱신용
   RENEW_ACCESS(state, access){
@@ -58,29 +60,52 @@ const actions = {
     commit('FETCH_ACCESS', accessToken)
   },
   fetchLoginedFeeds({commit}, token) {
+    console.log('fetch로넘어옴')
     const jwt = require('jsonwebtoken')
-    const decodeAccessToken = jwt.decode(token.access)
+    const decodeAccessToken = jwt.decode(token[0])
     console.log('decodepk:', decodeAccessToken.pk)
     // 메인 페이지 데이터 받아오기 & access 토큰 받아오기
     // 돌아오는건 access 토큰만이고, data랑 같이 안에
     if ( decodeAccessToken.exp > Date.now()/1000 + 60) {
       console.log('갱신해야함')
+      console.log(token[0])
       const config = {
         headers: {
-          'access_token': token.access,
-          'refresh_token': token.refresh,
+          'access_token': token[0],
+          'refresh_token': token[1],
         }
       }
-      axios.all([axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config),
-                axios.get(`http://localhost:8000/token/refresh`, config)])
+      
+      console.log('config', config.headers.access_token),
+      axios.all([axios.get(`http://localhost:8000/token/refresh`, config),
+                 axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)])
             .then(axios.spread((res1, res2) => {console.log(res1, res2.data.success)}))
+            // .then((res1) => {console.log(res1)})
+            // .then((res2) => {console.log(res2)})
             .catch((err) => console.log(err))
+      // 받아온 토큰으로 갱신해서 보내기
+      // async test() {
+      //   const response = await axios.get(`http://localhost:8000/token/refresh`, config)
+      //   console.log(response)
+      //   const response2 = await axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, response.data.success)
+      //   console.log(response2)	
+      // }
+      // test()
+      // async await 안되면 axios get 받고 const a 로 저장하고 if a 가 있다면 재요청보내는 방식으로 ㄱ
+
+
+      // axios.get(`http://localhost:8000/token/refresh`, config)
+      //           .then((res) => {console.log(res)}
+      //           axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config.headers.access_token=res.data.success)
+      //               .then((res) => console.log('갱신된res', res)))
+      // // .then((res) => console.log(res.data.success))
+      // .catch((err) => {console.log(err)})
 
     } else {
       console.log('갱신안해도됨')
       const config = {
         headers: {
-          'access_token': token.access,
+          'access_token': token[0],
         }
       }
       axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)

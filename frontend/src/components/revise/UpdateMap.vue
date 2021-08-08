@@ -29,13 +29,16 @@
 import {mapGetters, mapMutations, mapActions} from 'vuex'
   
 export default {
-  name: 'Map',
+  name: 'UpdateMap',
   components: {  
   },
   props: {
     isFreeze: {
       type: Boolean
-    }
+    },
+    resPlacesData: {
+      type: Array
+    },
   },
   data() {
     return {
@@ -44,6 +47,11 @@ export default {
       },
       map: null,
       pointListPk: 0,
+      positionLst: [
+        { lat: 37.501, lng: 127.039 },
+        { lat: 37.501, lng: 127.001 },
+        { lat: 37.451, lng: 127.039 },
+      ],
     }
   },
   computed: {
@@ -61,7 +69,6 @@ export default {
       script.onload = () => this.initMap(false);
       script.src =
         "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&libraries=places&region=KR&language=ko&v=weekly";
-      // script.async = true;
       script.defer = true;
       document.head.appendChild(script);
     },
@@ -75,12 +82,57 @@ export default {
           // 경로의 중앙에 포커스가 위치하도록 설정하였음(초기는 멀캠)
           // center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
           center: { lat: 37.501, lng: 127.039 },
-          zoom: 16,
+          zoom: 12,
           streetViewControl: false,
           mapTypeControl: false,
           zoomControl: true,
           fullscreenControl: false,
         })
+        // Map생성시 기존 data에 대한 마커 생성
+        const length = this.resPlacesData.length
+        console.log(this.resPlacesData)
+        for (let x = 0; x < length; x++) {
+          let pk = this.pointListPk
+          this.pointListPk = this.pointListPk + 1
+          const marker = new window.google.maps.Marker({
+            position: { lat: this.resPlacesData[x].lat, lng: this.resPlacesData[x].lng },
+            map: this.map
+          })
+          let newPlace = {
+            createdOrder: pk,
+            imageUpload: false,
+            placeImg : this.resPlacesData[x].placeImg,
+            lat : this.resPlacesData[x].lat,
+            lng : this.resPlacesData[x].lng,
+            content: this.resPlacesData[x].title,
+            isThumbnail : this.resPlacesData[x].isThumbnail,
+            marker: {
+              location: marker,
+              createdOrder: pk,
+            },
+          }
+          this.addPlace(newPlace)
+          
+          this.SET_POLYLINE(new window.google.maps.Polyline
+            ({
+              strokeColor: "#2A355D",
+              strokeOpacity: 0.3,
+              strokeWeight: 8,
+            })
+          )
+          this.polyLine.setMap(this.map);
+          marker.addListener('dblclick', (e) => {
+            console.log(e.latLng)
+            this.removePoint(marker)
+            marker.setMap(null);
+          });
+          marker.addListener('click', function () {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+            setTimeout((function() {
+              marker.setAnimation(null)
+            }).bind(marker), 1400)
+          });
+        }
         // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
         this.SET_POLYLINE(new window.google.maps.Polyline
           ({
@@ -144,8 +196,8 @@ export default {
         animation: window.google.maps.Animation.DROP
       });
       // 마커 더블클릭시 삭제
-      marker.addListener('dblclick', (e) => {
-        console.log(e.latLng)
+      marker.addListener('dblclick', () => {
+        // console.log(e.latLng)
         this.removePoint(marker)
       });
       // 마커 클릭시 바운스효과
@@ -173,7 +225,6 @@ export default {
      
     addPoint(event) {
       let newPlace = this.makePlace(event.latLng)
-
       // Store actions로 연동 & 루트 새로고침
       this.addPlace(newPlace)
       this.refreshPolyline();
@@ -196,6 +247,9 @@ export default {
 
     // 6. 루트를 새로고침
     refreshPolyline() {
+      // console.log('refreshPolyline')
+      // console.log(this.polyLine)
+      // console.log(this.polyLine.getPath())
       const path = this.polyLine.getPath();
       const places = this.places
       const bounds = new window.google.maps.LatLngBounds();
@@ -251,8 +305,8 @@ export default {
     }
   },
   watch: {
-    isFreeze: function(isFreeze) {
-      if (isFreeze) {
+    isFreeze: function() {
+      if (this.isFreeze) {
         this.initMap(true)
       } else {
         this.initMap(false)
