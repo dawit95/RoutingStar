@@ -13,7 +13,11 @@
               role="tabpanel" 
               aria-labelledby="description" 
               aria-hidden="false">
-            <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            <ul>
+              <li>
+                <RouteThumbnail/>
+              </li>
+            </ul>
           </div>
         </li>
       
@@ -38,8 +42,13 @@
 </template>
 
 <script>
-export default {
+import RouteThumbnail from '@/components/common/RouteThumbnail.vue'
 
+export default {
+  name: 'MyRoutesTabs',
+  components: {
+    RouteThumbnail
+  }
 }
 </script>
 
@@ -90,7 +99,7 @@ h1 span {
 }
 .tabs label {
   display: block;
-  padding: 9px 24px;
+  padding: 9px 25px;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
@@ -105,7 +114,7 @@ h1 span {
   border-radius: 10px;
 }
 .tabs label:hover {
-  background: #703688;
+  background: #C1C8E4;
 }
 .tabs .tab-content {
   z-index: 2;
@@ -120,7 +129,8 @@ h1 span {
   top: 40px;
   left: 20px;
   background: #2A355D;
-  color: #D2FDFF
+  color: #D2FDFF;
+  border-radius: 10px;
 }
 .tabs [id^=tab]:checked + label {
   top: 0;
