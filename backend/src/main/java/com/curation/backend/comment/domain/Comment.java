@@ -1,5 +1,6 @@
 package com.curation.backend.comment.domain;
 
+import com.curation.backend.comment.dto.CommentModifyRequestDto;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.user.domain.User;
@@ -12,9 +13,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Optional;
 
-@SQLDelete(sql = "UPDATE comment set deleted = true where id = ?")
-@Where(clause = "deleted = false")
 @Getter
 @NoArgsConstructor
 @Entity
@@ -39,19 +39,20 @@ public class Comment extends BaseTime {
         this.getRoute().getRouteComments().add(this);
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Optional<User> user) {
+        this.user = user.get();
     }
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column
-    private boolean deleted = Boolean.FALSE;
-
     @Builder
     public Comment(String comment) {
         this.comment = comment;
+    }
+
+    public void modify(CommentModifyRequestDto commentModifyRequestDto) {
+        this.comment = commentModifyRequestDto.getComment();
     }
 }

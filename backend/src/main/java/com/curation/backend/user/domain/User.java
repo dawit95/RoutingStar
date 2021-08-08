@@ -66,6 +66,7 @@ public class User extends BaseTime {
 
     @Column
     private boolean deleted = Boolean.FALSE;
+
     @Enumerated
     @Column(nullable = false)
     private Role role;
