@@ -75,24 +75,28 @@ const actions = {
           'refresh_token': token[1],
         }
       }
+      
       console.log('config', config.headers.access_token),
-      // axios.all([axios.get(`http://localhost:8000/token/refresh`, config),
-      //            axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)])
-      //       .then(axios.spread((res1, res2) => {console.log(res1, res2.data.success)}))
-      //       // .then((res1) => {console.log(res1)})
-      //       // .then((res2) => {console.log(res2)})
-      //       .catch((err) => console.log(err))
+      axios.all([axios.get(`http://localhost:8000/token/refresh`, config),
+                 axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)])
+            .then(axios.spread((res1, res2) => {console.log(res1, res2.data.success)}))
+            // .then((res1) => {console.log(res1)})
+            // .then((res2) => {console.log(res2)})
+            .catch((err) => console.log(err))
       // 받아온 토큰으로 갱신해서 보내기
-      async function test() {
-        const response = await axios.get(`http://localhost:8000/token/refresh`, config)
-        console.log(response)
-        const response2 = await axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, response.data.success)
-        console.log(response2)	
-      }
-      test()
+      // async test() {
+      //   const response = await axios.get(`http://localhost:8000/token/refresh`, config)
+      //   console.log(response)
+      //   const response2 = await axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, response.data.success)
+      //   console.log(response2)	
+      // }
       // test()
+      // async await 안되면 axios get 받고 const a 로 저장하고 if a 가 있다면 재요청보내는 방식으로 ㄱ
+
+
       // axios.get(`http://localhost:8000/token/refresh`, config)
-      // .then((res) => axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config.headers.access_token=res.data.success)
+      //           .then((res) => {console.log(res)}
+      //           axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config.headers.access_token=res.data.success)
       //               .then((res) => console.log('갱신된res', res)))
       // // .then((res) => console.log(res.data.success))
       // .catch((err) => {console.log(err)})

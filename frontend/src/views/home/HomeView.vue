@@ -115,6 +115,7 @@ export default {
     // readUser
   },
   created () {
+    
   // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
   if (this.jwt[0]) {
     console.log('token이 이미 저장이 되어있음')
