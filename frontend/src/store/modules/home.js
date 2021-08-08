@@ -1,58 +1,65 @@
-// accounts.js
+// home.js
+// import { login } from '@/api/user.js'
 import axios from 'axios'
 
 const state = {
-  jwt: [],
+  feeds: '',
+
 }
 
 
 const getters = {
-  jwt(state) {
-    return state.jwt
-  },
-
 
 }
 
 const mutations= {
   // 전체 토큰 받아오기(처음 로그인)
-  CREATE_USER(state, token){
-    console.log('처음 로그인 jwt 저장 commit')
-    state.jwt[0] = token.access
-    state.jwt[1] = token.refresh
-    console.log(state.jwt)
+  CREATE_HOME(state, fetechedFeeds){
+    console.log('처음 로그인 메인페이지 저장 commit')
+    console.log(fetechedFeeds)
+    state.feeds = fetechedFeeds
+    // state.jwt.access = token.access
+    // state.jwt.refresh = token.refresh
   },
-  FETCH_LOGINED_TOKEN(state, access){
-    console.log('갱신된 토큰 받아오기 commiteed', access)
-    state.jwt[0] = access
+  // access 토큰 갱신용
+  FETCH_LOGINED_FEEDS(state, fetechedFeeds){
+    console.log('FETCH_LOGINE 메인페이지 다시 받아오기 commiteed', fetechedFeeds)
+    state.feeds = fetechedFeeds
   }
 }
 
 const actions = {
-  createUser({commit}, token) {
-    commit('CREATE_USER', token)
-  },
-  fetchLoginedToken({commit}, token) {
-    console.log('fetch로넘어옴')
+  createHome({commit}, token) {
+    console.log('createhome으로 넘어옴')
+    const jwt = require('jsonwebtoken')
+    const decodeAccessToken = jwt.decode(token.access)
+    console.log('decode', decodeAccessToken)
+    const config = {
+      headers: {
+        'access_token': token.access,
+      }
+    }
+    axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      .then(res => commit('CREATE_HOME', res.data.success))
+      .catch((fail) => console.log('fail: ', fail))
+    },
+  fetchLoginedFeeds({commit}, token) {
     const jwt = require('jsonwebtoken')
     const decodeAccessToken = jwt.decode(token[0])
-    console.log('decodepk:', decodeAccessToken.pk)
     // 메인 페이지 데이터 받아오기 & access 토큰 받아오기
     // 돌아오는건 access 토큰만이고, data랑 같이 안에
     if ( decodeAccessToken.exp < Date.now()/1000 + 60) {
-      console.log('갱신해야함')
-      console.log(token[0])
       const config = {
         headers: {
           'access_token': token[0],
           'refresh_token': token[1],
         }
       }
-      
-      axios.get(`http://localhost:8000/token/refresh`, config)
-        .then((res) => commit('FETCH_LOGINED_TOKEN', res.data.success))
-        .catch((res) => {console.log(res)})
+      axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
+      .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
+      .catch((err) => console.log(err))
 
+      // console.log('config', config.headers.access_token),
       // axios.all([axios.get(`http://localhost:8000/token/refresh`, config),
       //            axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)])
       //       .then(axios.spread((res1, res2) => {console.log(res1, res2.data.success)}))
