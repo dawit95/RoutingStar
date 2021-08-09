@@ -21,7 +21,7 @@ abafwef    </router-link> -->
           <v-img class="elevation-6" alt="" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="$router.push('/mypage')">Fromecha</span>
+          <span @click="onClickUsername(feed)">Fromecha</span>
       </v-card-title>
      
 
@@ -100,49 +100,49 @@ export default {
       list: [],
     }
   },
-  mounted () {
-    if (this.name === 'HomeView') {
-      console.log('home')
-      // this.$router.push({name: 'HomeView'})
-      this.value = 2
-    }
-  },
+  // mounted () {
+  //   if (this.name === 'HomeView') {
+  //     console.log('home')
+  //     // this.$router.push({name: 'HomeView'})
+  //     this.value = 2
+  //   }
+  // },
   computed: {
     ...mapGetters(['jwt', 'feeds']),
     // readUser
   },
-  created () {
+  // created () {
     
-  // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
-  if (this.jwt[0]) {
-    console.log('token이 이미 저장이 되어있음')
-    this.$store.dispatch('fetchLoginedToken', this.jwt)
-    this.$store.dispatch('fetchLoginedFeeds', this.jwt)
-  }
-  else if (this.$route.query.access && this.$route.query.refresh){
-    console.log('token을 지금 처음 저장함')
-    const token = 
-      {
-        access: this.$route.query.access,
-        refresh: this.$route.query.refresh
-      }
-      this.$store.dispatch('createUser', token)
-      this.$store.dispatch('createHome', token)
-    } 
-  else {
-      console.log('token이 없음')
-      // axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
-      axios.get('http://i5a309.p.ssafy.io:8000/api/guest/routes')
-      .then((res) => {console.log(res)})
-      .catch((err) => {console.log(err)})
-  }
-    // main page 들어오자마자 피드 정보들 받아오기
-    // 참조: https://jasonwatmore.com/post/2020/07/23/vue-axios-http-get-request-examples
-    // 현재 내가 로그인되있어서 user pk가 가지고 있다면
-    // likes, routes_storage, routes에 요청을 보내야 필요한 정보를 모두 얻을 수 있음
-    // store/home.js 생성 후 state 에 정보 저장
+  // // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
+  // if (this.jwt[0]) {
+  //   console.log('token이 이미 저장이 되어있음')
+  //   this.$store.dispatch('fetchLoginedToken', this.jwt)
+  //   this.$store.dispatch('fetchLoginedFeeds', this.jwt)
+  // }
+  // else if (this.$route.query.access && this.$route.query.refresh){
+  //   console.log('token을 지금 처음 저장함')
+  //   const token = 
+  //     {
+  //       access: this.$route.query.access,
+  //       refresh: this.$route.query.refresh
+  //     }
+  //     this.$store.dispatch('createUser', token)
+  //     this.$store.dispatch('createHome', token)
+  //   } 
+  // else {
+  //     console.log('token이 없음')
+  //     // axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
+  //     axios.get('http://i5a309.p.ssafy.io:8000/api/guest/routes')
+  //     .then((res) => {console.log(res)})
+  //     .catch((err) => {console.log(err)})
+  // }
+  //   // main page 들어오자마자 피드 정보들 받아오기
+  //   // 참조: https://jasonwatmore.com/post/2020/07/23/vue-axios-http-get-request-examples
+  //   // 현재 내가 로그인되있어서 user pk가 가지고 있다면
+  //   // likes, routes_storage, routes에 요청을 보내야 필요한 정보를 모두 얻을 수 있음
+  //   // store/home.js 생성 후 state 에 정보 저장
 
-  },
+  // },
   methods: {
     infiniteHandler($state) {
       axios.get(api, {
