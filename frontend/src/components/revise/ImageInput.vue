@@ -55,6 +55,10 @@ export default {
         place.placeImg = imageURL
         // Emit the FormData and image URL to the parent component
         this.$emit('input', { formData, imageURL })
+        if (place.isThumbnail) {
+          console.log('썸네일 재설정으로 들어옴')
+          this.$emit('update-tumbnail-image', imageURL)
+        }
       }
     },
   }
