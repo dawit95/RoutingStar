@@ -65,6 +65,9 @@ export default {
   props: {
     isthumbail: {
       type: Boolean
+    },
+    listLength: {
+      type: Number
     }
   },
   directives: {
@@ -107,7 +110,8 @@ export default {
         const oldItems = this.places
         const newplaces = oldItems.filter((place) => {
           if (place.createdOrder === marker.createdOrder && place.isThumbnail) {
-            this.isthumbail = !this.isthumbail
+            this.$emit('change-isthumbail')
+            // this.isthumbail = !this.isthumbail
             place.isThumbnail = false
             this.thumbnailLabel = ''
             this.$store.state.images.thumbnailChecked = false
@@ -131,20 +135,17 @@ export default {
     refreshThumbnailBtn(place) {
       // 썸네일인 경우 => 썸네일 취소
       if (this.isthumbail) {
-        this.isthumbail = !this.isthumbail
+        this.$emit('change-isthumbail')
+        // this.isthumbail = !this.isthumbail
         place.isThumbnail = false
         this.thumbnailLabel = ''
         this.$store.state.images.thumbnailChecked = false
       // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
-      } else if (this.isthumbail === false) {
-        if (this.imgList[place.createdOrder].includes('https')) {
-          this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
-          this.$emit('update-tumbnail-image', this.imgList[place.createdOrder])
-          this.isthumbail = !this.isthumbail
-          place.isThumbnail = true
-          this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
-        } else {
-          this.isthumbail = !this.isthumbail
+      } else {
+        if (place.createdOrder >= this.listLength) {
+          console.log('위로들어와서 s3에 업로드 & 저장')
+          this.$emit('change-isthumbail')
+          // this.isthumbail = !this.isthumbail
           place.isThumbnail = true
           this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
   
@@ -157,11 +158,11 @@ export default {
             })
           });
           // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
-          var s3 = new AWS.S3({
+          var s2 = new AWS.S3({
             apiVersion: "2006-03-01",
             params: { Bucket: this.albumBucketName }
           });
-          s3.upload({
+          s2.upload({
             Key: `thumbnail/${date + image.name}`,
             Body: image,
             ContentType: image.type,
@@ -173,10 +174,61 @@ export default {
             }
             this.$store.state.images.thumbnailImage = data.Location
             this.$emit('update-tumbnail-image', data.Location)
-        })
-
+          })
+        } else {
+          console.log('밑으로 들어와서 해당 URL바로 저장')
+          this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
+          this.$emit('update-tumbnail-image', this.imgList[place.createdOrder])
+          this.$emit('change-isthumbail')
+          // this.isthumbail = !this.isthumbail
+          place.isThumbnail = true
+          this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
         }
       }
+        // if (typeof(this.imgList[place.createdOrder]) !== String || typeof(this.imgList[place.createdOrder]) === Object) {
+        //   // console.log(typeof(this.imgList[place.createdOrder]))
+        //   // console.log('ssasdfasdfadfsdsfsdfsdfsdf')
+        //   this.$emit('change-isthumbail')
+        //   // this.isthumbail = !this.isthumbail
+        //   place.isThumbnail = true
+        //   this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
+  
+        //   const image = this.imgList[place.createdOrder]
+        //   const date = new Date().getTime();
+        //   AWS.config.update({
+        //     region: this.bucketRegion,
+        //     credentials: new AWS.CognitoIdentityCredentials({
+        //     IdentityPoolId: this.IdentityPoolId,
+        //     })
+        //   });
+        //   // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
+        //   var s2 = new AWS.S3({
+        //     apiVersion: "2006-03-01",
+        //     params: { Bucket: this.albumBucketName }
+        //   });
+        //   s2.upload({
+        //     Key: `thumbnail/${date + image.name}`,
+        //     Body: image,
+        //     ContentType: image.type,
+        //     ACL: 'public-read'
+        //   }, (err, data) => {
+        //     if (err) {
+        //       console.log(err)
+        //       return alert("There was an error uploading your photo: ", err.message);
+        //     }
+        //     this.$store.state.images.thumbnailImage = data.Location
+        //     this.$emit('update-tumbnail-image', data.Location)
+        //   })
+        // } else if (this.imgList[place.createdOrder].indexOf('https') != -1) {
+        //   console.log('밑으로 들어옴')
+        //   this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
+        //   this.$emit('update-tumbnail-image', this.imgList[place.createdOrder])
+        //   this.$emit('change-isthumbail')
+        //   // this.isthumbail = !this.isthumbail
+        //   place.isThumbnail = true
+        //   this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
+        // }
+      // }
     },
   },
 }
