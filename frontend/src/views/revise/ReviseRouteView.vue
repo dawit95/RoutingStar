@@ -2,7 +2,7 @@
   <v-layout row swap>
     <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places" 
     @thumbnail-checked="thumbnailChecked" @update-tumbnail-image="updateThumbnailImage"/> 
-
+    <ImageInput @update-tumbnail-image="updateThumbnailImage"/>
     <UpdateMapPointForm @update-tumbnail-image="updateThumbnailImage" :isthumbail="isthumbail" 
     :listLength="responseData.success.places.length"
     @change-isthumbail="changeIsthumbail"/>
@@ -17,6 +17,7 @@
 import UpdateMap from '@/components/revise/UpdateMap.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
 import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
+import ImageInput from '@/components/revise/ImageInput.vue'
 // import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -105,6 +106,7 @@ export default {
     UpdateMap,
     UpdateMapPointForm,
     UpdatePostRouteDetailModal,
+    ImageInput
   },
   computed: {
     ...mapGetters(['jwt'])
@@ -121,6 +123,7 @@ export default {
       // console.log(this.isFreeze)
     },
     updateThumbnailImage(image) {
+      console.log('updateThumbnailImage로 들어옴')
       this.tempThumbnail = image
     },
     thumbnailChecked() {
@@ -138,8 +141,11 @@ export default {
     const tmp_id = 1
     const routeId = 1
     const access_token = this.jwt[0]
+    console.log(access_token)
     // console.log('여기 마운티드')
     // console.log(this.jwt[0])
+    // 1. api/v1/route/userid/routeid
+    // 2. 보내는 data 안에있는 userid를 빼서 루트작성자id와 동일한지 확인
     this.fetchRouteInfo({
       userId: tmp_id,
       routeId: routeId,
