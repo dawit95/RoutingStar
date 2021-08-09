@@ -17,8 +17,8 @@
 import UpdateMap from '@/components/revise/UpdateMap.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
 import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
-import axios from 'axios'
-import { mapGetters } from 'vuex'
+// import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ReviseRouteView',
@@ -110,6 +110,7 @@ export default {
     ...mapGetters(['jwt'])
   },
   methods: {
+    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo']),
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true
@@ -130,19 +131,20 @@ export default {
     }
   },
   created () {
-    
-  // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
-  if (this.jwt[0]) {
-    console.log('token이 이미 저장이 되어있음')
-    this.$store.dispatch('fetchLoginedToken', this.jwt)
-    this.$store.dispatch('fetchLoginedFeeds', this.jwt)
-  }
-    // main page 들어오자마자 피드 정보들 받아오기
-    // 참조: https://jasonwatmore.com/post/2020/07/23/vue-axios-http-get-request-examples
-    // 현재 내가 로그인되있어서 user pk가 가지고 있다면
-    // likes, routes_storage, routes에 요청을 보내야 필요한 정보를 모두 얻을 수 있음
-    // store/home.js 생성 후 state 에 정보 저장
-
+    const token = this.jwt
+    this.fetchLoginedToken(token)
+  },
+  mounted() {
+    const tmp_id = 1
+    const routeId = 1
+    const access_token = this.jwt[0]
+    // console.log('여기 마운티드')
+    // console.log(this.jwt[0])
+    this.fetchRouteInfo({
+      userId: tmp_id,
+      routeId: routeId,
+      access_token: access_token
+    })
   },
 }
 </script>
