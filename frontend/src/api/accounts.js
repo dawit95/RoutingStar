@@ -1,4 +1,9 @@
 import { createInstance } from "./index.js";
+//import getters from '../store'
+import accounts from '../store/modules/accounts.js'
+
+console.log(accounts)
+const access_token = accounts.getters.jwt[0]
 
 const instance = createInstance()
 
@@ -39,13 +44,19 @@ const instance = createInstance()
 
 // function logout() {
 
-async function findByToken(token, success, fail) {
-  instance.defaults.headers['auth-token'] = token;
-  await instance
-    .get('account/info')
-    .then(success)
-    .catch(fail);
+// 토큰 기간 
+function getUserInfoByUserId(success, fail) {
+  console.log(access_token)
+  instance
+  .get('api/vi/userInfo', {
+    headers: {
+      'access_token': access_token,
+    }
+  })
+  .then(success)
+  .catch(fail);
 }
+
 
 function searchUserByEmail(keyword, success, fail) {
   instance
@@ -61,12 +72,12 @@ function searchUserByNickname(keyword, success, fail) {
     .catch(fail);
 }
 
-function getUserInfoByUserId(UserId, success, fail) {
-  instance
-    .get('user/nickname', { params: { UserId } })
-    .then(success)
-    .catch(fail);
-}
+// function getUserInfoByUserId(UserId, success, fail) {
+//   instance
+//     .get('user/nickname', { params: { UserId } })
+//     .then(success)
+//     .catch(fail);
+// }
 
 function editProfile(param, success, fail) {
   instance
@@ -77,7 +88,6 @@ function editProfile(param, success, fail) {
 
 
 export { 
-  findByToken,
   searchUserByEmail,
   searchUserByNickname,
   getUserInfoByUserId,
