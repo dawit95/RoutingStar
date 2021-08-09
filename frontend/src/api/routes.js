@@ -12,4 +12,33 @@ function postRoute(param, success, fail) {
   .catch(fail);
 }
 
-export { postRoute }
+// 유저가 작성한 루트 목록 조회
+function getWrittenRoute(userId, access_token, success, fail) {
+  instance
+    .get(`api/user/mypage/routes/${userId}`, {
+      headers: {
+        'access_token': access_token,
+      }
+    })
+    .then(success)
+    .catch(fail);
+}
+
+// 유저가 저장한 루트 목록 조회
+function getSavedRoute(userId, access_token, success, fail) {
+  instance
+    .get(`api/v1/routes/${userId}`, {
+      headers: {
+        'access_token': access_token,
+      }
+    })
+    .then(success)
+    .catch(fail);
+}
+
+
+export { 
+  postRoute,
+  getWrittenRoute,
+  getSavedRoute
+ }

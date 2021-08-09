@@ -2,7 +2,7 @@
   <div>
     <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
     <ProfileInfo/>
-    <div class="button mx-8">Following</div>
+    <div class="button mx-8" @click="followOtherUser(followInfo)">Following</div>
     <!-- <div class="button mx-8">{{ follow }}</div> -->
     <OtherUserRoutesTab/>
 
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
 import OtherUserRoutesTab from '@/components/myPage/OtherUserRoutesTab.vue'
 
@@ -22,15 +22,21 @@ export default {
   },
   data() {
     return {
-      follow: ''
+      follow: '',
+      followInfo :{
+        userId: this.jwt[2],
+        targetId: this.userInfo.Id
+      }
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'jwt'])
   },
   methods: {
+    ...mapActions(['follow']),
+    
     setFollow() {
-      if (this.userInfo.isFollowed) {
+      if (this.userInfo.followed) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'

@@ -53,10 +53,10 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ProfileInfo',
   computed: {
-    ...mapGetters(['jwt', 'userInfo', 'followingUserList', 'followerUserList'])
+    ...mapGetters(['jwt', 'userInfo', 'followUserList'])
   },
   methods: {
-    ...mapActions(['fetchUserInfo']),
+    ...mapActions(['fetchUserInfo', 'fetchFollowUserList']),
   },
   mounted() {
     const tmp_id = 1
@@ -65,6 +65,10 @@ export default {
     console.log(this.jwt[0])
     this.fetchUserInfo({
       userId: tmp_id, 
+      access_token: access_token
+    })
+    this.fetchFollowUserList({
+      userId: tmp_id,
       access_token: access_token
     })
   }
