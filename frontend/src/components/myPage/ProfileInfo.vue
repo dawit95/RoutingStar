@@ -59,7 +59,7 @@ export default {
     ...mapActions(['fetchUserInfo', 'fetchFollowUserList']),
   },
   mounted() {
-    const tmp_id = 1
+    const tmp_id = 2
     const access_token = this.jwt[0]
     console.log('여기 마운티드')
     console.log(this.jwt[0])
@@ -69,7 +69,7 @@ export default {
     })
     this.fetchFollowUserList({
       userId: tmp_id,
-      access_token: access_token
+      // access_token: access_token
     })
   }
 }
