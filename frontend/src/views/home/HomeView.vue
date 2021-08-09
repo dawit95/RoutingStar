@@ -1,69 +1,62 @@
 <template>
   <v-container pa-0>
     <div class="white">
+      <span>abc</span>
       {{ feeds }}
     </div>
     <!-- <Header /> -->
-    <!-- state를 통해 정보를 가져왔다 가정하고 card 제작 -->
-      <!-- <v-card
-    class="mx-auto"
-    color="#26c6da"
-    dark
-    max-width="400"
-  >
-    <v-card-title>
-      <v-icon
-        large
-        left
-      >
-        mdi-twitter
-      </v-icon>
-      <span class="text-h6 font-weight-light">Twitter</span>
-    </v-card-title>
+   
+   <v-list
+    v-for="(feed, idx) in feeds" 
+    :key="idx"
+    :feed="feed"
+    >
+      <!-- <router-link :to="mypage">
+abafwef    </router-link> -->
+    <v-card class="mx-auto" color="#2A355D" dark max-width="400">
+      <v-card-title>
+        <!-- {{ feed. }} -->
+        <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
+          <!-- feed.places 썸네일로 교체 -->
+          <v-img class="elevation-6" alt="" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"></v-img>
+        </v-list-item-avatar>
+          <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
+          <span @click="$router.push('/mypage')">Fromecha</span>
+      </v-card-title>
+     
 
-    <v-card-text class="text-h5 font-weight-bold">
-      "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
-    </v-card-text>
+      <v-card-text class="text-h5 font-weight-bold">
+        "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+      </v-card-text>
 
+    <!-- 기타 버튼 등이 들어가는 v-card-actions -->
     <v-card-actions>
       <v-list-item class="grow">
-        <v-list-item-avatar color="grey darken-3">
-          <v-img
-            class="elevation-6"
-            alt=""
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          ></v-img>
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>Evan You</v-list-item-title>
-        </v-list-item-content>
-
-        <v-row
-          align="center"
-          justify="end"
-        >
-          <v-icon class="mr-1">
-            mdi-heart
-          </v-icon>
+        <v-row align="center" justify="end">
+          <v-icon class="mr-1">mdi-heart</v-icon>
           <span class="subheading mr-2">256</span>
           <span class="mr-1">·</span>
-          <v-icon class="mr-1">
-            mdi-share-variant
-          </v-icon>
+          <v-icon class="mr-1">mdi-share-variant</v-icon>
           <span class="subheading">45</span>
         </v-row>
+        <!-- <v-row>
+          {짧은 글 소개 }
+        </v-row> -->
       </v-list-item>
     </v-card-actions>
-  </v-card> -->
-   
-   <!-- <div v-for="(item, $index) in list" :key="$index"> -->
-    <!-- Hacker News item loop -->
+  </v-card>
+  <v-card class="mx-auto mt-3" color="#2A355D" dark max-width="400">
+         <v-card-text class="text-h5 font-weight-bold">
+        {{ feed.routeDescription }}
+      </v-card-text>
+  </v-card>
+   </v-list>
+        <!-- Hacker News item loop -->
     <!-- {{item}} -->
     <!-- </div> -->
 <!-- infiniteHandler method 실행 -->
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
-      <v-btn @click="renew">갱신용</v-btn>
+
     <Header />
     <Nav />
   </v-container>
@@ -78,7 +71,7 @@ import Header from '@/components/common/Header.vue'
 // import { login } from '@/api/user.js'
 import axios from 'axios'
 import { mapGetters, } from 'vuex'
-
+// import HomeDetailView from '@/views/home/HomeDetailView.vue'
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
 // 2. mapGetters에서 필터링 해주기
@@ -91,6 +84,7 @@ export default {
     Nav,
     // InfiniteLoading,
     Header,
+    // HomeDetailView,
   },
   data() {
     return {
@@ -137,7 +131,8 @@ export default {
     } 
   else {
       console.log('token이 없음')
-      axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
+      // axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
+      axios.get('http://i5a309.p.ssafy.io:8000/api/guest/routes')
       .then((res) => {console.log(res)})
       .catch((err) => {console.log(err)})
   }
