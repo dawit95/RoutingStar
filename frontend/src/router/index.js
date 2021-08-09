@@ -78,6 +78,13 @@ const routes = [
     name: 'ReviseRouteView',
     component: () => import('@/views/revise/ReviseRouteView.vue')
   },
+
+  // tmp
+  {
+    path: '/loginprocess',
+    name: 'LoginProcessView',
+    component: () => import('@/views/LoginProcessView.vue')
+  },
 ]
 
 
