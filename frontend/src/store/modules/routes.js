@@ -2,6 +2,7 @@
 
 import { postRoute } from '@/api/routes.js'
 import { getRouteInfoByRouteId } from '@/api/routes.js'
+// import accounts from '@/store/modules/accounts.js'
 import images from './images'
 import router from '@/router'
 
@@ -138,7 +139,7 @@ const actions = {
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
   },
-  createRoute() {
+  createRoute(access_token) {
     const newPlaces = []
     for (const place of state.places) {
       const tmpPlace = {
@@ -158,6 +159,9 @@ const actions = {
     const whatTag = state.whatTag
     const withTag = state.withTag
 
+    // const access_token = accounts.state.jwt[0]
+    console.log('access_token check')
+    console.log(access_token.getters.jwt[0])
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
@@ -171,6 +175,7 @@ const actions = {
         withTag: withTag,
         id: 1
       }),
+      access_token.getters.jwt[0],
       () => {
         console.log('success')
         router.push({ name: 'LoginView' })

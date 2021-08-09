@@ -176,13 +176,19 @@ export default {
             this.$emit('update-tumbnail-image', data.Location)
           })
         } else {
-          console.log('밑으로 들어와서 해당 URL바로 저장')
-          this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
-          this.$emit('update-tumbnail-image', this.imgList[place.createdOrder])
-          this.$emit('change-isthumbail')
-          // this.isthumbail = !this.isthumbail
-          place.isThumbnail = true
-          this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
+          console.log(typeof(this.imgList[place.createdOrder]))
+          if (typeof(this.imgList[place.createdOrder]) == 'object') {
+            console.log('밑으로 들어와서 S3 변환 후 해당 URL저장')
+            this.thumbnailSendToS3(this.imgList[place.createdOrder])
+          } else {
+            console.log('밑으로 들어와서 해당 URL바로 저장')
+            this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
+            this.$emit('update-tumbnail-image', this.imgList[place.createdOrder])
+            this.$emit('change-isthumbail')
+            // this.isthumbail = !this.isthumbail
+            place.isThumbnail = true
+            this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
+          }
         }
       }
         // if (typeof(this.imgList[place.createdOrder]) !== String || typeof(this.imgList[place.createdOrder]) === Object) {
@@ -230,6 +236,33 @@ export default {
         // }
       // }
     },
+    thumbnailSendToS3 (image) {
+      const date = new Date().getTime();
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.IdentityPoolId,
+        })
+      });
+      // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
+      var s2 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: this.albumBucketName }
+      });
+      s2.upload({
+        Key: `thumbnail/${date + image.name}`,
+        Body: image,
+        ContentType: image.type,
+        ACL: 'public-read'
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+          return alert("There was an error uploading your photo: ", err.message);
+        }
+        this.$store.state.images.thumbnailImage = data.Location
+        this.$emit('update-tumbnail-image', data.Location)
+      })
+    }
   },
 }
 </script>

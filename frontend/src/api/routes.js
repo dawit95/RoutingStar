@@ -5,9 +5,14 @@ import { createInstance } from './index.js'
 const instance = createInstance();
 
 // { params: { places, routeDescription, routeImg, whatTag, withTag } }
-function postRoute(param, success, fail) {
+function postRoute(param, access_token, success, fail) {
   instance
-  .post('api/v1/route', param )
+  .post('api/v1/route', {
+    data: param,
+    headers: {
+      'access_token': access_token,
+    },
+  })
   .then(success)
   .catch(fail);
 }
