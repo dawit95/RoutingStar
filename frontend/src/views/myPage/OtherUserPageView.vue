@@ -27,7 +27,7 @@ export default {
         // userId: this.jwt[2],
         // targetId: this.userInfo.Id
         userId: 1,
-        targetId: 2
+        targetId: 2,
       }
     }
   },
@@ -46,9 +46,30 @@ export default {
     },
     onClickfollowOtherUser() {
       this.setFollow()
+      this.followInfo["access_token"] = this.jwt[0]
+      console.log(this.followInfo)
       this.followOtherUser(this.followInfo)
-    }
+    },
+
+  //   mounted() {
+  //   const tmp_id = 2
+  //   const access_token = this.jwt[0]
+  //   console.log('여기 마운티드')
+  //   console.log(this.jwt[0])
+  //   this.fetchUserInfo({
+  //     userId: tmp_id,
+  //     access_token: access_token
+  //   })
+  //   this.fetchFollowUserList({
+  //     userId: tmp_id,
+  //     access_token: access_token
+  //   })
+  // }
   },
+  mounted() {
+    console.log(this.userInfo)
+    this.setFollow()
+  }
 }
 </script>
 

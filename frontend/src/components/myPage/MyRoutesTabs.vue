@@ -66,7 +66,7 @@ export default {
     ...mapGetters(['jwt'])
   },
   methods: {
-    ...mapActions(['writtenRouteList', 'savedRouteList' ])
+    ...mapActions(['fetchWrittenRouteList', 'fetchSavedRouteList' ])
   },
   mounted() {
     const tmp_id = 1
