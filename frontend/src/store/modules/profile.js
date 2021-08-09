@@ -45,9 +45,9 @@ const mutations = {
 const actions = {
   // async fetchUserInfo({ commit }, userId, access_token) {
   fetchUserInfo({ commit }, payload ) {
-    console.log('여기는 store')
-    console.log(payload)
-    // console.log(payload.userId)
+    // console.log('여기는 store')
+    // console.log(payload)
+    // // console.log(payload.userId)
     // console.log(payload.access_token)
     getUserInfoByUserId(payload.userId, payload.access_token,
     (res) => {
@@ -59,17 +59,23 @@ const actions = {
   },
   
   followOtherUser({ dispatch }, payload ) {
+    console.log('여기 페이로드')
+    console.log(payload)
     follow(payload.userId, payload.targetId, payload.access_token,
     (res) => {
       console.log(res.data.success)
-      dispatch('fetchFollowUserList', payload.targetId)
+      // console.log('그럼 여기는 리스트 불러오는 =')
+      // console.log(payload.targetId)
+      dispatch('fetchFollowUserList', payload)
     }, (error) => {
       console.log(error)
     });
   },
 
   fetchFollowUserList({ commit }, payload ) {
-    getFollowList(payload.userId, payload.access_token,
+    console.log('그럼 여기는 리스트 불러오는 =')
+    console.log(payload)
+    getFollowList(payload.targetId, payload.access_token,
     (res) => {
       console.log(res.data.success)
       commit('SET_FOLLOW_USER_LIST', res.data.success)

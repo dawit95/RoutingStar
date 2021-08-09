@@ -139,7 +139,9 @@ const actions = {
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
   },
-  createRoute(access_token) {
+  createRoute( {commit}, jwt) {
+    console.log(commit)
+    console.log(jwt)
     const newPlaces = []
     for (const place of state.places) {
       const tmpPlace = {
@@ -161,7 +163,7 @@ const actions = {
 
     // const access_token = accounts.state.jwt[0]
     console.log('access_token check')
-    console.log(access_token.getters.jwt[0])
+    // console.log(access_token.getters.jwt[0])
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
@@ -174,8 +176,7 @@ const actions = {
         whatTag: whatTag,
         withTag: withTag,
         id: 1
-      }),
-      access_token.getters.jwt[0],
+      }), jwt,
       () => {
         console.log('success')
         router.push({ name: 'LoginView' })
