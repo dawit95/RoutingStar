@@ -2,8 +2,8 @@
   <div>
     <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
     <ProfileInfo/>
-    <div class="button mx-8" @click="followOtherUser(followInfo)">Following</div>
-    <!-- <div class="button mx-8">{{ follow }}</div> -->
+    <!-- <div class="button mx-8">Following</div> -->
+    <div class="button mx-8" @click="onClickfollowOtherUser">{{ follow }}</div>
     <OtherUserRoutesTab/>
 
   </div>
@@ -24,8 +24,10 @@ export default {
     return {
       follow: '',
       followInfo :{
-        userId: this.jwt[2],
-        targetId: this.userInfo.Id
+        // userId: this.jwt[2],
+        // targetId: this.userInfo.Id
+        userId: 1,
+        targetId: 2
       }
     }
   },
@@ -33,7 +35,7 @@ export default {
     ...mapGetters(['userInfo', 'jwt'])
   },
   methods: {
-    ...mapActions(['follow']),
+    ...mapActions(['followOtherUser']),
     
     setFollow() {
       if (this.userInfo.followed) {
@@ -41,6 +43,10 @@ export default {
       } else {
         this.follow = 'follow'
       }
+    },
+    onClickfollowOtherUser() {
+      this.setFollow()
+      this.followOtherUser(this.followInfo)
     }
   },
 }
