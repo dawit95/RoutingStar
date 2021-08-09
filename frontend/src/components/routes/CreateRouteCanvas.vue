@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['places', 'xyPoints'])
+    ...mapGetters(['places', 'xyPoints', 'jwt'])
   },
   methods: {
     ...mapActions(['updateRouteImg', 'createRoute']),
@@ -114,7 +114,8 @@ export default {
           console.log(data)
           
           // 동기적으로 callback을 활용한다 !!!! 으아아아아 
-          this.createRoute()
+          console.log('createroute 실행전', this.jwt)
+          this.createRoute(this.jwt)
         })
     },
     
