@@ -112,7 +112,8 @@ export default {
           console.log(`data변환 완료`)
           this.updateRouteImg(data.Location)
           console.log(data)
-          
+          const access_token = this.jwt[0]
+          console.log(access_token)
           // 동기적으로 callback을 활용한다 !!!! 으아아아아 
           console.log('createroute 실행전', this.jwt)
           this.createRoute(this.jwt)

@@ -15,11 +15,11 @@
               aria-hidden="false">
             <ul>
               <li>
-                <!-- <RouteThumbnail
-                  v-for="route in myRouteList"
+                <RouteThumbnail
+                  v-for="route in writtenRouteList"
                   :key="route.id"
                   :route="route"
-                /> -->
+                />
                 <RouteThumbnail/>
               </li>
             </ul>
@@ -40,11 +40,11 @@
               aria-hidden="true">
             <ul>
               <li>
-                <!-- <RouteThumbnail
-                  v-for="route in followingRouteList"
+                <RouteThumbnail
+                  v-for="route in savedRouteList"
                   :key="route.id"
                   :route="route"
-                /> -->
+                />
                 <RouteThumbnail/>
               </li>
             </ul>
@@ -63,13 +63,24 @@ export default {
   name: 'MyRoutesTabs',
   components: { RouteThumbnail },
   computed: {
-    ...mapGetters(['myRouteList', 'followingRouteList'])
+    ...mapGetters(['jwt'])
   },
   methods: {
-    ...mapActions([''])
+    ...mapActions(['writtenRouteList', 'savedRouteList' ])
   },
   mounted() {
-    
+    const tmp_id = 1
+    const access_token = this.jwt[0]
+    console.log('여기 마운티드')
+    console.log(this.jwt[0])
+    this.fetchWrittenRouteList({
+      userId: tmp_id, 
+      access_token: access_token
+    })
+    this.fetchSavedRouteList({
+      userId: tmp_id,
+      access_token: access_token
+    })
   }
 }
 </script>

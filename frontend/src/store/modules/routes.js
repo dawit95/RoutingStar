@@ -1,6 +1,8 @@
 // store/modules/routes.js
 
 import { postRoute } from '@/api/routes.js'
+import { getRouteInfoByRouteId } from '@/api/routes.js'
+// import accounts from '@/store/modules/accounts.js'
 import images from './images'
 import router from '@/router'
 
@@ -13,6 +15,7 @@ const state = {
   xyPoints: [],
   whatTag: [],
   withTag: [],
+  routeInfo: [],
 }
 
 const getters = {
@@ -101,6 +104,10 @@ const mutations= {
   SET_WITH_TAG(state, withTag) {
     state.withTag = withTag
   },
+  SET_ROUTE_INFO(state, res) {
+    console.log('SET_ROUTE_INFO')
+    state.routeInfo = res
+  },
 }
 
 // import axios from 'axios'
@@ -154,6 +161,9 @@ const actions = {
     const whatTag = state.whatTag
     const withTag = state.withTag
 
+    // const access_token = accounts.state.jwt[0]
+    console.log('access_token check')
+    console.log(access_token.getters.jwt[0])
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
@@ -166,7 +176,12 @@ const actions = {
         whatTag: whatTag,
         withTag: withTag,
         id: 1
+<<<<<<< HEAD
       }), jwt,
+=======
+      }),
+      access_token.getters.jwt[0],
+>>>>>>> 90cbeb014b97b16590355d94be6c8156945a4f09
       () => {
         console.log('success')
         router.push({ name: 'LoginView' })
@@ -174,6 +189,16 @@ const actions = {
         console.log(error)
       }
     );
+  },
+  fetchRouteInfo({ commit }, payload) {
+    console.log(payload)
+    getRouteInfoByRouteId(payload.routeId, payload.access_token,
+      (res) => {
+        console.log(res)
+        commit('SET_ROUTE_INFO', res)
+      }, (error) => {
+        console.log(error)
+      })
   },
 }
 

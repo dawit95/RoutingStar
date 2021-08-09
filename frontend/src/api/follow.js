@@ -4,29 +4,30 @@ import { createInstance } from './index.js'
 
 const instance = createInstance();
 
-function follow(from, to, success, fail) {
+function follow(userId, targetId, access_token, success, fail) {
   instance
-    .get('profile/follow', { params: { from, to } })
+    .get(`api/v1/reaction/follow/${userId}/${targetId}`, {
+      headers: {
+        'access_token': access_token,
+      }
+    })
     .then(success)
     .catch(fail);
 }
 
-function getFollowerList(email, success, fail) {
+function getFollowList(userId, access_token, success, fail) {
   instance
-    .get('profile/follower', { params: { email } })
+    .get(`api/v1/reaction/follow/${userId}`, {
+      headers: {
+        'access_token': access_token,
+      }
+    })
     .then(success)
     .catch(fail);
 }
 
-function getFollowingList(email, success, fail) {
-  instance
-    .get('profile/following', { params: { email } })
-    .then(success)
-    .catch(fail);
-}
 
 export { 
   follow,
-  getFollowerList,
-  getFollowingList,
+  getFollowList,
  }
