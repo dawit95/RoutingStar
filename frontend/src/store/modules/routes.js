@@ -176,12 +176,7 @@ const actions = {
         whatTag: whatTag,
         withTag: withTag,
         id: 1
-<<<<<<< HEAD
       }), jwt,
-=======
-      }),
-      access_token.getters.jwt[0],
->>>>>>> 90cbeb014b97b16590355d94be6c8156945a4f09
       () => {
         console.log('success')
         router.push({ name: 'LoginView' })
