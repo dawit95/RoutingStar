@@ -11,13 +11,30 @@
 <script>
 import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
 import MyRoutesTabs from '@/components/myPage/MyRoutesTabs.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'MyPageView',
+  data() {
+    return {
+      }
+  },
   components: {
     ProfileInfo,
     MyRoutesTabs,
   },
+  computed: {
+    ...mapGetters(['jwt']),
+  },
+  methods: {
+    ...mapActions(['fetchLoginedToken'])
+  },
+  mounted() {
+    console.log('여기 크리에이티드')
+    const access_token = this.jwt
+    console.log(access_token)
+    this.fetchLoginedToken(access_token)
+  }
 }
 </script>
 
