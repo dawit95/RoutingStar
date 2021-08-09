@@ -18,8 +18,12 @@ const mutations= {
   // 전체 토큰 받아오기(처음 로그인)
   CREATE_USER(state, token){
     console.log('처음 로그인 jwt 저장 commit')
+    // console.log('decodepk:', decodeAccessToken.pk)
     state.jwt[0] = token.access
     state.jwt[1] = token.refresh
+    const jwt = require('jsonwebtoken')
+    const decodeAccessToken = jwt.decode(token.access)
+    state.jwt[2] = decodeAccessToken.pk
     console.log(state.jwt)
   },
   FETCH_LOGINED_TOKEN(state, access){
