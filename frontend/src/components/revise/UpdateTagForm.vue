@@ -106,29 +106,25 @@ export default {
     addWithTagButtonClass(idx) {
       this.withTagObj[idx].isSelcted = !this.withTagObj[idx].isSelcted
     },
-    // updateTag(reswhatTag, reswithTag) {
-    //   const whatTagLength = reswhatTag.length
-    //   const withTagLength = reswithTag.length
-
-    //   for (let x=0; x<whatTagLength; x++) {
-    //     this.whatTagObj.filter(tag => {
-    //       if (tag.tagnum === whatTagLength[x].id) {
-    //         tag.isSelcted = true
-    //       }
-    //     })
-    //   }
-    //   for (let x=0; x<withTagLength; x++) {
-    //     this.withTagObj.filter(tag => {
-    //       if (tag.tagnum === withTagLength[x].id) {
-    //         tag.isSelcted = true
-    //       }
-    //     })
-    //   }
-    // }
   },
-  // mounted () {
-  //   this.updateTag(this.reswhatTag, this.reswithTag)
-  // }
+  created () {
+    const whatTagLength = this.reswhatTag.length
+    const withTagLength = this.reswithTag.length
+    for (let x=0; x<whatTagLength; x++) {
+      this.whatTagObj.filter(tag => {
+        if (tag.tagnum === this.reswhatTag[x].id) {
+          tag.isSelcted = true
+        }
+      })
+    }
+    for (let x=0; x<withTagLength; x++) {
+        this.withTagObj.filter(tag => {
+          if (tag.tagnum === this.reswithTag[x].id) {
+            tag.isSelcted = true
+          }
+        })
+      }
+  }
 }
 </script>
 
