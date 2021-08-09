@@ -76,20 +76,9 @@ const actions = {
       // // .then((res) => console.log(res.data.success))
       // .catch((err) => {console.log(err)})
 
-    } else {
-      console.log('갱신안해도됨')
-      const config = {
-        headers: {
-          'access_token': token[0],
-        }
-      }
-      // axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
-      axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
-        .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
-        .catch((err) => console.log(err))
-        }   
-      }
-   }
+    }  
+  }
+}
 
 
 export default {
