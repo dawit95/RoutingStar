@@ -7,10 +7,9 @@ const instance = createInstance();
 // { params: { places, routeDescription, routeImg, whatTag, withTag } }
 function postRoute(param, success, fail) {
   instance
-  .post('route', param )
+  .post('api/v1/route', param )
   .then(success)
   .catch(fail);
-
 }
 
 export { postRoute }

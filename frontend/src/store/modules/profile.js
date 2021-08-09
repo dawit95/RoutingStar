@@ -1,6 +1,6 @@
-// profile.js
-
-// import { getUserInfoByUserId } from '@/api/accounts.js'
+// profile.js 
+import { getUserInfoByUserId } from '@/api/accounts.js'
+// import accounts from './accounts'
 // import axios from 'axios'
 
 const state = {
@@ -55,14 +55,22 @@ const mutations = {
 }
 
 const actions = {
-  // fetchUserInfo({ commit }, userId) {
-  //   getUserInfoByUserId(userId),
-  //   (res) => {
-  //     commit('')
-  //   } 
-  // }
+  // async fetchUserInfo({ commit }, userId, access_token) {
+  fetchUserInfo({ commit }, payload ) {
+    console.log('여기는 store')
+    console.log(payload)
+    // console.log(payload.userId)
+    // console.log(payload.access_token)
+    getUserInfoByUserId(payload.userId, payload.access_token,
+    (res) => {
+      console.log(res.data.success)
+      commit('SET_USER_INFO', res.data.success)
+    }, (error) => {
+      console.log(error)
+    });
+  }
 
-  // followOtherUser({ getters, dispatch }, userId) {
+  // followOtherUser({ getters, dispatch }, userI+d) {
   //   axios.post(DRF.URL + DRF.ROUTES.follow(userId), null, getters.config)
   //     .then(() => dispatch('fetchOtherUserInfo', userId))
   //     // 팔로우, 팔로잉 리스트도 받아야와야함
