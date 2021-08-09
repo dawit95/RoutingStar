@@ -45,7 +45,7 @@ public class ReactionController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/follow/{userId}")
+    @GetMapping("/followlist/{userId}")
     public ResponseEntity<SuccessResponseDto> countOfFollow(@PathVariable Long userId) throws NoUserException, NoRouteException {
 
         FFResponseDto ffResponseDto =  reactionService.countOfFollow(userId);

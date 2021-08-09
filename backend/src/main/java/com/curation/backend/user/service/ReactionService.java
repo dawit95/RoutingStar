@@ -75,7 +75,7 @@ public class ReactionService {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("당신의 정보가 없습니다.\n회원가입해주세요"));
         User target = userRepository.findById(targetId).orElseThrow(() -> new NoUserException("해당하는 사용자가 없습니다."));
 
-        FollowerFollowing followerFollowing = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(targetId,userId).orElse(null);
+        FollowerFollowing followerFollowing = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(userId,targetId).orElse(null);
 
         //이미 저장되어 있음
         if(followerFollowing != null) {
