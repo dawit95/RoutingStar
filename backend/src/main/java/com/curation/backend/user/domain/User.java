@@ -15,6 +15,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @SQLDelete(sql = "UPDATE user set deleted = true where id = ?")
 @Where(clause = "deleted = false")
 @Getter
