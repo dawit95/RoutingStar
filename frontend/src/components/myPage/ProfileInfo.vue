@@ -56,7 +56,10 @@ export default {
     ...mapGetters(['userInfo', 'followingUserList', 'followerUserList'])
   },
   methods: {
-    ...mapActions([]),
+    ...mapActions(['fetchUserInfo']),
+  },
+  mounted() {
+    this.fetchUserInfo()
   }
 }
 </script>                                                                               

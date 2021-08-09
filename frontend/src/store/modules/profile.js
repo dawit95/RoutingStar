@@ -1,6 +1,6 @@
 // profile.js
 
-// import { getUserInfoByUserId } from '@/api/accounts.js'
+import { getUserInfoByUserId } from '@/api/accounts.js'
 // import axios from 'axios'
 
 const state = {
@@ -55,12 +55,12 @@ const mutations = {
 }
 
 const actions = {
-  // fetchUserInfo({ commit }, userId) {
-  //   getUserInfoByUserId(userId),
-  //   (res) => {
-  //     commit('')
-  //   } 
-  // }
+  fetchUserInfo({ commit }, userId) {
+    getUserInfoByUserId(userId),
+    (res) => {
+      commit('SET_USER_INFO', res)
+    } 
+  }
 
   // followOtherUser({ getters, dispatch }, userId) {
   //   axios.post(DRF.URL + DRF.ROUTES.follow(userId), null, getters.config)
