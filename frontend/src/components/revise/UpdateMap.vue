@@ -90,7 +90,7 @@ export default {
         })
         // Map생성시 기존 data에 대한 마커 생성
         const length = this.resPlacesData.length
-        console.log(this.resPlacesData)
+        // console.log(this.resPlacesData)
         for (let x = 0; x < length; x++) {
           let pk = this.pointListPk
           this.pointListPk = this.pointListPk + 1
@@ -103,9 +103,6 @@ export default {
             this.$store.state.images.thumbnailImage = this.resPlacesData[x].placeImg
             this.$store.state.images.thumbnailChecked = true
             this.$emit('update-tumbnail-image', this.resPlacesData[x].placeImg)
-          }
-          if (this.resPlacesData[x].placeImg !== "") {
-            this.imgList[pk] = this.resPlacesData[x].placeImg
           }
           let newPlace = {
             createdOrder: pk,
@@ -121,6 +118,9 @@ export default {
             },
           }
           this.addPlace(newPlace)
+          if (this.resPlacesData[x].placeImg !== "") {
+            this.imgList[pk] = this.resPlacesData[x].placeImg
+          }
           
           this.SET_POLYLINE(new window.google.maps.Polyline
             ({
