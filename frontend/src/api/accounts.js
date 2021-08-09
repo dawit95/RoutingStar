@@ -1,10 +1,8 @@
 import { createInstance } from "./index.js";
 //import getters from '../store'
-import accounts from '../store/modules/accounts.js'
 
-console.log(accounts)
-const access_token = accounts.getters.jwt[0]
-
+// const access_token = accounts.state.jwt[0]
+// console.log(access_token)
 const instance = createInstance()
 
 // function login(token){
@@ -44,11 +42,14 @@ const instance = createInstance()
 
 // function logout() {
 
-// 토큰 기간 
-function getUserInfoByUserId(success, fail) {
+// UserID만 있으면 가져오는 targetUser 정보
+function getUserInfoByUserId(targetId, access_token, success, fail) {
+
+  // const access_token = accounts.getters.jwt[0]
+  console.log("g어쎄스토큰")
   console.log(access_token)
   instance
-  .get('api/vi/userInfo', {
+  .get(`api/user/Info/${targetId}`, {
     headers: {
       'access_token': access_token,
     }
@@ -56,28 +57,6 @@ function getUserInfoByUserId(success, fail) {
   .then(success)
   .catch(fail);
 }
-
-
-function searchUserByEmail(keyword, success, fail) {
-  instance
-    .get('search/email', { params: keyword })
-    .then(success)
-    .catch(fail);
-}
-
-function searchUserByNickname(keyword, success, fail) {
-  instance
-    .get('search/nickname', { params: keyword })
-    .then(success)
-    .catch(fail);
-}
-
-// function getUserInfoByUserId(UserId, success, fail) {
-//   instance
-//     .get('user/nickname', { params: { UserId } })
-//     .then(success)
-//     .catch(fail);
-// }
 
 function editProfile(param, success, fail) {
   instance
@@ -88,8 +67,6 @@ function editProfile(param, success, fail) {
 
 
 export { 
-  searchUserByEmail,
-  searchUserByNickname,
   getUserInfoByUserId,
   editProfile,
  }    
