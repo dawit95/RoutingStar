@@ -6,6 +6,7 @@ import AWS from 'aws-sdk'
 const state = {
   routeImg: '',
   thumbnailImage: '',
+  thumbnailChecked: false,
   albumBucketName: 'routingstar-photo-album',
   bucketRegion: 'ap-northeast-2',
   IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',

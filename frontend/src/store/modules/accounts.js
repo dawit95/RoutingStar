@@ -18,8 +18,12 @@ const mutations= {
   // 전체 토큰 받아오기(처음 로그인)
   CREATE_USER(state, token){
     console.log('처음 로그인 jwt 저장 commit')
+    // console.log('decodepk:', decodeAccessToken.pk)
     state.jwt[0] = token.access
     state.jwt[1] = token.refresh
+    const jwt = require('jsonwebtoken')
+    const decodeAccessToken = jwt.decode(token.access)
+    state.jwt[2] = decodeAccessToken.pk
     console.log(state.jwt)
   },
   FETCH_LOGINED_TOKEN(state, access){
@@ -76,20 +80,9 @@ const actions = {
       // // .then((res) => console.log(res.data.success))
       // .catch((err) => {console.log(err)})
 
-    } else {
-      console.log('갱신안해도됨')
-      const config = {
-        headers: {
-          'access_token': token[0],
-        }
-      }
-      // axios.get(`http://localhost:8000/userTest/routes/${decodeAccessToken.pk}`, config)
-      axios.get(`http://i5a309.p.ssafy.io:8000/api/guest/route/${decodeAccessToken.pk}`, config)
-        .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
-        .catch((err) => console.log(err))
-        }   
-      }
-   }
+    }  
+  }
+}
 
 
 export default {

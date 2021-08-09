@@ -1,6 +1,7 @@
 // store/modules/routes.js
 
 import { postRoute } from '@/api/routes.js'
+import { getRouteInfoByRouteId } from '@/api/routes.js'
 import images from './images'
 import router from '@/router'
 
@@ -13,6 +14,7 @@ const state = {
   xyPoints: [],
   whatTag: [],
   withTag: [],
+  routeInfo: [],
 }
 
 const getters = {
@@ -44,7 +46,7 @@ const mutations= {
     state.places.push(newPlace)
   },
   ADD_IMAGE(state, newPlace) {
-    state.imgList.push(newPlace.image)
+    state.imgList.push(newPlace.placeImg)
   },
   SEND_IMAGES_ARRAY(state) {
     console.log(state)
@@ -100,6 +102,10 @@ const mutations= {
   },
   SET_WITH_TAG(state, withTag) {
     state.withTag = withTag
+  },
+  SET_ROUTE_INFO(state, res) {
+    console.log('SET_ROUTE_INFO')
+    state.routeInfo = res
   },
 }
 
@@ -172,6 +178,16 @@ const actions = {
         console.log(error)
       }
     );
+  },
+  fetchRouteInfo({ commit }, payload) {
+    console.log(payload)
+    getRouteInfoByRouteId(payload.routeId, payload.access_token,
+      (res) => {
+        console.log(res)
+        commit('SET_ROUTE_INFO', res)
+      }, (error) => {
+        console.log(error)
+      })
   },
 }
 
