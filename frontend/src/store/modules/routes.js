@@ -163,7 +163,7 @@ const actions = {
 
     // const access_token = accounts.state.jwt[0]
     console.log('access_token check')
-    console.log(access_token.getters.jwt[0])
+    // console.log(access_token.getters.jwt[0])
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
