@@ -33,7 +33,7 @@
                     <v-col cols="12">
                       <v-text-field
                         @change="createRouteDescription"
-                        label="Description" 
+                        label="Description"
                         hint="25자 내외의 짧은 설명을 기록해주세요"
                         v-model="RouteDetailData.routeDescription"
                         :rules="rules"
@@ -45,7 +45,7 @@
               </v-card-text>
             
               <v-layout>
-                <TagForm/>
+                <UpdateTagForm :reswhatTag="whatTag" :reswithTag="withTag"/>
               </v-layout>
             
               <v-card-actions>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import TagForm from '@/components/routes/TagForm.vue'
+import UpdateTagForm from '@/components/revise/UpdateTagForm.vue'
 import CreateRouteSuccessModal from '@/components/routes/CreateRouteSuccessModal.vue'
 import { mapActions } from 'vuex'
 
@@ -87,10 +87,19 @@ export default {
   props: {
     tempThumbnail: {
       type: String
+    },
+    routeDescription: {
+      type: String
+    },
+    whatTag: {
+      type: Array
+    },
+    withTag: {
+      type: Array
     }
   },
   components: {
-    TagForm,
+    UpdateTagForm,
     CreateRouteSuccessModal,
   },
   data() {
@@ -99,7 +108,7 @@ export default {
       dialog: false,
       // 모달에 작성되는 데이터
       RouteDetailData: {
-        routeDescription: '',
+        routeDescription: this.routeDescription,
       },
       // 모달에 작성되는 데이터의 조건
       rules: [v => v.length <= 25 || '25자 이상입니다'],

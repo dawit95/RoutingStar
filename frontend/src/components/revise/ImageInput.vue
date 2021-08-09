@@ -38,6 +38,7 @@ export default {
     },
     onFileSelected(place, fieldName, file) {
       // const { maxSize } = this
+      // 파일 갱신되었는데 이미 썸네일인 경우도 고려해야함.
       let imageFile = file[0]
       if (file.length>0) {
         // let size = imageFile.size / maxSize / maxSize
