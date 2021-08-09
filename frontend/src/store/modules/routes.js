@@ -132,7 +132,9 @@ const actions = {
   setWithTag( {commit}, withTag) {
     commit('SET_WITH_TAG', withTag)
   },
-  createRoute() {
+  createRoute( {commit}, jwt) {
+    console.log(commit)
+    console.log(jwt)
     const newPlaces = []
     for (const place of state.places) {
       const tmpPlace = {
@@ -164,7 +166,7 @@ const actions = {
         whatTag: whatTag,
         withTag: withTag,
         id: 1
-      }),
+      }), jwt,
       () => {
         console.log('success')
         router.push({ name: 'LoginView' })
