@@ -2,7 +2,6 @@ package com.curation.backend.route.web;
 
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
-import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteDetailWithCommentResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.exception.NoRouteException;
@@ -40,11 +39,4 @@ public class GuestRouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/mypage/routes/{userId}")
-    public ResponseEntity<SuccessResponseDto> myRouteList(@PathVariable("userId") Long id) {
-        List<RouteListResponseDto> list = routeService.myRouteList(id);
-        HttpStatus status = HttpStatus.OK;
-        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
-        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
-    }
 }
