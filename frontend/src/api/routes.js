@@ -12,4 +12,16 @@ function postRoute(param, success, fail) {
   .catch(fail);
 }
 
-export { postRoute }
+function getRouteInfoByRouteId(routeId, access_token, success, fail) {
+  console.log("getRouteInfoByRouteId잘 들어옴")
+  // console.log(routeId, access_token)
+  instance
+  .get(`api/v1/route/${routeId}`, {
+    headers: {
+      'access_token': access_token,
+    }
+  })
+  .then(success)
+  .catch(fail);
+}
+export { postRoute, getRouteInfoByRouteId }
