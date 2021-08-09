@@ -3,8 +3,37 @@
 import axios from 'axios'
 
 const state = {
-  feeds: '',
-
+  feeds: [
+    {
+    "id": 1,
+    "places": [
+      {
+        "createdOrder": 1,
+        "isThumbnail": true,
+        "lat": 12.3,
+        "lng": 45.2,
+        "placeImg": "첫번째 사진이지롱",
+        "title": "여기는 카페에요"
+      },
+      {
+        "createdOrder": 2,
+        "isThumbnail": false,
+        "lat": 45.2222,
+        "lng": 666.123,
+        "placeImg": "두번째 사진이지롱",
+        "title": "여기는 존맛 밥집"
+      }
+    ],
+    "routeDescription": "우리동네 최고 코스에요",
+    "routeImg": "루트 사진이 들어가있음",
+    "whatTag": [
+      1, 2, 3
+    ],
+    "withTag": [
+      1, 2, 7
+    ]
+  }
+  ],
 }
 
 
