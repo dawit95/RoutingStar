@@ -8,7 +8,7 @@ const instance = createInstance();
 
 function postPointImages(files, success, fail) {
   instance
-  .post('http://192.168.1.214:8000/api/v1/img/place', files, {
+  .post('api/v1/img/place', files, {
     headers: {
       'Content-Type': 'multipart/form-data',
     }
@@ -19,7 +19,7 @@ function postPointImages(files, success, fail) {
 
 function postThumbnailImage(file, success, fail) {
   instance
-  .post('http://192.168.1.214:8000/api/v1/img/place', file, {
+  .post('api/v1/img/place', file, {
     headers: {
       'Content-Type': 'multipart/form-data',
     }

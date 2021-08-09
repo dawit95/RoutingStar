@@ -1,5 +1,8 @@
 import { createInstance } from "./index.js";
+//import getters from '../store'
 
+// const access_token = accounts.state.jwt[0]
+// console.log(access_token)
 const instance = createInstance()
 
 // function login(token){
@@ -39,33 +42,20 @@ const instance = createInstance()
 
 // function logout() {
 
-async function findByToken(token, success, fail) {
-  instance.defaults.headers['auth-token'] = token;
-  await instance
-    .get('account/info')
-    .then(success)
-    .catch(fail);
-}
+// UserID만 있으면 가져오는 targetUser 정보
+function getUserInfoByUserId(targetId, access_token, success, fail) {
 
-function searchUserByEmail(keyword, success, fail) {
+  // const access_token = accounts.getters.jwt[0]
+  console.log("g어쎄스토큰")
+  console.log(access_token)
   instance
-    .get('search/email', { params: keyword })
-    .then(success)
-    .catch(fail);
-}
-
-function searchUserByNickname(keyword, success, fail) {
-  instance
-    .get('search/nickname', { params: keyword })
-    .then(success)
-    .catch(fail);
-}
-
-function getUserInfoByUserId(UserId, success, fail) {
-  instance
-    .get('user/nickname', { params: { UserId } })
-    .then(success)
-    .catch(fail);
+  .get(`api/user/Info/${targetId}`, {
+    headers: {
+      'access_token': access_token,
+    }
+  })
+  .then(success)
+  .catch(fail);
 }
 
 function editProfile(param, success, fail) {
@@ -77,9 +67,6 @@ function editProfile(param, success, fail) {
 
 
 export { 
-  findByToken,
-  searchUserByEmail,
-  searchUserByNickname,
   getUserInfoByUserId,
   editProfile,
  }    
