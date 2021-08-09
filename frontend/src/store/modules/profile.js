@@ -1,35 +1,29 @@
 // profile.js 
 import { getUserInfoByUserId } from '@/api/accounts.js'
+import { follow, getFollowList } from '@/api/follow.js'
+import { getWrittenRoute, getSavedRoute } from '@/api/routes.js'
 // import accounts from './accounts'
 // import axios from 'axios'
 
 const state = {
   userInfo: [],
-  myRouteList: [],
-  othersRouteList: [],
-  followingRouteList: [],
-  followingUserList: [],
-  followerUserList: [],
+  writtenRouteList: [],
+  savedRouteList: [],
+  followUserList: [],
 }
 
 const getters = {
   userInfo(state) {
     return state.userInfo
   },
-  myRouteList(state) {
+  writtenRouteList(state) {
     return state.myRouteList
   },
-  othersRouteList(state) {
+  savedRouteList(state) {
     return state.othersRouteList
   },
-  followingRouteList(state) {
-    return state.followingRouteList
-  },
-  followingUserList(state) {
-    return state.followingUserList
-  },
-  followerUserList(state) {
-    return state.followerUserList
+  followUserList(state) {
+    return state.followUserList
   },
 }
 
@@ -37,20 +31,14 @@ const mutations = {
   SET_USER_INFO(state, userInfo) {
     state.userInfo = userInfo
   },
-  SET_MY_ROUTE_LIST(state, myRouteList) {
+  SET_WRITTEN_ROUTE_LIST(state, myRouteList) {
     state.myRouteList = myRouteList
   },
-  SET_OTHERS_ROUTE_LIST(state, othersRouteList) {
+  SET_SAVED_ROUTE_LIST(state, othersRouteList) {
     state.othersRouteList = othersRouteList
   },
-  SET_FOLLOWING_ROUTE_LIST(state, followingRouteList) {
-    state.followingRouteList = followingRouteList
-  },
-  SET_FOLLOWING_USER_LIST(state, followingUserList) {
-    state.followingUserList = followingUserList
-  },
-  SET_FOLLOWER_USER_LIST(state, followerUserList) {
-    state.followerUserList = followerUserList
+  SET_FOLLOW_USER_LIST(state, followUserList) {
+    state.followingUserList = followUserList
   },
 }
 
@@ -68,7 +56,49 @@ const actions = {
     }, (error) => {
       console.log(error)
     });
-  }
+  },
+  
+  followOtherUser({ dispatch }, payload ) {
+    follow(payload.userId, payload.targetId, payload.access_token,
+    (res) => {
+      console.log(res.data.success)
+      dispatch('fetchFollowUserList', payload.targetId)
+    }, (error) => {
+      console.log(error)
+    });
+  },
+
+  fetchFollowUserList({ commit }, payload ) {
+    getFollowList(payload.userId, payload.access_token,
+    (res) => {
+      console.log(res.data.success)
+      commit('SET_FOLLOW_USER_LIST', res.data.success)
+    }, (error) => {
+      console.log(error)
+    });
+  },
+
+  fetchWrittenRouteList({ commit }, payload ) {
+    getWrittenRoute(payload.userId, payload.access_token,
+    (res) => {
+      console.log(res.data.success)
+      commit('SET_WRITTEN_ROUTE_LIST', res.data.success)
+    }, (error) => {
+      console.log(error)
+    });
+  },
+
+  fetchSavedRouteList({ commit }, payload ) {
+    getSavedRoute(payload.userId, payload.access_token,
+    (res) => {
+      console.log(res.data.success)
+      commit('SET_SAVED_ROUTE_LIST', res.data.success)
+    }, (error) => {
+      console.log(error)
+    });
+  },
+
+
 
   // followOtherUser({ getters, dispatch }, userI+d) {
   //   axios.post(DRF.URL + DRF.ROUTES.follow(userId), null, getters.config)
