@@ -5,13 +5,14 @@ import com.curation.backend.place.domain.PlaceRepository;
 import com.curation.backend.place.dto.PlaceRequestDto;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
+import com.curation.backend.route.domain.RouteStorage;
+import com.curation.backend.route.domain.RouteStorageRepository;
 import com.curation.backend.route.dto.*;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.tag.domain.RouteWhatTagRepository;
 import com.curation.backend.tag.domain.RouteWithTagRepository;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.FollowerFollowing;
-import com.curation.backend.user.domain.LikeRepository;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.exception.NoUserException;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 public class RouteService {
 
     private final RouteRepository routeRepository;
+    private final RouteStorageRepository routeStorageRepository;
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
     private final RouteWhatTagRepository routeWhatTagRepository;
@@ -117,6 +120,18 @@ public class RouteService {
     @Transactional(readOnly = true)
     public List<RouteListResponseDto> myRouteList(Long id) {
         return routeRepository.findAllByUserId(id).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RouteDetailResponseDto> myStoreList(Long userId) {
+        ListIterator<RouteStorage> storageIdList = routeStorageRepository.findAllByUserId(userId).listIterator();
+        List<RouteDetailResponseDto> routeStorageList = new ArrayList<>();
+        while(storageIdList.hasNext()){
+            Long route_id = storageIdList.next().getRoute().getId();
+            logger.trace("저장한 리스트 id {}", route_id);
+            routeStorageList.add(new RouteDetailResponseDto(routeRepository.findById(route_id).get()));
+        }
+        return routeStorageList;
     }
 
     @Transactional(readOnly = true)

@@ -4,6 +4,7 @@ import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
+import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
@@ -82,6 +83,14 @@ public class UserController {
     @GetMapping("/mypage/routes/{userId}")
     public ResponseEntity<SuccessResponseDto> myRouteList(@PathVariable("userId") Long id) {
         List<RouteListResponseDto> list = routeService.myRouteList(id);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @GetMapping("/mypage/stores/{userId}")
+    public ResponseEntity<SuccessResponseDto> myStoreList(@PathVariable("userId") Long id) {
+        List<RouteDetailResponseDto> list = routeService.myStoreList(id);
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
