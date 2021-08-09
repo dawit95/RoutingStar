@@ -4,6 +4,7 @@ import com.curation.backend.global.config.auth.CustomOAuth2UserService;
 import com.curation.backend.global.filter.JwtAuthFilter;
 import com.curation.backend.global.handler.CustomOAuth2SuccessHandler;
 import com.curation.backend.token.service.TokenService;
+import com.curation.backend.user.domain.Role;
 import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
+                .cors().configurationSource(corsConfigurationSource())
 
                 .and()
                 .csrf().disable()
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**","/error","/favicon.ico").permitAll()
                 //antMatchers의 url은 frontend와 함께 정리하여 변환.
                 .antMatchers("/auth/**","/oauth2/**").permitAll()
-                .antMatchers("/token/**","/api/v1/**").permitAll()
+                .antMatchers("/token/**","/api/v1/**").hasRole(Role.USER.name())
 
                 .antMatchers("/api/guest/**","/api/user/**").permitAll()
                 .anyRequest().authenticated()

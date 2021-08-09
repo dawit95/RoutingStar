@@ -28,8 +28,7 @@ public class TokenController {
     Logger logger = LoggerFactory.getLogger(TokenController.class);
 
     @GetMapping("/token/expired")
-    public String auth()
-    {
+    public String auth() {
         logger.trace("token/expired요청함 : ");
         throw new RuntimeException();
     }
@@ -54,6 +53,7 @@ public class TokenController {
 
 //                response.addHeader("access_token", newToken.getAccess_token());
 //                response.setContentType("application/json;charset=UTF-8");
+                response.setHeader("Access-Control-Allow-Origin", "*");
                 HttpStatus status = HttpStatus.OK;
                 SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(newToken.getAccess_token());
 
