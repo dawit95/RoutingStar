@@ -55,7 +55,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['places', 'polyLine'])
+    ...mapGetters(['places', 'polyLine', 'imgList'])
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
@@ -90,7 +90,7 @@ export default {
         })
         // Map생성시 기존 data에 대한 마커 생성
         const length = this.resPlacesData.length
-        console.log(this.resPlacesData)
+        // console.log(this.resPlacesData)
         for (let x = 0; x < length; x++) {
           let pk = this.pointListPk
           this.pointListPk = this.pointListPk + 1
@@ -98,9 +98,15 @@ export default {
             position: { lat: this.resPlacesData[x].lat, lng: this.resPlacesData[x].lng },
             map: this.map
           })
+          if (this.resPlacesData[x].isThumbnail) {
+            this.$emit('thumbnail-checked')
+            this.$store.state.images.thumbnailImage = this.resPlacesData[x].placeImg
+            this.$store.state.images.thumbnailChecked = true
+            this.$emit('update-tumbnail-image', this.resPlacesData[x].placeImg)
+          }
           let newPlace = {
             createdOrder: pk,
-            imageUpload: false,
+            imageUpload: (this.resPlacesData[x].placeImg !== "" ? true : false),
             placeImg : this.resPlacesData[x].placeImg,
             lat : this.resPlacesData[x].lat,
             lng : this.resPlacesData[x].lng,
@@ -112,6 +118,9 @@ export default {
             },
           }
           this.addPlace(newPlace)
+          if (this.resPlacesData[x].placeImg !== "") {
+            this.imgList[pk] = this.resPlacesData[x].placeImg
+          }
           
           this.SET_POLYLINE(new window.google.maps.Polyline
             ({

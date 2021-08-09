@@ -53,10 +53,20 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ProfileInfo',
   computed: {
-    ...mapGetters(['userInfo', 'followingUserList', 'followerUserList'])
+    ...mapGetters(['jwt', 'userInfo', 'followingUserList', 'followerUserList'])
   },
   methods: {
-    ...mapActions([]),
+    ...mapActions(['fetchUserInfo']),
+  },
+  mounted() {
+    const tmp_id = 1
+    const access_token = this.jwt[0]
+    console.log('여기 마운티드')
+    console.log(this.jwt[0])
+    this.fetchUserInfo({
+      userId: tmp_id, 
+      access_token: access_token
+    })
   }
 }
 </script>                                                                               

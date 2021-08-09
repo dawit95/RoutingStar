@@ -37,14 +37,15 @@ export default {
       this.$refs.file.click();
     },
     onFileSelected(place, fieldName, file) {
-      const { maxSize } = this
+      // const { maxSize } = this
+      // 파일 갱신되었는데 이미 썸네일인 경우도 고려해야함.
       let imageFile = file[0]
       if (file.length>0) {
-        let size = imageFile.size / maxSize / maxSize
+        // let size = imageFile.size / maxSize / maxSize
         this.imgList[place.createdOrder] = imageFile
         
         place.imageUpload = true
-        console.log(size)
+        // console.log(size)
 
         // Append file into FormData and turn file into image URL
         let formData = new FormData()
@@ -56,26 +57,6 @@ export default {
         this.$emit('input', { formData, imageURL })
       }
     },
-    // onFileChange(fieldName, file) {
-    //   const { maxSize } = this
-    //   let imageFile = file[0]
-    //   if (file.length>0) {
-    //     let size = imageFile.size / maxSize / maxSize
-    //     // console.log(file)
-    //     // console.log(maxSize)
-    //     // console.log(imageFile.size)
-    //     console.log(size)
-    //       // Append file into FormData and turn file into image URL
-    //       let formData = new FormData()
-    //       let imageURL = URL.createObjectURL(imageFile)
-    //       // console.log(formData)
-    //       // console.log(imageURL)
-    //       formData.append(fieldName, imageFile)
-    //       // Emit the FormData and image URL to the parent component
-    //       this.$emit('input', { formData, imageURL })
-    //     }
-    //   // }
-    // },
   }
 }
 </script>

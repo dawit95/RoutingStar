@@ -44,7 +44,7 @@ const mutations= {
     state.places.push(newPlace)
   },
   ADD_IMAGE(state, newPlace) {
-    state.imgList.push(newPlace.image)
+    state.imgList.push(newPlace.placeImg)
   },
   SEND_IMAGES_ARRAY(state) {
     console.log(state)
