@@ -4,6 +4,7 @@ import { postRoute } from '@/api/routes.js'
 import { getRouteInfoByRouteId } from '@/api/routes.js'
 // import accounts from '@/store/modules/accounts.js'
 import images from './images'
+// import accounts from './accounts'
 import router from '@/router'
 
 
@@ -167,19 +168,19 @@ const actions = {
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
-    postRoute(
-      CircularJSON.stringify(
-      {
-        places: newPlaces,
-        routeDescription: routeDescription,
-        routeImg: routeImg,
-        whatTag: whatTag,
-        withTag: withTag,
-        id: 1
-      }), jwt,
-      () => {
-        console.log('success')
-        router.push({ name: 'LoginView' })
+      postRoute(
+        CircularJSON.stringify(
+          {
+            places: newPlaces,
+            routeDescription: routeDescription,
+            routeImg: routeImg,
+            whatTag: whatTag,
+            withTag: withTag,
+            id: jwt[2],
+          }), jwt,
+          () => {
+            console.log('success')
+        router.push({ name: 'HomeView' })
       },(error) => {
         console.log(error)
       }
