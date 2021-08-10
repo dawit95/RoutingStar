@@ -2,7 +2,7 @@
   <v-app>
     <v-main class="background-color">
       <!-- Header -->
-      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' ">
+      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' ">
         <Header/>
       </div>
 
