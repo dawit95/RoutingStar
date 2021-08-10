@@ -1,22 +1,23 @@
 <template>
 <div>
-    <a href="https://192.168.1.51:8080/oauth2/authorization/google">google1</a>
-    <a href="http://192.168.1.51:8080/oauth2/authorization/google">google2</a>
-    <a href="http://localhost:8080/oauth2/authorization/google">google3</a>
+    <!-- 수정 1. google 2. vuex accounts -->
+    <!-- <a href="http://localhost:8000/oauth2/authorization/kakao"> -->
+    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">
 
-    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">google2</a>
-<<<<<<< HEAD
-=======
-    <a href="http://192.168.1.51:8000/oauth2/authorization/kakao">google2</a>
+      <v-img class="mx-auto logoTopM" max-height="300" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
+    </a>
+    <div class="rounded-lg">
 
->>>>>>> fe9e1958e80eafaa461124731f50f530395ad7c7
-    <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
+    <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/google">
+      <v-img class="mx-auto loginButtonM circle" max-height="40" max-width="315" :src="require('../../assets/btn_google_signin_dark_pressed_web@2x.png')" />
+    </a>
+    </div>
 </div>
 </template>
 
 <script>
 
-import GoogleLogin from 'vue-google-login';
+// import GoogleLogin from 'vue-google-login';
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
  
  export default {
@@ -34,18 +35,16 @@ const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
         }
   },
   components: {
-    GoogleLogin,
+    // GoogleLogin,
   },
   methods: {
-    onSuccess(googleUser) {
-    console.log(googleUser);
-    // This only gets the user information: id, name, imageUrl and email
-    console.log(googleUser.getBasicProfile());
-    }
   },
-}
+ }
+
 </script>
 
 <style>
-
+.logoTopM {margin-top: 70px;}
+.loginButtonM {margin-top: 30px;}
+.circle {border-radius: 15px;}
 </style>

@@ -1,121 +1,139 @@
 <template>
   <div>
-    <div id="container"></div>
+    <canvas id="canvas"></canvas>
+    <v-btn @click="canvasToPng">루트 그림으로 변환 확인</v-btn>
+    <img v-bind:src="imgDataUrl" alt="">
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, } from 'vuex'
+import AWS from 'aws-sdk'
 
 export default {
   name: 'CreateRouteCanvas',
   data() {
     return {
-      XYfromlatlng: []
+      imgDataUrl: '',
+      file: '',
+      albumBucketName: 'routingstar-photo-album',
+      bucketRegion: 'ap-northeast-2',
+      IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
+    }
+  },
+  props: {
+    isCompleted: {
+      type: Boolean
     }
   },
   computed: {
-    ...mapGetters(['pointedItems'])
+    ...mapGetters(['places', 'xyPoints', 'jwt'])
   },
   methods: {
+    ...mapActions(['updateRouteImg', 'createRoute']),
+
     addCanvasScript() {
+      console.log("addCanvasScript")
       const script = document.createElement("script");
 
-      script.onload = () => this.initCanvas();
-      script.src = "https://unpkg.com/konva@8.1.1/konva.min.js";
-      // script.async = true;
+      script.onload = () => this.drawPolyLine();
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js";
       document.head.appendChild(script);
     },
-    initCanvas() {
-      console.log(this.pointedItems)
-      var width = 800
-      var height = 400
+    drawPolyLine() {
+      console.log("drawPolyLine")
+      let canvas = new window.fabric.Canvas("canvas", {width:400, height:400 });
+      console.log(canvas.getWidth())
+      console.log(this.xyPoints)
+      var canvasPolyline = new window.fabric.Polyline(
+        this.xyPoints,
+        {
+          stroke: '#D2FDFF',
+          fill: 'rgba(0,0,0,0)',
+          strokeWidth: 10,
+        })
 
-      var stage = new window.Konva.Stage({
-        container: 'container',
-        width: width,
-        height: height,
-      });
+      const canvasWidth = 400
+      const canvasHeight = 400
+      const margin = 0.6
 
-      var layer = new window.Konva.Layer();
+      let bounds = canvasPolyline.getBoundingRect()
+      let widthRatio = bounds.width / canvasWidth
+      let heightRatio = bounds.height / canvasHeight
 
-      var redLine = new window.Konva.Line({
-        points: points,
-        stroke: 'red',
-        strokeWidth: 15,
-        lineCap: 'round',
-        lineJoin: 'round',
-      });
-
-
-      // // dashed line
-      // var greenLine = new window.Konva.Line({
-      //   points: [5, 70, 140, 23, 250, 60, 300, 20],
-      //   stroke: 'green',
-      //   strokeWidth: 2,
-      //   lineJoin: 'round',
-      //   /*
-      //    * line segments with a length of 33px
-      //    * with a gap of 10px
-      //    */
-      //   dash: [33, 10],
-      // });
-
-      // // complex dashed and dotted line
-      // var blueLine = new window.Konva.Line({
-      //   points: [5, 70, 140, 23, 250, 60, 300, 20],
-      //   stroke: 'blue',
-      //   strokeWidth: 10,
-      //   lineCap: 'round',
-      //   lineJoin: 'round',
-      //   /*
-      //    * line segments with a length of 29px with a gap
-      //    * of 20px followed by a line segment of 0.001px (a dot)
-      //    * followed by a gap of 20px
-      //    */
-      //   dash: [29, 20, 0.001, 20],
-      // });
-
-      /*
-       * since each line has the same point array, we can
-       * adjust the position of each one using the
-       * move() method
-       */
-      redLine.move({
-        x: 10,
-        y: 20,
-      });
-      // greenLine.move({
-      //   x: 0,
-      //   y: 55,
-      // });
-      // blueLine.move({
-      //   x: 0,
-      //   y: 105,
-      // });
-
-      layer.add(redLine);
-      // layer.add(greenLine);
-      // layer.add(blueLine);
-
-      // add the layer to the stage
-      stage.add(layer);
-      this.getXYfromlatlng()
-    },
-    getXYfromlatlng() {
-      for (const point of this.pointedItems) {
-        let lat = point.lat
-        let lng = point.lng
-        this.XYfromlatlng.push(lat)
-        this.XYfromlatlng.push(lng)
+      if ( widthRatio > heightRatio ) {
+        canvasPolyline.scaleToWidth( canvasWidth * margin )  
+      } else {
+        canvasPolyline.scaleToHeight( canvasHeight * margin)  
       }
+      canvas.add(canvasPolyline)
+      canvasPolyline.center()
     },
+    canvasToPng() {
+      console.log('canvasToPng')
+      let canvas = document.getElementById("canvas")
+      console.log(canvas)
+      this.imgDataUrl = canvas.toDataURL("image/png")
+      
+      // base64 암호화뎅 이미지 데이터 디코딩
+      let blobBin = atob(this.imgDataUrl.split(',')[1])
+      let array = []
+      for (let i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+      }
+      this.file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+      console.log(this.file)
+    }, 
+    sendToS3() {  
+      console.log('sendToS3')
+      const image = this.file
+      const date = new Date().getTime();
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.IdentityPoolId,
+        })
+      });
+      // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
+      var s3 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: this.albumBucketName }
+      });
+      s3.upload({
+          Key: `routeImage/${date}`,
+          Body: image,
+          ContentType: 'image/png',
+          ACL: 'public-read'
+        }, (err, data) => {
+          if (err) {
+            console.log(err)
+            return alert("There was an error uploading your photo: ", err.message);
+          }
+          console.log(`data변환 완료`)
+          this.updateRouteImg(data.Location)
+          console.log(data)
+          const access_token = this.jwt[0]
+          console.log(access_token)
+          // 동기적으로 callback을 활용한다 !!!! 으아아아아 
+          console.log('createroute 실행전', this.jwt)
+          this.createRoute(this.jwt)
+        })
+    },
+    
+  },
+  watch: {
+    isCompleted: function(isCompleted) {
+      if (isCompleted) {
+        this.canvasToPng()
+        this.sendToS3()
+      }
+    }
   },
   mounted() {
-    window.Konva
-      ? this.initCanvas()
+    window.fabric
+      ? this.drawPolyLine()
       : this.addCanvasScript();
-  }
+  },
 }
 </script>
 
@@ -124,6 +142,11 @@ body {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: #f0f0f0;
+        background-color: #2A355D;
       }
+
+#canvas {
+  width: 800px;
+  height: 400px;
+}
 </style>

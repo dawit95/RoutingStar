@@ -1,55 +1,40 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+    <v-main class="background-color">
+      <!-- Header -->
+      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' ">
+        <Header/>
       </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
+      <!-- 라우터 뷰 -->  
       <router-view/>
+    
+      <!-- Footer -->
+      <div v-if="$route.name !== 'LoginView'">
+        <Nav/>
+      </div>
+
     </v-main>
   </v-app>
-  
 </template>
 
 <script>
+import Header from '@/components/common/Header.vue'
+import Nav from '@/components/common/Nav.vue'
 
 export default {
   name: 'App',
   data: () => ({
-    //
+    
   }),
+  components: {
+    Header,
+    Nav
+  }
 };
 </script>
+<style>
+.background-color {
+  background-color: #101423;;
+}
+</style>
