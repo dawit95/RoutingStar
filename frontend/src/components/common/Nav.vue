@@ -1,31 +1,32 @@
 <template>
-<v-card>
-  <v-bottom-navigation 
-  absolute grow color="#FBE8A6"
-  :value="value" dark
-  background-color="#101423"
-  >
-    <v-btn @click="moveToSearch">
-      <span>Search</span>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+  <!-- <v-card> -->
+    <v-bottom-navigation 
+      absolute grow color="#FBE8A6"
+      :value="value" dark
+      background-color="#101423"
+    >
+      <v-btn @click="moveToSearch">
+        <span>Search</span>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
 
-    <v-btn @click="moveToPost">
-      <span>Post</span>
-      <v-icon>mdi-star-circle-outline</v-icon>
-    </v-btn>
+      <v-btn @click="moveToPost">
+        <span>Post</span>
+        <v-icon>mdi-star-circle-outline</v-icon>
+      </v-btn>
 
-    <v-btn @click="moveToHome">
-      <span>Home</span>
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
-  </v-bottom-navigation>
+      <v-btn @click="moveToHome">
+        <span>Home</span>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+    
+    </v-bottom-navigation>
 
-  <v-sheet align-self-end>
-    <v-container class="background-color" style="width: 100%; height: 600px;">
-    </v-container>
-  </v-sheet>
-</v-card>
+    <!-- <v-sheet align-self-end>
+      <v-container class="background-color" style="width: 100%; height: 600px;">
+      </v-container>
+    </v-sheet> -->
+  <!-- </v-card> -->
 </template>
 
 <script>

@@ -12,14 +12,6 @@ const routes = [
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
-  // 회원가입 전까지는 위의 프로필로 테스트
-  // path: '/acocunts/profile/:username',
-  {
-    path: '/accounts/profile/',
-    name: 'ProfileView',
-    component: () => import('@/views/accounts/ProfileView.vue')
-  },
-  
   // Common
   {
     path: '/Header',
@@ -63,10 +55,6 @@ const routes = [
     path: '/mypage',
     name: 'MyPageView',
     component: () => import('@/views/myPage/MyPageView.vue')
-
-    // follow / unfollow API 다르게 설정
-    // 다른 유저가 내가 팔로잉 한 유저인지 아닌지만 확인 한다
-    // 데이터와의 비교는 빽에서 한다
   },
   {
     path: '/profilepage',

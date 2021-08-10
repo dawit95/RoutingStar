@@ -16,10 +16,10 @@
         <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
           <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
           <!-- {{ feed.user.profileImg }} -->
-          <v-img class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
+          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="onClickUsername(feed)">{{ feed.user.name }}</span>
+          <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
       </v-card-title>
      
 
@@ -94,7 +94,7 @@ import Nav from '@/components/common/Nav.vue'
 import Header from '@/components/common/Header.vue'
 // import { login } from '@/api/user.js'
 import axios from 'axios'
-import { mapGetters, } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 // import HomeDetailView from '@/views/home/HomeDetailView.vue'
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
@@ -169,6 +169,7 @@ export default {
 
   // },
   methods: {
+    ...mapActions(['fetchUserInfo']),
 
     requestLike( id, idx ) {
       this.jwt[3] = id
@@ -222,6 +223,17 @@ export default {
     // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
     .then(res => {console.log(res)})  
     .catch((fail) => console.log(fail))  
+    },
+    
+    // 닉네임, 사진 누르면 프로필로 간다
+    onClickUser(feed) {
+      // 피드에 올린 글쓴이가 로그인한 유저이면 mypage로
+      if (this.jwt[2] === feed.user.id) {
+        this.$router.push({ name: 'MyPageView' })
+      } else {
+        // 아니면 글쓴이의 profilepage로 간다
+        this.$router.push({ name: 'OtherUserPageView' })
+      }
     }
   }
 }

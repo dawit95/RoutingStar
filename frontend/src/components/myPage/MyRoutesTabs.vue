@@ -13,16 +13,14 @@
               role="tabpanel" 
               aria-labelledby="description" 
               aria-hidden="false">
-            <ul>
-              <li>
+
+              <div>
                 <RouteThumbnail
                   v-for="route in writtenRouteList"
                   :key="route.id"
                   :route="route"
                 />
-                <RouteThumbnail/>
-              </li>
-            </ul>
+              </div>           
           </div>
         </li>
       
@@ -38,20 +36,17 @@
               role="tabpanel" 
               aria-labelledby="specification" 
               aria-hidden="true">
-            <ul>
-              <li>
+
+              <div>
                 <RouteThumbnail
                   v-for="route in savedRouteList"
                   :key="route.id"
                   :route="route"
                 />
-                <RouteThumbnail/>
-              </li>
-            </ul>
+              </div>
           </div>
         </li>
     </ul>
-
   </div>
 </template>
 
@@ -63,25 +58,21 @@ export default {
   name: 'MyRoutesTabs',
   components: { RouteThumbnail },
   computed: {
-    ...mapGetters(['jwt'])
+    ...mapGetters(['jwt', 'userInfo', 'writtenRouteList', 'savedRouteList'])
   },
   methods: {
     ...mapActions(['fetchWrittenRouteList', 'fetchSavedRouteList' ])
   },
-  mounted() {
-    const tmp_id = 1
-    const access_token = this.jwt[0]
-    console.log('여기 마운티드')
-    console.log(this.jwt[0])
-    this.fetchWrittenRouteList({
-      userId: tmp_id, 
-      access_token: access_token
-    })
-    this.fetchSavedRouteList({
-      userId: tmp_id,
-      access_token: access_token
-    })
-  }
+  // beforeCreated() {
+  //   this.fetchWrittenRouteList({
+  //     userId: this.jwt[2], 
+  //     access_token: this.jwt[0]
+  //   })
+  //   this.fetchSavedRouteList({
+  //     userId: this.jwt[2], 
+  //     access_token: this.jwt[0]
+  //   })
+  // },
 }
 </script>
 
