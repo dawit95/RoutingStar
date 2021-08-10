@@ -23,6 +23,8 @@ public class RouteListResponseDto {
     private Long likeCnt;
     private Long storageCnt;
     private Long commentCnt;
+    private Boolean isLiked = false;
+    private Boolean isStored = false;
 
     public RouteListResponseDto(Route entity) {
         this.id = entity.getId();

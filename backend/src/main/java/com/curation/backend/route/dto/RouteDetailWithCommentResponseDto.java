@@ -25,8 +25,6 @@ public class RouteDetailWithCommentResponseDto {
     private List<WithTagResponseDto> withTag;
     private List<CommentResponseDto> comments;
 
-
-
     public RouteDetailWithCommentResponseDto(Route entity) {
         this.id = entity.getId();
         this.routeImg = entity.getRouteImg();

@@ -101,4 +101,14 @@ public class ReactionService {
         return ffResponseDto;
     }
 
+    public List<Long> likeList(Long userId) {
+        List<Long> list = likeRepository.findAllByUserId(userId).stream().map(e -> e.getRoute().getId()).collect(Collectors.toList());;
+        return list;
+    }
+
+    public List<Long> storeList(Long userId) {
+        List<Long> list = routeStorageRepository.findAllByUserId(userId).stream().map(e -> e.getRoute().getId()).collect(Collectors.toList());
+        return list;
+    }
+
 }
