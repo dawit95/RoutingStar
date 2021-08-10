@@ -227,7 +227,7 @@ const actions = {
         commit('SET_ROUTE_INFO', res)
       }, (error) => {
         console.log(error)
-      })
+    })
   },
   changeMethodType({ commit }, type) {
     commit('CHANGE_METHOD_TYPE', type)
