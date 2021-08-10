@@ -7,6 +7,7 @@ import home from './modules/home.js'
 import profile from './modules/profile.js'
 import routes from './modules/routes.js'
 import images from './modules/images.js'
+import reactions from './modules/reactions.js'
 
 Vue.use(Vuex)
 
@@ -29,5 +30,6 @@ export default new Vuex.Store({
     profile,
     routes,
     images,
+    reactions,
   }
 })
