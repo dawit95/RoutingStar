@@ -39,7 +39,6 @@ export default {
     ...mapActions(['followOtherUser']),
     
     setFollow() {
-      console.log('팔로우 버튼 바꾸기')
       if (this.userInfo.followed == true ) {
         this.follow = 'unfollow'
       } else {
@@ -72,15 +71,10 @@ export default {
   // }
   },
   created() {
-    console.log('여기서 일단 마운티드 확인')
-    const user = this.userInfo
-    console.log(user)
     this.setFollow()
   },
   watch: {
-    userInfo: function(userInfo) {
-      console.log('여긴 워치')
-      console.log(userInfo)
+    userInfo: function() {
       this.setFollow()
     }
   }

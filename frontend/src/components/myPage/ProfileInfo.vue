@@ -27,14 +27,14 @@
           
             <v-row class="d=flex justify-center">
               <v-col class="ma-1 pa-1">
-                <div class="mt-1">Followings</div>
-                <div v-if="followUserList" class="mt-1">0</div>
-                <div v-else class="mt-1">{{ followUserList[0].length }}</div>
+                <div class="mt-1">Followers</div>
+                <div v-if="followUserList" class="mt-1">{{ followerCnt }}</div>
+                <div v-else class="mt-1">0</div>
               </v-col>
               <v-col class="ma-1 pa-1">
-                <div class="mt-1">Followers</div>
-                <div v-if="followUserList" class="mt-1">0</div>
-                <div v-else class="mt-1">{{ followUserList[1].length }}</div>
+                <div class="mt-1">Followings</div>
+                <div v-if="followUserList" class="mt-1">{{ followingCnt }}</div>
+                <div v-else class="mt-1">0</div>
               </v-col>
             </v-row>
           </v-col>          
@@ -67,6 +67,8 @@ export default {
   name: 'ProfileInfo',
   data () {
     return {
+      followerCnt: 0,
+      followingCnt: 0,
     }
   },
   computed: {
@@ -74,22 +76,29 @@ export default {
   },
   methods: {
     ...mapActions(['fetchUserInfo', 'fetchFollowUserList']),
+
+    setFollowCnt() {
+      this.followerCnt = this.followUserList.followerList.length
+      this.followingCnt = this.followUserList.followingList.length
+    }
+
   },
   created() {
     const access_token = this.jwt[0]
-    console.log('여기 마운티드')
-    console.log(this.jwt[0])
     this.fetchUserInfo({
       userId: this.jwt[2],
       access_token: access_token
     })
-    console.log("왜")
-    console.log(this.jwt[2])
     this.fetchFollowUserList({
-      userId: this.jwt[2],
+      targetId: this.jwt[2],
       access_token: access_token
     })
   },
+  watch: {
+    followUserList: function() {
+      this.setFollowCnt()
+    }
+  }
 }
 </script>                                                                               
 
