@@ -77,11 +77,13 @@ public class RouteService {
         return routeRepository.findByUserIdInOrderByModifiedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
 
-    public RouteDetailResponseDto getDetail(Long id) throws NoRouteException {
-        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+    @Transactional(readOnly = true)
+    public RouteDetailResponseDto getDetail(Long userId, Long id) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findByIdAndUserId(id, userId).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
         return new RouteDetailResponseDto(route.get());
     }
 
+    @Transactional(readOnly = true)
     public List<RouteListResponseDto> likeRouteList() {
         return routeRepository.findAllOrderByLikeCount().stream().map(RouteListResponseDto::new).collect(Collectors.toList());
     }
@@ -196,6 +198,7 @@ public class RouteService {
         return routeIds;
     }
 
+    @Transactional(readOnly = true)
     public RouteDetailWithCommentResponseDto getDetailWithComment(Long id) throws NoRouteException {
         Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
         return new RouteDetailWithCommentResponseDto(route.get());

@@ -79,9 +79,9 @@ public class RouteController {
     }
 
     //수정시 사용
-    @GetMapping("/route/{routeId}")
-    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("routeId") Long id) throws NoRouteException {
-        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
+    @GetMapping("/route/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException {
+        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(userId, id);
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
