@@ -13,7 +13,7 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-app-bar-title>LOGO</v-app-bar-title>
 
@@ -32,7 +32,7 @@
           v-on="on"
           icon
         >        
-        <v-icon >mdi-account</v-icon>
+        <v-icon>mdi-account</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -66,7 +66,7 @@
     name: 'Header',
     data: () => ({
       items: [
-        { title: 'Click Me 0' },
+        { title: 'MyPage' },
         { title: 'Click Me 1' },
         { title: 'Logout' },
       ],
@@ -74,11 +74,12 @@
     methods: {
       selectSection(item) {
       switch (item.title) {
-        case 'Click Me 0':
-          console.log('Click Me')
+        case 'MyPage':
+          console.log('MyPage')
+          this.$router.push({ name: 'MyPageView' })
           break
         case 'Click Me 1':
-          console.log('Profile')
+          console.log('Click ME')
           break
           // 토큰 정보 제거 이후에 로그인창으로 이동
         case 'Logout':
