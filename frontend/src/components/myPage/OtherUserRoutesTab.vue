@@ -13,16 +13,15 @@
               role="tabpanel" 
               aria-labelledby="description" 
               aria-hidden="false">
-            <ul>
-              <li>
-                <!-- <RouteThumbnail
-                  v-for="route in otherRouteList"
+
+            <div>
+                <RouteThumbnail
+                  v-for="route in writtenRouteList"
                   :key="route.id"
                   :route="route"
-                /> -->
-                <RouteThumbnail/>
-              </li>
-            </ul>
+                />
+            </div>           
+
           </div>
         </li>
     </ul>
@@ -38,14 +37,11 @@ export default {
   name: 'MyRoutesTabs',
   components: { RouteThumbnail },
   computed: {
-    ...mapGetters(['othersRouteList'])
+    ...mapGetters(['writtenRouteList'])
   },
   methods: {
     ...mapActions([''])
   },
-  mounted() {
-    
-  }
 }
 </script>
 
