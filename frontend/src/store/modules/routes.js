@@ -1,6 +1,6 @@
 // store/modules/routes.js
 
-import { postRoute } from '@/api/routes.js'
+import { postRoute, updateRoute } from '@/api/routes.js'
 import { getRouteInfoByRouteId } from '@/api/routes.js'
 // import accounts from '@/store/modules/accounts.js'
 import images from './images'
@@ -16,6 +16,8 @@ const state = {
   whatTag: [],
   withTag: [],
   routeInfo: [],
+  routeMethodType: '',
+  clickedRouteId: 1,
 }
 
 const getters = {
@@ -39,6 +41,12 @@ const getters = {
   },
   withTag(state) {
     return state.withTag
+  },
+  routeInfo(state) {
+    return state.routeInfo
+  },
+  routeMethodType(state) {
+    return state.routeMethodType
   }
 }
 
@@ -167,23 +175,44 @@ const actions = {
     const CircularJSON = require('circular-json')
     console.log('시작했다')
       // params: { places, routeDescription, routeImg, whatTag, withTag }
-    postRoute(
-      CircularJSON.stringify(
-      {
-        places: newPlaces,
-        routeDescription: routeDescription,
-        routeImg: routeImg,
-        whatTag: whatTag,
-        withTag: withTag,
-        id: 1
-      }), jwt,
-      () => {
-        console.log('success')
-        router.push({ name: 'LoginView' })
-      },(error) => {
-        console.log(error)
-      }
-    );
+    if (state.routeMethodType === 'put') {
+      console.log('put요청')
+      updateRoute(
+        CircularJSON.stringify(
+        {
+          places: newPlaces,
+          routeDescription: routeDescription,
+          routeImg: routeImg,
+          whatTag: whatTag,
+          withTag: withTag,
+          id: 1
+        }), state.clickedRouteId, jwt,
+        () => {
+          console.log('success')
+          router.push({ name: 'LoginView' })
+        },(error) => {
+          console.log(error)
+        }
+      );
+    } else {
+      postRoute(
+        CircularJSON.stringify(
+        {
+          places: newPlaces,
+          routeDescription: routeDescription,
+          routeImg: routeImg,
+          whatTag: whatTag,
+          withTag: withTag,
+          id: 1
+        }), jwt,
+        () => {
+          console.log('success')
+          router.push({ name: 'LoginView' })
+        },(error) => {
+          console.log(error)
+        }
+      );
+    }
   },
   fetchRouteInfo({ commit }, payload) {
     console.log(payload)
@@ -195,6 +224,9 @@ const actions = {
         console.log(error)
       })
   },
+  changeMethodType(type) {
+    this.routeMethodType = type
+  }
 }
 
 export default {
