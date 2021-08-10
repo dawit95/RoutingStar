@@ -65,9 +65,8 @@ const actions = {
     follow(payload.userId, payload.targetId, payload.access_token,
     (res) => {
       console.log(res.data.success)
-      // console.log('그럼 여기는 리스트 불러오는 =')
-      // console.log(payload.targetId)
       dispatch('fetchFollowUserList', payload)
+      dispatch('fetchUserInfo', payload)
     }, (error) => {
       console.log(error)
     });
