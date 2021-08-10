@@ -23,12 +23,13 @@ export default {
   data() {
     return {
       follow: '',
-      followInfo :{
-        userId: this.jwt[2],
-        targetId: this.userInfo.Id
-        // userId: 3,
-        // targetId: 1,
-      }
+      // followInfo :{
+      //   userId: this.jwt[2],
+      //   targetId: this.userInfo.Id,
+      //   access_token: this.jwt[0]
+      //   // userId: 3,
+      //   // targetId: 1,
+      // }
     }
   },
   computed: {
@@ -38,17 +39,21 @@ export default {
     ...mapActions(['followOtherUser']),
     
     setFollow() {
-      if (this.userInfo.followed) {
+      console.log('팔로우 버튼 바꾸기')
+      if (this.userInfo.followed == true ) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'
       }
     },
     onClickfollowOtherUser() {
-      this.setFollow()
-      this.followInfo["access_token"] = this.jwt[0]
-      console.log(this.followInfo)
-      this.followOtherUser(this.followInfo)
+      let followInfo = {
+        userId: this.jwt[2],
+        targetId: this.userInfo.id,
+        access_token: this.jwt[0]
+      }
+      console.log(followInfo)
+      this.followOtherUser(followInfo)
     },
 
   //   mounted() {
@@ -66,9 +71,18 @@ export default {
   //   })
   // }
   },
-  mounted() {
-    console.log(this.userInfo)
+  created() {
+    console.log('여기서 일단 마운티드 확인')
+    const user = this.userInfo
+    console.log(user)
     this.setFollow()
+  },
+  watch: {
+    userInfo: function(userInfo) {
+      console.log('여긴 워치')
+      console.log(userInfo)
+      this.setFollow()
+    }
   }
 }
 </script>
