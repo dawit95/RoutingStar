@@ -1,18 +1,36 @@
 <template>
   <v-app>
     <v-main class="background-color">
+      <!-- Header -->
+      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' ">
+        <Header/>
+      </div>
+
+      <!-- 라우터 뷰 -->  
       <router-view/>
+    
+      <!-- Footer -->
+      <div v-if="$route.name !== 'LoginView'">
+        <Nav/>
+      </div>
+
     </v-main>
   </v-app>
 </template>
 
 <script>
+import Header from '@/components/common/Header.vue'
+import Nav from '@/components/common/Nav.vue'
 
 export default {
   name: 'App',
   data: () => ({
-    //
+    
   }),
+  components: {
+    Header,
+    Nav
+  }
 };
 </script>
 <style>
