@@ -117,6 +117,9 @@ const mutations= {
     console.log('SET_ROUTE_INFO')
     state.routeInfo = res
   },
+  CHANGE_METHOD_TYPE(state, type) {
+    state.routeMethodType = type
+  }
 }
 
 // import axios from 'axios'
@@ -196,6 +199,7 @@ const actions = {
         }
       );
     } else {
+      console.log('post요청')
       postRoute(
         CircularJSON.stringify(
         {
@@ -216,17 +220,17 @@ const actions = {
     }
   },
   fetchRouteInfo({ commit }, payload) {
-    console.log(payload)
-    getRouteInfoByRouteId(payload.routeId, payload.access_token,
+    // console.log(payload)
+    getRouteInfoByRouteId(1, payload.routeId, payload.access_token,
       (res) => {
         console.log(res)
         commit('SET_ROUTE_INFO', res)
       }, (error) => {
         console.log(error)
-      })
+    })
   },
-  changeMethodType(type) {
-    this.routeMethodType = type
+  changeMethodType({ commit }, type) {
+    commit('CHANGE_METHOD_TYPE', type)
   }
 }
 

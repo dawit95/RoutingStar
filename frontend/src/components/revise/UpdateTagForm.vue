@@ -107,6 +107,7 @@ export default {
       this.withTagObj[idx].isSelcted = !this.withTagObj[idx].isSelcted
     },
   },
+  // created시 선택되어있었던 태그 활성화
   created () {
     const whatTagLength = this.reswhatTag.length
     const withTagLength = this.reswithTag.length
@@ -114,6 +115,7 @@ export default {
       this.whatTagObj.filter(tag => {
         if (tag.tagnum === this.reswhatTag[x].id) {
           tag.isSelcted = true
+          this.addWhatTag(tag.tagnum)
         }
       })
     }
@@ -121,6 +123,7 @@ export default {
         this.withTagObj.filter(tag => {
           if (tag.tagnum === this.reswithTag[x].id) {
             tag.isSelcted = true
+            this.addWithTag(tag.tagnum)
           }
         })
       }
