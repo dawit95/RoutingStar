@@ -17,10 +17,10 @@ const getters = {
     return state.userInfo
   },
   writtenRouteList(state) {
-    return state.myRouteList
+    return state.writtenRouteList
   },
   savedRouteList(state) {
-    return state.othersRouteList
+    return state.savedRouteList
   },
   followUserList(state) {
     return state.followUserList
