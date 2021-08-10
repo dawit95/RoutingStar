@@ -63,23 +63,21 @@ export default {
   name: 'MyRoutesTabs',
   components: { RouteThumbnail },
   computed: {
-    ...mapGetters(['jwt'])
+    ...mapGetters(['jwt', 'userInfo', 'writtenRouteList', 'savedRouteList'])
   },
   methods: {
     ...mapActions(['fetchWrittenRouteList', 'fetchSavedRouteList' ])
   },
   mounted() {
-    const tmp_id = 1
-    const access_token = this.jwt[0]
-    console.log('여기 마운티드')
-    console.log(this.jwt[0])
+    console.log('여기 탭스마운티드')
+    console.log(this.jwt)
     this.fetchWrittenRouteList({
-      userId: tmp_id, 
-      access_token: access_token
+      userId: this.jwt[2], 
+      access_token: this.jwt[0]
     })
     this.fetchSavedRouteList({
-      userId: tmp_id,
-      access_token: access_token
+      userId: this.jwt[2], 
+      access_token: this.jwt[0]
     })
   }
 }

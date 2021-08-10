@@ -31,14 +31,14 @@ const mutations = {
   SET_USER_INFO(state, userInfo) {
     state.userInfo = userInfo
   },
-  SET_WRITTEN_ROUTE_LIST(state, myRouteList) {
-    state.myRouteList = myRouteList
+  SET_WRITTEN_ROUTE_LIST(state, writtenRouteList) {
+    state.writtenRouteList = writtenRouteList
   },
-  SET_SAVED_ROUTE_LIST(state, othersRouteList) {
-    state.othersRouteList = othersRouteList
+  SET_SAVED_ROUTE_LIST(state, savedRouteList) {
+    state.savedRouteList = savedRouteList
   },
   SET_FOLLOW_USER_LIST(state, followUserList) {
-    state.followingUserList = followUserList
+    state.followUserList = followUserList
   },
 }
 
