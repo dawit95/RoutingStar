@@ -17,10 +17,10 @@ const getters = {
     return state.userInfo
   },
   writtenRouteList(state) {
-    return state.myRouteList
+    return state.writtenRouteList
   },
   savedRouteList(state) {
-    return state.othersRouteList
+    return state.savedRouteList
   },
   followUserList(state) {
     return state.followUserList
@@ -31,14 +31,14 @@ const mutations = {
   SET_USER_INFO(state, userInfo) {
     state.userInfo = userInfo
   },
-  SET_WRITTEN_ROUTE_LIST(state, myRouteList) {
-    state.myRouteList = myRouteList
+  SET_WRITTEN_ROUTE_LIST(state, writtenRouteList) {
+    state.writtenRouteList = writtenRouteList
   },
-  SET_SAVED_ROUTE_LIST(state, othersRouteList) {
-    state.othersRouteList = othersRouteList
+  SET_SAVED_ROUTE_LIST(state, savedRouteList) {
+    state.savedRouteList = savedRouteList
   },
   SET_FOLLOW_USER_LIST(state, followUserList) {
-    state.followingUserList = followUserList
+    state.followUserList = followUserList
   },
 }
 
@@ -51,6 +51,7 @@ const actions = {
     // console.log(payload.access_token)
     getUserInfoByUserId(payload.userId, payload.access_token,
     (res) => {
+      console.log('유저정보 가져오기 성공!')
       console.log(res.data.success)
       commit('SET_USER_INFO', res.data.success)
     }, (error) => {
@@ -64,9 +65,8 @@ const actions = {
     follow(payload.userId, payload.targetId, payload.access_token,
     (res) => {
       console.log(res.data.success)
-      // console.log('그럼 여기는 리스트 불러오는 =')
-      // console.log(payload.targetId)
       dispatch('fetchFollowUserList', payload)
+      dispatch('fetchUserInfo', payload)
     }, (error) => {
       console.log(error)
     });
