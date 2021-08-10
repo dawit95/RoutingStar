@@ -8,7 +8,7 @@
       pa-0
     >
       <v-btn
-      @click="handleClick1"
+      @click="goBack"
       icon>
         <v-icon x-large>mdi-chevron-left</v-icon>
       </v-btn>
@@ -23,8 +23,8 @@
 export default {
   name: 'ReviseHeader',
   methods: {
-    handleClick1() {
-      console.log('hello1')
+    goBack() {
+      this.$router.go(-1)
     },
     handleClick2() {
       console.log('hello2')
