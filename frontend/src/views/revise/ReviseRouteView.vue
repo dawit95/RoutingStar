@@ -1,5 +1,6 @@
 <template>
   <v-layout v-if="canRendering" row swap>
+    <ReviseHeader />
     <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places" 
     @thumbnail-checked="thumbnailChecked" @update-tumbnail-image="updateThumbnailImage"/> 
 
@@ -22,6 +23,7 @@ import UpdateMap from '@/components/revise/UpdateMap.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
 import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
 import ImageInput from '@/components/revise/ImageInput.vue'
+import ReviseHeader from '@/components/revise/ReviseHeader.vue'
 import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 
@@ -45,7 +47,8 @@ export default {
     UpdateMap,
     UpdateMapPointForm,
     UpdatePostRouteDetailModal,
-    ImageInput
+    ImageInput,
+    ReviseHeader
   },
   computed: {
     ...mapGetters(['jwt', 'routeInfo',])
