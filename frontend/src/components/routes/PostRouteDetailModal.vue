@@ -10,7 +10,7 @@
             max-width="80%"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="freezeMap">
                 NEXT
               </v-btn>
             </template>
@@ -23,7 +23,7 @@
               <!-- 썸네일 이미지 보여주는 란 (루트가 올라간) -->
               <!-- 현재 임시 이미지로 대체되어 있음 -->
               <v-container>
-                <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" src="@/assets/temp_image_for_test.png" alt="...">
+                <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" :src="tempThumbnail" alt="...">
               </v-container>
 
               <!-- 설명 작성 란 -->
@@ -53,7 +53,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="dialog = false"
+                  @click="onDialogClose"
                 >
                   Close
                 </v-btn>
@@ -84,6 +84,11 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'PostRouteDetailModal',
+  props: {
+    tempThumbnail: {
+      type: String
+    }
+  },
   components: {
     TagForm,
     CreateRouteSuccessModal,
@@ -108,6 +113,18 @@ export default {
   },
   methods: {
     ...mapActions(['createRouteDescription']),
+
+    // 모달이 열리면 map이 freeze된다 (그림 그려서 좌표 찾기 위함)
+    freezeMap(event) {
+      this.$emit('freeze-map', event)
+    },
+    recoverFreezeMap(event) {
+      this.$emit('recover-freeze-map', event)
+    },
+    onDialogClose() {
+      this.dialog = false
+      this.recoverFreezeMap()
+    }
   }
 }
 </script>
@@ -123,3 +140,4 @@ export default {
   }
 
 </style>
+ 

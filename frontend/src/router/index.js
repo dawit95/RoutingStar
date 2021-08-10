@@ -6,12 +6,6 @@ import PostRouteView from '@/views/post/PostRouteView.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  // My Profile
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import('@/views/myPage/MyPage.vue')
-  },
   // Accounts
   {
     path: '/',
@@ -25,7 +19,7 @@ const routes = [
     name: 'ProfileView',
     component: () => import('@/views/accounts/ProfileView.vue')
   },
-
+  
   // Common
   {
     path: '/Header',
@@ -47,11 +41,6 @@ const routes = [
     name: 'HomeView',
     component: () => import('@/views/home/HomeView')
   },
-  {
-    path: '/nav',
-    name: 'Nav',
-    component: () => import('@/components/common/Nav')
-  },
   
   // Routes
   {
@@ -60,19 +49,41 @@ const routes = [
     component: PostRouteView,
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import('@/views/Test'),
-  },
-  {
-    path: '/draggable',
-    name: 'draggable',
-    component: () => import('@/views/draggable'),
-  },
-  {
     path: '/error',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
+  },
+  // My Page
+  {
+    path: '/mypage',
+    name: 'MyPageView',
+    component: () => import('@/views/myPage/MyPageView.vue')
+
+    // follow / unfollow API 다르게 설정
+    // 다른 유저가 내가 팔로잉 한 유저인지 아닌지만 확인 한다
+    // 데이터와의 비교는 빽에서 한다
+  },
+  {
+    path: '/profilepage',
+    name: 'OtherUserPageView',
+    component: () => import('@/views/myPage/OtherUserPageView.vue')
+  },
+  {
+    path: '/editProfile',
+    name: 'EditProfileView',
+    component: () => import('@/views/myPage/EditProfileView.vue')
+  },
+  {
+    path: '/reviseroute',
+    name: 'ReviseRouteView',
+    component: () => import('@/views/revise/ReviseRouteView.vue')
+  },
+
+  // tmp
+  {
+    path: '/loginprocess',
+    name: 'LoginProcessView',
+    component: () => import('@/views/LoginProcessView.vue')
   },
 ]
 

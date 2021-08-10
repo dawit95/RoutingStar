@@ -1,24 +1,27 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row swap>
-
       <v-flex xs12>
-        <div>
+        <div class="pac-card" id="pac-card">
           <!-- 검색창 -->
-          <input v-model="SearchWord.word"
-            id="pac-input"
-            class="controls"
-            type="text"
-            placeholder="Search Box"
-          />
+          <div id="pac-container">
+            <input v-model="SearchWord.word"
+              id="pac-input"
+              class="controls"
+              type="text"
+              placeholder="Search Box"
+            />
+          </div>
+
           <!-- 맵 -->
-          <div id="map"></div>
+          <div>
+            <div id="map"></div>
+          </div>
         </div>
       </v-flex>
 
       <v-divider></v-divider>
     </v-layout>
-    <v-btn @click='createMap'>Submit</v-btn>
   </v-container>
 </template>
 
@@ -28,6 +31,11 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 export default {
   name: 'Map',
   components: {  
+  },
+  props: {
+    isFreeze: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -39,18 +47,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pointedItems', 'latLstItems', 'lngLstItems', 'polyLine'])
+    ...mapGetters(['places', 'polyLine'])
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
-    ...mapActions(['addPointItem', 'addLatLngLst', 'sendImagesArray']),
+    ...mapActions(['addPlace', 'sendImagesArray', 'setXYPoints', 'refreshPlaces']),
 
     // 0. HTML에 Script 삽입
     // API key 보호를 위해 변수로 삽입
     addGoogleMapScript() {
       const script = document.createElement("script");
 
-      script.onload = () => this.initMap();
+      script.onload = () => this.initMap(false);
       script.src =
         "https://maps.googleapis.com/maps/api/js?key=" + process.env.VUE_APP_GOOGLEMAPS_API_KEY + "&libraries=places&region=KR&language=ko&v=weekly";
       // script.async = true;
@@ -58,68 +66,59 @@ export default {
       document.head.appendChild(script);
     },
     // 1. Map 세팅
-    initMap() {
-      // 중심은 우선 첫번째 요소로 선택
-      if (this.latLstItems.length) {
+    initMap( freeze ) {
+      // 맵이 중복으로 만들어지는 걸 막기 위해 함수를 분리
+      if ( this.map === null ) {
         this.map = new window.google.maps.Map(document.getElementById("map"),
         {
           mapId: "8e0a97af9386fef",
-          // 경로의 중앙에 포커스가 위치하도록 설정하였음
-          center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
+          // 경로의 중앙에 포커스가 위치하도록 설정하였음(초기는 멀캠)
+          // center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
+          center: { lat: 37.501, lng: 127.039 },
           zoom: 16,
           streetViewControl: false,
           mapTypeControl: false,
           zoomControl: true,
           fullscreenControl: false,
         })
-        // 좌표
-        const flightPlanCoordinates = []
-        for (var j in this.latLstItems) {
-          const myLatLng = {lat: this.latLstItems[j], lng: this.lngLstItems[j]}
-          flightPlanCoordinates.push(myLatLng)
-          new window.google.maps.Marker({
-            position: myLatLng,
-            map: this.map,
-          });        
-          // 선(rotue) 
-          const flightPath = new window.google.maps.Polyline({
-            path: flightPlanCoordinates,
-            geodesic: true,
-            strokeColor: "#FF0000",
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-          });
-          flightPath.setMap(this.map);
-        }
-
-      } else {
-        this.map = new window.google.maps.Map(document.getElementById("map"), 
-        {
-          mapId: "8e0a97af9386fef",
-          center: { lat:37.501, lng: 127.039 },
-          zoom: 16,
-          streetViewControl: false,
-          mapTypeControl: false,
-          zoomControl: true,
-          fullscreenControl: false,
-          // mapTypeId: "roadmap",
-        });
+        // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
+        this.SET_POLYLINE(new window.google.maps.Polyline
+          ({
+            strokeColor: "#2A355D",
+            strokeOpacity: 0.3,
+            strokeWeight: 8,
+          })
+        )
+        this.polyLine.setMap(this.map);
+        this.map.addListener("click", this.addPoint);
       }
-      // 3. 검색창 만들기
-      const input = document.getElementById("pac-input");
-      const searchBox = new window.google.maps.places.SearchBox(input);
-      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
-      // 4.검색어에 따라 바운더리를 바꾼다
+      // 실제 Google Map 객체를 생성하는 것은 null 일때만 
+      // 루트를 그릴 때 freeze 상태라면 bound 조정하고, 아니라면 검색창 붙인다
+      if(freeze === true) {
+        this.freezeBound()
+      } else {
+        this.attachSearch()
+        this.refreshPolyline()
+      }
+    },
+
+    // 3. 검색창 붙이기
+    attachSearch() {
+      let input = document.getElementById("pac-input");
+      let searchBox = new window.google.maps.places.SearchBox(input)
+      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].clear()
+      this.map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input)
+      // 검색어에 따라 바운더리를 바꾼다
       this.map.addListener("bounds_changed", () => {
         searchBox.setBounds(this.map.getBounds());
       });
       searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (places.length == 0) {
+        const searchPlaces = searchBox.getPlaces();
+        if (searchPlaces.length == 0) {
           return;
         }
         const bounds = new window.google.maps.LatLngBounds();
-        places.forEach((place) => {
+        searchPlaces.forEach((place) => {
           if (!place.geometry || !place.geometry.location) {
             console.log("Returned place contains no geometry");
             return;
@@ -132,23 +131,16 @@ export default {
         });
         this.map.fitBounds(bounds);
       });
-
-      // 5. 폴리라인(루트 라인)을 만든다
-      this.SET_POLYLINE(new window.google.maps.Polyline
-        ({
-          strokeColor: "#E64398",
-          strokeOpacity: 0.3,
-          strokeWeight: 8,
-        })
-      )
-      this.polyLine.setMap(this.map);
-      this.map.addListener("click", this.addPoint);
     },
-    // 5. 폴리라인을 위한 정점(포인트)를 만들어 마커로 찍는다
-    addPoint(event) {
-      const marker = new window.google.maps.Marker({
-        position:event.latLng,
-        map:this.map,
+    
+    // 4. place를 생성(마커)
+    makePlace(latLng) {
+      let pk = this.pointListPk
+      this.pointListPk = this.pointListPk + 1
+
+      let marker = new window.google.maps.Marker({
+        position: latLng,
+        map: this.map,
         animation: window.google.maps.Animation.DROP
       });
       // 마커 더블클릭시 삭제
@@ -163,66 +155,115 @@ export default {
           marker.setAnimation(null)
         }).bind(marker), 1400)
       });
-      let newPoint = {
-        pk: this.pointListPk,
-        image : '',
-        lat : event.latLng.lat(),
-        lng : event.latLng.lng(),
+
+      return {
+        createdOrder: pk,
+        imageUpload: false,
+        placeImg : '',
+        lat : latLng.lat(),
+        lng : latLng.lng(),
         content: null,
-        thumbnail : false,
+        isThumbnail : false,
         marker: {
           location: marker,
-          pk: this.pointListPk,
+          createdOrder: pk,
         },
       }
-      this.pointListPk = this.pointListPk + 1
-      // Store actions로 연동
-      this.addPointItem(newPoint)
+    },
+     
+    addPoint(event) {
+      let newPlace = this.makePlace(event.latLng)
+
+      // Store actions로 연동 & 루트 새로고침
+      this.addPlace(newPlace)
       this.refreshPolyline();
     },
-    // 6. 마커 삭제 구현 (마커 리스트를 제거한 뒤 다시 맵 refresh)
+
+    // 5. 마커 삭제(place를 리스트에서 제거한 뒤 다시 맵 refresh)
     removePoint(marker) {
       const latLng = marker.getPosition();
       const lat = latLng.lat();
       const lng = latLng.lng();
-      const pointedItems = this.pointedItems
-      const idx = pointedItems.findIndex( (e) => e.lat == lat && e.lng == lng );
+      const places = this.places
+      const idx = places.findIndex( (e) => e.lat == lat && e.lng == lng );
       if ( idx != -1 ) {
         marker.setMap(null);
-        pointedItems.splice(idx,1);
+        places.splice(idx,1);
+        this.refreshPlaces(places)
         this.refreshPolyline();
       }
     },
+
+    // 6. 루트를 새로고침
     refreshPolyline() {
       const path = this.polyLine.getPath();
-      const pointedItems = this.pointedItems
+      const places = this.places
+      const bounds = new window.google.maps.LatLngBounds();
+
       path.clear();
-      for( const point of pointedItems ) {
-        path.push( new window.google.maps.LatLng( point.lat, point.lng));
+      for( const place of places ) {
+        let latLng = new window.google.maps.LatLng( place.lat, place.lng)
+        path.push(latLng)
+        bounds.extend(latLng)
       }
+      return bounds
     },
-    
-    // 새로운 게시물을 생성했을 때 구글맵에 재요청을 보내서 다시 그려지는지 확인
-    createMap() {
-      let lat_lst = []
-      let lng_lst = []
-      for (var i in this.pointedItems){
-        lat_lst.push(this.pointedItems[i].lat)
-        lng_lst.push(this.pointedItems[i].lng)
+
+    // 7. 루트 이미지 생성 위해 맵 멈추고 바운드 재정렬, polyline에서 xy값 좌표 떼오기
+    freezeBound() {
+      const bounds = this.refreshPolyline()
+      const path = this.polyLine.getPath();
+      // bound 찾았으면 폴리라인 중복을 위해 path clear
+      path.clear();
+      this.map.fitBounds(bounds);      
+
+      var overlay = new window.google.maps.OverlayView() 
+      overlay.places = this.places
+      overlay.points = []
+
+      overlay.draw = function() {}
+      overlay.onAdd = function() {
+        let projection = this.getProjection()
+        let region = projection.getVisibleRegion()
+        let ne = projection.fromLatLngToDivPixel(region.latLngBounds.getNorthEast())
+        let sw = projection.fromLatLngToDivPixel(region.latLngBounds.getSouthWest())
+
+        let left = sw.x
+        let top = ne.y
+
+        // freeze된 바운드에서 xy좌표값을 가져온다
+        for ( const place of this.places ) {
+            let latLng = new window.google.maps.LatLng( place.lat, place.lng )
+            var pixel = projection.fromLatLngToDivPixel(latLng)
+
+            this.points.push( { x:pixel.x - left, y:pixel.y - top} )
+        }
+      }      
+      overlay.setMap(this.map)
+      // console.log(overlay.points)
+      this.setXYPoints(overlay.points)
+
+      // 좌표 확인했으면 없엔다
+      for ( var i = 0; i < overlay.points.length; i++ ) {
+        overlay.points[i].setMap(null)
       }
-      let latLngLst = {
-        latLst: lat_lst,
-        lngLst: lng_lst,
+      overlay.points.length = 0;
+    }
+  },
+  watch: {
+    isFreeze: function(isFreeze) {
+      if (isFreeze) {
+        this.initMap(true)
+      } else {
+        this.initMap(false)
       }
-      this.addLatLngLst(latLngLst)
-      this.initMap();
     }
   },
   mounted() {
     window.google && window.google.maps
-      ? this.initMap()
+      ? this.initMap(false)
       : this.addGoogleMapScript();
-  }
+  },
 }
 </script>
 
@@ -251,7 +292,7 @@ a {
 }
 
 .pac-card {
-  margin: 10px 10px 0 0;
+  margin: 0 0 0 0;
   border-radius: 2px 0 0 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
