@@ -102,6 +102,11 @@ export default {
     isthumbail: false,
    }
  },
+//  props: {
+//    routeId: {
+//      type: Number
+//    }
+//  },
   components: {
     UpdateMap,
     UpdateMapPointForm,
@@ -109,10 +114,10 @@ export default {
     ImageInput
   },
   computed: {
-    ...mapGetters(['jwt'])
+    ...mapGetters(['jwt', 'routeInfo',])
   },
   methods: {
-    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo']),
+    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo', 'changeMethodType']),
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true
@@ -138,12 +143,12 @@ export default {
     this.fetchLoginedToken(token)
   },
   mounted() {
-    const tmp_id = 1
+    const tmp_id = this.jwt[2]
+    // const routeId = this.routeId
     const routeId = 1
     const access_token = this.jwt[0]
+    this.changeMethodType('put')
     console.log(access_token)
-    // console.log('여기 마운티드')
-    // console.log(this.jwt[0])
     // 1. api/v1/route/userid/routeid
     // 2. 보내는 data 안에있는 userid를 빼서 루트작성자id와 동일한지 확인
     this.fetchRouteInfo({
