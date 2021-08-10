@@ -18,7 +18,6 @@ import UpdateMap from '@/components/revise/UpdateMap.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
 import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
 import ImageInput from '@/components/revise/ImageInput.vue'
-// import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -144,11 +143,11 @@ export default {
   },
   mounted() {
     const tmp_id = this.jwt[2]
+    console.log(`userID확인 : ${this.jwt[2]}`)
     // const routeId = this.routeId
     const routeId = 1
     const access_token = this.jwt[0]
     this.changeMethodType('put')
-    console.log(access_token)
     // 1. api/v1/route/userid/routeid
     // 2. 보내는 data 안에있는 userid를 빼서 루트작성자id와 동일한지 확인
     this.fetchRouteInfo({
