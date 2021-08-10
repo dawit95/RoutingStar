@@ -156,6 +156,7 @@ const actions = {
     console.log(jwt)
     const newPlaces = []
     for (const place of state.places) {
+      // console.log(`${place.createdOrder}번째 글내용 ${place.content}`)
       const tmpPlace = {
         createdOrder: place.createdOrder,
         imageUpload: place.imageUpload,
