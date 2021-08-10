@@ -16,6 +16,7 @@ import com.curation.backend.user.domain.FollowerFollowing;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.exception.NoUserException;
+import com.curation.backend.user.service.ReactionService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public class RouteService {
     private final RouteWithTagRepository routeWithTagRepository;
 
     private final TagService tagService;
+    private final ReactionService reactionService;
 
 
     Logger logger = LoggerFactory.getLogger(RouteService.class);
@@ -74,7 +76,16 @@ public class RouteService {
         List<Long> list = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         list.add(id);
 
-        return routeRepository.findByUserIdInOrderByModifiedAtDesc(list).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        List<Long> storeIds = reactionService.storeList(id);
+        List<Long> likeIds = reactionService.likeList(id);
+
+        return routeRepository.findByUserIdInOrderByModifiedAtDesc(list).stream().map((e) -> {
+            RouteListResponseDto routeListResponseDto = new RouteListResponseDto(e);
+            Long routeId = routeListResponseDto.getId();
+            if(likeIds.contains(routeId))  routeListResponseDto.setIsLiked(true);
+            if(storeIds.contains(routeId))  routeListResponseDto.setIsStored(true);
+            return routeListResponseDto;
+        }).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -90,7 +101,7 @@ public class RouteService {
 
     @Transactional
     public Long modifyRoute(Long id, RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws NoRouteException {
-        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+        Optional<Route> route = Optional.ofNullable(routeRepository.findByIdAndUserId(id, routeRequestDto.getId()).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
 
         route.get().modify(routeRequestDto);
 
@@ -113,8 +124,8 @@ public class RouteService {
         return id;
     }
 
-    public void deleteRoute(Long id) throws NoRouteException {
-        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+    public void deleteRoute(Long userId, Long id) throws NoRouteException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findByIdAndUserId(id, userId).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
         route.get().delete();
         routeRepository.save(route.get());
     }

@@ -54,9 +54,9 @@ public class RouteController {
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @DeleteMapping("/route/{routeId}")
-    public ResponseEntity<SuccessResponseDto> deleteRoute(@PathVariable("routeId") Long id) throws NoRouteException {
-        routeService.deleteRoute(id);
+    @DeleteMapping("/route/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> deleteRoute(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException {
+        routeService.deleteRoute(userId, id);
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse("성공적으로 삭제되었습니다.");
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
