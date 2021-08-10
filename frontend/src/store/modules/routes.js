@@ -179,7 +179,7 @@ const actions = {
       }), jwt,
       () => {
         console.log('success')
-        router.push({ name: 'LoginView' })
+        router.push({ name: 'HomeView' })
       },(error) => {
         console.log(error)
       }

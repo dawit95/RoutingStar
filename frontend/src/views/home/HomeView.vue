@@ -1,10 +1,10 @@
 <template>
   <v-container pa-0>
+    <Header />
+    
     <div class="white">
-      <span>abc</span>
       {{ feeds }}
     </div>
-    <!-- <Header /> -->
    
    <v-list
     v-for="(feed, idx) in feeds" 
@@ -15,29 +15,66 @@
 abafwef    </router-link> -->
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
-        <!-- {{ feed. }} -->
         <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
-          <!-- feed.places 썸네일로 교체 -->
-          <v-img class="elevation-6" alt="" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"></v-img>
+          <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
+          <!-- {{ feed.user.profileImg }} -->
+          <v-img class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="onClickUsername(feed)">Fromecha</span>
+          <span @click="onClickUsername(feed)">{{ feed.user.name }}</span>
       </v-card-title>
      
 
       <v-card-text class="text-h5 font-weight-bold">
-        "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+        <div class="container">
+          <div class="box">
+
+            <!-- <v-for="(place, idx) in feed.places" 
+            :key="idx"
+            :place="place">
+            fw
+            </v-for> -->
+        <div v-for="(place, idx) in feed.places" :key="idx">
+             <!-- v-if="place">  -->
+             <!-- <div>{{ place.isThumbnail }}</div> -->
+          <span v-if="place.isThumbnail===true">
+             <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg"><img :src=feed.routeImg alt=""></span>
+          </span>
+        </div>
+            <!-- <div class="thumbnail"><img :src="routeThumbnail" alt="thumnbnail"></div> -->
+            <!-- <div class="routeImg"><img :src="routeImg" alt="routeImage"></div> -->
+          </div>
+        </div>
+
+
+        <!-- "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." -->
       </v-card-text>
 
     <!-- 기타 버튼 등이 들어가는 v-card-actions -->
     <v-card-actions>
       <v-list-item class="grow">
         <v-row align="center" justify="end">
-          <v-icon class="mr-1">mdi-heart</v-icon>
-          <span class="subheading mr-2">256</span>
+          <!-- <span v-if="feed.isLiked">
+            <v-icon @click="likeRequest" class="mr-1">mdi-heart</v-icon>
+          </span>
+          <span v-else>
+            <v-icon @click="likeRequest" class="mr-1">mdi-heart-outline</v-icon>
+          </span>  -->
+
+          <!-- <span v-if="feed.isStored">
+            <v-icon @click="likeRequest" class="mr-1">mdi-bookmark-outline</v-icon>
+          </span>
+          <span v-else>
+            <v-icon @click="likeRequest" class="mr-1">mdi-bookmark-outline</v-icon>
+          </span>  -->
+            <v-icon @click="likeRequest" class="mr-1">mdi-heart-outline</v-icon>
+
+          <span class="subheading mr-2">{{ feed.likeCnt }}</span>
           <span class="mr-1">·</span>
-          <v-icon class="mr-1">mdi-share-variant</v-icon>
-          <span class="subheading">45</span>
+          <v-icon class="mr-1">mdi-bookmark-outline</v-icon>
+          <!-- 꽉차있는북마크: bookmark -->
+          <span class="subheading">{{ feed.storageCnt }}</span>
         </v-row>
         <!-- <v-row>
           {짧은 글 소개 }
@@ -57,7 +94,6 @@ abafwef    </router-link> -->
 <!-- infiniteHandler method 실행 -->
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
 
-    <Header />
     <Nav />
   </v-container>
 </template>
@@ -109,16 +145,17 @@ export default {
   // },
   computed: {
     ...mapGetters(['jwt', 'feeds']),
+
     // readUser
   },
-  // created () {
-    
-  // // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
-  // if (this.jwt[0]) {
-  //   console.log('token이 이미 저장이 되어있음')
-  //   this.$store.dispatch('fetchLoginedToken', this.jwt)
-  //   this.$store.dispatch('fetchLoginedFeeds', this.jwt)
-  // }
+  created () {
+  // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
+  if (this.jwt[0]) {
+    console.log('token이 이미 저장이 되어있음')
+    this.$store.dispatch('fetchLoginedToken', this.jwt)
+    this.$store.dispatch('fetchLoginedFeeds', this.jwt)
+   }
+  },
   // else if (this.$route.query.access && this.$route.query.refresh){
   //   console.log('token을 지금 처음 저장함')
   //   const token = 
@@ -181,5 +218,28 @@ export default {
 </script>
 
 <style scoped>
-
+.container {
+  margin: 0px;
+  padding: 0px;
+}
+img {
+  width: 150px; height: 150px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+}
+.box {
+  position: relative;
+}
+.thumbnail {
+  top: 0;
+  left: 0;
+  position: relative;
+}
+.routeImg {
+  position: absolute;
+  top: -10px;
+  left: 110px;
+  /* transform: translate( 10%, 10% ); */
+}
 </style>
