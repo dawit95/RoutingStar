@@ -24,10 +24,10 @@ export default {
     return {
       follow: '',
       followInfo :{
-        // userId: this.jwt[2],
-        // targetId: this.userInfo.Id
-        userId: 1,
-        targetId: 2,
+        userId: this.jwt[2],
+        targetId: this.userInfo.Id
+        // userId: 3,
+        // targetId: 1,
       }
     }
   },

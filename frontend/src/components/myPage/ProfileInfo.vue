@@ -5,10 +5,10 @@
           <v-col class="my-3 pa-1">
             <div slot="activator">
               <!-- 아래의 if 분기는 프로필 이미지 없을때의 처리 -->
-              <v-avatar size="100px" v-if="!userInfo.profileImage" class="grey lighten-3 mb-3">
+              <!-- <v-avatar size="100px" v-if="userInfo.profileImage" class="grey lighten-3 mb-3">
                 <span>프로필 이미지가 들어갈 공간입니다</span>
-              </v-avatar>
-              <v-avatar size="100px" v-else class="mb-3">
+              </v-avatar> -->
+              <v-avatar size="100px" class="mb-3">
                 <img :src="userInfo.profileImg" alt="profileImage">
               </v-avatar>
               <!-- <v-avatar size="100px" class="grey lighten-3 mb-3">

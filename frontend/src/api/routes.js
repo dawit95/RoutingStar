@@ -31,7 +31,7 @@ function getWrittenRoute(userId, access_token, success, fail) {
 // 유저가 저장한 루트 목록 조회
 function getSavedRoute(userId, access_token, success, fail) {
   instance
-    .get(`api/v1/routes/${userId}`, {
+    .get(`api/user/mypage/stores/${userId}`, {
       headers: {
         'access_token': access_token,
       }

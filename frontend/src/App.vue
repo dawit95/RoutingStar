@@ -6,8 +6,10 @@
         <Header/>
       </div>
 
-      <!-- 라우터 뷰 -->  
-      <router-view/>
+      <!-- 라우터 뷰 -->
+      <div class="mt-1">
+        <router-view/>
+      </div>  
     
       <!-- Footer -->
       <div v-if="$route.name !== 'LoginView'">
