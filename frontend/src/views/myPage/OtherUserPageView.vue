@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import ProfileInfo from '@/components/myPage/ProfileInfo.vue'
 import OtherUserRoutesTab from '@/components/myPage/OtherUserRoutesTab.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'OtherUserPageView',
@@ -36,7 +36,7 @@ export default {
     ...mapGetters(['userInfo', 'jwt'])
   },
   methods: {
-    ...mapActions(['followOtherUser']),
+    ...mapActions(['followOtherUser', 'fetchLoginedToken', 'fetchWrittenRouteList']),
     
     setFollow() {
       if (this.userInfo.followed == true ) {
@@ -54,28 +54,31 @@ export default {
       console.log(followInfo)
       this.followOtherUser(followInfo)
     },
-
-  //   mounted() {
-  //   const tmp_id = 2
-  //   const access_token = this.jwt[0]
-  //   console.log('여기 마운티드')
-  //   console.log(this.jwt[0])
-  //   this.fetchUserInfo({
-  //     userId: tmp_id,
-  //     access_token: access_token
-  //   })
-  //   this.fetchFollowUserList({
-  //     userId: tmp_id,
-  //     access_token: access_token
-  //   })
-  // }
   },
   created() {
     this.setFollow()
+    const access_token = this.jwt
+    this.fetchLoginedToken(access_token)
+  },
+  mounted() {
+    // // const access_token = this.jwt
+    // console.log('왜 안된거냐')
+    // // const userId = this.userInfo
+    // console.log(this.userInfo)
+    // this.fetchWrittenRouteList({
+    //   userId: this.userInfo.id,
+    //   access_token: this.jwt[0]
+    // })
   },
   watch: {
     userInfo: function() {
       this.setFollow()
+      // const access_token = this.jwt
+      // const userId = this.userInfo
+      this.fetchWrittenRouteList({
+        userId: this.userInfo.id,
+        access_token: this.jwt[0]
+      })
     }
   }
 }

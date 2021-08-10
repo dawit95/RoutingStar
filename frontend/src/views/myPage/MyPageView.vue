@@ -15,13 +15,13 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'MyPageView',
-  data() {
-    return {
-      }
-  },
   components: {
     ProfileInfo,
     MyRoutesTabs,
+  },
+  data() {
+    return {
+      }
   },
   computed: {
     ...mapGetters(['jwt']),
@@ -30,7 +30,6 @@ export default {
     ...mapActions(['fetchLoginedToken', 'fetchWrittenRouteList', 'fetchSavedRouteList'])
   },
   mounted() {
-    console.log('여기 크리에이티드')
     const access_token = this.jwt
     console.log(access_token)
     this.fetchLoginedToken(access_token)
