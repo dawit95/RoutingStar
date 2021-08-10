@@ -49,7 +49,7 @@ function getUserInfoByUserId(targetId, access_token, success, fail) {
   console.log("g어쎄스토큰")
   console.log(access_token)
   instance
-  .get(`api/user/Info/${targetId}`, {
+  .get(`api/user/info/${targetId}`, {
     headers: {
       'access_token': access_token,
     }
