@@ -53,9 +53,21 @@ function getRouteInfoByRouteId(routeId, access_token, success, fail) {
   .catch(fail);
 }
 
+function updateRoute(param, routeId, jwt, success, fail) {
+  instance
+  .put(`api/v1/route/${jwt[2]}/${routeId}`, param, {
+    headers: {
+      'access_token': jwt[0],
+    }
+  })
+  .then(success)
+  .catch(fail);
+}
+
 export { 
   postRoute,
   getWrittenRoute,
   getSavedRoute,
-  getRouteInfoByRouteId
+  getRouteInfoByRouteId,
+  updateRoute,
  }
