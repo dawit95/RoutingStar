@@ -51,6 +51,7 @@ const actions = {
     // console.log(payload.access_token)
     getUserInfoByUserId(payload.userId, payload.access_token,
     (res) => {
+      console.log('유저정보 가져오기 성공!')
       console.log(res.data.success)
       commit('SET_USER_INFO', res.data.success)
     }, (error) => {
