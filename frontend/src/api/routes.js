@@ -42,7 +42,7 @@ function getSavedRoute(userId, access_token, success, fail) {
 
 function getRouteInfoByRouteId(userId, routeId, access_token, success, fail) {
   console.log("getRouteInfoByRouteId잘 들어옴")
-  console.log(userId, routeId, access_token)
+  // console.log(userId, routeId, access_token)
   instance
   .get(`api/v1/route/${userId}/${routeId}`, {
     headers: {
