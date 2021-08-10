@@ -1,5 +1,12 @@
 <template>
   <v-layout v-if="canRendering" row swap>
+
+    <ReviseHeader :tempThumbnail="tempThumbnail" 
+    :routeDescription="responseData.success.routeDescription"
+    :whatTag="responseData.success.whatTag" 
+    :withTag="responseData.success.withTag"
+    @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
+
     <UpdateMap :isFreeze="isFreeze" :resPlacesData="responseData.success.places" 
     @thumbnail-checked="thumbnailChecked" @update-tumbnail-image="updateThumbnailImage"/> 
 
@@ -9,19 +16,20 @@
     :listLength="responseData.success.places.length"
     @change-isthumbail="changeIsthumbail"/>
 
-    <UpdatePostRouteDetailModal :tempThumbnail="tempThumbnail" 
+    <!-- <UpdatePostRouteDetailModal :tempThumbnail="tempThumbnail" 
     :routeDescription="responseData.success.routeDescription"
     :whatTag="responseData.success.whatTag" 
     :withTag="responseData.success.withTag"
-    @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
+    @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/> -->
   </v-layout>
 </template>
 
 <script>
 import UpdateMap from '@/components/revise/UpdateMap.vue'
 import UpdateMapPointForm from '@/components/revise/UpdateMapPointForm.vue'
-import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
+// import UpdatePostRouteDetailModal from '@/components/revise/UpdatePostRouteDetailModal.vue'
 import ImageInput from '@/components/revise/ImageInput.vue'
+import ReviseHeader from '@/components/revise/ReviseHeader.vue'
 import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 
@@ -44,8 +52,9 @@ export default {
   components: {
     UpdateMap,
     UpdateMapPointForm,
-    UpdatePostRouteDetailModal,
-    ImageInput
+    // UpdatePostRouteDetailModal,
+    ImageInput,
+    ReviseHeader
   },
   computed: {
     ...mapGetters(['jwt', 'routeInfo',])

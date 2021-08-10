@@ -82,7 +82,7 @@ export default {
           // 경로의 중앙에 포커스가 위치하도록 설정하였음(초기는 멀캠)
           // center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
           center: { lat: 37.501, lng: 127.039 },
-          zoom: 12,
+          zoom: 16,
           streetViewControl: false,
           mapTypeControl: false,
           zoomControl: true,
