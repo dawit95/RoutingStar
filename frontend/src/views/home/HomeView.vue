@@ -11,8 +11,6 @@
     :key="idx"
     :feed="feed"
     >
-      <!-- <router-link :to="mypage">
-abafwef    </router-link> -->
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
         <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
@@ -35,15 +33,11 @@ abafwef    </router-link> -->
             fw
             </v-for> -->
         <div v-for="(place, idx) in feed.places" :key="idx">
-             <!-- v-if="place">  -->
-             <!-- <div>{{ place.isThumbnail }}</div> -->
           <span v-if="place.isThumbnail===true">
-             <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-            <span class="routeImg"><img :src=feed.routeImg alt=""></span>
+             <span class="thumbnail" @click="$router.push('/homedetail')"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg" @click="$router.push('/homedetail')"><img :src=feed.routeImg alt=""></span>
           </span>
         </div>
-            <!-- <div class="thumbnail"><img :src="routeThumbnail" alt="thumnbnail"></div> -->
-            <!-- <div class="routeImg"><img :src="routeImg" alt="routeImage"></div> -->
           </div>
         </div>
 
@@ -55,30 +49,24 @@ abafwef    </router-link> -->
     <v-card-actions>
       <v-list-item class="grow">
         <v-row align="center" justify="end">
-          <!-- <span v-if="feed.isLiked">
-            <v-icon @click="likeRequest" class="mr-1">mdi-heart</v-icon>
-          </span>
-          <span v-else>
-            <v-icon @click="likeRequest" class="mr-1">mdi-heart-outline</v-icon>
-          </span>  -->
+          
+          <div v-if="feed.isLiked">
+            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart</v-icon>
+          </div>
+          <div v-else>
+            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart-outline</v-icon>
+          </div> 
+          <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
-          <!-- <span v-if="feed.isStored">
-            <v-icon @click="likeRequest" class="mr-1">mdi-bookmark-outline</v-icon>
-          </span>
-          <span v-else>
-            <v-icon @click="likeRequest" class="mr-1">mdi-bookmark-outline</v-icon>
-          </span>  -->
-            <v-icon @click="likeRequest" class="mr-1">mdi-heart-outline</v-icon>
 
-          <span class="subheading mr-2">{{ feed.likeCnt }}</span>
-          <span class="mr-1">·</span>
-          <v-icon class="mr-1">mdi-bookmark-outline</v-icon>
-          <!-- 꽉차있는북마크: bookmark -->
-          <span class="subheading">{{ feed.storageCnt }}</span>
+          <div v-if="feed.isStored">
+            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark</v-icon>
+          </div>
+          <div v-else>
+            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark-outline</v-icon>
+          </div> 
+          <div class="subheading">{{ feed.storageCnt }}</div>
         </v-row>
-        <!-- <v-row>
-          {짧은 글 소개 }
-        </v-row> -->
       </v-list-item>
     </v-card-actions>
   </v-card>
@@ -181,6 +169,28 @@ export default {
 
   // },
   methods: {
+
+    requestLike( id, idx ) {
+      this.jwt[3] = id
+      if (this.feeds[idx].isLiked) {
+        this.feeds[idx].likeCnt -= 1
+      } else {
+        this.feeds[idx].likeCnt += 1     
+      }
+      this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+      this.$store.dispatch('fetchLike', this.jwt)
+    },
+    requestStore( id, idx) {
+      this.jwt[3] = id
+      if (this.feeds[idx].isStored) {
+        this.feeds[idx].storageCnt -= 1
+      } else {
+        this.feeds[idx].storageCnt += 1     
+      }
+      this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      this.$store.dispatch('fetchStore', this.jwt)
+    },
+
     infiniteHandler($state) {
       axios.get(api, {
         params: {
