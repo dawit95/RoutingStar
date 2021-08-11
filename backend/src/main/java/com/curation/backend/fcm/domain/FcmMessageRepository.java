@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface FcmMessageRepository extends JpaRepository<FcmMessage, Long> {
-    List<FcmMessage> findByFromUser(Long fromUser);
+    List<FcmMessage> findAllByToUser(Long toUser);
 }
