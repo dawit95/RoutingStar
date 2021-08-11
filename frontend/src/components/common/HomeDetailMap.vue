@@ -35,6 +35,7 @@ export default {
       },
       map: null,
       pointListPk: 0,
+      locations: [],
     }
   },
   computed: {
@@ -77,12 +78,49 @@ export default {
      
       for( const place of places ) {
         let latLng = new window.google.maps.LatLng( place.lat, place.lng)
-        new window.google.maps.Marker({
+        this.locations.push({ lat: place.lat, lng: place.lng })
+        let marker = new window.google.maps.Marker({
           position: latLng,
           map: this.map,
           animation: window.google.maps.Animation.DROP
         });
- }
+      // 마커 더블클릭시 삭제a
+        marker.addListener('mousedown', (e) => {
+        console.log(e.latLng)
+        console.log(e.latLng.lat())
+        console.log(e.latLng.lng())
+        this.removePoint(marker,e.latLng.lat(), e.latLng.lng())
+        // this.locations.push({ lat: e.latLng.lat(), lng: e.latLng.lng()})
+        // this.removePoint(marker)
+        // const contentString =  'ulruslfawejfiawfoawejf'
+        // const infowindow = new window.google.maps.InfoWindow({
+        //   content: 'ajvioawefjawiofjawioefjao',
+        // })
+        // marker.position = a
+        // marker.addListener("mouseup", () => {
+        //   // console.log(marker)
+        //   infowindow.open({
+        //     anchor: marker,
+        //     map: this.map,
+        //     shouldFocus: false,
+        //   });
+        // })
+
+        })
+      }
+      // console.log('이거슨로케이션', this.locations)
+      // const infowindow = new window.google.maps.InfoWindow({
+      //     content: 'ajvioawefjawiofjawioefjao',
+      //   })
+      // marker.addListener("mouseup", () => {
+      //     // console.log(marker)
+      //     infowindow.open({
+      //       anchor: marker,
+      //       map: this.map,
+      //       shouldFocus: false,
+      //     });
+      //   })
+
 
         // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
         this.SET_POLYLINE(new window.google.maps.Polyline
@@ -93,6 +131,7 @@ export default {
           })
         )
         this.polyLine.setMap(this.map);
+        console.log('polyline')
         this.map.addListener("click", this.addPoint);
       }
       // 실제 Google Map 객체를 생성하는 것은 null 일때만 
@@ -103,8 +142,92 @@ export default {
         this.refreshPolyline()
       }
     },
+     
+    addPoint(event) {
+      let newPlace = this.makePlace(event.latLng)
 
+      // Store actions로 연동 & 루트 새로고침
+      this.addPlace(newPlace)
+      this.refreshPolyline();
+    },
   
+   // 4. place를 생성(마커)
+    // makePlace(latLng) {
+    //   let pk = this.pointListPk
+    //   console.log(pk)
+    //   this.pointListPk = this.pointListPk + 1
+
+    //   let marker = new window.google.maps.Marker({
+    //     position: latLng,
+    //     map: this.map,
+    //     animation: window.google.maps.Animation.DROP
+    //   });
+      // // 마커 더블클릭시 삭제
+      // marker.addListener('dblclick', (e) => {
+      //   console.log(e.latLng)
+      //   this.removePoint(marker)
+      // })
+    // },
+
+    removePoint(marker, lat, lng) {
+    for( const place of this.feed.places ) {
+      if (place.lat == lat && place.lng == lng) {
+        console.log(lat, find)
+        console.log('찾음', marker)
+        console.log('place', place)
+        console.log(this.feed)
+
+
+      const infowindow = new window.google.maps.InfoWindow({
+          content: place
+        })
+      console.log('infowindow', infowindow)
+      console.log('infowindow', infowindow.content)
+      marker.addListener("mouseup", () => {
+          // console.log(marker)
+          infowindow.open({
+            anchor: marker,
+            map: this.map,
+            shouldFocus: false,
+          });
+        })
+
+      }
+    }},
+    //  console.log(lat, lng)
+    // 
+    //  console.log(this.feed)
+    //  console.log('marker', marker)
+    //  console.log('marker', marker.latLng)
+    //  console.log('이거슨로케이션', this.locations)
+    //   const infowindow = new window.google.maps.InfoWindow({
+    //       content: 'ajvioawefjawiofjawioefjao',
+    //     })
+    //   console.log('infowindow', infowindow)
+    //   console.log('infowindow', infowindow.content)
+    //   marker.addListener("mouseup", () => {
+    //       // console.log(marker)
+    //       infowindow.open({
+    //         anchor: marker,
+    //         map: this.map,
+    //         shouldFocus: false,
+    //       });
+    //     })
+
+      // const latLng = marker.getPosition();
+      // const lat = latLng.lat();
+      // const lng = latLng.lng();
+      // const places = this.places
+      // const idx = places.findIndex( (e) => e.lat == lat && e.lng == lng );
+      // if ( idx != -1 ) {
+      //   marker.setMap(null);
+      //   places.splice(idx,1);
+      //   this.refreshPlaces(places)
+      //   this.refreshPolyline();
+      // }
+    // },
+
+
     // 6. 루트를 새로고침
     refreshPolyline() {
       const path = this.polyLine.getPath();
