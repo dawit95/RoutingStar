@@ -12,6 +12,7 @@ const routes = [
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
+  
   // Common
   {
     path: '/Header',
@@ -24,10 +25,19 @@ const routes = [
     component: () => import('@/App.vue')
   },
   {
+    path: '/error',
+    name: 'ErrorView',
+    component: () => import('@/views/ErrorView'),
+  },
+  
+  // Search
+  {
     path: '/search',
     name: 'SearchView',
     component: () => import('@/views/search/SearchView')
   },
+  
+  // Main Page
   {
     path: '/home',
     name: 'HomeView',
@@ -45,11 +55,14 @@ const routes = [
     name: 'PostRouteView',
     component: PostRouteView,
   },
+  
+  // Revise Routes
   {
-    path: '/error',
-    name: 'ErrorView',
-    component: () => import('@/views/ErrorView'),
+    path: '/reviseroute',
+    name: 'ReviseRouteView',
+    component: () => import('@/views/revise/ReviseRouteView.vue')
   },
+  
   // My Page
   {
     path: '/mypage',
@@ -62,14 +75,14 @@ const routes = [
     component: () => import('@/views/myPage/OtherUserPageView.vue')
   },
   {
-    path: '/editProfile',
+    path: '/editprofile',
     name: 'EditProfileView',
     component: () => import('@/views/myPage/EditProfileView.vue')
   },
   {
-    path: '/reviseroute',
-    name: 'ReviseRouteView',
-    component: () => import('@/views/revise/ReviseRouteView.vue')
+    path: '/followuserlist',
+    name: 'FollowUserListView',
+    component: () => import('@/views/myPage/FollowUserListView.vue')
   },
 
   // tmp
@@ -111,11 +124,21 @@ router.beforeEach((to, from, next) => {
       next('/')
     } 
   }
+
+  // 없는 곳으로 오려 한다면
+  if (!to.name) {
+    next({ name: 'NotFound' })
+  }
   // if (from.name === 'Lines' && to.name === 'LoginView') {
   // //   next({ name : 'PostView' })
   //   next('/')
   
 });
+
+// 라우터 이동이 끝나고 해야하는 일들
+router.afterEach(() => {
+  console.log("router moved")
+})
 
 // router.beforeEach((to, from, next) => {
   //     // console.log(to)

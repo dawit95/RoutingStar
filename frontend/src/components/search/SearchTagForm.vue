@@ -7,7 +7,7 @@
       <div v-for="withTag in withTagObj" :key="withTag.idx" class="d-inline" style="flex">
         <button 
           class="button mx-3" 
-          :class="{grayscale:!withTag.isSelcted}" 
+          :class="{chooseButton: withTag.isSelcted}" 
           @click="addWithTag(withTag.tagnum); addWithTagButtonClass(withTag.idx);"
         >
 
@@ -19,11 +19,11 @@
       </div>
     </v-container>
     <v-container>
-      <H3>무었을???</H3>
+      <H3>무엇을???</H3>
       <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
         <button 
           class="button mx-3" 
-          :class="{grayscale:!whatTag.isSelcted}" 
+          :class="{chooseButton: whatTag.isSelcted}" 
           @click="addWhatTag(whatTag.tagnum); addWhatTagButtonClass(whatTag.idx);"
         >
           <span>

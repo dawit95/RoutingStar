@@ -1,6 +1,6 @@
 <template>
   <v-layout row swap>
-    <Header />
+    <ReviseHeader />
     <Map :isFreeze="isFreeze"/>
     <v-divider></v-divider>
     <MapPointFormS3 @update-tumbnail-image="updateThumbnailImage"/>
@@ -15,7 +15,7 @@
 import Map from '@/components/routes/Map.vue'
 import MapPointFormS3 from '@/components/routes/MapPointFormS3.vue'
 import PostRouteDetailModal from '@/components/routes/PostRouteDetailModal.vue'
-import Header from '@/components/common/Header.vue'
+import ReviseHeader from '@/components/revise/ReviseHeader.vue'
 
 export default {
  name: 'PostRouteView',
@@ -29,7 +29,7 @@ export default {
     Map, 
     MapPointFormS3,
     PostRouteDetailModal,
-    Header,
+    ReviseHeader,
   },
   methods: {
     // 모달이 열리면 map freeze하기
