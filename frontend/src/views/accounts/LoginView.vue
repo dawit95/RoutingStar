@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 style="color: white">안녕하세요~~</h1>
     <!-- <v-row justify="center"> -->
     <v-img class="mx-auto logoTopM rotate-center" max-height="400" max-width="400" :src="require('../../assets/logo.png')" />  
     <!-- </v-row> -->
