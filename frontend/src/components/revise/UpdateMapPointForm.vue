@@ -11,7 +11,7 @@
         <v-card flat class="d-flex justify-end">
 
 
-          <image-input v-model="avatar" :place="place">
+          <image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
             <div slot="activator">
               <v-avatar size="50px" v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
                 <span>Image</span>
@@ -50,7 +50,7 @@
 
 <script>
 
-import { mapActions, mapGetters, mapMutations, } from 'vuex'
+import { mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
 import { dragscroll } from 'vue-dragscroll'
 import AWS from 'aws-sdk'
@@ -93,7 +93,6 @@ export default {
     // 일단 데이터의 조작만 있고, 모든 데이터의 input이 완료된 이후에 백앤드와 통신하니
     // 일단은 mutations함수를 사용하였습니다.
     ...mapMutations(['UPDATE_DRAGGERBLE_ITEMS','REFRESH_PLACES']),
-    ...mapActions(['updateThumbnailImage']),
     onUpdated(event) {
       this.UPDATE_DRAGGERBLE_ITEMS(event);
       this.refreshPolyline();
@@ -138,10 +137,11 @@ export default {
         this.$emit('change-isthumbail')
         // this.isthumbail = !this.isthumbail
         place.isThumbnail = false
-        this.thumbnailLabel = ''
+        this.thumbnailLabel = '썸네일로 설정하기!'
         this.$store.state.images.thumbnailChecked = false
       // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
       } else {
+        // 새롭게 등록 된 이미지 파일의 경우
         if (place.createdOrder >= this.listLength) {
           console.log('위로들어와서 s3에 업로드 & 저장')
           this.$emit('change-isthumbail')
@@ -175,11 +175,14 @@ export default {
             this.$store.state.images.thumbnailImage = data.Location
             this.$emit('update-tumbnail-image', data.Location)
           })
+          // 기존에 있던 파일의 경우
         } else {
-          console.log(typeof(this.imgList[place.createdOrder]))
+          // console.log(typeof(this.imgList[place.createdOrder]))
+          // 새로등록해서 파일인 경우 S3로 보내서 업로드 후 저장
           if (typeof(this.imgList[place.createdOrder]) == 'object') {
             console.log('밑으로 들어와서 S3 변환 후 해당 URL저장')
             this.thumbnailSendToS3(this.imgList[place.createdOrder])
+            // 기존 URL인 경우 그대로 저장
           } else {
             console.log('밑으로 들어와서 해당 URL바로 저장')
             this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
@@ -262,6 +265,9 @@ export default {
         this.$store.state.images.thumbnailImage = data.Location
         this.$emit('update-tumbnail-image', data.Location)
       })
+    },
+    updateThumbnailImage(imgUrl) {
+      this.$emit('update-tumbnail-image', imgUrl)
     }
   },
 }

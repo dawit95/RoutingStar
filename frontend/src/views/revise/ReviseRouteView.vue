@@ -91,7 +91,7 @@ export default {
     const tmp_id = this.jwt[2]
     console.log(`userID확인 : ${this.jwt[2]}`)
     // prop받은 routeId로 변경필요
-    const routeId = 1
+    const routeId = 8
     const access_token = this.jwt[0]
     // 수정페이지에서는 put요청을 보내야함
     this.changeMethodType('put')
