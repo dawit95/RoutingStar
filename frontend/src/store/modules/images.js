@@ -1,5 +1,5 @@
 // images.js
-import { postPointImages, postThumbnailImage } from '@/api/images.js'
+// import { postPointImages, postThumbnailImage } from '@/api/images.js'
 import routes from '@/store/modules/routes.js'
 import AWS from 'aws-sdk'
 
@@ -40,46 +40,46 @@ const mutations= {
 }
 
 const actions = {
-  complete({ commit }) {
-    const ins = routes.state.places.length
-    for (var x = 0; x < ins; x++) {
-      const files = new FormData()
-      const pk = routes.state.places[x].pk
-      // 첨부파일이 없다면 패스
-      if (routes.state.imgLst[pk] === null) {
-        continue
-        // 첨부파일이 있다면
-      } else if (routes.state.imgLst[pk] !== null) {
-        const imagefile =  routes.state.imgLst[pk]
-        files.append('files', imagefile)
-        postPointImages(files, (response) => {
-          console.log(x)
-          const responseData = response.data.success.image
-          routes.state.places[pk].image = responseData
-          // commit('POST_POINT_IMAGES', {responseData, pk})
-        }, (error) => {
-          console.log(error)
-        })
-      }
-    }
-    const file = new FormData()
-    file.append('file', state.thumbnailImage)
-    postThumbnailImage(file, (res) => {
-      commit('POST_THUMBNAIL_IMAGE', res.data.success.image)
-    }, (error) => {
-      console.log(error)
-    })
-  },
+  // complete({ commit }) {
+  //   const ins = routes.state.places.length
+  //   for (var x = 0; x < ins; x++) {
+  //     const files = new FormData()
+  //     const pk = routes.state.places[x].pk
+  //     // 첨부파일이 없다면 패스
+  //     if (routes.state.imgLst[pk] === null) {
+  //       continue
+  //       // 첨부파일이 있다면
+  //     } else if (routes.state.imgLst[pk] !== null) {
+  //       const imagefile =  routes.state.imgLst[pk]
+  //       files.append('files', imagefile)
+  //       postPointImages(files, (response) => {
+  //         console.log(x)
+  //         const responseData = response.data.success.image
+  //         routes.state.places[pk].image = responseData
+  //         // commit('POST_POINT_IMAGES', {responseData, pk})
+  //       }, (error) => {
+  //         console.log(error)
+  //       })
+  //     }
+  //   }
+  //   const file = new FormData()
+  //   file.append('file', state.thumbnailImage)
+  //   postThumbnailImage(file, (res) => {
+  //     commit('POST_THUMBNAIL_IMAGE', res.data.success.image)
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // },
   postPointImages() {
     console.log('업로드 이미지 들어옴 ㅇㅇ')
     const ins = routes.state.places.length
     for (var x = 0; x < ins; x++) {
       const pointItemPk = routes.state.places[x].createdOrder
-      // 첨부파일이 없다면 pass
-      if (routes.state.imgList[pointItemPk] === '') {
+      // 첨부파일이 없거나 이미 URL로 등록되어있다면 pass
+      if (routes.state.imgList[pointItemPk] === '' || typeof(routes.state.imgList[pointItemPk]) === 'string') {
         continue
         // 첨부파일이 있다면 S3로 업로드 진행 및 응답 데이터를 서버로 보내는 이미지 리스트에 저장
-      } else if (routes.state.imgList[pointItemPk] !== '') {
+      } else if (typeof(routes.state.imgList[pointItemPk]) === 'object') {
         const image = routes.state.imgList[pointItemPk]
         // S3로 업로드 후 반환값(이미지URL)을 저장
 
@@ -87,9 +87,6 @@ const actions = {
         actions.upload({image: image, num: x, bool: false})
       }
     }
-    // setTimeout(() => {
-    //   console.log(routes.state.places)
-    // }, 3000);
   },
   upload(payload) {
     // console.log('썸네일 업로드 들어옴')

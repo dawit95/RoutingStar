@@ -19,7 +19,7 @@ import { mapGetters } from 'vuex'
 import AWS from 'aws-sdk'
 
 export default {
-  name: 'ImageInput',
+  name: 'OthersImageInput',
   data: ()=> ({
     uploadFieldName: 'file',
     maxSize: 1024,
