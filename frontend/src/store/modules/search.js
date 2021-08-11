@@ -2,7 +2,7 @@
 
 import { postSearhFollow, postSearhNonFollow } from '@/api/search.js'
 // import accounts from './accounts'
-// import router from '@/router'
+import router from '@/router'
 
 
 const state = {
@@ -40,8 +40,8 @@ const actions = {
     postSearhFollow(payload.param, payload.userId, payload.access_token, 
       (success) => {
         console.log('받아졌니?')
-        console.log(success)
-        commit('SET_SEARCHED_FOLLOW_ROUTES', success)
+        console.log(success.data.success)
+        commit('SET_SEARCHED_FOLLOW_ROUTES', success.data.success)
         
         // 성공하면 두번째 요청도 보내버려
         console.log('두번째 부른다')
@@ -49,11 +49,13 @@ const actions = {
         postSearhNonFollow(payload.param, payload.userId, payload.access_token, 
           (success) => {
             console.log('받아졌니?')
-            console.log(success)
-            commit('SET_SEARCHED_FOLLOW_ROUTES', success)
+            console.log(success.data.success)
+            commit('SET_SEARCHED_NON_FOLLOW_ROUTES', success.data.success)
+            router.push({ name: 'SearchResultView' })
           }, (error) => {
             console.log(error)
         })
+      
       }, (error) => {
         console.log(error)
     })
