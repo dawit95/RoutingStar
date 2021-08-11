@@ -91,7 +91,8 @@ export default {
           this.pointListPk = this.pointListPk + 1
           const marker = new window.google.maps.Marker({
             position: { lat: this.resPlacesData[x].lat, lng: this.resPlacesData[x].lng },
-            map: this.map
+            map: this.map,
+            icon: 'https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/pin_sample(xxs).png'
           })
           // if (this.resPlacesData[x].isThumbnail) {
           //   this.$emit('thumbnail-checked')
@@ -116,7 +117,7 @@ export default {
           
           this.SET_POLYLINE(new window.google.maps.Polyline
             ({
-              strokeColor: "#2A355D",
+              strokeColor: "#303C6C",
               strokeOpacity: 0.3,
               strokeWeight: 8,
             })

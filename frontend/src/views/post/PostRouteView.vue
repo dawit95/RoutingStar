@@ -3,7 +3,11 @@
     <ReviseOthersHeader :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
     <Map :isFreeze="isFreeze"/>
     <v-divider></v-divider>
-    <MapPointFormS3 @update-tumbnail-image="updateThumbnailImage"/>
+    <MapPointFormS3 
+    :isthumbail="isthumbail" 
+    @update-tumbnail-image="updateThumbnailImage"
+    @change-isthumbail="changeIsthumbail"/>
+
   </v-layout>
 
 </template>
@@ -20,12 +24,12 @@ export default {
    return {
      isFreeze: false,
      tempThumbnail: '',
+     isthumbail: false,
    }
  },
  components: { 
     Map, 
     MapPointFormS3,
-
     ReviseOthersHeader,
   },
   methods: {
@@ -40,7 +44,10 @@ export default {
     },
     updateThumbnailImage(image) {
       this.tempThumbnail = image
-    }
+    },
+    changeIsthumbail() {
+      this.isthumbail = !this.isthumbail
+    },
   }
 }
 </script>
