@@ -21,7 +21,7 @@
 
         <v-tab-item>
           <v-card>
-            <div v-if="searchedFollowRoutes">
+            <div v-if="searchedFollowRoutes.length">
                 <RouteCard
                   v-for="feed in searchedFollowRoutes"
                   :key="feed.id"
@@ -34,7 +34,7 @@
 
         <v-tab-item>
           <v-card>
-            <div v-if="searchedNonFollowRoutes">
+            <div v-if="searchedNonFollowRoutes.length">
                 <RouteCard
                   v-for="feed in searchedNonFollowRoutes"
                   :key="feed.id"
