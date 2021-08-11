@@ -2,9 +2,9 @@
   <v-container pa-0>
     <Header />
     
-    <div class="white">
+    <!-- <div class="white">
       {{ feeds }}
-    </div>
+    </div> -->
    
    <v-list
     v-for="(feed, idx) in feeds" 
@@ -16,7 +16,7 @@
         <v-list-item-avatar color="grey darken-3">
           <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
           <!-- {{ feed.user.profileImg }} -->
-          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
+          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src="feed.user.profileImg"></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
           <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
