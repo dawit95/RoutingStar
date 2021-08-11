@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>여기는 태그폼이 들어갈 자리입니다</h2>
     <!-- 태그는 번호로 DB에 저장되는 것으로 논의 -->
     <v-container>
       <H3>누구랑??</H3>
@@ -10,8 +9,6 @@
           :class="{chooseButton: withTag.isSelcted}" 
           @click="addWithTag(withTag.tagnum); addWithTagButtonClass(withTag.idx);"
         >
-
-        
           <span>
             {{ withTag.tag }}
           </span>
@@ -32,11 +29,14 @@
         </button>
       </div>
     </v-container>
+    <div>
+      <button @click="onClickSearch">Search!!!</button>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TagForm',
@@ -65,8 +65,11 @@ export default {
       withTag: [],
     }
   },
+  computed: {
+    ...mapGetters(['jwt'])
+  },
   methods: {
-    ...mapActions(['setWhatTag', 'setWithTag']),
+    ...mapActions(['setWhatTag', 'setWithTag', 'fetchSearchedRoutes',]),
 
     // 태그 데이터에 있으면 삭제 없으면 추가
     addWhatTag(tagnum) {
@@ -95,6 +98,23 @@ export default {
     addWithTagButtonClass(idx) {
       this.withTagObj[idx].isSelcted = !this.withTagObj[idx].isSelcted
     },
+    onClickSearch() {
+      if (this.withTag && this.whatTag) {
+        console.log('지금부터 서치를 시작')
+        const data = {
+          userId : this.jwt[2],
+          access_token: this.jwt[0],
+          param: {
+            whatTag: this.whatTag,
+            withTag: this.withTag
+          }
+        }
+        console.log(data.param)
+        this.fetchSearchedRoutes(data)
+      } else {
+        console.log('없어요!! 막아주세요!! 알람!!')
+      }
+    }
   },
 }
 </script>
