@@ -36,6 +36,11 @@ const routes = [
     name: 'SearchView',
     component: () => import('@/views/search/SearchView')
   },
+  {
+    path: '/searchresult',
+    name: 'SearchResultView',
+    component: () => import('@/views/search/SearchResultView')
+  },
   
   // Main Page
   {
