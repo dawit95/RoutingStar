@@ -1,5 +1,6 @@
 package com.curation.backend.user.service;
 
+import com.curation.backend.fcm.service.AlarmService;
 import com.curation.backend.fcm.service.PushService;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
@@ -29,6 +30,7 @@ public class ReactionService {
     private final RouteStorageRepository routeStorageRepository;
     private final FollowerFollowingRepository followerFollowingRepository;
 
+    private final AlarmService alarmService;
     private final PushService pushService;
 
     private Logger logger = LoggerFactory.getLogger(ReactionService.class);
@@ -44,15 +46,18 @@ public class ReactionService {
         if(like != null) {
             likeRepository.deleteById(like.getId());
             message = "좋아요 취소";
-            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
+            alarmService.addAlarm(user.getId(),route.getUser().getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
+//            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
         } else {
             like = Like.builder().route(route).user(user).build();
             message = "좋아요 등록";
             likeRepository.save(like);
-            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
+            alarmService.addAlarm(user.getId(),route.getUser().getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
+//            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
         }
 
         return message;
+
     }
 
     public String setStore(Long userId, Long routeId) throws NoUserException, NoRouteException {
@@ -66,10 +71,12 @@ public class ReactionService {
         if(routeStorage != null) {
             routeStorageRepository.deleteById(routeStorage.getId());
             message = "루트 저장 취소";
+            alarmService.addAlarm(user.getId(),route.getUser().getId(),"피드 저장 알림",user.getName()+"가 "+route.getUser().getName()+"의 "+message);
         } else {
             routeStorage = RouteStorage.builder().route(route).user(user).build();
             message = "루트 저장 성공";
             routeStorageRepository.save(routeStorage);
+            alarmService.addAlarm(user.getId(),route.getUser().getId(),"피드 저장 알림",user.getName()+"가 "+route.getUser().getName()+"의 "+message);
         }
 
         return message;
@@ -86,10 +93,12 @@ public class ReactionService {
         if(followerFollowing != null) {
             followerFollowingRepository.deleteById(followerFollowing.getId());
             message = "follow 취소";
+            alarmService.addAlarm(user.getId(),target.getId(),"좋아요 알림",user.getName()+"가 "+target.getName()+"의 피드"+message);
         } else {
             followerFollowing = followerFollowing.builder().follower(user).following(target).build();
             message = "follow 성공";
             followerFollowingRepository.save(followerFollowing);
+            alarmService.addAlarm(user.getId(),target.getId(),"좋아요 알림",user.getName()+"가 "+target.getName()+"의 피드"+message);
         }
 
         return message;
