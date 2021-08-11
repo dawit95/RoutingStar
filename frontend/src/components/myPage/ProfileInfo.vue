@@ -25,7 +25,7 @@
               </div>
             </v-row>
           
-            <v-row class="d=flex justify-center">
+            <v-row class="d=flex justify-center" @click="onClickFollowList">
               <v-col class="ma-1 pa-1">
                 <div class="mt-1">Followers</div>
                 <div v-if="followUserList" class="mt-1">{{ followerCnt }}</div>
@@ -80,6 +80,9 @@ export default {
     setFollowCnt() {
       this.followerCnt = this.followUserList.followerList.length
       this.followingCnt = this.followUserList.followingList.length
+    },
+    onClickFollowList() {
+      this.$router.push({ name: 'FollowUserListView' })
     }
 
   },
