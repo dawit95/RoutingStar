@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="mt-7">
-      <button style="color:white">뒤로가기</button>
+      <button style="color:white" @click="goBack">뒤로가기</button>
     </div>
     <v-card class="followTabs" dark>
       <v-tabs
@@ -68,6 +68,11 @@ export default {
   },
   computed: {
     ...mapGetters(['followUserList'])
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
   },
   mounted() {
     // this.followUsers = this.followUserList

@@ -12,6 +12,7 @@ const routes = [
     name: 'LoginView',
     component: () => import('@/views/accounts/LoginView.vue')
   },
+  
   // Common
   {
     path: '/Header',
@@ -24,10 +25,19 @@ const routes = [
     component: () => import('@/App.vue')
   },
   {
+    path: '/error',
+    name: 'ErrorView',
+    component: () => import('@/views/ErrorView'),
+  },
+  
+  // Search
+  {
     path: '/search',
     name: 'SearchView',
     component: () => import('@/views/search/SearchView')
   },
+  
+  // Main Page
   {
     path: '/home',
     name: 'HomeView',
@@ -45,16 +55,14 @@ const routes = [
     name: 'PostRouteView',
     component: PostRouteView,
   },
-  {
-    path: '/error',
-    name: 'ErrorView',
-    component: () => import('@/views/ErrorView'),
-  },
+  
+  // Revise Routes
   {
     path: '/reviseroute',
     name: 'ReviseRouteView',
     component: () => import('@/views/revise/ReviseRouteView.vue')
   },
+  
   // My Page
   {
     path: '/mypage',
