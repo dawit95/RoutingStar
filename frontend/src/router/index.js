@@ -78,6 +78,11 @@ const routes = [
     name: 'LoginProcessView',
     component: () => import('@/views/LoginProcessView.vue')
   },
+  {
+    path: '/reviseothers',
+    name: 'ReviseOthersRouteView',
+    component: () => import('@/views/revise/ReviseOthersRouteView.vue')
+  },
 ]
 
 
