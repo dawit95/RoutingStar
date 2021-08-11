@@ -8,6 +8,7 @@ import profile from './modules/profile.js'
 import routes from './modules/routes.js'
 import images from './modules/images.js'
 import reactions from './modules/reactions.js'
+import select from './modules/select.js'
 
 Vue.use(Vuex)
 
@@ -20,7 +21,7 @@ export default new Vuex.Store({
   // },
   plugins: [
     createPersistedState({
-      paths: ['accounts'],
+      paths: ['accounts', 'home'],
     })
   ],
 
@@ -31,5 +32,6 @@ export default new Vuex.Store({
     routes,
     images,
     reactions,
+    select,
   }
 })
