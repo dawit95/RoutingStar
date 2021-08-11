@@ -1,5 +1,6 @@
 package com.curation.backend.user.service;
 
+import com.curation.backend.fcm.service.PushService;
 import com.curation.backend.route.domain.Route;
 import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.domain.RouteStorage;
@@ -28,6 +29,8 @@ public class ReactionService {
     private final RouteStorageRepository routeStorageRepository;
     private final FollowerFollowingRepository followerFollowingRepository;
 
+    private final PushService pushService;
+
     private Logger logger = LoggerFactory.getLogger(ReactionService.class);
 
     public String setLike(Long userId, Long routeId) throws NoUserException, NoRouteException {
@@ -41,10 +44,12 @@ public class ReactionService {
         if(like != null) {
             likeRepository.deleteById(like.getId());
             message = "좋아요 취소";
+            pushService.searchReceivedUser(user.getId(),user.getName()+"가 "+route+""+message);
         } else {
             like = Like.builder().route(route).user(user).build();
             message = "좋아요 등록";
             likeRepository.save(like);
+            pushService.searchReceivedUser(user.getId(),user.getName()+"가 "+route+""+message);
         }
 
         return message;
