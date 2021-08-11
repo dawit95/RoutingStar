@@ -117,6 +117,9 @@ const mutations= {
     console.log('SET_ROUTE_INFO')
     state.routeInfo = res
   },
+  CHANGE_METHOD_TYPE(state, type) {
+    state.routeMethodType = type
+  }
 }
 
 // import axios from 'axios'
@@ -153,6 +156,7 @@ const actions = {
     console.log(jwt)
     const newPlaces = []
     for (const place of state.places) {
+      // console.log(`${place.createdOrder}번째 글내용 ${place.content}`)
       const tmpPlace = {
         createdOrder: place.createdOrder,
         imageUpload: place.imageUpload,
@@ -190,12 +194,13 @@ const actions = {
         }), state.clickedRouteId, jwt,
         () => {
           console.log('success')
-          router.push({ name: 'LoginView' })
+          router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
         }
       );
     } else {
+      console.log('post요청')
       postRoute(
         CircularJSON.stringify(
         {
@@ -216,17 +221,17 @@ const actions = {
     }
   },
   fetchRouteInfo({ commit }, payload) {
-    console.log(payload)
-    getRouteInfoByRouteId(payload.routeId, payload.access_token,
+    // console.log(payload)
+    getRouteInfoByRouteId(1, payload.routeId, payload.access_token,
       (res) => {
         console.log(res)
         commit('SET_ROUTE_INFO', res)
       }, (error) => {
         console.log(error)
-      })
+    })
   },
-  changeMethodType(type) {
-    this.routeMethodType = type
+  changeMethodType({ commit }, type) {
+    commit('CHANGE_METHOD_TYPE', type)
   }
 }
 

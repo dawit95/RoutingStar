@@ -142,7 +142,7 @@ body {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: #2A355D;
+        background-color: #101423;
       }
 
 #canvas {

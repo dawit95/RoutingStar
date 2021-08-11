@@ -2,12 +2,14 @@
   <v-app>
     <v-main class="background-color">
       <!-- Header -->
-      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' ">
+      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' ">
         <Header/>
       </div>
 
-      <!-- 라우터 뷰 -->  
-      <router-view/>
+      <!-- 라우터 뷰 -->
+      <div class="mt-1">
+        <router-view/>
+      </div>  
     
       <!-- Footer -->
       <div v-if="$route.name !== 'LoginView'">
