@@ -59,36 +59,45 @@
 
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 
+export default {
+  name: 'Header',
+  data: () => ({
+    items: [
+      { title: 'MyPage' },
+      { title: 'Click Me 1' },
+      { title: 'Logout' },
+    ],
+  }),
+  computed: {
+    ...mapGetters(['jwt'])
+  },
+  methods: {
+    ...mapActions(['fetchUserInfo']),
 
-  export default {
-    name: 'Header',
-    data: () => ({
-      items: [
-        { title: 'MyPage' },
-        { title: 'Click Me 1' },
-        { title: 'Logout' },
-      ],
-    }),
-    methods: {
-      selectSection(item) {
-      switch (item.title) {
-        case 'MyPage':
-          console.log('MyPage')
-          this.$router.push({ name: 'MyPageView' })
-          break
-        case 'Click Me 1':
-          console.log('Click ME')
-          break
-          // 토큰 정보 제거 이후에 로그인창으로 이동
-        case 'Logout':
-          console.log('Logout')
-          this.$store.state.accounts.jwt = []
-          this.$store.state.accounts.feeds = ''
-          localStorage.removeItem('vuex')
-          this.$router.push('/')
-      }
-    }
+    selectSection(item) {
+    switch (item.title) {
+      case 'MyPage':
+        console.log('MyPage')
+        this.fetchUserInfo({
+          userId: this.jwt[2],
+          access_token: this.jwt[0],
+          jwtId: this.jwt[2]
+        })
+        break
+      case 'Click Me 1':
+        console.log('Click ME')
+        break
+        // 토큰 정보 제거 이후에 로그인창으로 이동
+      case 'Logout':
+        console.log('Logout')
+        this.$store.state.accounts.jwt = []
+        this.$store.state.accounts.feeds = ''
+        localStorage.removeItem('vuex')
+        this.$router.push('/')
     }
   }
+  }
+}
 </script>

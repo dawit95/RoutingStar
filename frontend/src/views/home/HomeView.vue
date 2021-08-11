@@ -232,7 +232,11 @@ export default {
         this.$router.push({ name: 'MyPageView' })
       } else {
         // 아니면 글쓴이의 profilepage로 간다
-        this.$router.push({ name: 'OtherUserPageView' })
+        this.fetchUserInfo({
+          userId: feed.user.id,
+          access_token: this.jwt[0],
+        })
+        this.$router.push({ name: 'OtherUserPageView'})
       }
     }
   }
