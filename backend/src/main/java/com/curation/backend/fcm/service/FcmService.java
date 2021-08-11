@@ -3,6 +3,7 @@ package com.curation.backend.fcm.service;
 import com.curation.backend.fcm.dto.FcmMessageDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class FcmService {
