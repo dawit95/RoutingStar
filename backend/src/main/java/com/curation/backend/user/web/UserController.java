@@ -1,12 +1,10 @@
 package com.curation.backend.user.web;
 
+import com.curation.backend.fcm.service.PushService;
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
-import com.curation.backend.route.domain.Route;
-import com.curation.backend.route.domain.RouteRepository;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
-import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
 import com.curation.backend.tag.domain.WhatTag;
@@ -14,7 +12,8 @@ import com.curation.backend.tag.domain.WhatTagRepository;
 import com.curation.backend.tag.domain.WithTag;
 import com.curation.backend.tag.domain.WithTagRepository;
 import com.curation.backend.token.service.TokenService;
-import com.curation.backend.user.domain.*;
+import com.curation.backend.user.domain.FollowerFollowing;
+import com.curation.backend.user.domain.FollowerFollowingRepository;
 import com.curation.backend.user.dto.UserRequestDto;
 import com.curation.backend.user.dto.UserResponseDto;
 import com.curation.backend.user.exception.NoUserException;
@@ -45,6 +44,7 @@ public class UserController {
 
     private final TokenService tokenService;
     private final RouteService routeService;
+    private final PushService pushService;
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
