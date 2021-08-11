@@ -18,7 +18,7 @@ const state = {
   withTag: [],
   routeInfo: [],
   routeMethodType: '',
-  clickedRouteId: 1,
+  clickedRouteId: 8,
 }
 
 const getters = {
@@ -163,9 +163,9 @@ const actions = {
         placeImg : place.placeImg,
         lat : place.lat,
         lng : place.lng,
-        content: place.content,
+        title: place.content,
         isThumbnail : place.isThumbnail,
-      }
+      } 
       newPlaces.push(tmpPlace)
     }
 
@@ -213,7 +213,7 @@ const actions = {
         }), jwt,
         () => {
           console.log('success')
-          router.push({ name: 'LoginView' })
+          router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
         }

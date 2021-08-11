@@ -13,7 +13,7 @@
     >
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
-        <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
+        <v-list-item-avatar color="grey darken-3">
           <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
           <!-- {{ feed.user.profileImg }} -->
           <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
@@ -34,8 +34,8 @@
             </v-for> -->
         <div v-for="(place, idx) in feed.places" :key="idx">
           <span v-if="place.isThumbnail===true">
-             <span class="thumbnail" @click="$router.push('/homedetail')"><img :src=place.placeImg alt=""></span>
-            <span class="routeImg" @click="$router.push('/homedetail')"><img :src=feed.routeImg alt=""></span>
+             <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: 123 }})"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}`}})"><img :src=feed.routeImg alt=""></span>
           </span>
         </div>
           </div>
