@@ -2,9 +2,9 @@
   <v-container pa-0>
     <Header />
     
-    <div class="white">
+    <!-- <div class="white">
       {{ feeds }}
-    </div>
+    </div> -->
    
    <v-list
     v-for="(feed, idx) in feeds" 
