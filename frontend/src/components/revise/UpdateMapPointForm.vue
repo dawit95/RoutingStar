@@ -138,10 +138,11 @@ export default {
         this.$emit('change-isthumbail')
         // this.isthumbail = !this.isthumbail
         place.isThumbnail = false
-        this.thumbnailLabel = ''
+        this.thumbnailLabel = '썸네일로 설정하기!'
         this.$store.state.images.thumbnailChecked = false
       // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
       } else {
+        // 새롭게 등록 된 이미지 파일의 경우
         if (place.createdOrder >= this.listLength) {
           console.log('위로들어와서 s3에 업로드 & 저장')
           this.$emit('change-isthumbail')
@@ -175,11 +176,14 @@ export default {
             this.$store.state.images.thumbnailImage = data.Location
             this.$emit('update-tumbnail-image', data.Location)
           })
+          // 기존에 있던 파일의 경우
         } else {
-          console.log(typeof(this.imgList[place.createdOrder]))
+          // console.log(typeof(this.imgList[place.createdOrder]))
+          // 새로등록해서 파일인 경우 S3로 보내서 업로드 후 저장
           if (typeof(this.imgList[place.createdOrder]) == 'object') {
             console.log('밑으로 들어와서 S3 변환 후 해당 URL저장')
             this.thumbnailSendToS3(this.imgList[place.createdOrder])
+            // 기존 URL인 경우 그대로 저장
           } else {
             console.log('밑으로 들어와서 해당 URL바로 저장')
             this.$store.state.images.thumbnailImage = this.imgList[place.createdOrder]
