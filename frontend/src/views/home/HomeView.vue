@@ -13,7 +13,7 @@
     >
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
-        <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
+        <v-list-item-avatar color="grey darken-3">
           <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
           <!-- {{ feed.user.profileImg }} -->
           <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
