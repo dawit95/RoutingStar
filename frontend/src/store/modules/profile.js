@@ -46,6 +46,29 @@ const mutations = {
 
 const actions = {
   // async fetchUserInfo({ commit }, userId, access_token) {
+  enterUserprofile({ commit, dispatch }, payload ) {
+    // console.log('여기는 store')
+    // console.log(payload)
+    // // console.log(payload.userId)
+    // console.log(payload.access_token)
+    getUserInfoByUserId(payload.userId, payload.access_token,
+    (res) => {
+      console.log('유저정보 가져오기 성공!')
+      console.log(res.data.success)
+      commit('SET_USER_INFO', res.data.success)
+      // dispatch('fetchFollowUserList', payload)
+      dispatch('fetchWrittenRouteList', payload)
+      dispatch('fetchSavedRouteList', payload)
+      if (payload.userId === payload.jwtId) {
+        router.push({ name: 'MyPageView' })
+      } else {
+        router.push({ name: 'OtherUserPageView' })
+      }
+    }, (error) => {
+      console.log(error)
+    });
+  },
+
   fetchUserInfo({ commit }, payload ) {
     // console.log('여기는 store')
     // console.log(payload)
@@ -56,11 +79,6 @@ const actions = {
       console.log('유저정보 가져오기 성공!')
       console.log(res.data.success)
       commit('SET_USER_INFO', res.data.success)
-      if (payload.userId === payload.jwtId) {
-        router.push({ name: 'MyPageView' })
-      } else {
-        router.push({ name: 'OtherUserPageView' })
-      }
     }, (error) => {
       console.log(error)
     });
@@ -73,7 +91,10 @@ const actions = {
     (res) => {
       console.log(res.data.success)
       dispatch('fetchFollowUserList', payload)
-      dispatch('fetchUserInfo', payload)
+      dispatch('fetchUserInfo', {
+        userId: payload.targetId,
+        access_token: payload.access_token
+      })
     }, (error) => {
       console.log(error)
     });

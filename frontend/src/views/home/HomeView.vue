@@ -169,7 +169,7 @@ export default {
 
   // },
   methods: {
-    ...mapActions(['fetchUserInfo']),
+    ...mapActions(['enterUserprofile']),
 
     requestLike( id, idx ) {
       this.jwt[3] = id
@@ -227,7 +227,7 @@ export default {
     
     // 닉네임, 사진 누르면 프로필로 간다
     onClickUser(feed) {
-      this.fetchUserInfo({
+      this.enterUserprofile({
         userId: feed.user.id,
         access_token: this.jwt[0],
         jwtId: this.jwt[2]

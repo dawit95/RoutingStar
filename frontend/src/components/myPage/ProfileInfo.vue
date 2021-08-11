@@ -93,7 +93,7 @@ export default {
     //   access_token: access_token
     // })
     this.fetchFollowUserList({
-      targetId: this.jwt[2],
+      targetId: this.userInfo.id,
       access_token: access_token
     })
   },
