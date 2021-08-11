@@ -25,19 +25,19 @@
           <v-row align="center" justify="end">
             
             <div v-if="feed.isLiked">
-              <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart</v-icon>
+              <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
             </div>
             <div v-else>
-              <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart-outline</v-icon>
+              <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
             </div> 
             <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
 
             <div v-if="feed.isStored">
-              <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark</v-icon>
+              <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
             </div>
             <div v-else>
-              <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark-outline</v-icon>
+              <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
             </div> 
             <div class="subheading">{{ feed.storageCnt }}</div>
           </v-row>
@@ -74,24 +74,24 @@ export default {
   },
   methods: {
 
-    requestLike( id, idx ) {
+    requestLike( id ) {
       this.jwt[3] = id
-      if (this.feeds[idx].isLiked) {
-        this.feeds[idx].likeCnt -= 1
+      if (this.feed.isLiked) {
+        this.feed.likeCnt -= 1
       } else {
-        this.feeds[idx].likeCnt += 1     
+        this.feed.likeCnt += 1     
       }
-      this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+      this.feed.isLiked = !this.feed.isLiked 
       this.$store.dispatch('fetchLike', this.jwt)
     },
-    requestStore( id, idx) {
+    requestStore( id ) {
       this.jwt[3] = id
-      if (this.feeds[idx].isStored) {
-        this.feeds[idx].storageCnt -= 1
+      if (this.feed.isStored) {
+        this.feed.storageCnt -= 1
       } else {
-        this.feeds[idx].storageCnt += 1     
+        this.feed.storageCnt += 1     
       }
-      this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      this.feed.isStored = !this.feed.isStored 
       this.$store.dispatch('fetchStore', this.jwt)
     },
 
