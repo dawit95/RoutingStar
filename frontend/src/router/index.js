@@ -34,7 +34,7 @@ const routes = [
     component: () => import('@/views/home/HomeView')
   },
   {
-    path: '/homedetail',
+    path: '/homedetail/:feedId',
     name: 'HomeDetailView',
     component: () => import('@/views/home/HomeDetailView')
   },
