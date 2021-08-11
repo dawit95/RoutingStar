@@ -31,7 +31,7 @@ function getWrittenRoute(userId, access_token, success, fail) {
 // 유저가 저장한 루트 목록 조회
 function getSavedRoute(userId, access_token, success, fail) {
   instance
-    .get(`api/v1/routes/${userId}`, {
+    .get(`api/user/mypage/stores/${userId}`, {
       headers: {
         'access_token': access_token,
       }
@@ -40,11 +40,11 @@ function getSavedRoute(userId, access_token, success, fail) {
     .catch(fail);
 }
 
-function getRouteInfoByRouteId(routeId, access_token, success, fail) {
+function getRouteInfoByRouteId(userId, routeId, access_token, success, fail) {
   console.log("getRouteInfoByRouteId잘 들어옴")
-  // console.log(routeId, access_token)
+  // console.log(userId, routeId, access_token)
   instance
-  .get(`api/v1/route/${routeId}`, {
+  .get(`api/v1/route/${userId}/${routeId}`, {
     headers: {
       'access_token': access_token,
     }
@@ -55,7 +55,7 @@ function getRouteInfoByRouteId(routeId, access_token, success, fail) {
 
 function updateRoute(param, routeId, jwt, success, fail) {
   instance
-  .put(`api/v1/route/${jwt[2]}/${routeId}`, param, {
+  .put(`api/v1/route/${routeId}`, param, {
     headers: {
       'access_token': jwt[0],
     }
