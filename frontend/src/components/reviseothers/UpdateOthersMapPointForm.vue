@@ -14,7 +14,9 @@
           <others-image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
             <div slot="activator">
               <v-avatar size="50px" v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
-                <span>Image</span>
+                <v-icon dark x-large>
+                  mdi-plus
+                </v-icon>
               </v-avatar>
               <v-avatar size="50px" v-ripple v-else class="ml-1">
                 <img :src="place.placeImg" alt="Image">
