@@ -16,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AWS from 'aws-sdk'
 
 export default {
   name: 'ImageInput',
@@ -23,6 +24,10 @@ export default {
     uploadFieldName: 'file',
     maxSize: 1024,
     selectedFile: null,
+    albumBucketName: 'routingstar-photo-album',
+    bucketRegion: 'ap-northeast-2',
+    IdentityPoolId: 'ap-northeast-2:65af3722-b840-4cce-8c5f-956fb7ed025e',
+    tmpImg:''
   }),
   props: {
     place: {
@@ -37,6 +42,7 @@ export default {
       this.$refs.file.click();
     },
     onFileSelected(place, fieldName, file) {
+      console.log(place.isThumbnail)
       // const { maxSize } = this
       // 파일 갱신되었는데 이미 썸네일인 경우도 고려해야함.
       let imageFile = file[0]
@@ -55,12 +61,54 @@ export default {
         place.placeImg = imageURL
         // Emit the FormData and image URL to the parent component
         this.$emit('input', { formData, imageURL })
+        // 썸네일로 지정되어있던 상태에서 첨부파일이 갱신된다면
+        
         if (place.isThumbnail) {
-          console.log('썸네일 재설정으로 들어옴')
-          this.$emit('update-tumbnail-image', imageURL)
+          this.tmpImg = imageURL
+          this.$store.state.images.thumbnailImage = imageURL
         }
       }
     },
+    thumbnailSendToS3 (image) {
+      // console.log('ㅇㅇㅇ')
+      const date = new Date().getTime();
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.IdentityPoolId,
+        })
+      });
+      // 썸네일 지정시 프론트에서 바로 업로드(리팩토링 필요)
+      var s2 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: this.albumBucketName }
+      });
+      s2.upload({
+        Key: `thumbnail/${date + image.name}`,
+        Body: image,
+        ContentType: image.type,
+        ACL: 'public-read'
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+          return alert("There was an error uploading your photo: ", err.message);
+        }
+        this.$store.state.images.thumbnailImage = data.Location
+        console.log('바꾼다잉')
+        this.tmpImg = data.Location
+        // this.$emit('update-tumbnail-image', data.Location)
+      })
+    },
+    // emitImage(imageURL) {
+    //   console.log(imageURL)
+    //   this.$emit('update-tumbnail-image', imageURL)
+    // }
+  },
+  watch: {
+    tmpImg: function (imageURL) {
+      this.$emit('update-tumbnail-image', imageURL)
+      // this.emitImage(imageURL)
+    }
   }
 }
 </script>
