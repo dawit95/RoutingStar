@@ -1,5 +1,6 @@
 ### key값 ###
 src/main/resources/application-credentials.properties
+src/main/resources/application-oauth.properties
 
 HELP.md
 .gradle
@@ -44,4 +45,4 @@ out/
 
 
 ### 보안 ###
-application-oauth.properties
+src/main/resources/application-oauth.properties

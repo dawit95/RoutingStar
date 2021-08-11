@@ -1,9 +1,15 @@
 package com.curation.backend.route.web;
 
+import com.curation.backend.global.dto.ExceptionResponseDto;
+import com.curation.backend.global.dto.SuccessResponseDto;
+import com.curation.backend.global.service.ResponseGenerateService;
 import com.curation.backend.route.dto.RouteDetailResponseDto;
 import com.curation.backend.route.dto.RouteListResponseDto;
 import com.curation.backend.route.dto.RouteRequestDto;
+import com.curation.backend.route.dto.RouteSearchRequestDto;
+import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
+import com.curation.backend.user.exception.NoUserException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,30 +27,63 @@ public class RouteController {
     Logger logger = LoggerFactory.getLogger(RouteController.class);
 
     private final RouteService routeService;
+    private final ResponseGenerateService responseGenerateService;
 
     @PostMapping("/route")
-    public Long addRoute(@RequestBody RouteRequestDto route) throws Exception {
-        return routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
+    public ResponseEntity<SuccessResponseDto> addRoute(@RequestBody RouteRequestDto route) throws Exception {
+        Long id = routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(id);
+
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @GetMapping("/routes/{id}")
-    public ResponseEntity<List<RouteListResponseDto>> followingRouteList(@PathVariable("id") Long id) {
+    @GetMapping("/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> followingRouteList(@PathVariable("userId") Long id) throws NoUserException {
         List<RouteListResponseDto> list = routeService.followingRouteList(id);
-
-        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @GetMapping("/routes")
-    public ResponseEntity<List<RouteListResponseDto>> likeRouteList() {
-        List<RouteListResponseDto> list = routeService.likeRouteList();
-        return new ResponseEntity<List<RouteListResponseDto>>(list, HttpStatus.OK);
-
+    @PutMapping("/route/{routeId}")
+    public ResponseEntity<SuccessResponseDto> modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
+        Long routeId = routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeId);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 
-    @GetMapping("/route/{id}")
-    public ResponseEntity<RouteDetailResponseDto> routeDetail(@PathVariable("id") Long id) {
-        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(id);
-        return new ResponseEntity<RouteDetailResponseDto>(routeDetailResponseDto, HttpStatus.OK);
+    @DeleteMapping("/route/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> deleteRoute(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException {
+        routeService.deleteRoute(userId, id);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse("성공적으로 삭제되었습니다.");
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @PostMapping("/following/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> searchFollowingRoute(@PathVariable("userId") Long id, @RequestBody RouteSearchRequestDto routeSearchRequestDto) throws NoUserException {
+        List<RouteListResponseDto> list = routeService.searchFollowingRoute(id, routeSearchRequestDto.getWhatTag(), routeSearchRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @PostMapping("/nonfollowing/routes/{userId}")
+    public ResponseEntity<SuccessResponseDto> searchNonFollowingRoute(@PathVariable("userId") Long id, @RequestBody RouteSearchRequestDto routeSearchRequestDto) throws NoUserException {
+        List<RouteListResponseDto> list = routeService.searchNonFollowingRoute(id, routeSearchRequestDto.getWhatTag(), routeSearchRequestDto.getWithTag());
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    //수정시 사용
+    @GetMapping("/route/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> routeDetail(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException {
+        RouteDetailResponseDto routeDetailResponseDto = routeService.getDetail(userId, id);
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailResponseDto);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, HttpStatus.OK);
     }
 }
 
@@ -53,27 +92,108 @@ public class RouteController {
   "id": 1,
   "places": [
     {
-      "lang": "123.12",
-      "lat": "231.56",
-      "placeImg": "첫번째 장소의 이미지",
-      "placeOrder": 1,
-      "title": "첫번째 장소인 카페!"
+      "createdOrder": 1,
+      "isThumbnail": true,
+      "lat": 12.3,
+      "lng": 45.2,
+      "placeImg": "첫번째 사진이지롱",
+      "title": "여기는 카페에요"
     },
     {
-      "lang": "567.12",
-      "lat": "892.12",
-      "placeImg": "두번째 장소의 이미지",
-      "placeOrder": 2,
-      "title": "두번째 장소인 산책로!"
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": 45.2222,
+      "lng": 666.123,
+      "placeImg": "두번째 사진이지롱",
+      "title": "여기는 존맛 밥집"
     }
   ],
-  "routeDescription": "루트에 대한 설명",
-  "thumbnail": "루트의 썸네일",
+  "routeDescription": "우리동네 최고 코스에요",
+  "routeImg": "루트 사진이 들어가있음",
   "whatTag": [
-    1,3,5
+    1, 2, 3
   ],
   "withTag": [
-    2,3,1
+    1, 2, 7
+  ]
+}
+ */
+
+/*
+{
+  "id": 3,
+  "places": [
+    {
+      "createdOrder": 1,
+      "isThumbnail": false,
+      "lat": "772.12",
+      "lng": "452.123",
+      "placeImg": "수정한 이미지 1",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": "7.123",
+      "lng": "8.23",
+      "placeImg": "수정한 이미지 2",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 3,
+      "isThumbnail": true,
+      "lat": "478.1",
+      "lng": "98.1",
+      "placeImg": "수정한 이미지 3",
+      "title": "여기는 영화관"
+    }
+  ],
+  "routeDescription": "수정해버리기 이 코스는 우리동네 맛집코스",
+  "routeImg": "루트 사진도 수정함",
+  "whatTag": [
+    2
+  ],
+  "withTag": [
+    3
+  ]
+}
+
+
+{
+  "id": 2,
+  "places": [
+    {
+      "createdOrder": 1,
+      "isThumbnail": false,
+      "lat": "772.12",
+      "lng": "452.123",
+      "placeImg": "수정한 이미지 1",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 2,
+      "isThumbnail": false,
+      "lat": "7.123",
+      "lng": "8.23",
+      "placeImg": "수정한 이미지 2",
+      "title": "여기는 영화관"
+    },
+    {
+      "createdOrder": 3,
+      "isThumbnail": true,
+      "lat": "478.1",
+      "lng": "98.1",
+      "placeImg": "수정한 이미지 3",
+      "title": "여기는 영화관"
+    }
+  ],
+  "routeDescription": "3번째로 올린 글",
+  "routeImg": "루트 사진도 수정함",
+  "whatTag": [
+    5, 2
+  ],
+  "withTag": [
+    1, 4
   ]
 }
  */

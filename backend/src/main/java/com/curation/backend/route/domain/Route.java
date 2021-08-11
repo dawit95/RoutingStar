@@ -3,22 +3,23 @@ package com.curation.backend.route.domain;
 import com.curation.backend.comment.domain.Comment;
 import com.curation.backend.global.domain.BaseTime;
 import com.curation.backend.place.domain.Place;
+import com.curation.backend.route.dto.RouteRequestDto;
 import com.curation.backend.tag.domain.RouteWhatTag;
 import com.curation.backend.tag.domain.RouteWithTag;
 import com.curation.backend.user.domain.Like;
 import com.curation.backend.user.domain.User;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @SQLDelete(sql = "UPDATE route set deleted = true where id = ?")
 @Where(clause = "deleted = false")
@@ -31,16 +32,18 @@ public class Route extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String thumbNail;
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
+    private String routeImg;
 
     @Column(nullable = false)
     private String routeDescription;
 
+    @JsonManagedReference
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "route")
     private List<Comment> routeComments = new ArrayList<>();
 
@@ -71,7 +74,16 @@ public class Route extends BaseTime {
 
     @Builder
     public Route(String thumbnail, String routeDescription) {
-        this.thumbNail = thumbnail;
+        this.routeImg = thumbnail;
         this.routeDescription = routeDescription;
+    }
+
+    public void delete() {
+        this.deleted = Boolean.TRUE;
+    }
+
+    public void modify(RouteRequestDto route) {
+        this.routeImg = route.getRouteImg();
+        this.routeDescription = route.getRouteDescription();
     }
 }
