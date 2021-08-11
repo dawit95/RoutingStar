@@ -13,12 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*
-route 게시물의 상세 페이지에서 연관된 place와 함께 조회된다.
- */
 @Getter @Setter
-public class RouteDetailResponseDto {
-
+public class RouteDetailWithCommentResponseDto {
     private Long id;
     private String routeImg;
     private String routeDescription;
@@ -27,10 +23,9 @@ public class RouteDetailResponseDto {
     private UserResponseDto user;
     private List<WhatTagResponseDto> whatTag;
     private List<WithTagResponseDto> withTag;
+    private List<CommentResponseDto> comments;
 
-
-
-    public RouteDetailResponseDto(Route entity) {
+    public RouteDetailWithCommentResponseDto(Route entity) {
         this.id = entity.getId();
         this.routeImg = entity.getRouteImg();
         this.routeDescription = entity.getRouteDescription();
@@ -39,6 +34,7 @@ public class RouteDetailResponseDto {
         this.user = new UserResponseDto(entity.getUser());
         this.whatTag = entity.getRouteWhatTags().stream().map(e -> new WhatTagResponseDto(e.getWhatTag())).collect(Collectors.toList());
         this.withTag = entity.getRouteWithTags().stream().map(e -> new WithTagResponseDto(e.getWithTag())).collect(Collectors.toList());
+        this.comments = entity.getRouteComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
     }
 
 }
