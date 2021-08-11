@@ -11,7 +11,7 @@
         <v-card flat class="d-flex justify-end">
 
 
-          <image-input v-model="avatar" :place="place">
+          <image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
             <div slot="activator">
               <v-avatar size="50px" v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
                 <span>Image</span>
@@ -50,7 +50,7 @@
 
 <script>
 
-import { mapActions, mapGetters, mapMutations, } from 'vuex'
+import { mapGetters, mapMutations, } from 'vuex'
 import draggable from 'vuedraggable'
 import { dragscroll } from 'vue-dragscroll'
 import AWS from 'aws-sdk'
@@ -93,7 +93,6 @@ export default {
     // 일단 데이터의 조작만 있고, 모든 데이터의 input이 완료된 이후에 백앤드와 통신하니
     // 일단은 mutations함수를 사용하였습니다.
     ...mapMutations(['UPDATE_DRAGGERBLE_ITEMS','REFRESH_PLACES']),
-    ...mapActions(['updateThumbnailImage']),
     onUpdated(event) {
       this.UPDATE_DRAGGERBLE_ITEMS(event);
       this.refreshPolyline();
@@ -266,6 +265,9 @@ export default {
         this.$store.state.images.thumbnailImage = data.Location
         this.$emit('update-tumbnail-image', data.Location)
       })
+    },
+    updateThumbnailImage(imgUrl) {
+      this.$emit('update-tumbnail-image', imgUrl)
     }
   },
 }
