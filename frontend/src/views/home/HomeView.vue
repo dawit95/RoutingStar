@@ -227,17 +227,11 @@ export default {
     
     // 닉네임, 사진 누르면 프로필로 간다
     onClickUser(feed) {
-      // 피드에 올린 글쓴이가 로그인한 유저이면 mypage로
-      if (this.jwt[2] === feed.user.id) {
-        this.$router.push({ name: 'MyPageView' })
-      } else {
-        // 아니면 글쓴이의 profilepage로 간다
-        this.fetchUserInfo({
-          userId: feed.user.id,
-          access_token: this.jwt[0],
-        })
-        this.$router.push({ name: 'OtherUserPageView'})
-      }
+      this.fetchUserInfo({
+        userId: feed.user.id,
+        access_token: this.jwt[0],
+        jwtId: this.jwt[2]
+      })
     }
   }
 }
