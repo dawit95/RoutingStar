@@ -44,12 +44,12 @@ public class ReactionService {
         if(like != null) {
             likeRepository.deleteById(like.getId());
             message = "좋아요 취소";
-            pushService.searchReceivedUser(user.getId(),user.getName()+"가 "+route+""+message);
+            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
         } else {
             like = Like.builder().route(route).user(user).build();
             message = "좋아요 등록";
             likeRepository.save(like);
-            pushService.searchReceivedUser(user.getId(),user.getName()+"가 "+route+""+message);
+            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
         }
 
         return message;
