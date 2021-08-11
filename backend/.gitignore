@@ -40,7 +40,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-
-### 보안 ###
-src/main/resources/application-oauth.properties
