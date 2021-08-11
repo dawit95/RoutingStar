@@ -4,6 +4,8 @@ import { follow, getFollowList } from '@/api/follow.js'
 import { getWrittenRoute, getSavedRoute } from '@/api/routes.js'
 // import accounts from './accounts'
 // import axios from 'axios'
+import router from '@/router'
+
 
 const state = {
   userInfo: [],
@@ -54,6 +56,11 @@ const actions = {
       console.log('유저정보 가져오기 성공!')
       console.log(res.data.success)
       commit('SET_USER_INFO', res.data.success)
+      if (payload.userId === payload.jwtId) {
+        router.push({ name: 'MyPageView' })
+      } else {
+        router.push({ name: 'OtherUserPageView' })
+      }
     }, (error) => {
       console.log(error)
     });
@@ -103,16 +110,6 @@ const actions = {
       console.log(error)
     });
   },
-
-
-
-  // followOtherUser({ getters, dispatch }, userI+d) {
-  //   axios.post(DRF.URL + DRF.ROUTES.follow(userId), null, getters.config)
-  //     .then(() => dispatch('fetchOtherUserInfo', userId))
-  //     // 팔로우, 팔로잉 리스트도 받아야와야함
-  //     .catch(err => console.error(err))
-  // },
-
 }
 
 export default {
