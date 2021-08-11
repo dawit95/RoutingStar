@@ -74,13 +74,13 @@ export default {
     ...mapGetters(['jwt'])
   },
   methods: {
-    ...mapActions(['fetchUserInfo']),
+    ...mapActions(['enterUserprofile']),
 
     selectSection(item) {
     switch (item.title) {
       case 'MyPage':
         console.log('MyPage')
-        this.fetchUserInfo({
+        this.enterUserprofile({
           userId: this.jwt[2],
           access_token: this.jwt[0],
           jwtId: this.jwt[2]
