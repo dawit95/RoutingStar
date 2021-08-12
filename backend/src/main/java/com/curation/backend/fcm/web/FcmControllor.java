@@ -27,16 +27,22 @@ public class FcmControllor {
 
     Logger logger = LoggerFactory.getLogger(FcmControllor.class);
 
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<SuccessResponseDto> setToken (@PathVariable("userId") Long userId,ServletRequest request, ServletResponse response) {
         String message = "";
 
         String browser_token = ((HttpServletRequest)request).getHeader("browser_token");
         logger.trace("브라우저토큰 왔음 {} ",browser_token);
-        message = fcmService.setBrowserToken(userId,browser_token);
+        HttpStatus status;
+        if(browser_token != null){
+            message = fcmService.setBrowserToken(userId,browser_token);
+            status = HttpStatus.OK;
+        }else{
+            message = "브라우저토큰이 null입니다....";
+            status = HttpStatus.BAD_REQUEST;
+        }
         logger.trace("브라우저토큰 저장 완료!!");
 
-        HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(message);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
