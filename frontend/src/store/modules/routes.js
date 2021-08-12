@@ -18,7 +18,7 @@ const state = {
   withTag: [],
   routeInfo: [],
   routeMethodType: '',
-  clickedRouteId: 8,
+  clickedRouteId: 3,
 }
 
 const getters = {
