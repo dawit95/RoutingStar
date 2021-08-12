@@ -7,6 +7,8 @@ import com.curation.backend.fcm.dto.FcmMessageResponseDto;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,8 @@ public class AlarmService {
     private final FcmTokenRepository fcmTokenRepository;
     private final PushService pushService;
 
+    Logger logger = LoggerFactory.getLogger(AlarmService.class);
+
     public boolean checkAlarm(long userId) {
         List<FcmMessage> messageList = fcmMessageRepository.findAllByToUser(userId);
         if(messageList.isEmpty())
@@ -33,6 +37,7 @@ public class AlarmService {
     public boolean addAlarm(Long toUserId, Long fromUserId,String title,String content) {
         FcmMessage fcmMessage = FcmMessage.builder().toUser(toUserId).fromUser(fromUserId).title(title).content(content).isPush(false).build();
         User user = userRepository.findById(toUserId).orElse(null);
+        logger.trace("알림 유저의 정보는 이거 {} 유저아이디 {}", user.toString(),toUserId);
         if(user==null)
             return false;
         if(fcmTokenRepository.existsByUserId(toUserId)){
