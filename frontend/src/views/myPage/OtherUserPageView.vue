@@ -39,7 +39,8 @@ export default {
     ...mapActions(['followOtherUser', 'fetchLoginedToken', 'fetchWrittenRouteList']),
     
     setFollow() {
-      if (this.userInfo.followed == true ) {
+      console.log('setFollow 불려짐')
+      if (this.userInfo.followed === true ) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'
@@ -75,10 +76,10 @@ export default {
       this.setFollow()
       // const access_token = this.jwt
       // const userId = this.userInfo
-      this.fetchWrittenRouteList({
-        userId: this.userInfo.id,
-        access_token: this.jwt[0]
-      })
+      // this.fetchWrittenRouteList({
+      //   userId: this.userInfo.id,
+      //   access_token: this.jwt[0]
+      // })
     }
   }
 }
