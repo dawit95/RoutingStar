@@ -80,9 +80,9 @@ const routes = [
     component: () => import('@/views/myPage/OtherUserPageView.vue')
   },
   {
-    path: '/editprofile',
-    name: 'EditProfileView',
-    component: () => import('@/views/myPage/EditProfileView.vue')
+    path: '/badge',
+    name: 'BadgeView',
+    component: () => import('@/views/myPage/BadgeView.vue')
   },
   {
     path: '/followuserlist',
