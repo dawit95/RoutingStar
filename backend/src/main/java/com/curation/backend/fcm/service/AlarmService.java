@@ -42,7 +42,7 @@ public class AlarmService {
             logger.trace("유저가 없어서 addAlarm 하지 못함");
             return false;
         }
-        if(fcmTokenRepository.existsByUserId(toUserId)){
+        if(!fcmTokenRepository.existsByUserId(toUserId)){
             logger.trace("토큰에 toUserId : {}가 없어서 addAlarm 하지 못함",toUserId);
             //탈퇴한 user는 아니지만 현재 로그인된 브라우저가 없는 상태 message 저장
             fcmMessageRepository.save(fcmMessage);
