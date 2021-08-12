@@ -64,10 +64,19 @@ function updateRoute(param, routeId, jwt, success, fail) {
   .catch(fail);
 }
 
+function getRouteInfoWithComment(routeId, success, fail) {
+  instance
+  .get(`api/guest/route/${routeId}`)
+  .then(success)
+  .catch(fail);
+}
+
+
 export { 
   postRoute,
   getWrittenRoute,
   getSavedRoute,
   getRouteInfoByRouteId,
   updateRoute,
+  getRouteInfoWithComment
  }
