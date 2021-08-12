@@ -124,20 +124,13 @@ export default {
       list: [],
     }
   },
-  // mounted () {
-  //   if (this.name === 'HomeView') {
-  //     console.log('home')
-  //     // this.$router.push({name: 'HomeView'})
-  //     this.value = 2
-  //   }
-  // },
   computed: {
-    ...mapGetters(['jwt', 'feeds']),
+    ...mapGetters(['jwt', 'feeds', 'getterbrowserToken']),
 
     // readUser
   },
   created () {
-  // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
+    // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
   if (this.jwt[0]) {
     console.log('token이 이미 저장이 되어있음')
     this.$store.dispatch('fetchLoginedToken', this.jwt)
@@ -145,17 +138,17 @@ export default {
    }
   },
   // else if (this.$route.query.access && this.$route.query.refresh){
-  //   console.log('token을 지금 처음 저장함')
+    //   console.log('token을 지금 처음 저장함')
   //   const token = 
   //     {
-  //       access: this.$route.query.access,
+    //       access: this.$route.query.access,
   //       refresh: this.$route.query.refresh
   //     }
   //     this.$store.dispatch('createUser', token)
   //     this.$store.dispatch('createHome', token)
   //   } 
   // else {
-  //     console.log('token이 없음')
+    //     console.log('token이 없음')
   //     // axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
   //     axios.get('http://i5a309.p.ssafy.io:8000/api/guest/routes')
   //     .then((res) => {console.log(res)})
@@ -169,7 +162,7 @@ export default {
 
   // },
   methods: {
-    ...mapActions(['enterUserprofile']),
+    ...mapActions(['enterUserprofile', 'sendBrowerToken']),
 
     requestLike( id, idx ) {
       this.jwt[3] = id
@@ -233,7 +226,29 @@ export default {
         jwtId: this.jwt[2]
       })
     }
-  }
+  },
+  mounted() {
+    // console.log(this.browserToken)
+    // const browser_token = this.browserToken
+    // const user_id = this.jwt[2]
+    // const data = {
+    //   user_id: user_id,
+    //   browser_token: browser_token
+    // }
+    // console.log('여기 브라우저 토큰 보내는 시점')
+    // const user_id = this.jwt[2]
+    // console.log(user_id)
+    // this.sendBrowerToken()
+  },
+  watch: {
+    getterbrowserToken: function() {
+      const user_id = this.jwt[2]
+      console.log('여기 브라우저 토큰 보내는 시점')
+      console.log(user_id)
+      this.sendBrowerToken(user_id)
+    }
+  },
+  
 }
 </script>
 

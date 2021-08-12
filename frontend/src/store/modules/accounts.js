@@ -54,7 +54,7 @@ const actions = {
       }
      
       // axios.get(`http://localhost:8000/token/refresh`, config)
-      axios.get(` http://i5a309.p.ssafy.io:8000/api/v1/token/refresh`, config)
+      axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/token/refresh`, config)
         .then((res) => commit('FETCH_LOGINED_TOKEN', res.data.success))
         .catch((res) => {console.log(res)})
 
