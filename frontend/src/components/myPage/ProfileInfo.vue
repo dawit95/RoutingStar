@@ -88,12 +88,12 @@ export default {
   },
   created() {
     const access_token = this.jwt[0]
-    this.fetchUserInfo({
-      userId: this.jwt[2],
-      access_token: access_token
-    })
+    // this.fetchUserInfo({
+    //   userId: this.jwt[2],
+    //   access_token: access_token
+    // })
     this.fetchFollowUserList({
-      targetId: this.jwt[2],
+      targetId: this.userInfo.id,
       access_token: access_token
     })
   },
