@@ -1,8 +1,8 @@
 <template>
   <div class="white">
     {{ feed }}
-    <v-card class="mx-auto" color="#2A355D" dark max-width="400">
-      <v-card-title>
+    <div class="mx-auto" color="#2A355D" dark max-width="400">
+      <div>
         <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
           <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
           <!-- {{ feed.user.profileImg }} -->
@@ -10,10 +10,12 @@
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
           <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
-      </v-card-title>    
+      </div>    
+        <!-- <v-card-text> -->
         <HomeDetailMap />
+                <!-- </v-card-text> -->
           
-    </v-card>
+    </div>
     <!-- <div>
 
     </div> -->
