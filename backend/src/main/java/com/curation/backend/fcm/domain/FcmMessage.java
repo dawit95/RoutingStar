@@ -31,17 +31,17 @@ public class FcmMessage extends BaseTime {
     private String content;
 
     @Column
-    private Boolean isPush;
+    private int isPush;
 
     @Builder
-    public FcmMessage(Long toUser, Long fromUser, String title, String content,Boolean isPush) {
+    public FcmMessage(Long toUser, Long fromUser, String title, String content,int isPush) {
         this.toUser = toUser;
         this.fromUser = fromUser;
         this.title = title;
         this.content = content;
         this.isPush = isPush;
     }
-    public FcmMessage updateIsPush(boolean check){
+    public FcmMessage updateIsPush(int check){
         this.isPush = check;
         return this;
     }
