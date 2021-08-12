@@ -53,11 +53,6 @@ const routes = [
     name: 'HomeDetailView',
     component: () => import('@/views/home/HomeDetailView')
   },
-  {
-    path: '/homedetailbutton/:feedId',
-    name: 'DetailViewButton',
-    component: () => import('@/views/home/DetailViewButton.vue')
-  },
   
   // Routes
   {

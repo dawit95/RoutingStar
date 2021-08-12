@@ -10,6 +10,9 @@
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
           <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
+          <v-btn v-if="feed.user.id === this.jwt[2] || feed.isStored" @click="moveToRevisePage(feed.id)" icon>
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
       </div>    
         <!-- <v-card-text> -->
         <HomeDetailMap />
@@ -101,7 +104,7 @@ export default {
 
   },
   methods: {
-     requestLike( id ) {
+    requestLike( id ) {
       this.jwt[3] = id
       if (this.feed.isLiked) {
         this.feed.likeCnt -= 1
@@ -111,17 +114,25 @@ export default {
       this.feed.isLiked = !this.feed.isLiked 
       this.$store.dispatch('fetchLike', this.jwt)
     },
-      requestStore( id, idx) {
-          this.jwt[3] = id
-          if (this.feeds[idx].isStored) {
-            this.feeds[idx].storageCnt -= 1
-          } else {
-            this.feeds[idx].storageCnt += 1     
-          }
-          this.feeds[idx].isStored = !this.feeds[idx].isStored 
-          this.$store.dispatch('fetchStore', this.jwt)
-        },
-
+    requestStore( id, idx) {
+      this.jwt[3] = id
+      if (this.feeds[idx].isStored) {
+        this.feeds[idx].storageCnt -= 1
+      } else {
+        this.feeds[idx].storageCnt += 1     
+      }
+      this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      this.$store.dispatch('fetchStore', this.jwt)
+    },
+    moveToRevisePage(routeId) {
+      // feed를 작성한 userId와 현재 로그인한 userID와 같다면 => reviseroute/routeId
+      if (this.feed.user.id === this.jwt[2]) {
+        this.$router.push({ name: 'ReviseRouteView', params: { routeId: `${routeId}`}})
+        // 작성자와 로그인유저가 다르고, 로그인 유저가 저장한 feed라면 => reviseothers/routeId
+      } else if (this.feed.user.id !== this.jwt[2] && this.feed.isStored) {
+        this.$router.push({ name: 'ReviseOthersRouteView', params: { routeId: `${routeId}`}})
+      }
+    }
   },
 }
 </script>
