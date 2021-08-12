@@ -48,8 +48,8 @@
           </div> 
           <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
-        <div v-if="feed.isStored">
-            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
+          <div v-if="feed.isStored">
+              <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
             <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
@@ -57,21 +57,26 @@
           <div class="subheading">{{ feed.storageCnt }}</div>
 
 
-        <div v-for="(place, idx) in feed.places" :key="idx">
-          <span v-if="place.isThumbnail===true">
-             <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-            <span class="routeImg"><img :src=feed.routeImg alt=""></span>
-          </span>
-        </div>
+          <div v-for="(place, idx) in feed.places" :key="idx">
+            <span v-if="place.isThumbnail===true">
+              <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+              <span class="routeImg"><img :src=feed.routeImg alt=""></span>
+            </span>
+          </div>
 
-        {{ feed.routeDescription }}
+          {{ feed.routeDescription }}
 
-          <div>---</div>
-              <div>---</div>
-                  <div>---</div>
-                      <div>---</div>
-        <!-- </v-row> -->
+            <div>---</div>
+                <div>---</div>
+                    <div>---</div>
+                        <div>---</div>
+          <!-- </v-row> -->
         </div>
+  
+        <div>
+          <CommentBox/>
+        </div>
+    
     </div>
   </div>
 
@@ -81,11 +86,13 @@
 <script>
 import { mapGetters, } from 'vuex'
 import HomeDetailMap from '@/components/common/HomeDetailMap.vue'
+import CommentBox from '@/components/routeDetail/CommentBox.vue'
 
 export default {
   name: 'HomeDetailView',
   components: {
     HomeDetailMap,
+    CommentBox
   },
   data() {
     return {
