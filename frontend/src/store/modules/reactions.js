@@ -31,10 +31,10 @@ const actions = {
           'access_token': jwt[0],
         }
       }
-    // console.log(this.jwt[0])
     axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/reaction/like/${jwt[2]}/${jwt[3]}`, config)
-      .then(res => commit('FETCH_LIKE', res.data.success))
+      .then(res => commit('FETCH_LIKE', (res.data.success)))
       .catch((err) => console.log(err))
+    
   },
   fetchStore( {commit}, jwt) {
     console.log(jwt)
@@ -45,7 +45,6 @@ const actions = {
           'access_token': jwt[0],
         }
       }
-    // console.log(this.jwt[0])
     axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/reaction/store/${jwt[2]}/${jwt[3]}`, config)
       .then(res => console.log(res.data.success))
       .catch((err) => console.log(err))

@@ -2,13 +2,12 @@
   <v-container fluid grid-list-md>
     <v-layout row swap>
       <v-flex xs12>
-        <div id="pac-card">
+
         
           <!-- 맵 -->
           <div>
             <div id="map"></div>
           </div>
-        </div>
       </v-flex>
 
       <v-divider></v-divider>
