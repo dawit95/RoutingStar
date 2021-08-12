@@ -82,7 +82,6 @@
 <!-- infiniteHandler method 실행 -->
 <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
 
-    <Nav />
   </v-container>
 </template>
 
@@ -90,7 +89,7 @@
 // import Header from '@/components/common/Header.vue'
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
 // import InfiniteLoading from 'vue-infinite-loading'
-import Nav from '@/components/common/Nav.vue'
+// import Nav from '@/components/common/Nav.vue'
 import Header from '@/components/common/Header.vue'
 // import { login } from '@/api/user.js'
 import axios from 'axios'
@@ -105,7 +104,7 @@ const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
 export default {
   name: 'HomeView',
   components: {
-    Nav,
+    // Nav,
     // InfiniteLoading,
     Header,
     // HomeDetailView,
