@@ -57,7 +57,10 @@ public class FcmService {
     }
 
     public String setBrowserToken(Long userId, String browserToken){
-        fcmTokenRepository.save(FcmToken.builder().userId(userId).token(browserToken).build());
+        FcmToken fcmToken = fcmTokenRepository.findbyUserId(userId)
+                .map(entity -> entity.update(browserToken))
+                .orElse(FcmToken.builder().userId(userId).token(browserToken).build());
+        fcmTokenRepository.save(fcmToken);
         return "성공";
     }
 }
