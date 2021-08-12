@@ -1,8 +1,8 @@
 <template>
   <!-- <v-card> -->
     <v-bottom-navigation 
-      absolute grow color="#FBE8A6"
-      :value="value" dark
+      fixed absolute grow color="#FBE8A6"
+      dark :value="navValue"
       background-color="#101423"
     >
       <v-btn @click="moveToSearch">
@@ -30,12 +30,16 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'Nav',
   data () {
     return {
-      value: 2,
+      navValue: undefined
     }
+  },
+  computed: {
   },
   methods: {
     moveToSearch () {
@@ -45,6 +49,8 @@ export default {
       this.$router.push({ name: 'PostRouteView' })
     },
     moveToHome () {
+      console.log('확인용')
+      console.log(document)
       this.$router.push({ name: 'HomeView' })
     },
   },
