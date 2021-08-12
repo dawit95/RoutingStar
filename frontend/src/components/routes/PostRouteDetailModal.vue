@@ -34,10 +34,10 @@
                       <v-text-field
                         @change="createRouteDescription"
                         label="Description" 
-                        hint="25자 내외의 짧은 설명을 기록해주세요"
+                        hint="루트에 대해 소개해 주세요"
                         v-model="RouteDetailData.routeDescription"
                         :rules="rules"
-                        counter="25">
+                        counter="300">
                       </v-text-field>
                     </v-col>
                   </v-row>
