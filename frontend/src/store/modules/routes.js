@@ -1,7 +1,6 @@
 // store/modules/routes.js
 
-import { postRoute, updateRoute } from '@/api/routes.js'
-import { getRouteInfoByRouteId } from '@/api/routes.js'
+import { postRoute, updateRoute, getRouteInfoByRouteId, getRouteInfoWithComment } from '@/api/routes.js'
 // import accounts from '@/store/modules/accounts.js'
 import images from './images'
 // import accounts from './accounts'
@@ -19,6 +18,7 @@ const state = {
   routeInfo: [],
   routeMethodType: '',
   clickedRouteId: 8,
+  routeInfoWithComment: [],
 }
 
 const getters = {
@@ -48,6 +48,9 @@ const getters = {
   },
   routeMethodType(state) {
     return state.routeMethodType
+  },
+  routeInfoWithComment(state) {
+    return state.routeInfoWithComment
   }
 }
 
@@ -119,6 +122,9 @@ const mutations= {
   },
   CHANGE_METHOD_TYPE(state, type) {
     state.routeMethodType = type
+  },
+  SET_ROUTE_INFO_WITH_COMMENT(state, res) {
+    state.routeInfoWithComment = res
   }
 }
 
@@ -232,7 +238,17 @@ const actions = {
   },
   changeMethodType({ commit }, type) {
     commit('CHANGE_METHOD_TYPE', type)
-  }
+  },
+  fetchRouteInfoWithComment({ commit }, routeId) {
+    getRouteInfoWithComment(routeId,
+      (res) => {
+        console.log('여긴 루트 코멘트 받아온 데')
+        console.log(res)
+        commit('SET_ROUTE_INFO_WITH_COMMENT', res)
+      }, (error) => {
+        console.log(error)
+    })
+  },
 }
 
 export default {
