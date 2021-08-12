@@ -41,7 +41,7 @@ public class FcmControllor {
             message = "브라우저토큰이 null입니다....";
             status = HttpStatus.BAD_REQUEST;
         }
-        logger.trace("브라우저토큰 저장 완료!!");
+        logger.trace("브라우저토큰"+message);
 
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(message);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
