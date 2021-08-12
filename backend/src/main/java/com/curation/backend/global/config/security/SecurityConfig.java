@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 //front-end CI/CD 구현시 변경될 uri
-                .loginPage("http://localhost:8080/")
+                .loginPage("http://i5a309.p.ssafy.io/")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
 
