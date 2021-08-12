@@ -18,7 +18,7 @@ const state = {
   withTag: [],
   routeInfo: [],
   routeMethodType: '',
-  clickedRouteId: 3,
+  clickedRouteId: null,
 }
 
 const getters = {
@@ -48,6 +48,9 @@ const getters = {
   },
   routeMethodType(state) {
     return state.routeMethodType
+  },
+  clickedRouteId(state) {
+    return state.clickedRouteId
   }
 }
 
@@ -119,6 +122,9 @@ const mutations= {
   },
   CHANGE_METHOD_TYPE(state, type) {
     state.routeMethodType = type
+  },
+  SET_CLICKED_ROUTE_ID(state, routeId) {
+    state.clickedRouteId = routeId
   }
 }
 
@@ -234,6 +240,9 @@ const actions = {
   },
   changeMethodType({ commit }, type) {
     commit('CHANGE_METHOD_TYPE', type)
+  },
+  setClickedRouteId({ commit }, routeId) {
+    commit('SET_CLICKED_ROUTE_ID', routeId)
   }
 }
 
