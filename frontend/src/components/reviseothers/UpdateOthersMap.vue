@@ -195,7 +195,8 @@ export default {
       let marker = new window.google.maps.Marker({
         position: latLng,
         map: this.map,
-        animation: window.google.maps.Animation.DROP
+        animation: window.google.maps.Animation.DROP,
+        icon: 'https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/pin_sample(xxs).png'
       });
       // 마커 더블클릭시 삭제
       marker.addListener('dblclick', () => {
