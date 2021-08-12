@@ -15,7 +15,7 @@ public class FcmMessageResponseDto {
     private Long fromUser;
     private String title;
     private String content;
-    private Boolean isPush;
+    private int isPush;
     private LocalDateTime createTime;
 
     public FcmMessageResponseDto(FcmMessage entity) {
