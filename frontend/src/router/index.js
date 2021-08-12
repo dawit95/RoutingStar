@@ -53,6 +53,11 @@ const routes = [
     name: 'HomeDetailView',
     component: () => import('@/views/home/HomeDetailView')
   },
+  {
+    path: '/homedetailbutton/:feedId',
+    name: 'DetailViewButton',
+    component: () => import('@/views/home/DetailViewButton.vue')
+  },
   
   // Routes
   {
@@ -63,7 +68,7 @@ const routes = [
   
   // Revise Routes
   {
-    path: '/reviseroute',
+    path: '/reviseroute/:routeId',
     name: 'ReviseRouteView',
     component: () => import('@/views/revise/ReviseRouteView.vue')
   },
@@ -96,8 +101,9 @@ const routes = [
     name: 'LoginProcessView',
     component: () => import('@/views/LoginProcessView.vue')
   },
+  // Revise Others' Route
   {
-    path: '/reviseothers',
+    path: '/reviseothers/:routeId',
     name: 'ReviseOthersRouteView',
     component: () => import('@/views/revise/ReviseOthersRouteView.vue')
   },
