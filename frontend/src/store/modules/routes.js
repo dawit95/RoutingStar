@@ -194,6 +194,7 @@ const actions = {
         }), state.clickedRouteId, jwt,
         () => {
           console.log('success')
+          state.places = []
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
@@ -213,6 +214,7 @@ const actions = {
         }), jwt,
         () => {
           console.log('success')
+          state.places = []
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
