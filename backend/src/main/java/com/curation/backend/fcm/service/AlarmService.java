@@ -34,20 +34,24 @@ public class AlarmService {
         return true;
     }
 
-    public boolean addAlarm(Long toUserId, Long fromUserId,String title,String content) {
-        FcmMessage fcmMessage = FcmMessage.builder().toUser(toUserId).fromUser(fromUserId).title(title).content(content).isPush(false).build();
+    public boolean addAlarm(Long fromUserId, Long toUserId, String title,String content) {
+        FcmMessage fcmMessage = FcmMessage.builder().toUser(toUserId).fromUser(fromUserId).title(title).content(content).isPush(0).build();
         User user = userRepository.findById(toUserId).orElse(null);
         logger.trace("알림 유저의 정보는 이거 {} 유저아이디 {}", user.toString(),toUserId);
-        if(user==null)
+        if(user==null){
+            logger.trace("유저가 없어서 addAlarm 하지 못함");
             return false;
+        }
         if(fcmTokenRepository.existsByUserId(toUserId)){
+            logger.trace("토큰에 toUserId : {}가 없어서 addAlarm 하지 못함",toUserId);
             //탈퇴한 user는 아니지만 현재 로그인된 브라우저가 없는 상태 message 저장
             fcmMessageRepository.save(fcmMessage);
             return false;
         }
 
+        logger.trace("메시지 보냄");
         pushService.searchReceivedUser(toUserId,title,content);
-        fcmMessage.setIsPush(true);
+        fcmMessage.setIsPush(1);
         fcmMessageRepository.save(fcmMessage);
         return true;
     }
@@ -55,7 +59,7 @@ public class AlarmService {
     public List<FcmMessageResponseDto> getAlarms(Long userId){
         List<FcmMessageResponseDto> ansList = fcmMessageRepository.findAllByToUser(userId).stream().map(FcmMessageResponseDto::new).collect(Collectors.toList());
         for (FcmMessageResponseDto dto: ansList) {
-            fcmMessageRepository.save(fcmMessageRepository.findById(dto.getId()).get().updateIsPush(true));
+            fcmMessageRepository.save(fcmMessageRepository.findById(dto.getId()).get().updateIsPush(1));
         }
         return ansList;
     }
