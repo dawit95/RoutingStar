@@ -39,4 +39,21 @@ export default {
 .background-color {
   background-color: #101423;;
 }
+/* .theme--dark {
+    background-color: red;
+    color: #1976d2;
+}
+.v-card {
+    background-color: red;
+    color: #1976d2;
+}
+.v-sheet {
+    background-color: red;
+    color: #1976d2;
+}
+
+.theme--dark.v-card {
+    background-color: red;
+    color: #1976d2;
+} */
 </style>
