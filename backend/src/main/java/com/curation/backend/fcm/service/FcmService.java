@@ -1,5 +1,7 @@
 package com.curation.backend.fcm.service;
 
+import com.curation.backend.fcm.domain.FcmToken;
+import com.curation.backend.fcm.domain.FcmTokenRepository;
 import com.curation.backend.fcm.dto.FcmMessageDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +26,7 @@ public class FcmService {
     private final String API_URL=
             "https://fcm.googleapis.com/fcm/send";
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final FcmTokenRepository fcmTokenRepository;
 
     public void sendMessageTo(String targetToken,String title, String body) throws IOException {
         String message = makeMessage(targetToken, title, body);
@@ -51,5 +54,10 @@ public class FcmService {
                 .build();
 
         return objectMapper.writeValueAsString(fcmMessageDto);
+    }
+
+    public String setBrowserToken(Long userId, String browserToken){
+        fcmTokenRepository.save(FcmToken.builder().userId(userId).token(browserToken).build());
+        return "성공";
     }
 }
