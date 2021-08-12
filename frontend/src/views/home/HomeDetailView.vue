@@ -14,11 +14,12 @@
         <!-- <v-card-text> -->
         <HomeDetailMap />
                 <!-- </v-card-text> -->
-          
+      <CommentBox/>
     </div>
+    
     <!-- <div>
-
     </div> -->
+
   </div>
 
 
@@ -27,11 +28,13 @@
 <script>
 import { mapGetters, } from 'vuex'
 import HomeDetailMap from '@/components/common/HomeDetailMap.vue'
+import CommentBox from '@/components/routeDetail/CommentBox.vue'
 
 export default {
   name: 'HomeDetailView',
   components: {
     HomeDetailMap,
+    CommentBox
   },
   data() {
     return {

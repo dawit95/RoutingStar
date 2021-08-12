@@ -245,8 +245,8 @@ const actions = {
     getRouteInfoWithComment(routeId,
       (res) => {
         console.log('여긴 루트 코멘트 받아온 데')
-        console.log(res)
-        commit('SET_ROUTE_INFO_WITH_COMMENT', res)
+        console.log(res.data.success)
+        commit('SET_ROUTE_INFO_WITH_COMMENT', res.data.success)
       }, (error) => {
         console.log(error)
     })
