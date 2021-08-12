@@ -7,40 +7,54 @@
 
 import { postComment, deleteComment } from '@/api/comment.js'
 // import accounts from '@/store/modules/accounts.js'
-// import accounts from './accounts'
+// import routes from './routes'
 // import router from '@/router'
 
 
 const state = {
+  newComment: '',
+  deletedComment: '',
 }
 
 const getters = {
+  newComment(state) {
+    return state.newComment
+  },
+  deletedComment(state) {
+    return state.deletedComment
+  }
 }
 
 const mutations= {
+  SET_NEW_COMMENT(state, comment) {
+    state.newComment = comment
+  },
+  SET_DELETED_COMMENT(state, comment) {
+    state.deletedComment = comment
+  }
 }
 
 const actions = {
-  createComment(payload) {
+  createComment({ commit }, payload) {
     console.log('댓글 액션스')
     console.log(payload)
     postComment( payload.routeId, payload.access_token, payload.param,
       (res) => {
         console.log(res)
-        // 다시 코멘트 정보 받아오기
+        commit('SET_NEW_COMMENT', payload.param.comment)
       },(error) => {
         console.log(error)
       }
     );
   },
 
-  deleteCommentActions(payload) {
+  deleteCommentActions({ commit }, payload) {
     console.log('댓글 삭제 엑션스')
     console.log(payload)
     deleteComment(payload.commentId, payload.access_token,
       (res) => {
         console.log(res)
-        // 다시 코멘트 정보 받아오기
+        commit('SET_DELETED_COMMENT', payload.commentId)
       }, (error) => {
         console.log(error)
     })
