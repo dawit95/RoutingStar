@@ -57,9 +57,13 @@ public class FcmService {
     }
 
     public String setBrowserToken(Long userId, String browserToken){
-        FcmToken fcmToken = fcmTokenRepository.findbyUserId(userId)
-                .map(entity -> entity.update(browserToken))
-                .orElse(FcmToken.builder().userId(userId).token(browserToken).build());
+        FcmToken fcmToken;
+        if(fcmTokenRepository.existsByUserId(userId)){
+            fcmToken = fcmTokenRepository.findFcmTokenByUserId(userId).get(0);
+            fcmToken.update(browserToken);
+        }else{
+            fcmToken = FcmToken.builder().userId(userId).token(browserToken).build();
+        }
         fcmTokenRepository.save(fcmToken);
         return "성공";
     }
