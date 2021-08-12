@@ -111,11 +111,18 @@ export default {
         }
         console.log(data.param)
         this.fetchSearchedRoutes(data)
+        this.$router.push({ name: 'SearchResultView' })
+
       } else {
         console.log('없어요!! 막아주세요!! 알람!!')
       }
     }
   },
+  // watch: {
+  //   searchedFollowRoutes: function() {
+  //       this.$router.push({ name: 'SearchResultView' })
+  //   }
+  // },
 }
 </script>
 

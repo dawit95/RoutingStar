@@ -1,5 +1,5 @@
 <template>
-  <div class="white">
+  <div class="white" height="10000">
     {{ feed }}
     <div class="mx-auto" color="#2A355D" dark max-width="400">
       <div>
@@ -15,10 +15,61 @@
         <HomeDetailMap />
                 <!-- </v-card-text> -->
           
-    </div>
-    <!-- <div>
+        <!-- <v-row align="center" justify="end"> -->
+          <!-- {{ feed.isLiked}}
+          {{ feed.isLiked}}
+          {{ feed.id }} -->
+        
+             <!-- {{ feed.whatTag.length }}
+             {{ feed.whatTag[0] }}
+             {{ feed.whatTag[0].title }}
+             {{ feed.withTag }} -->
+        <!-- <li v-for="item in feed.withTag">{{ item }}</li> -->
+        <!-- <li v-for="tag in feed.whatTag" ></li> -->
 
-    </div> -->
+
+         <div v-for="n in feed.whatTag.length" v-bind:key="n">
+           {{ feed.whatTag[n-1].title }}
+         </div>
+ 
+         <div v-for="n in feed.withTag.length" v-bind:key="n">
+           {{ feed.withTag[n-1].title }}
+         </div>
+
+        <div>  
+          <div v-if="feed.isLiked">
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
+          </div>
+          <div v-else>
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
+          </div> 
+          <div class="subheading mr-2">{{ feed.likeCnt }}</div>
+
+        <div v-if="feed.isStored">
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
+          </div>
+          <div v-else>
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+          </div> 
+          <div class="subheading">{{ feed.storageCnt }}</div>
+
+
+        <div v-for="(place, idx) in feed.places" :key="idx">
+          <span v-if="place.isThumbnail===true">
+             <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg"><img :src=feed.routeImg alt=""></span>
+          </span>
+        </div>
+
+        {{ feed.routeDescription }}
+
+          <div>---</div>
+              <div>---</div>
+                  <div>---</div>
+                      <div>---</div>
+        <!-- </v-row> -->
+        </div>
+    </div>
   </div>
 
 
@@ -39,21 +90,38 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['places', 'polyLine', 'imgList','feeds', 'feed', ])
+    ...mapGetters(['places', 'polyLine', 'imgList','feeds', 'feed', 'jwt', ])
   },
   created() {
     console.log(this.$route.params)
     console.log(this.$route.params.feedId)
     this.feeds[this.feeds.length] = this.$route.params.feedId
     this.$store.dispatch('selectedFeed', this.feeds)
-    // console.log('created마지막2', this.feed.places.length)
-    // console.log('created마지막3', this.feed.places[0].lat, this.feed.places[0].lng)
-    // console.log('created마지막3', this.feed.places[1].lat, this.feed.places[1].lng)
-    // console.log('created마지막3', this.feed.places[2].lat, this.feed.places[2].lng)
+
 
   },
   methods: {
- 
+     requestLike( id ) {
+      this.jwt[3] = id
+      if (this.feed.isLiked) {
+        this.feed.likeCnt -= 1
+      } else {
+        this.feed.likeCnt += 1     
+      }
+      this.feed.isLiked = !this.feed.isLiked 
+      this.$store.dispatch('fetchLike', this.jwt)
+    },
+      requestStore( id, idx) {
+          this.jwt[3] = id
+          if (this.feeds[idx].isStored) {
+            this.feeds[idx].storageCnt -= 1
+          } else {
+            this.feeds[idx].storageCnt += 1     
+          }
+          this.feeds[idx].isStored = !this.feeds[idx].isStored 
+          this.$store.dispatch('fetchStore', this.jwt)
+        },
+
   },
 }
 </script>
