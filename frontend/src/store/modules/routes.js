@@ -19,7 +19,11 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
+<<<<<<< HEAD
   selectedRoute: []
+=======
+  postingCheck: false,
+>>>>>>> bd81c704c954638b05a0304e504f4e9cb1e51f92
 }
 
 const getters = {
@@ -56,8 +60,13 @@ const getters = {
   routeInfoWithComment(state) {
     return state.routeInfoWithComment
   },
+<<<<<<< HEAD
   selectedRoute(state) {
     return state.selectedRoute
+=======
+  postingCheck(state) {
+    return state.postingCheck
+>>>>>>> bd81c704c954638b05a0304e504f4e9cb1e51f92
   }
 }
 
@@ -225,6 +234,7 @@ const actions = {
         () => {
           console.log('success')
           state.places = []
+          state.postingCheck = true
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)

@@ -1,12 +1,9 @@
 <template>
-  <!-- <v-card> -->
+  <!-- <v-card class="overflow-hidden mx-auto"> -->
   <v-bottom-navigation
-    fixed
-    grow
-    color="#FBE8A6"
-    dark
+    app grow dark
     background-color="#101423"
-    class="pa-1"
+    color="#FBE8A6"
   >
     <v-btn id="SearchView" @click="moveToSearch">
       <span>Search</span>
@@ -32,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Nav",
   data() {
@@ -55,10 +53,19 @@ export default {
         document.getElementById(to.name).classList.remove("v-btn—inactive");
         document.getElementById(to.name).classList.add("v-btn—active");
       }
+
+      if (from.name === 'PostRouteView' && to.name !== 'PostRouteView' && this.postingCheck === false) {
+        alert('작성중인 내용이 삭제됩니다.')
+        this.refreshPlaces([])
+      }
+
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['postingCheck'])
+  },
   methods: {
+    ...mapActions(['refreshPlaces']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
@@ -70,7 +77,9 @@ export default {
       }
     },
     moveToHome() {
+      if (this.$route.name != "HomeView") {
         this.$router.push({ name: "HomeView" }).catch(() => {});
+      }
     },
   },
 };
@@ -84,4 +93,5 @@ export default {
 .theme—dark.v-btn:hover::before {
     opacity: 0.00;
 }
+
 </style>

@@ -9,7 +9,7 @@
     <div class="rounded-lg">
 
     <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/google">
-      <v-img class="mx-auto loginButtonM circle" max-height="40" max-width="315" :src="require('../../assets/btn_google_signin_dark_pressed_web@2x.png')" />
+      <v-img class="mx-auto loginButtonM circle" max-height="46" max-width="308" :src="require('../../assets/btn_google_signin_light_focus_web@2x.png')" />
     </a>
     </div>
 </div>
