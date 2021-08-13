@@ -3,7 +3,7 @@
     <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
     <ProfileInfo/>
     <!-- <div class="button mx-8">Following</div> -->
-    <div class="button mx-8" @click="onClickfollowOtherUser">{{ userInfo.followed }}</div>
+    <div class="button mx-8" @click="onClickfollowOtherUser">{{ follow }}</div>
     <OtherUserRoutesTab/>
 
   </div>
@@ -40,7 +40,7 @@ export default {
     
     setFollow() {
       console.log('setFollow 불려짐')
-      if (this.userInfo.followed === true ) {
+      if (this.userInfo.following === true ) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'
