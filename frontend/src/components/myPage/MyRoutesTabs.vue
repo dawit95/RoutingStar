@@ -5,7 +5,7 @@
         <input type="radio" name="tabs" id="tab1" checked />
           <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0">내가 작성한 루트</label>
           <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
-            <div>
+            <div class="content">
               <RouteThumbnail
                 v-for="route in writtenRouteList"
                 :key="route.id"
@@ -56,7 +56,11 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+}
 body {
   padding: 10px;
   text-align: left;
