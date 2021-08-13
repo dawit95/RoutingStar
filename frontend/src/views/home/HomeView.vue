@@ -1,6 +1,5 @@
 <template>
-  <v-container pa-0>
-    <Header />
+  <v-container color="black">
     
     <!-- <div class="white">
       {{ feeds }}
@@ -34,7 +33,7 @@
             </v-for> -->
         <div v-for="(place, idx) in feed.places" :key="idx">
           <span v-if="place.isThumbnail===true">
-             <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: 123 }})"><img :src=place.placeImg alt=""></span>
+             <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
             <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}`}})"><img :src=feed.routeImg alt=""></span>
           </span>
         </div>
@@ -90,7 +89,7 @@
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
 // import InfiniteLoading from 'vue-infinite-loading'
 // import Nav from '@/components/common/Nav.vue'
-import Header from '@/components/common/Header.vue'
+
 // import { login } from '@/api/user.js'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
@@ -103,12 +102,6 @@ const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
 
 export default {
   name: 'HomeView',
-  components: {
-    // Nav,
-    // InfiniteLoading,
-    Header,
-    // HomeDetailView,
-  },
   data() {
     return {
       // profile과 관련된 이미지는 jwt에 있다면 안받아와도 될 것 같습니다

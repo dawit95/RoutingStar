@@ -6,6 +6,7 @@
     color="#FBE8A6"
     dark
     background-color="#101423"
+    class="pa-1"
   >
     <v-btn id="SearchView" @click="moveToSearch">
       <span>Search</span>
