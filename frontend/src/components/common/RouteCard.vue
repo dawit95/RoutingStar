@@ -3,7 +3,7 @@
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
         <v-list-item-avatar color="grey darken-3">
-          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
+          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src="feed.user.profileImg"></v-img>
         </v-list-item-avatar>
           <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
       </v-card-title>
@@ -12,8 +12,8 @@
         <div class="container">
           <div v-for="(place, idx) in feed.places" :key="idx">
             <span v-if="place.isThumbnail===true">
-              <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=feed.routeImg alt=""></span>
+              <span class="thumbnail" @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
+              <span class="routeImg" @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img :src=feed.routeImg alt=""></span>
             </span>
           </div>
         </div>
@@ -23,26 +23,15 @@
       <v-card-actions>
         <v-list-item class="grow">
           <v-row align="center" justify="end">
-            <!-- {{ feed }} -->
 
-            {{ feed.isLiked }}
-            <!-- {{ feed.isStored }} -->
-             <!-- for ( const nonFollowRoute of this.searchedNonFollowRoutes) {
-        if ( nonFollowRoute.id == feed.id) { -->
-        <div v-for="(nonFollowRoute, idx) in searchedNonFollowRoutes" :key="idx">
-          <span v-if="nonFollowRoute.id == feed.id">
-            {{ nonFollowRoute }}
-            {{ nonFollowRoute.isLiked }}
-            <div v-if="nonFollowRoute.isLiked">
-              <v-icon @click="requestLike(nonFollowRoute.id, idx)" class="mr-1">mdi-heart</v-icon>
+            <div v-if="feed.isLiked">
+              <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
             </div>
             <div v-else>
-              <v-icon @click="requestLike(nonFollowRoute.id, idx)" class="mr-1">mdi-heart-outline</v-icon>
+              <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
             </div> 
-            <div class="subheading mr-2">{{ nonFollowRoute.likeCnt }}</div>
-          </span>
-        </div>
-
+            <div class="subheading mr-2">{{ feed.likeCnt }}</div>
+            
             <div v-if="feed.isStored">
               <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
             </div>
@@ -50,6 +39,7 @@
               <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
             </div> 
             <div class="subheading">{{ feed.storageCnt }}</div>
+
           </v-row>
         </v-list-item>
       </v-card-actions>
@@ -81,10 +71,34 @@ export default {
     feed: Object,
   },
   computed: {
-    ...mapGetters(['jwt', 'feeds', 'searchedNonFollowRoutes']),
+    ...mapGetters(['jwt', 'feeds', 'searchedNonFollowRoutes', 'isLiked', 'isSaved']),
   },
-  created() {
-    console.log('이것슨피드', this.feed)
+  // created() {
+  //   console.log('이것슨피드', this.feed)
+  //   const data = {
+  //     userId : this.jwt[2],
+  //     access_token: this.jwt[0],
+  //     param: {
+  //       whatTag: [this.feed.whatTag[0].id],
+  //       withTag: [this.feed.withTag[0].id],
+  //       }
+  //     }
+  //   console.log('이거슨데이터', data)
+  //   // this.$store.dispatch('fetchSearchedRoutes', data)
+  // },
+
+  methods: {
+    ...mapActions(['enterUserprofile']),
+
+    async requestLike(id) {
+      this.jwt[3] = id
+      // if (this.feeds[idx].isLiked) {
+      //   this.feeds[idx].likeCnt -= 1
+      // } else {
+      //   this.feeds[idx].likeCnt += 1     
+      // }
+      // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+      await this.$store.dispatch('fetchLike', this.jwt)
       const data = {
         userId : this.jwt[2],
         access_token: this.jwt[0],
@@ -92,27 +106,27 @@ export default {
           whatTag: [this.feed.whatTag[0].id],
           withTag: [this.feed.withTag[0].id],
           }
-        }
-      console.log('이거슨데이터', data)
-     this.$store.dispatch('fetchSearchedRoutes', data)
-  },
-
-  methods: {
-    ...mapActions(['enterUserprofile']),
-
-    requestLike( id, idx ) {
-      console.log('requestlike', id, idx)
-      this.jwt[3] = id
-      if (this.searchedNonFollowRoutes[idx].isLiked) {
-        this.searchedNonFollowRoutes[idx].likeCnt -= 1
-      } else {
-        this.searchedNonFollowRoutes[idx].likeCnt += 1     
       }
-      console.log('변경전', this.searchedNonFollowRoutes[idx].isLiked)
-      this.searchedNonFollowRoutes[idx].isLiked = !this.searchedNonFollowRoutes[idx].isLiked 
-      // this.$store.search.state.searchedNonFollowRoutes[idx].isLiked = !this.$store.search.state.searchedNonFollowRoutes[idx].isLiked 
-      console.log('변경후', this.searchedNonFollowRoutes[idx].isLiked)
-      this.$store.dispatch('fetchLike', this.jwt)
+      await this.$store.dispatch('fetchSearchedRoutes', data)
+    },
+    async requestStore(id) {
+      this.jwt[3] = id
+      // if (this.feeds[idx].isStored) {
+      //   this.feeds[idx].storageCnt -= 1
+      // } else {
+      //   this.feeds[idx].storageCnt += 1     
+      // }
+      // this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      await this.$store.dispatch('fetchStore', this.jwt)
+      const data = {
+        userId : this.jwt[2],
+        access_token: this.jwt[0],
+        param: {
+          whatTag: [this.feed.whatTag[0].id],
+          withTag: [this.feed.withTag[0].id],
+          }
+      }
+      await this.$store.dispatch('fetchSearchedRoutes', data)
     },
       // console.log(feed)
       // console.log(this.searchedNonFollowRoutes)
@@ -182,7 +196,33 @@ export default {
         jwtId: this.jwt[2]
       })
     }
-  }
+  },
+  // watch: {
+  //   isLiked: function() {
+  //     console.log('불려야돼')
+  //     const data = {
+  //       userId : this.jwt[2],
+  //       access_token: this.jwt[0],
+  //       param: {
+  //         whatTag: [this.feed.whatTag[0].id],
+  //         withTag: [this.feed.withTag[0].id],
+  //         }
+  //     }
+  //     this.$store.dispatch('fetchSearchedRoutes', data)
+  //   },
+  //   isSaved: function() {
+  //     console.log('얘도 불려야돼')
+  //     const data = {
+  //       userId : this.jwt[2],
+  //       access_token: this.jwt[0],
+  //       param: {
+  //         whatTag: [this.feed.whatTag[0].id],
+  //         withTag: [this.feed.withTag[0].id],
+  //         }
+  //     }
+  //     this.$store.dispatch('fetchSearchedRoutes', data)
+  //   }
+  // }
 }
 </script>
 
