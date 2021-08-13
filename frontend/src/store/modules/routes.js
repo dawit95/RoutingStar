@@ -19,6 +19,7 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
+  selectedRoute: []
 }
 
 const getters = {
@@ -54,6 +55,9 @@ const getters = {
   },
   routeInfoWithComment(state) {
     return state.routeInfoWithComment
+  },
+  selectedRoute(state) {
+    return state.selectedRoute
   }
 }
 
@@ -74,15 +78,6 @@ const mutations= {
   REFRESH_PLACES(state, newPlaces) {
     state.places = newPlaces
   },
-  // UPDATE_DRAGGERBLE_ITEMS(state, event) {
-  //   var ary = [...state.places]
-
-  //   var tmp = ary[event.newIndex]
-  //   ary[event.newIndex] = ary[event.oldIndex]
-  //   ary[event.oldIndex] = tmp
-
-  //   state.places = ary;
-  // },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
     console.log(state.places)
 
@@ -131,6 +126,9 @@ const mutations= {
   },
   SET_ROUTE_INFO_WITH_COMMENT(state, res) {
     state.routeInfoWithComment = res
+  },
+  SET_SELECTED_ROUTE(state, res) {
+    state.selectedRoute = res
   }
 }
 
@@ -259,6 +257,9 @@ const actions = {
       }, (error) => {
         console.log(error)
     })
+  },
+  setSelectedRoute( {commit}, route){
+    commit('SET_SELECTED_ROUTE', route)
   },
 }
 

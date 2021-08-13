@@ -1,6 +1,5 @@
 <template>
-  <v-container pa-0>
-    <Header />
+  <v-container color="black">
     
     <!-- <div class="white">
       {{ feeds }}
@@ -34,7 +33,7 @@
             </v-for> -->
         <div v-for="(place, idx) in feed.places" :key="idx">
           <span v-if="place.isThumbnail===true">
-             <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: 123 }})"><img :src=place.placeImg alt=""></span>
+<span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
             <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}`}})"><img :src=feed.routeImg alt=""></span>
           </span>
         </div>
@@ -51,19 +50,19 @@
         <v-row align="center" justify="end">
           
           <div v-if="feed.isLiked">
-            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart</v-icon>
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
           <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
 
           <div v-if="feed.isStored">
-            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark</v-icon>
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading">{{ feed.storageCnt }}</div>
         </v-row>
@@ -90,7 +89,7 @@
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
 // import InfiniteLoading from 'vue-infinite-loading'
 // import Nav from '@/components/common/Nav.vue'
-import Header from '@/components/common/Header.vue'
+
 // import { login } from '@/api/user.js'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
@@ -103,12 +102,6 @@ const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
 
 export default {
   name: 'HomeView',
-  components: {
-    // Nav,
-    // InfiniteLoading,
-    Header,
-    // HomeDetailView,
-  },
   data() {
     return {
       // profile과 관련된 이미지는 jwt에 있다면 안받아와도 될 것 같습니다
@@ -124,7 +117,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['jwt', 'feeds', 'getterbrowserToken']),
+    ...mapGetters(['jwt', 'feeds', 'getterbrowserToken', 'isLiked', 'isSaved']),
 
     // readUser
   },
@@ -163,24 +156,34 @@ export default {
   methods: {
     ...mapActions(['enterUserprofile', 'sendBrowerToken']),
 
-    requestLike( id, idx ) {
+    // requestLike( id, idx ) {
+    //   this.jwt[3] = id
+    //   if (this.feeds[idx].isLiked) {
+    //     this.feeds[idx].likeCnt -= 1
+    //   } else {
+    //     this.feeds[idx].likeCnt += 1     
+    //   }
+    //   this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+    //   this.$store.dispatch('fetchLike', this.jwt)
+    // },
+    requestLike(id) {
       this.jwt[3] = id
-      if (this.feeds[idx].isLiked) {
-        this.feeds[idx].likeCnt -= 1
-      } else {
-        this.feeds[idx].likeCnt += 1     
-      }
-      this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+      // if (this.feeds[idx].isLiked) {
+      //   this.feeds[idx].likeCnt -= 1
+      // } else {
+      //   this.feeds[idx].likeCnt += 1     
+      // }
+      // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
       this.$store.dispatch('fetchLike', this.jwt)
     },
-    requestStore( id, idx) {
+    requestStore(id) {
       this.jwt[3] = id
-      if (this.feeds[idx].isStored) {
-        this.feeds[idx].storageCnt -= 1
-      } else {
-        this.feeds[idx].storageCnt += 1     
-      }
-      this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      // if (this.feeds[idx].isStored) {
+      //   this.feeds[idx].storageCnt -= 1
+      // } else {
+      //   this.feeds[idx].storageCnt += 1     
+      // }
+      // this.feeds[idx].isStored = !this.feeds[idx].isStored 
       this.$store.dispatch('fetchStore', this.jwt)
     },
 
@@ -224,20 +227,7 @@ export default {
         access_token: this.jwt[0],
         jwtId: this.jwt[2]
       })
-    }
-  },
-  mounted() {
-    // console.log(this.browserToken)
-    // const browser_token = this.browserToken
-    // const user_id = this.jwt[2]
-    // const data = {
-    //   user_id: user_id,
-    //   browser_token: browser_token
-    // }
-    // console.log('여기 브라우저 토큰 보내는 시점')
-    // const user_id = this.jwt[2]
-    // console.log(user_id)
-    // this.sendBrowerToken()
+    },
   },
   watch: {
     getterbrowserToken: function() {
@@ -245,7 +235,16 @@ export default {
       console.log('여기 브라우저 토큰 보내는 시점')
       console.log(user_id)
       this.sendBrowerToken(user_id)
+    },
+    isLiked: function() {
+      console.log('불려야돼')
+      this.$store.dispatch('fetchLoginedFeeds', this.jwt)
+    },
+    isSaved: function() {
+      console.log('얘도 불려야돼')
+      this.$store.dispatch('fetchLoginedFeeds', this.jwt)
     }
+
   },
   
 }
