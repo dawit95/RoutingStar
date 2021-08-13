@@ -7,7 +7,7 @@
       </v-row>
       
       <div class="commentList">
-        <v-row v-for="(comment, idx) of routeInfoWithComment.comments" v-bind:key="idx">
+        <v-row v-for="(comment, idx) of routeInfo.comments" v-bind:key="idx">
           <div @click="onClickUser(comment.user)">
             <!-- <img class="followListImg" :src=comment.user.profileImg alt=""> -->
             <span>{{ comment.user.name }}</span>
@@ -28,7 +28,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CommentForm',
   computed: {
-    ...mapGetters(['jwt', 'routeInfoWithComment', 'newComment', 'deletedComment'])
+    ...mapGetters(['jwt', 'routeInfo', 'newComment', 'deletedComment'])
   },
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRouteInfoWithComment', 'createComment', 'deleteCommentActions']),
+    ...mapActions(['fetchRouteInfo', 'createComment', 'deleteCommentActions']),
 
     onClickUser(user) {
       this.enterUserprofile({
@@ -49,7 +49,7 @@ export default {
     onClickAddComment() {
       if (this.WrittingComment) {
         const payload = {
-          routeId : this.routeInfoWithComment.id,
+          routeId : this.routeInfo.id,
           access_token : this.jwt[0],
           param : {
             comment: this.WrittingComment,
@@ -79,12 +79,18 @@ export default {
   },
   watch: {
     newComment: function() {
-      const routeId = this.$route.params.feedId
-      this.fetchRouteInfoWithComment(routeId)
+      this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.routeInfo.id,
+      access_token: this.jwt[0]
+    })
     },
     deletedComment: function() {
-      const routeId = this.$route.params.feedId
-      this.fetchRouteInfoWithComment(routeId)
+      this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.routeInfo.id,
+      access_token: this.jwt[0]
+    })
     },
   }
 }
