@@ -19,7 +19,6 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
-  clickedRouteId: 3,
 }
 
 const getters = {
