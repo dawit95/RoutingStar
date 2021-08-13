@@ -166,7 +166,16 @@ public class RouteService {
         List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         followerList.add(id);
 
-        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdNotIn(routeIds, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        List<Long> storeIds = reactionService.storeList(id);
+        List<Long> likeIds = reactionService.likeList(id);
+
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdNotIn(routeIds, followerList).stream().map(e -> {
+            RouteListResponseDto routeListResponseDto = new RouteListResponseDto(e);
+            Long routeId = routeListResponseDto.getId();
+            if(likeIds.contains(routeId))  routeListResponseDto.setIsLiked(true);
+            if(storeIds.contains(routeId))  routeListResponseDto.setIsStored(true);
+            return routeListResponseDto;
+        }).collect(Collectors.toList());
 
         return list;
     }
@@ -190,7 +199,16 @@ public class RouteService {
         List<Long> followerList = followList.stream().map(e -> e.getFollowing().getId()).collect(Collectors.toList());
         followerList.add(id);
 
-        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdIn(routeIds, followerList).stream().map(RouteListResponseDto::new).collect(Collectors.toList());
+        List<Long> storeIds = reactionService.storeList(id);
+        List<Long> likeIds = reactionService.likeList(id);
+
+        List<RouteListResponseDto> list = routeRepository.findByIdInAndUserIdIn(routeIds, followerList).stream().map(e -> {
+            RouteListResponseDto routeListResponseDto = new RouteListResponseDto(e);
+            Long routeId = routeListResponseDto.getId();
+            if(likeIds.contains(routeId))  routeListResponseDto.setIsLiked(true);
+            if(storeIds.contains(routeId))  routeListResponseDto.setIsStored(true);
+            return routeListResponseDto;
+        }).collect(Collectors.toList());
 
         return list;
     }
