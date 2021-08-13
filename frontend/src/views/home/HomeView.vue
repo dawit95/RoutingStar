@@ -1,7 +1,7 @@
 <template>
-  <v-container pa-0 class="moveUp">   
+  <v-container pa-0>
    <v-list v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
-    <v-card class="mx-auto" color='#2A355D' max-width="400">
+    <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
         <v-list-item-avatar>
         <!-- user profile img avatar 생성: https://m.blog.naver.com/lizziechung/221793761299 -->
