@@ -3,10 +3,10 @@
     <v-app-bar color="#0E111E" dense height="50px" class="moveToUp">
       <v-avatar @click="$router.push({name: 'HomeView'})"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
       <v-spacer></v-spacer>
-      <v-btn class="moveToRight" color="primary" icon><v-icon>mdi-bell</v-icon></v-btn>
+      <v-btn class="moveToRight" color="grey" x-large icon><v-icon>mdi-bell</v-icon></v-btn>
       <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on" icon><v-icon>mdi-account</v-icon></v-btn>
+        <v-btn class="ml-3 pr-3" color="grey" dark v-bind="attrs" v-on="on" x-large icon><v-icon>mdi-account</v-icon></v-btn>
       </template>
       <v-list>
         <v-list-item
