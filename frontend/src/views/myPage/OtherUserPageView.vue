@@ -40,7 +40,7 @@ export default {
     
     setFollow() {
       console.log('setFollow 불려짐')
-      if (this.userInfo.followed === true ) {
+      if (this.userInfo.following === true ) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'

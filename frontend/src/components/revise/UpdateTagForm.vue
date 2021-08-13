@@ -133,7 +133,7 @@ export default {
 
 <style>
 /* 임시로 가독성을 위해 넣는 클래스 스타일입니다 */
-.button {
+/* .button {
   height: 65px;
   background: #8860D0;
   border-radius: 16px;
@@ -145,5 +145,5 @@ export default {
   line-height: 50px;
   font-size: 20px;
   color: #C1C8E4
-}
+} */
 </style>
