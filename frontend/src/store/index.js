@@ -36,7 +36,6 @@ export default new Vuex.Store({
     routes,
     images,
     reactions,
-    select,
     search,
     alarm,
     comment,
