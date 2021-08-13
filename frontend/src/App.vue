@@ -2,9 +2,8 @@
   <v-app>
     <v-main class="background-color">
       <!-- Header -->
-      <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' ">
-        <Header/>
-      </div>
+      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' "/>
+
 
       <!-- 라우터 뷰 -->
       <div class="mt-1">
@@ -12,9 +11,8 @@
       </div>  
     
       <!-- Footer -->
-      <div v-if="$route.name !== 'LoginView'">
-        <Nav/>
-      </div>
+      <Nav v-if="$route.name !== 'LoginView'"/>
+
 
     </v-main>
   </v-app>
@@ -39,21 +37,35 @@ export default {
 .background-color {
   background-color: #101423;;
 }
-/* .theme--dark {
-    background-color: red;
-    color: #1976d2;
+
+/* .chooseButton까지 TagForm에서 사용되는 CSS */
+.button {
+  width: 70px;
+  height: 25px;
+  background: #C1C8E4;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
+  margin-top: 6px;
 }
-.v-card {
-    background-color: red;
-    color: #1976d2;
+.button span {
+  line-height: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #303C6C;
 }
-.v-sheet {
-    background-color: red;
-    color: #1976d2;
+.chooseButton {
+  width: 70px;
+  height: 25px;
+  background: #B4DFE5;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
 }
 
-.theme--dark.v-card {
-    background-color: red;
-    color: #1976d2;
-} */
+
 </style>
