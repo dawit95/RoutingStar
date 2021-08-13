@@ -33,7 +33,7 @@
             </v-for> -->
         <div v-for="(place, idx) in feed.places" :key="idx">
           <span v-if="place.isThumbnail===true">
-             <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
+<span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
             <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}`}})"><img :src=feed.routeImg alt=""></span>
           </span>
         </div>
@@ -227,20 +227,7 @@ export default {
         access_token: this.jwt[0],
         jwtId: this.jwt[2]
       })
-    }
-  },
-  mounted() {
-    // console.log(this.browserToken)
-    // const browser_token = this.browserToken
-    // const user_id = this.jwt[2]
-    // const data = {
-    //   user_id: user_id,
-    //   browser_token: browser_token
-    // }
-    // console.log('여기 브라우저 토큰 보내는 시점')
-    // const user_id = this.jwt[2]
-    // console.log(user_id)
-    // this.sendBrowerToken()
+    },
   },
   watch: {
     getterbrowserToken: function() {
