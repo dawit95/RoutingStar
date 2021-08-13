@@ -3,7 +3,7 @@
     <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
     <ProfileInfo/>
     <!-- <div class="button mx-8">Following</div> -->
-    <div class="button mx-8" @click="onClickfollowOtherUser">{{ follow }}</div>
+    <div class="button mx-8" @click="onClickfollowOtherUser">{{ userInfo.followed }}</div>
     <OtherUserRoutesTab/>
 
   </div>

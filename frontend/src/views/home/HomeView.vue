@@ -51,19 +51,19 @@
         <v-row align="center" justify="end">
           
           <div v-if="feed.isLiked">
-            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart</v-icon>
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestLike(feed.id, idx)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
           <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
 
           <div v-if="feed.isStored">
-            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark</v-icon>
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestStore(feed.id, idx)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading">{{ feed.storageCnt }}</div>
         </v-row>
@@ -124,7 +124,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['jwt', 'feeds', 'getterbrowserToken']),
+    ...mapGetters(['jwt', 'feeds', 'getterbrowserToken', 'isLiked', 'isSaved']),
 
     // readUser
   },
@@ -163,24 +163,34 @@ export default {
   methods: {
     ...mapActions(['enterUserprofile', 'sendBrowerToken']),
 
-    requestLike( id, idx ) {
+    // requestLike( id, idx ) {
+    //   this.jwt[3] = id
+    //   if (this.feeds[idx].isLiked) {
+    //     this.feeds[idx].likeCnt -= 1
+    //   } else {
+    //     this.feeds[idx].likeCnt += 1     
+    //   }
+    //   this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+    //   this.$store.dispatch('fetchLike', this.jwt)
+    // },
+    requestLike(id) {
       this.jwt[3] = id
-      if (this.feeds[idx].isLiked) {
-        this.feeds[idx].likeCnt -= 1
-      } else {
-        this.feeds[idx].likeCnt += 1     
-      }
-      this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
+      // if (this.feeds[idx].isLiked) {
+      //   this.feeds[idx].likeCnt -= 1
+      // } else {
+      //   this.feeds[idx].likeCnt += 1     
+      // }
+      // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
       this.$store.dispatch('fetchLike', this.jwt)
     },
-    requestStore( id, idx) {
+    requestStore(id) {
       this.jwt[3] = id
-      if (this.feeds[idx].isStored) {
-        this.feeds[idx].storageCnt -= 1
-      } else {
-        this.feeds[idx].storageCnt += 1     
-      }
-      this.feeds[idx].isStored = !this.feeds[idx].isStored 
+      // if (this.feeds[idx].isStored) {
+      //   this.feeds[idx].storageCnt -= 1
+      // } else {
+      //   this.feeds[idx].storageCnt += 1     
+      // }
+      // this.feeds[idx].isStored = !this.feeds[idx].isStored 
       this.$store.dispatch('fetchStore', this.jwt)
     },
 
@@ -245,7 +255,16 @@ export default {
       console.log('여기 브라우저 토큰 보내는 시점')
       console.log(user_id)
       this.sendBrowerToken(user_id)
+    },
+    isLiked: function() {
+      console.log('불려야돼')
+      this.$store.dispatch('fetchLoginedFeeds', this.jwt)
+    },
+    isSaved: function() {
+      console.log('얘도 불려야돼')
+      this.$store.dispatch('fetchLoginedFeeds', this.jwt)
     }
+
   },
   
 }
