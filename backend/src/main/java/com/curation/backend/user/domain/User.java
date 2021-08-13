@@ -103,4 +103,9 @@ public class User extends BaseTime {
         this.profileImg = userRequestDto.getProfileImg();
         this.userDescription = userRequestDto.getUserDescription();
     }
+
+    @Override
+    public String toString(){
+        return "이름 : "+this.name+this.email;
+    }
 }
