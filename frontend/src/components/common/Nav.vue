@@ -1,11 +1,9 @@
 <template>
-  <!-- <v-card> -->
+  <!-- <v-card class="overflow-hidden mx-auto"> -->
   <v-bottom-navigation
-    fixed
-    grow
-    color="#FBE8A6"
-    dark
+    app grow dark
     background-color="#101423"
+    color="#FBE8A6"
   >
     <v-btn id="SearchView" @click="moveToSearch">
       <span>Search</span>
