@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: "Nav",
   data() {
@@ -56,11 +57,14 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+  },
   methods: {
+    ...mapActions(['refreshPlaces']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
+        this.refreshPlaces([])
       }
     },
     moveToPost() {
@@ -70,6 +74,7 @@ export default {
     },
     moveToHome() {
         this.$router.push({ name: "HomeView" }).catch(() => {});
+        this.refreshPlaces([])
     },
   },
 };
