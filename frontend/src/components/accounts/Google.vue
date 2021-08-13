@@ -18,14 +18,14 @@
 <script>
 
 // import GoogleLogin from 'vue-google-login';
-const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+// const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
  
  export default {
   name: 'Google',
   data() {
     return {
     params: {
-        client_id: API_KEY
+        // client_id: API_KEY
     },
     renderParams: {
         width: 250,
