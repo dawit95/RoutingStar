@@ -1,77 +1,67 @@
 <template>
   <div class="white" height="10000">
-    {{ feed }}
+    <!-- {{ routeInfoWithComment }} -->
     <div class="mx-auto" color="#2A355D" dark max-width="400">
       <div>
+        
+        <div>-------</div>
+        <div>-------</div>
+        <div>-------</div>
         <v-list-item-avatar color="grey darken-3" @click="$router.push('/mypage')">
-          <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
-          <!-- {{ feed.user.profileImg }} -->
-          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
+          <v-img @click="onClickUser(routeInfoWithComment)" class="elevation-6" alt="" :src=routeInfoWithComment.user.profileImg></v-img>
         </v-list-item-avatar>
-          <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
-          <v-btn v-if="feed.user.id === this.jwt[2] || feed.isStored" @click="moveToRevisePage(feed.id)" icon>
+          <span @click="onClickUser(routeInfoWithComment)">{{ routeInfoWithComment.user.name }}</span>
+          <v-btn v-if="routeInfoWithComment.user.id === this.jwt[2] || routeInfoWithComment.isStored" @click="moveToRevisePage(routeInfoWithComment.id)" icon>
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
       </div>    
-        <!-- <v-card-text> -->
-        <HomeDetailMap />
-                <!-- </v-card-text> -->
-          
-        <!-- <v-row align="center" justify="end"> -->
-          <!-- {{ feed.isLiked}}
-          {{ feed.isLiked}}
-          {{ feed.id }} -->
-        
-             <!-- {{ feed.whatTag.length }}
-             {{ feed.whatTag[0] }}
-             {{ feed.whatTag[0].title }}
-             {{ feed.withTag }} -->
-        <!-- <li v-for="item in feed.withTag">{{ item }}</li> -->
-        <!-- <li v-for="tag in feed.whatTag" ></li> -->
-
-
-         <div v-for="n in feed.whatTag.length" v-bind:key="n">
-           {{ feed.whatTag[n-1].title }}
-         </div>
  
-         <div v-for="n in feed.withTag.length" v-bind:key="n">
-           {{ feed.withTag[n-1].title }}
+        <HomeDetailMap />
+          
+ 
+
+         <div v-for="n in routeInfoWithComment.whatTag.length" v-bind:key="n">
+           {{ routeInfoWithComment.whatTag[n-1].title }}
+         </div>
+         <div v-for="n in routeInfoWithComment.withTag.length" v-bind:key="n">
+           {{ routeInfoWithComment.withTag[n-1].title }}
          </div>
 
+        
         <div>  
-          <div v-if="feed.isLiked">
-            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
+          <div v-if="routeInfoWithComment.isLiked">
+            <v-icon @click="requestLike(routeInfoWithComment.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon @click="requestLike(routeInfoWithComment.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
-          <div class="subheading mr-2">{{ feed.likeCnt }}</div>
+          <div class="subheading mr-2">{{ routeInfoWithComment.likeCnt }}</div>
 
-          <div v-if="feed.isStored">
-              <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
+          <div v-if="routeInfoWithComment.isStored">
+              <v-icon @click="requestStore(routeInfoWithComment.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon @click="requestStore(routeInfoWithComment.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
-          <div class="subheading">{{ feed.storageCnt }}</div>
+          <div class="subheading">{{ routeInfoWithComment.storageCnt }}</div>
 
 
-          <div v-for="(place, idx) in feed.places" :key="idx">
+          <div v-for="(place, idx) in routeInfoWithComment.places" :key="idx">
             <span v-if="place.isThumbnail===true">
-              <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg"><img :src=feed.routeImg alt=""></span>
+              {{ place }}
+              <span class="thumbnail"><img :src=place.placeImg alt="" height="100px" width="100px"></span>
+              <span class="routeImg"><img :src=routeInfoWithComment.routeImg alt="" height="100px" width="100px"></span>
             </span>
           </div>
-
-          {{ feed.routeDescription }}
+        </div>
+          {{ routeInfoWithComment.routeDescription }} 
 
             <div>---</div>
                 <div>---</div>
                     <div>---</div>
                         <div>---</div>
           <!-- </v-row> -->
-        </div>
+        <!-- </div> -->
   
         <div>
           <CommentBox/>
@@ -100,13 +90,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['places', 'polyLine', 'imgList','feeds', 'feed', 'jwt', ])
+    ...mapGetters(['places', 'polyLine', 'imgList','feeds', 'feed', 'jwt', 'routeInfoWithComment'])
   },
   created() {
     console.log(this.$route.params)
     console.log(this.$route.params.feedId)
-    this.feeds[this.feeds.length] = this.$route.params.feedId
-    this.$store.dispatch('selectedFeed', this.feeds)
+    // this.feeds[this.feeds.length] = this.$route.params.feedId
+    this.$store.dispatch('fetchRouteInfoWithComment', this.$route.params.feedId)
 
 
   },
