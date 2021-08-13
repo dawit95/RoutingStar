@@ -6,6 +6,7 @@
     color="#FBE8A6"
     dark
     background-color="#101423"
+
   >
     <v-btn id="SearchView" @click="moveToSearch">
       <span>Search</span>
@@ -83,4 +84,5 @@ export default {
 .theme—dark.v-btn:hover::before {
     opacity: 0.00;
 }
+
 </style>

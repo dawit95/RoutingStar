@@ -3,7 +3,7 @@
     <v-main class="background-color">
       <!-- Header -->
       <div v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' ">
-        <Header/>
+        <Header />
       </div>
 
       <!-- 라우터 뷰 -->
