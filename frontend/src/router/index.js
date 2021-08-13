@@ -41,17 +41,17 @@ const routes = [
     name: 'HomeView',
     component: () => import('@/views/home/HomeView')
   },
-  {
-    path: '/routedetail/:feedId',
-    name: 'RouteDetailView',
-    component: () => import('@/views/routeDetail/RouteDetailView')
-  },
   
   // Routes
   {
     path: '/post',
     name: 'PostRouteView',
     component: () => import('@/views/post/PostRouteView.vue')
+  },
+  {
+    path: '/routedetail/:feedId',
+    name: 'RouteDetailView',
+    component: () => import('@/views/routeDetail/RouteDetailView')
   },
   
   // Revise Routes
