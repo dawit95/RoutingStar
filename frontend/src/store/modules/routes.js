@@ -1,7 +1,6 @@
 // store/modules/routes.js
 
-import { postRoute, updateRoute } from '@/api/routes.js'
-import { getRouteInfoByRouteId } from '@/api/routes.js'
+import { postRoute, updateRoute, getRouteInfoByRouteId, getRouteInfoWithComment } from '@/api/routes.js'
 // import accounts from '@/store/modules/accounts.js'
 import images from './images'
 // import accounts from './accounts'
@@ -18,7 +17,8 @@ const state = {
   withTag: [],
   routeInfo: [],
   routeMethodType: '',
-  clickedRouteId: 8,
+  clickedRouteId: null,
+  routeInfoWithComment: [],
 }
 
 const getters = {
@@ -48,6 +48,12 @@ const getters = {
   },
   routeMethodType(state) {
     return state.routeMethodType
+  },
+  clickedRouteId(state) {
+    return state.clickedRouteId
+  },
+  routeInfoWithComment(state) {
+    return state.routeInfoWithComment
   }
 }
 
@@ -119,6 +125,13 @@ const mutations= {
   },
   CHANGE_METHOD_TYPE(state, type) {
     state.routeMethodType = type
+  },
+  SET_CLICKED_ROUTE_ID(state, routeId) {
+    state.clickedRouteId = routeId
+  },
+  SET_ROUTE_INFO_WITH_COMMENT(state, res) {
+    state.routeInfoWithComment = res
+    console.log('SET_ROUTE_INFO_WITH_COMMENT', res)
   }
 }
 
@@ -194,6 +207,7 @@ const actions = {
         }), state.clickedRouteId, jwt,
         () => {
           console.log('success')
+          state.places = []
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
@@ -213,6 +227,7 @@ const actions = {
         }), jwt,
         () => {
           console.log('success')
+          state.places = []
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
@@ -232,7 +247,20 @@ const actions = {
   },
   changeMethodType({ commit }, type) {
     commit('CHANGE_METHOD_TYPE', type)
-  }
+  },
+  setClickedRouteId({ commit }, routeId) {
+    commit('SET_CLICKED_ROUTE_ID', routeId)
+  },
+  fetchRouteInfoWithComment({ commit }, routeId) {
+    getRouteInfoWithComment(routeId,
+      (res) => {
+        console.log('여긴 루트 코멘트 받아온 데')
+        console.log(res.data.success)
+        commit('SET_ROUTE_INFO_WITH_COMMENT', res.data.success)
+      }, (error) => {
+        console.log(error)
+    })
+  },
 }
 
 export default {

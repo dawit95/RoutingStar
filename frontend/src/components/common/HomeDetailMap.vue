@@ -2,13 +2,12 @@
   <v-container fluid grid-list-md>
     <v-layout row swap>
       <v-flex xs12>
-        <div class="pac-card" id="pac-card">
+
         
           <!-- 맵 -->
           <div>
             <div id="map"></div>
           </div>
-        </div>
       </v-flex>
 
       <v-divider></v-divider>
@@ -151,38 +150,22 @@ export default {
       this.refreshPolyline();
     },
   
-   // 4. place를 생성(마커)
-    // makePlace(latLng) {
-    //   let pk = this.pointListPk
-    //   console.log(pk)
-    //   this.pointListPk = this.pointListPk + 1
-
-    //   let marker = new window.google.maps.Marker({
-    //     position: latLng,
-    //     map: this.map,
-    //     animation: window.google.maps.Animation.DROP
-    //   });
-      // // 마커 더블클릭시 삭제
-      // marker.addListener('dblclick', (e) => {
-      //   console.log(e.latLng)
-      //   this.removePoint(marker)
-      // })
-    // },
 
     removePoint(marker, lat, lng) {
     for( const place of this.feed.places ) {
-      if (place.lat == lat && place.lng == lng) {
-        console.log(lat, find)
-        console.log('찾음', marker)
-        console.log('place', place)
-        console.log(this.feed)
+      if (place.lat == lat && place.lng == lng) { 
+        var a = place.placeImg
+        var b = place.title
+        console.log('ab', a, b)
 
 
-      const infowindow = new window.google.maps.InfoWindow({
-          content: place
+        const infowindow = new window.google.maps.InfoWindow({
+          content:    
+          `<img src="${a}" alt="" height="100" width="150">` +
+                     `<div class="modalcontent">"${b}"</div>`
         })
-      console.log('infowindow', infowindow)
-      console.log('infowindow', infowindow.content)
+        // .theme--dark.v-card iw-subTitle 
+   
       marker.addListener("mouseup", () => {
           // console.log(marker)
           infowindow.open({
@@ -262,6 +245,83 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+        /*style the box which holds the text of the information window*/  
+         .gm-style .gm-style-iw {
+            background-color: #252525 !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 120px !important;
+            padding-top: 10px;
+            display: block !important;
+         }    
+
+         /*style the paragraph tag*/
+         .gm-style .gm-style-iw #google-popup p{
+            padding: 10px;
+         }
+
+
+        /*style the annoying little arrow at the bottom*/
+        .gm-style div div div div div div div div {
+            background-color: #252525 !important;
+            margin: 0;
+            padding: 0;
+            top: 0;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /*style the link*/
+        .gm-style div div div div div div div div a {
+            color: #f1f1f1;
+            font-weight: bold;
+        }
+
+
+
+.modalcontent {
+    background-color: #1E1E1E;
+    color: purple;
+
+}
+.map.theme--dark.v-card {
+    background-color: #1E1E1E;
+    color: #ff0606;
+}
+
+/* .theme--dark.v-card {
+    background-color: #1E1E1E;
+    color: #ff0202;
+} */
+/* .theme--dark.v-card {
+  background-color: red;
+    color: #1976d2;
+}
+  .v-card {
+      background-color: red;
+      color: #1976d2;
+  } */
+
+/* .theme--dark {
+    background-color: red;
+    color: #1976d2;
+}
+.v-sheet {
+    background-color: red;
+    color: #1976d2;
+} */
+
+/* .theme--dark.v-card {
+    background-color: red;
+    color: #1976d2;
+} */
+
+
+
+
 h3 {
   margin: 40px 0 0;
 }

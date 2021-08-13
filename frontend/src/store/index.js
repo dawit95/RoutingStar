@@ -10,6 +10,9 @@ import images from './modules/images.js'
 import reactions from './modules/reactions.js'
 import select from './modules/select.js'
 import search from './modules/search.js'
+import alarm from './modules/alarm.js'
+import comment from './modules/comment.js'
+
 
 Vue.use(Vuex)
 
@@ -35,5 +38,7 @@ export default new Vuex.Store({
     reactions,
     select,
     search,
+    alarm,
+    comment,
   }
 })
