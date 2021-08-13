@@ -50,7 +50,7 @@ export default {
   else {
       console.log('token이 없음')
       // axios.get('http://i5a309.p.ssafy.io:8000/api/v1/routes')
-      axios.get('https://i5a309.p.ssafy.io/api/guest/routes')
+      axios.get('http://i5a309.p.ssafy.io:8000/api/guest/routes')
       .then((res) => {console.log(res)})
       .catch((err) => {console.log(err)})
   } 
