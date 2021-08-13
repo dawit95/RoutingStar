@@ -11,4 +11,8 @@ public interface RouteStorageRepository extends JpaRepository<RouteStorage, Long
     Optional<RouteStorage> findByUserIdAndRouteId(Long userId, Long routeId);
 
     List<RouteStorage> findAllByUserId(Long id);
+
+    Long countByRouteId(Long routeId);
+
+    Boolean existsRouteStorageByUserIdAndRouteId(Long userId, Long routeId);
 }
