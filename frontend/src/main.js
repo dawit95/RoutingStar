@@ -51,7 +51,7 @@ messaging.onMessage(payload => {
 Vue.config.productionTip = false
 
 // 카카오 인증코드 요청
-window.Kakao.init("0470967fe64eda9f5d9c8a5caede1e78")
+// window.Kakao.init("0470967fe64eda9f5d9c8a5caede1e78")
 
 new Vue({
   store,
