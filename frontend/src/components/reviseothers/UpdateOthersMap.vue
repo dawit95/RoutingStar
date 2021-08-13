@@ -9,7 +9,7 @@
               id="pac-input"
               class="controls"
               type="text"
-              placeholder="Search Box"
+              placeholder="장소를 검색하세요."
             />
           </div>
 
