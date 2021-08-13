@@ -12,8 +12,8 @@
         <div class="container">
           <div v-for="(place, idx) in feed.places" :key="idx">
             <span v-if="place.isThumbnail===true">
-              <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: 123 }})"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: 123 }})"><img :src=feed.routeImg alt=""></span>
+              <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
+              <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=feed.routeImg alt=""></span>
             </span>
           </div>
         </div>

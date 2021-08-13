@@ -131,6 +131,7 @@ const mutations= {
   },
   SET_ROUTE_INFO_WITH_COMMENT(state, res) {
     state.routeInfoWithComment = res
+    console.log('SET_ROUTE_INFO_WITH_COMMENT', res)
   }
 }
 
