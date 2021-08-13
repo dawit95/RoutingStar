@@ -12,6 +12,7 @@ public class UserResponseDto {
     private String profileImg;
     private String userDescription;
     private Boolean followed;
+    private Boolean following;
 
     public UserResponseDto(User entity) {
         this.id = entity.getId();
