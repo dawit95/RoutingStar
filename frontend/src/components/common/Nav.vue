@@ -39,19 +39,17 @@ export default {
   watch: {
     $route(to, from) {
       console.log(from.name + "에서 " + to.name + "으로 온 경우");
-      if(from.name != null) {
+      if(to.name != from.name && from.name != null) {
         const fromObject = document.getElementById(from.name);
         if(fromObject != null) {
-          fromObject.classList.add("v-btn—inactive");
-          fromObject.classList.remove("v-btn—active");
+          fromObject.classList.remove("v-btn--active");
         }
       }
 
       const toObject = document.getElementById(to.name);
 
       if(toObject != null) {
-        document.getElementById(to.name).classList.remove("v-btn—inactive");
-        document.getElementById(to.name).classList.add("v-btn—active");
+        toObject.classList.add("v-btn--active");
       }
 
       if (from.name === 'PostRouteView' && to.name !== 'PostRouteView' && this.postingCheck === false) {
@@ -85,12 +83,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .background-color {
   background-color: #101423;
 }
 
-.theme—dark.v-btn:hover::before {
+.theme--dark.v-btn--active:hover::before, .theme--dark.v-btn--active::before {
+    opacity: 0.00;
+}
+
+.theme--dark.v-btn:hover::before {
     opacity: 0.00;
 }
 
