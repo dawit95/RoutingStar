@@ -19,6 +19,7 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
+  postingCheck: false,
 }
 
 const getters = {
@@ -54,6 +55,9 @@ const getters = {
   },
   routeInfoWithComment(state) {
     return state.routeInfoWithComment
+  },
+  postingCheck(state) {
+    return state.postingCheck
   }
 }
 
@@ -228,6 +232,7 @@ const actions = {
         () => {
           console.log('success')
           state.places = []
+          state.postingCheck = true
           router.push({ name: 'HomeView' })
         },(error) => {
           console.log(error)
