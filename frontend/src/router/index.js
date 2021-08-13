@@ -63,7 +63,7 @@ const routes = [
   
   // Revise Routes
   {
-    path: '/reviseroute',
+    path: '/reviseroute/:routeId',
     name: 'ReviseRouteView',
     component: () => import('@/views/revise/ReviseRouteView.vue')
   },
@@ -80,9 +80,9 @@ const routes = [
     component: () => import('@/views/myPage/OtherUserPageView.vue')
   },
   {
-    path: '/editprofile',
-    name: 'EditProfileView',
-    component: () => import('@/views/myPage/EditProfileView.vue')
+    path: '/badge',
+    name: 'BadgeView',
+    component: () => import('@/views/myPage/BadgeView.vue')
   },
   {
     path: '/followuserlist',
@@ -96,8 +96,9 @@ const routes = [
     name: 'LoginProcessView',
     component: () => import('@/views/LoginProcessView.vue')
   },
+  // Revise Others' Route
   {
-    path: '/reviseothers',
+    path: '/reviseothers/:routeId',
     name: 'ReviseOthersRouteView',
     component: () => import('@/views/revise/ReviseOthersRouteView.vue')
   },

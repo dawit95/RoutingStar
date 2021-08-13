@@ -44,11 +44,6 @@ export default {
     canRendering: false,
    }
  },
-//  props: {
-//    routeId: {
-//      type: Number
-//    }
-//  },
   components: {
     UpdateMap,
     UpdateMapPointForm,
@@ -60,7 +55,7 @@ export default {
     ...mapGetters(['jwt', 'routeInfo',])
   },
   methods: {
-    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo', 'changeMethodType']),
+    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo', 'changeMethodType', 'setClickedRouteId']),
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true
@@ -90,8 +85,9 @@ export default {
     console.log(this.jwt)
     const tmp_id = this.jwt[2]
     console.log(`userID확인 : ${this.jwt[2]}`)
+    this.setClickedRouteId(this.$route.params.routeId)
     // prop받은 routeId로 변경필요
-    const routeId = 2
+    const routeId = this.$route.params.routeId
     const access_token = this.jwt[0]
     // 수정페이지에서는 put요청을 보내야함
     this.changeMethodType('put')
