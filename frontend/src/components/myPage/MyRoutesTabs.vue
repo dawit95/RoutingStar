@@ -1,51 +1,33 @@
 <template>
   <div class="mt-4">
     <ul class="tabs" role="tablist">
-        <li>
-          <input type="radio" name="tabs" id="tab1" checked />
-          <label for="tab1" 
-                role="tab" 
-                aria-selected="true" 
-                aria-controls="panel1" 
-                tabindex="0">내가 작성한 루트</label>
-          <div id="tab-content1" 
-              class="tab-content" 
-              role="tabpanel" 
-              aria-labelledby="description" 
-              aria-hidden="false">
-
-              <div>
-                <RouteThumbnail
-                  v-for="route in writtenRouteList"
-                  :key="route.id"
-                  :route="route"
-                />
-              </div>           
+      <li>
+        <input type="radio" name="tabs" id="tab1" checked />
+          <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0">내가 작성한 루트</label>
+          <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
+            <div>
+              <RouteThumbnail
+                v-for="route in writtenRouteList"
+                :key="route.id"
+                :route="route"
+              />
+            </div>           
           </div>
-        </li>
+      </li>
       
-        <li>
-          <input type="radio" name="tabs" id="tab2" />
-          <label for="tab2"
-                role="tab" 
-                aria-selected="false" 
-                aria-controls="panel2" 
-                tabindex="0">내가 저장한 루트</label>
-          <div id="tab-content2" 
-              class="tab-content"
-              role="tabpanel" 
-              aria-labelledby="specification" 
-              aria-hidden="true">
-
-              <div>
-                <RouteThumbnail
-                  v-for="route in savedRouteList"
-                  :key="route.id"
-                  :route="route"
-                />
-              </div>
+      <li>
+        <input type="radio" name="tabs" id="tab2" />
+          <label for="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="0">내가 저장한 루트</label>
+          <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
+          <div>
+            <RouteThumbnail
+              v-for="route in savedRouteList"
+              :key="route.id"
+              :route="route"
+            />
           </div>
-        </li>
+          </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -63,16 +45,6 @@ export default {
   methods: {
     ...mapActions(['fetchWrittenRouteList', 'fetchSavedRouteList' ])
   },
-  // beforeCreated() {
-  //   this.fetchWrittenRouteList({
-  //     userId: this.jwt[2], 
-  //     access_token: this.jwt[0]
-  //   })
-  //   this.fetchSavedRouteList({
-  //     userId: this.jwt[2], 
-  //     access_token: this.jwt[0]
-  //   })
-  // },
 }
 </script>
 
@@ -123,7 +95,7 @@ h1 span {
 }
 .tabs label {
   display: block;
-  padding: 9px 25px;
+  padding: 9px 21px;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
