@@ -114,19 +114,19 @@ export default {
   watch: {
     isLiked: function() {
       console.log('불려야돼')
-      this.fetchRouteInfo({
-      userId: this.jwt[2],
-      routeId: this.$route.params.feedId,
-      access_token: this.jwt[0]
-      })
+        this.fetchRouteInfo({
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
     },
     isSaved: function() {
       console.log('얘도 불려야돼')
       this.fetchRouteInfo({
-      userId: this.jwt[2],
-      routeId: this.$route.params.feedId,
-      access_token: this.jwt[0]
-      })
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
     },
   },
 }

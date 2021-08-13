@@ -3,7 +3,7 @@
     <v-card class="mx-auto" color="#2A355D" dark max-width="400">
       <v-card-title>
         <v-list-item-avatar color="grey darken-3">
-          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src=feed.user.profileImg></v-img>
+          <v-img @click="onClickUser(feed)" class="elevation-6" alt="" :src="feed.user.profileImg"></v-img>
         </v-list-item-avatar>
           <span @click="onClickUser(feed)">{{ feed.user.name }}</span>
       </v-card-title>
@@ -12,8 +12,8 @@
         <div class="container">
           <div v-for="(place, idx) in feed.places" :key="idx">
             <span v-if="place.isThumbnail===true">
-              <span class="thumbnail" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg" @click="$router.push({name: 'HomeDetailView', params: { feedId: `${feed.id}` }})"><img :src=feed.routeImg alt=""></span>
+              <span class="thumbnail" @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img :src=place.placeImg alt=""></span>
+              <span class="routeImg" @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img :src=feed.routeImg alt=""></span>
             </span>
           </div>
         </div>
@@ -73,24 +73,24 @@ export default {
   computed: {
     ...mapGetters(['jwt', 'feeds', 'searchedNonFollowRoutes', 'isLiked', 'isSaved']),
   },
-  created() {
-    console.log('이것슨피드', this.feed)
-    const data = {
-      userId : this.jwt[2],
-      access_token: this.jwt[0],
-      param: {
-        whatTag: [this.feed.whatTag[0].id],
-        withTag: [this.feed.withTag[0].id],
-        }
-      }
-    console.log('이거슨데이터', data)
-    this.$store.dispatch('fetchSearchedRoutes', data)
-  },
+  // created() {
+  //   console.log('이것슨피드', this.feed)
+  //   const data = {
+  //     userId : this.jwt[2],
+  //     access_token: this.jwt[0],
+  //     param: {
+  //       whatTag: [this.feed.whatTag[0].id],
+  //       withTag: [this.feed.withTag[0].id],
+  //       }
+  //     }
+  //   console.log('이거슨데이터', data)
+  //   // this.$store.dispatch('fetchSearchedRoutes', data)
+  // },
 
   methods: {
     ...mapActions(['enterUserprofile']),
 
-    requestLike(id) {
+    async requestLike(id) {
       this.jwt[3] = id
       // if (this.feeds[idx].isLiked) {
       //   this.feeds[idx].likeCnt -= 1
@@ -98,9 +98,18 @@ export default {
       //   this.feeds[idx].likeCnt += 1     
       // }
       // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
-      this.$store.dispatch('fetchLike', this.jwt)
+      await this.$store.dispatch('fetchLike', this.jwt)
+      const data = {
+        userId : this.jwt[2],
+        access_token: this.jwt[0],
+        param: {
+          whatTag: [this.feed.whatTag[0].id],
+          withTag: [this.feed.withTag[0].id],
+          }
+      }
+      await this.$store.dispatch('fetchSearchedRoutes', data)
     },
-    requestStore(id) {
+    async requestStore(id) {
       this.jwt[3] = id
       // if (this.feeds[idx].isStored) {
       //   this.feeds[idx].storageCnt -= 1
@@ -108,7 +117,16 @@ export default {
       //   this.feeds[idx].storageCnt += 1     
       // }
       // this.feeds[idx].isStored = !this.feeds[idx].isStored 
-      this.$store.dispatch('fetchStore', this.jwt)
+      await this.$store.dispatch('fetchStore', this.jwt)
+      const data = {
+        userId : this.jwt[2],
+        access_token: this.jwt[0],
+        param: {
+          whatTag: [this.feed.whatTag[0].id],
+          withTag: [this.feed.withTag[0].id],
+          }
+      }
+      await this.$store.dispatch('fetchSearchedRoutes', data)
     },
       // console.log(feed)
       // console.log(this.searchedNonFollowRoutes)
@@ -179,32 +197,32 @@ export default {
       })
     }
   },
-  watch: {
-    isLiked: function() {
-      console.log('불려야돼')
-      const data = {
-        userId : this.jwt[2],
-        access_token: this.jwt[0],
-        param: {
-          whatTag: [this.feed.whatTag[0].id],
-          withTag: [this.feed.withTag[0].id],
-          }
-      }
-      this.$store.dispatch('fetchSearchedRoutes', data)
-    },
-    isSaved: function() {
-      console.log('얘도 불려야돼')
-      const data = {
-        userId : this.jwt[2],
-        access_token: this.jwt[0],
-        param: {
-          whatTag: [this.feed.whatTag[0].id],
-          withTag: [this.feed.withTag[0].id],
-          }
-      }
-      this.$store.dispatch('fetchSearchedRoutes', data)
-    }
-  }
+  // watch: {
+  //   isLiked: function() {
+  //     console.log('불려야돼')
+  //     const data = {
+  //       userId : this.jwt[2],
+  //       access_token: this.jwt[0],
+  //       param: {
+  //         whatTag: [this.feed.whatTag[0].id],
+  //         withTag: [this.feed.withTag[0].id],
+  //         }
+  //     }
+  //     this.$store.dispatch('fetchSearchedRoutes', data)
+  //   },
+  //   isSaved: function() {
+  //     console.log('얘도 불려야돼')
+  //     const data = {
+  //       userId : this.jwt[2],
+  //       access_token: this.jwt[0],
+  //       param: {
+  //         whatTag: [this.feed.whatTag[0].id],
+  //         withTag: [this.feed.withTag[0].id],
+  //         }
+  //     }
+  //     this.$store.dispatch('fetchSearchedRoutes', data)
+  //   }
+  // }
 }
 </script>
 
