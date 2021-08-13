@@ -58,10 +58,12 @@ public class UserController {
         if (token != null) {
             Long userId = tokenService.getId(token);
 
-            FollowerFollowing followerFollowing = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(targetId,userId).orElse(null);
+            FollowerFollowing followed = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(targetId,userId).orElse(null);
+            FollowerFollowing following = followerFollowingRepository.findByFollower_IdAndAndFollowing_Id(userId, targetId).orElse(null);
             logger.trace("{}가 {}의 follow를 눌렀다. {} ",userId,targetId,userResponseDto);
             //follow정보 저장
-            userResponseDto.setFollowed(followerFollowing != null?true:false);
+            userResponseDto.setFollowed(followed != null?true:false);
+            userResponseDto.setFollowing(following != null?true:false);
         }
 
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(userResponseDto);
