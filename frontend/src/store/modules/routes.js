@@ -19,11 +19,8 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
-<<<<<<< HEAD
-  selectedRoute: []
-=======
+  routeDetail: [],
   postingCheck: false,
->>>>>>> bd81c704c954638b05a0304e504f4e9cb1e51f92
 }
 
 const getters = {
@@ -60,14 +57,9 @@ const getters = {
   routeInfoWithComment(state) {
     return state.routeInfoWithComment
   },
-<<<<<<< HEAD
-  selectedRoute(state) {
-    return state.selectedRoute
-=======
   postingCheck(state) {
     return state.postingCheck
->>>>>>> bd81c704c954638b05a0304e504f4e9cb1e51f92
-  }
+  },
 }
 
 const mutations= {
@@ -243,11 +235,13 @@ const actions = {
     }
   },
   fetchRouteInfo({ commit }, payload) {
-    // console.log(payload)
-    getRouteInfoByRouteId(1, payload.routeId, payload.access_token,
+    console.log(payload)
+    getRouteInfoByRouteId(payload.userId, payload.routeId, payload.access_token,
       (res) => {
+        
+        console.log('액션스~~~')
         console.log(res)
-        commit('SET_ROUTE_INFO', res)
+        commit('SET_ROUTE_INFO', res.data.success)
       }, (error) => {
         console.log(error)
     })
