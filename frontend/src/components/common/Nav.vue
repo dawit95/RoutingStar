@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Nav",
   data() {
@@ -55,10 +56,19 @@ export default {
         document.getElementById(to.name).classList.remove("v-btn—inactive");
         document.getElementById(to.name).classList.add("v-btn—active");
       }
+
+      if (from.name === 'PostRouteView' && to.name !== 'PostRouteView' && this.postingCheck === false) {
+        alert('작성중인 내용이 삭제됩니다.')
+        this.refreshPlaces([])
+      }
+
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['postingCheck'])
+  },
   methods: {
+    ...mapActions(['refreshPlaces']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
@@ -70,7 +80,9 @@ export default {
       }
     },
     moveToHome() {
+      if (this.$route.name != "HomeView") {
         this.$router.push({ name: "HomeView" }).catch(() => {});
+      }
     },
   },
 };
