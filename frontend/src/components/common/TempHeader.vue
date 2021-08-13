@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="#0E111E" dense height="50px" class="moveToUp">
+    <v-app-bar color="#5AB9EA" dense dark>
       <v-avatar @click="$router.push({name: 'HomeView'})"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
       <v-spacer></v-spacer>
       <v-btn class="moveToRight" color="primary" icon><v-icon>mdi-bell</v-icon></v-btn>
@@ -65,9 +65,5 @@ export default {
 <style>
 .moveToRight {
   left: 20px;
-}
-.moveToUp {
-  top: 1px;
-  margin-bottom: -1px;
 }
 </style>
