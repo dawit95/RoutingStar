@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Header from '@/components/common/Header.vue'
-import PostRouteView from '@/views/post/PostRouteView.vue'
 
 Vue.use(VueRouter)
 
@@ -14,11 +12,6 @@ const routes = [
   },
   
   // Common
-  {
-    path: '/Header',
-    name: 'Header',
-    component: Header,
-  },
   {
     path: '/main',
     name: 'App',
@@ -49,16 +42,16 @@ const routes = [
     component: () => import('@/views/home/HomeView')
   },
   {
-    path: '/homedetail/:feedId',
-    name: 'HomeDetailView',
-    component: () => import('@/views/home/HomeDetailView')
+    path: '/routedetail/:feedId',
+    name: 'RouteDetailView',
+    component: () => import('@/views/routeDetail/RouteDetailView')
   },
   
   // Routes
   {
     path: '/post',
     name: 'PostRouteView',
-    component: PostRouteView,
+    component: () => import('@/views/post/PostRouteView.vue')
   },
   
   // Revise Routes

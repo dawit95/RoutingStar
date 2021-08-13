@@ -27,6 +27,7 @@ const mutations = {
     // state.jwt.refresh = token.refresh
   },
   REFRESH_ISSAVED(state, saveOrNOt) {
+    console.log('likeorNot', saveOrNOt)
     state.isSaved = saveOrNOt
   }
 
