@@ -3,13 +3,11 @@ package com.curation.backend.route.web;
 import com.curation.backend.global.dto.ExceptionResponseDto;
 import com.curation.backend.global.dto.SuccessResponseDto;
 import com.curation.backend.global.service.ResponseGenerateService;
-import com.curation.backend.route.dto.RouteDetailResponseDto;
-import com.curation.backend.route.dto.RouteListResponseDto;
-import com.curation.backend.route.dto.RouteRequestDto;
-import com.curation.backend.route.dto.RouteSearchRequestDto;
+import com.curation.backend.route.dto.*;
 import com.curation.backend.route.exception.NoRouteException;
 import com.curation.backend.route.service.RouteService;
 import com.curation.backend.user.exception.NoUserException;
+import com.google.api.Http;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +41,14 @@ public class RouteController {
         List<RouteListResponseDto> list = routeService.followingRouteList(id);
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(list);
+        return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
+    }
+
+    @GetMapping("/routes/{userId}/{routeId}")
+    public ResponseEntity<SuccessResponseDto> routeDetailWithComment(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException, NoUserException {
+        RouteDetailWithCommentResponseDto routeDetailWithCommentResponseDto = routeService.getDetailWithComment(userId, id);
+        HttpStatus status = HttpStatus.OK;
+        SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeDetailWithCommentResponseDto);
         return new ResponseEntity<SuccessResponseDto>(successResponseDto, status);
     }
 

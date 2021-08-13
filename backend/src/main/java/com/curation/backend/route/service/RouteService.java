@@ -1,5 +1,6 @@
 package com.curation.backend.route.service;
 
+import com.curation.backend.comment.domain.CommentRepository;
 import com.curation.backend.place.domain.Place;
 import com.curation.backend.place.domain.PlaceRepository;
 import com.curation.backend.place.dto.PlaceRequestDto;
@@ -13,6 +14,7 @@ import com.curation.backend.tag.domain.RouteWhatTagRepository;
 import com.curation.backend.tag.domain.RouteWithTagRepository;
 import com.curation.backend.tag.service.TagService;
 import com.curation.backend.user.domain.FollowerFollowing;
+import com.curation.backend.user.domain.LikeRepository;
 import com.curation.backend.user.domain.User;
 import com.curation.backend.user.domain.UserRepository;
 import com.curation.backend.user.exception.NoUserException;
@@ -39,6 +41,8 @@ public class RouteService {
     private final UserRepository userRepository;
     private final RouteWhatTagRepository routeWhatTagRepository;
     private final RouteWithTagRepository routeWithTagRepository;
+    private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
 
     private final TagService tagService;
     private final ReactionService reactionService;
@@ -230,7 +234,29 @@ public class RouteService {
     @Transactional(readOnly = true)
     public RouteDetailWithCommentResponseDto getDetailWithComment(Long id) throws NoRouteException {
         Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
-        return new RouteDetailWithCommentResponseDto(route.get());
+        RouteDetailWithCommentResponseDto routeDetailWithCommentResponseDto = new RouteDetailWithCommentResponseDto(route.get());
+        Long likeCnt = likeRepository.countLikeByRouteId(id);
+        Long storageCnt = routeStorageRepository.countByRouteId(id);
+        Long commentCnt = commentRepository.countByRouteId(id);
+        routeDetailWithCommentResponseDto.setCount(likeCnt, storageCnt, commentCnt);
+        return routeDetailWithCommentResponseDto;
+    }
+
+    @Transactional(readOnly = true)
+    public RouteDetailWithCommentResponseDto getDetailWithComment(Long userId, Long id) throws NoRouteException, NoUserException {
+        Optional<Route> route = Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NoRouteException("해당하는 루트가 없습니다.")));
+        Optional<User> user = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
+
+        RouteDetailWithCommentResponseDto routeDetailWithCommentResponseDto = new RouteDetailWithCommentResponseDto(route.get());
+        Long likeCnt = likeRepository.countLikeByRouteId(id);
+        Long storageCnt = routeStorageRepository.countByRouteId(id);
+        Long commentCnt = commentRepository.countByRouteId(id);
+        Boolean isLiked = likeRepository.existsLikeByUserIdAndRouteId(userId, id);
+        Boolean isStored = routeStorageRepository.existsRouteStorageByUserIdAndRouteId(userId, id);
+
+        routeDetailWithCommentResponseDto.setOptions(likeCnt, storageCnt, commentCnt, isLiked, isStored);
+
+        return routeDetailWithCommentResponseDto;
     }
 }
 
