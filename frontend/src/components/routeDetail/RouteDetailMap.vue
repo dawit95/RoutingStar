@@ -19,7 +19,7 @@
 import {mapGetters, mapMutations, mapActions} from 'vuex'
   
 export default {
-  name: 'Map',
+  name: 'RouteDetailMap',
   components: {  
   },
   props: {

@@ -73,9 +73,9 @@ export default {
   created() {
     // console.log('여기서도 되나여')
     // console.log(this.$route.params)
-    console.log(this.$route.params.feedId)
-    const routeId = this.$route.params.feedId
-    this.fetchRouteInfoWithComment(routeId)
+    // console.log(this.$route.params.feedId)
+    // const routeId = this.$route.params.feedId
+    // this.fetchRouteInfoWithComment(routeId)
   },
   watch: {
     newComment: function() {
