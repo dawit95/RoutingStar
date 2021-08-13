@@ -2,50 +2,50 @@
     <div class="mx-auto tmpBackgroud" max-width="400">
       <div>
         <v-list-item-avatar color="grey darken-3">
-          <v-img @click="onClickUser(selectedRoute)" class="elevation-6" alt="" :src="selectedRoute.user.profileImg"></v-img>
+          <v-img @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="onClickUser(selectedRoute)">{{ selectedRoute.user.name }}</span>
-          <v-btn v-if="selectedRoute.user.id === this.jwt[2] || selectedRoute.isStored" @click="moveToRevisePage(selectedRoute.id)" icon>
+          <span @click="onClickUser(routeInfo)">{{ routeInfo.user.name }}</span>
+          <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
       </div>    
         <RouteDetailMap />
 
-        <div v-for="(whatTag, idx) in selectedRoute.whatTag" v-bind:key="idx +'i'">
+        <div v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
           {{ whatTag.title }}
         </div>
 
-        <div v-for="(withTag, idx) in selectedRoute.withTag" v-bind:key="idx+ 'j'">
+        <div v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
           {{ withTag.title }}
         </div>
 
         <div>  
-          <div v-if="selectedRoute.isLiked">
-            <v-icon @click="requestLike(selectedRoute.id)" class="mr-1">mdi-heart</v-icon>
+          <div v-if="routeInfo.isLiked">
+            <v-icon @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestLike(selectedRoute.id)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
-          <div class="subheading mr-2">{{ selectedRoute.likeCnt }}</div>
+          <div class="subheading mr-2">{{ routeInfo.likeCnt }}</div>
 
-          <div v-if="selectedRoute.isStored">
-              <v-icon @click="requestStore(selectedRoute.id)" class="mr-1">mdi-bookmark</v-icon>
+          <div v-if="routeInfo.isStored">
+              <v-icon @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestStore(selectedRoute.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
-          <div class="subheading">{{ selectedRoute.storageCnt }}</div>
+          <div class="subheading">{{ routeInfo.storageCnt }}</div>
 
 
-          <div v-for="(place, idx) in selectedRoute.places" :key="idx+'k'">
+          <div v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
             <span v-if="place.isThumbnail===true">
               <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg"><img :src=selectedRoute.routeImg alt=""></span>
+              <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
             </span>
           </div>
 
-          {{ selectedRoute.routeDescription }}
+          {{ routeInfo.routeDescription }}
 
         </div>
   
@@ -73,10 +73,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedRoute', 'jwt', 'isLiked', 'isSaved'])
+    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved'])
   },
   methods: {
-    ...mapActions(['enterUserprofile']),
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo']),
 
     requestLike(id) {
       this.jwt[3] = id
@@ -88,10 +88,10 @@ export default {
     },
     moveToRevisePage(routeId) {
       // feed를 작성한 userId와 현재 로그인한 userID와 같다면 => reviseroute/routeId
-      if (this.selectedRoute.user.id === this.jwt[2]) {
+      if (this.routeInfo.user.id === this.jwt[2]) {
         this.$router.push({ name: 'ReviseRouteView', params: { routeId: `${routeId}`}})
         // 작성자와 로그인유저가 다르고, 로그인 유저가 저장한 feed라면 => reviseothers/routeId
-      } else if (this.selectedRoute.user.id !== this.jwt[2] && this.selectedRoute.isStored) {
+      } else if (this.routeInfo.user.id !== this.jwt[2] && this.routeInfo.isStored) {
         this.$router.push({ name: 'ReviseOthersRouteView', params: { routeId: `${routeId}`}})
       }
     },
@@ -105,21 +105,30 @@ export default {
     }, 
   },
   created() {
-    console.log(this.$route.params)
-    console.log(this.$route.params.feedId)
-    // this.feeds[this.feeds.length] = this.$route.params.feedId
-    this.$store.dispatch('fetchRouteInfoWithComment', this.$route.params.feedId)
+    this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.$route.params.feedId,
+      access_token: this.jwt[0]
+    })
   },
-  // watch: {
-  //   isLiked: function() {
-  //     console.log('불려야돼')
-  //     this.fetchRouteInfoWithComment(this.selectedRoute.id)
-  //   },
-  //   isSaved: function() {
-  //     console.log('얘도 불려야돼')
-  //     this.fetchRouteInfoWithComment(this.selectedRoute.id)
-  //   }
-  // },
+  watch: {
+    isLiked: function() {
+      console.log('불려야돼')
+        this.fetchRouteInfo({
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
+    },
+    isSaved: function() {
+      console.log('얘도 불려야돼')
+      this.fetchRouteInfo({
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
+    },
+  },
 }
 </script>
 

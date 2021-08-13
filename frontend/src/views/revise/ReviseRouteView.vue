@@ -55,7 +55,7 @@ export default {
     ...mapGetters(['jwt', 'routeInfo',])
   },
   methods: {
-    ...mapActions(['fetchLoginedToken', 'fetchRouteInfo', 'changeMethodType', 'setClickedRouteId']),
+    ...mapActions(['fetchLoginedToken', 'changeMethodType', 'setClickedRouteId']),
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true

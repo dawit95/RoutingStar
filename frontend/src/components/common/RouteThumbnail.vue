@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="thumbnailContainer" >
     <!-- 루트랑 썸네일 합치는 컴포넌트 입니다 -->
-    <div class="container" @click="onClick(route)">
+    <div @click="$router.push({name: 'RouteDetailView', params: { feedId: `${route.id}` }})"
+>
       <div class="box">
         
         <div v-if="route" class="thumbnail"><img class="profileThumbnailImg" :src="this.routeThumbnail" alt="thumnbnail"></div>
@@ -36,16 +37,11 @@ export default {
   computed: {
     // 썸네일 이미지 찾아내기
     routeThumbnail () {
-      console.log('섬네일')
-      //console.log(this.route)
-
       let place = this.route.places.find( e => e.isThumbnail === true )
 
       if (place !== undefined) {
-        console.log(place.placeImg)
         return place.placeImg
       }
-      console.log("@/assets/temp_thumbnail.jpg")
       return "@/assets/temp_thumbnail.jpg"
     },
     routeImg() {
@@ -74,9 +70,10 @@ export default {
 </script>
 
 <style>
-.container {
+.thumbnailContainer {
   margin: 0px;
   padding: 0px;
+  width: 100px;
 }
 .profileThumbnailImg {
   width: 60px; height: 60px;
