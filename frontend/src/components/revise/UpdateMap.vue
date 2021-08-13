@@ -9,7 +9,7 @@
               id="pac-input"
               class="controls"
               type="text"
-              placeholder="Search Box"
+              placeholder="장소를 검색하세요."
             />
           </div>
 
@@ -367,34 +367,39 @@ a {
   font-family: Roboto;
 }
 
-#pac-container {
+/* #pac-container {
   padding-bottom: 12px;
   margin-right: 12px;
-}
+} */
 #pac-input {
   background-color: #fff;
+  opacity: 0.8;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
-  margin-left: 12px;
+  margin-left: 2%;
+  margin-top: 10px;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 400px;
+  width: 95%;
+  height: 45px;
+  border: 3px solid #303C6C;
+  border-radius: 12px;
 }
 
-#pac-input:focus {
-  border-color: #4d90fe;
-}
+/* #pac-input:focus {
+  border-color: none transparent;
+} */
 
 .pac-controls {
   display: inline-block;
   padding: 5px 11px;
+  color: teal;
 }
-
 .pac-controls label {
   font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
+  font-weight: 50;
+  font-size: 15px;
 }
 
 </style>

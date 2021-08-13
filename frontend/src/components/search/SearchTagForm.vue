@@ -127,7 +127,7 @@ export default {
 </script>
 
 <style>
-.button {
+/* .button {
   width: 70px;
   height: 25px;
   background: #C1C8E4;
@@ -153,5 +153,5 @@ export default {
   cursor: pointer;
   transition: all 0.3x ease-in-out;
   box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
-}
+} */
 </style>
