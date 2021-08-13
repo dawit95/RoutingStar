@@ -97,7 +97,7 @@ export default {
         'access_token': access_token
       }
     }
-    await axios.get(`https://i5a309.p.ssafy.io/api/v1/route/${tmp_id}/${routeId}`, config)
+    await axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/route/${tmp_id}/${routeId}`, config)
       .then((res) => {
         console.log('응답받음')
         console.log(res)
