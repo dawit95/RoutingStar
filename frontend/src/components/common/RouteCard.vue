@@ -227,6 +227,7 @@ export default {
 </script>
 
 <style scoped>
+/* 얘도 */
 .container {
   margin: 0px;
   padding: 0px;
