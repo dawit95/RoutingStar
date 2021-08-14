@@ -2,7 +2,7 @@
     <div class="mx-auto tmpBackgroud" max-width="400">
       <div>
         <v-list-item-avatar color="grey darken-3">
-          <v-img @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
+          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
           <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
           <span @click="onClickUser(routeInfo)">{{ routeInfo.user.name }}</span>
