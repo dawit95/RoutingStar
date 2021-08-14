@@ -133,7 +133,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+/* 수정필요 전역 ㄴㄴ */
 .container {
   margin: 0px;
   padding: 0px;

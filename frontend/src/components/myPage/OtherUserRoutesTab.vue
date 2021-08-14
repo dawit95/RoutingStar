@@ -45,7 +45,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* 면밀 검토 too */
 * {
   margin: 0;
   padding: 0;

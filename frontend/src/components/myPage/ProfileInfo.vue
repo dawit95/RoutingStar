@@ -76,7 +76,8 @@ export default {
 }
 </script>                                                                               
 
-<style>
+<style scoped>
+/* app 전역 말이 되니 */
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
