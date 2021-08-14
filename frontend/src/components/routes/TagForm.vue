@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* .button {
   width: 70px;
   height: 25px;
