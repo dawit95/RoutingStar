@@ -255,12 +255,13 @@ export default {
   margin: 0px;
   padding: 0px;
 }
-img {
+/* 전역으로 사용되고 있음 안됨 */
+/* img {
   width: 150px; height: 150px;
   object-fit: cover;
   object-position: top;
   border-radius: 50%;
-}
+} */
 .box {
   position: relative;
 }
