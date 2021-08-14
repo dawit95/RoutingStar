@@ -48,7 +48,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* 얘도 면밀히 검토 필요 */
 * {
   margin: 0;
   padding: 0;

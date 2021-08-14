@@ -45,7 +45,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* 이거 수정 필요 전역 ㄴㄴ 일단 스코프드로*/
 .button {
   flex: 1 1 auto;
   padding: 3px;

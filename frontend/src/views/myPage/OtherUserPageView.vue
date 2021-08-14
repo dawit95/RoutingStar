@@ -85,7 +85,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* 얘도 고쳐야함 */
 .button {
   flex: 1 1 auto;
   padding: 3px;

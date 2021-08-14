@@ -40,34 +40,106 @@ export default {
       script.src = "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js";
       document.head.appendChild(script);
     },
-    drawPolyLine() {
-      console.log("drawPolyLine")
-      let canvas = new window.fabric.Canvas("canvas", {width:400, height:400 });
-      console.log(canvas.getWidth())
-      console.log(this.xyPoints)
-      var canvasPolyline = new window.fabric.Polyline(
-        this.xyPoints,
-        {
-          stroke: '#D2FDFF',
-          fill: 'rgba(0,0,0,0)',
-          strokeWidth: 10,
+    createLine(s, e, lineWidth, lineColor, shadow ) {
+      return new window.fabric.Line( [ s.x, s.y, e.x, e.y ], {
+            //fill:'white',
+            stroke:lineColor,
+            strokeWidth: lineWidth,
+            shadow: shadow,
         })
+    },
+    createLine2(s, e, lineColor, shadow ) {
+      return new window.fabric.Line( [ s.x, s.y, e.x, e.y ], {
+            //fill:'white',
+            stroke:lineColor,
+            strokeWidth: 3,
+            shadow: shadow,
+        })
+    },
+    // createCircle(point, lineWidth, lineColor, shadow) {
+    createCircle(point, lineWidth) {
+      return new window.fabric.Circle ({
+        left: point.x - lineWidth / 2,
+        top: point.y - lineWidth / 2,
+        radius: lineWidth,
+        stroke: '#8860D0',
+        fill: '#8860D0',
+        // shadow: shadow
+      })
+    },
+    drawPolyLine() {
+      // console.log("drawPolyLine")
+      let canvas = new window.fabric.Canvas("canvas", {width:400, height:400 });
+      // console.log(canvas.getWidth())
+      // console.log(this.xyPoints)
+      // var canvasPolyline = new window.fabric.Polyline(
+      //   this.xyPoints,
+      //   {
+      //     stroke: '#D2FDFF',
+      //     fill: 'rgba(0,0,0,0)',
+      //     strokeWidth: 10,
+      //   })
 
+      // const canvasWidth = 400
+      // const canvasHeight = 400
+      // const margin = 0.6
+
+      // let bounds = canvasPolyline.getBoundingRect()
+      // let widthRatio = bounds.width / canvasWidth
+      // let heightRatio = bounds.height / canvasHeight
+
+      // if ( widthRatio > heightRatio ) {
+      //   canvasPolyline.scaleToWidth( canvasWidth * margin )  
+      // } else {
+      //   canvasPolyline.scaleToHeight( canvasHeight * margin)  
+      // }
+      // canvas.add(canvasPolyline)
+      // canvasPolyline.center()
+      let shadow = new window.fabric.Shadow( {
+        blur:17,
+        color:'#D2FDFF',
+      })
+
+      const lineWidth = 6
+      const lineColor = '#D2FDFF'
+
+      let polyLine = []
+
+      for ( let step = 0 ; step < this.xyPoints.length-1 ; step ++ ) {
+        let s = this.xyPoints[step]
+        let e = this.xyPoints[step+1]
+        
+        polyLine.push( this.createLine( s, e, lineWidth, lineColor, shadow ))
+        polyLine.push( this.createLine2( s, e, lineColor, shadow ))
+        
+      }
+
+      for ( let step = 0 ; step < this.xyPoints.length ; step ++ ) {
+        polyLine.push(this.createCircle( this.xyPoints[step], lineWidth, lineColor, shadow))
+      }
+
+      let group = new window.fabric.Group( polyLine, { 
+        selectable: false,
+        objectCaching: false,
+      })
+      /*
       const canvasWidth = 400
       const canvasHeight = 400
       const margin = 0.6
 
-      let bounds = canvasPolyline.getBoundingRect()
+      let bounds = group.getBoundingRect()
       let widthRatio = bounds.width / canvasWidth
       let heightRatio = bounds.height / canvasHeight
 
       if ( widthRatio > heightRatio ) {
-        canvasPolyline.scaleToWidth( canvasWidth * margin )  
+        group.scaleToWidth( canvasWidth * margin )  
       } else {
-        canvasPolyline.scaleToHeight( canvasHeight * margin)  
-      }
-      canvas.add(canvasPolyline)
-      canvasPolyline.center()
+        group.scaleToHeight( canvasHeight * margin)  
+      } */     
+
+      canvas.add(group)
+      group.center()
+      canvas.renderAll()
     },
     canvasToPng() {
       console.log('canvasToPng')
@@ -137,7 +209,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* body같은거 빼기 */
 body {
         margin: 0;
         padding: 0;
