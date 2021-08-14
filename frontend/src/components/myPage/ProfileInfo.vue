@@ -7,13 +7,13 @@
         </div>
       </v-col>
       <v-col class="mt-1">
-        <v-row class="d-flex justify-center mt-1">
+        <v-row class="d-flex justify-center mt-1 mr-5">
           <div><h4>{{ userInfo.name }}</h4></div>
         </v-row>
-        <v-row class="d=flex justify-center" @click="onClickFollowList">
-          <v-col class="ma-1 pa-1">
+        <v-row class="d-flex justify-center moveLeft" @click="onClickFollowList">
+          <v-col class="ma-1 pa-1 ml-3">
             <div class="mt-1">Followers</div>
-            <div v-if="followUserList" class="mt-1">{{ followerCnt }}</div>
+            <div v-if="followUserList" class="mt-1 ">{{ followerCnt }}</div>
             <div v-else class="mt-1">0</div>
           </v-col>
           <v-col class="ma-1 pa-1">
@@ -22,6 +22,7 @@
             <div v-else class="mt-1">0</div>
           </v-col>
         </v-row>
+           
       </v-col>          
     </v-row>
 
@@ -91,5 +92,9 @@ export default {
 .moveUp {
   /* top: 1px; */
   margin-bottom: 50px;
+}
+.moveLeft {
+  position: absolute;
+  left: 160px;
 }
 </style>
