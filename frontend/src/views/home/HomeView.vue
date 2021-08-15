@@ -37,19 +37,19 @@
               <v-row class="pb-1 pt-2" align="center" justify="end">
               
                 <div v-if="feed.isLiked">
-                  <v-icon @click="requestLike(feed.id)" color="red" large class="mr-1">mdi-heart</v-icon>
+                  <v-icon @click="requestLike(feed.id)" color="red" class="mr-1">mdi-heart</v-icon>
                 </div>
                 <div v-else>
-                  <v-icon @click="requestLike(feed.id)" large class="mr-1">mdi-heart-outline</v-icon>
+                  <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
                 </div> 
                 <div class="subheading mr-2">{{ feed.likeCnt }}</div>
 
 
                 <div v-if="feed.isStored">
-                  <v-icon @click="requestStore(feed.id)" color="#B4DFE5" large class="mr-1">mdi-bookmark</v-icon>
+                  <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1">mdi-bookmark</v-icon>
                 </div>
                 <div v-else>
-                  <v-icon @click="requestStore(feed.id)" large class="mr-1">mdi-bookmark-outline</v-icon>
+                  <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
                 </div> 
                 <div class="subheading">{{ feed.storageCnt }}</div>
               </v-row>
@@ -302,4 +302,5 @@ export default {
   left: 65px;
   /* transform: translate( 10%, 10% ); */
 }
+
 </style>
