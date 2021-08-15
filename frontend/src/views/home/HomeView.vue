@@ -1,10 +1,5 @@
 <template>
   <v-container color="black">
-    
-    <!-- <div class="white">
-      {{ feeds }}
-    </div> -->
-   
    <v-list
     v-for="(feed, idx) in feeds" 
     :key="idx"

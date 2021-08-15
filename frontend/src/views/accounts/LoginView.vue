@@ -2,6 +2,8 @@
   <div>
     <!-- <v-row justify="center"> -->
     <v-img class="mx-auto logoTopM rotate-center" max-height="400" max-width="400" :src="require('../../assets/logo.png')" />  
+    <!-- <p class="logoFont"> -->
+      <h1 class="logoFont">ROUTING STAR</h1>
     <!-- </v-row> -->
     <!-- width: 30px
     height: 150px /> -->
@@ -24,6 +26,12 @@ export default {
 </script>
 
 <style>
+.logoFont {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
 .logoTopM {
   margin-top: 100px;
 }

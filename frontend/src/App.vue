@@ -6,6 +6,7 @@
 
 
       <!-- 라우터 뷰 -->
+<<<<<<< HEAD
       <router-view>
         <!-- <transition
           mode="out-in"
@@ -14,11 +15,13 @@
         >
         </transition> -->
       </router-view>
+=======
+      <router-view/>
+>>>>>>> 7cb50e33e60b84e30fce185f35c5bdf54b6a4cff
 
     
       <!-- Footer -->
       <Nav v-if="$route.name !== 'LoginView'"/>
-
 
     </v-main>
   </v-app>

@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <p style="color: white">로그인한 유저가 보는 자기 페이지입니다.</p>
+  <v-container>
+    <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 자기 페이지입니다.</v-row>
     <ProfileInfo/>
-    <div class="button mx-8">Edit Profile</div>
+    <v-row class="button mx-8">Edit Profile</v-row>
     <MyRoutesTabs/>
-
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -18,6 +17,7 @@ export default {
   components: {
     ProfileInfo,
     MyRoutesTabs,
+    // Nav,
   },
   data() {
     return {
@@ -46,7 +46,6 @@ export default {
 </script>
 
 <style scoped>
-/* 이거 수정 필요 전역 ㄴㄴ 일단 스코프드로*/
 .button {
   flex: 1 1 auto;
   padding: 3px;
@@ -84,5 +83,10 @@ export default {
 }
 .button:hover:after {
   width: 0%;
+}
+.moveDown {
+  /* top: 1px; */
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 </style>
