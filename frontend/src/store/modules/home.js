@@ -123,7 +123,7 @@ const actions = {
           'access_token': token[0],
         }
       }
-      axios.get(`https://i5a309.p.ssafy.io/api/guest/routes`, config)
+      axios.get(`https://i5a309.p.ssafy.io/api/v1/routes/${decodeAccessToken.pk}`, config)
       // axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/routes/1`, config)
         .then(res => commit('FETCH_LOGINED_FEEDS', res.data.success))
         .catch((err) => console.log(err))
