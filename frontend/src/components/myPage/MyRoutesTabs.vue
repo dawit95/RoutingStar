@@ -1,53 +1,36 @@
 <template>
-  <div class="mt-4">
-    <ul class="tabs" role="tablist">
-        <li>
-          <input type="radio" name="tabs" id="tab1" checked />
-          <label for="tab1" 
-                role="tab" 
-                aria-selected="true" 
-                aria-controls="panel1" 
-                tabindex="0">내가 작성한 루트</label>
-          <div id="tab-content1" 
-              class="tab-content" 
-              role="tabpanel" 
-              aria-labelledby="description" 
-              aria-hidden="false">
+  <v-container class="mt-4">
+    <v-row class="tabs d-flex justify-center" role="tablist" >
+      <v-col cols="5" xs="5" >
+        <input type="radio" name="tabs" id="tab1" checked />
+        <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0">내가 작성한 루트</label>
+        <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
 
-              <div>
-                <RouteThumbnail
-                  v-for="route in writtenRouteList"
-                  :key="route.id"
-                  :route="route"
-                />
-              </div>           
-          </div>
-        </li>
+          <v-row class="content">
+            <RouteThumbnail
+              v-for="route in writtenRouteList"
+              :key="route.id"
+              :route="route"
+            />
+          </v-row>   
+        </div>
+      </v-col>
       
-        <li>
-          <input type="radio" name="tabs" id="tab2" />
-          <label for="tab2"
-                role="tab" 
-                aria-selected="false" 
-                aria-controls="panel2" 
-                tabindex="0">내가 저장한 루트</label>
-          <div id="tab-content2" 
-              class="tab-content"
-              role="tabpanel" 
-              aria-labelledby="specification" 
-              aria-hidden="true">
-
-              <div>
-                <RouteThumbnail
-                  v-for="route in savedRouteList"
-                  :key="route.id"
-                  :route="route"
-                />
-              </div>
+      <v-col cols="5" xs="5" >
+        <input type="radio" name="tabs" id="tab2" />
+          <label for="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="0">내가 저장한 루트</label>
+          <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
+          <v-row class="content">
+            <RouteThumbnail
+              v-for="route in savedRouteList"
+              :key="route.id"
+              :route="route"
+            />
+          </v-row>
           </div>
-        </li>
-    </ul>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -63,20 +46,11 @@ export default {
   methods: {
     ...mapActions(['fetchWrittenRouteList', 'fetchSavedRouteList' ])
   },
-  // beforeCreated() {
-  //   this.fetchWrittenRouteList({
-  //     userId: this.jwt[2], 
-  //     access_token: this.jwt[0]
-  //   })
-  //   this.fetchSavedRouteList({
-  //     userId: this.jwt[2], 
-  //     access_token: this.jwt[0]
-  //   })
-  // },
 }
 </script>
 
-<style>
+<style scoped>
+/* 얘도 면밀히 검토 필요 */
 * {
   margin: 0;
   padding: 0;
@@ -84,7 +58,11 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
 body {
   padding: 10px;
   text-align: left;
@@ -123,7 +101,7 @@ h1 span {
 }
 .tabs label {
   display: block;
-  padding: 9px 25px;
+  padding: 9px 21px;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;

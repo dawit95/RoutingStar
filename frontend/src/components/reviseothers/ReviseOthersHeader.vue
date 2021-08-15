@@ -108,9 +108,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createRouteDescription']),
+    ...mapActions(['createRouteDescription', 'refreshPlaces']),
     goBack() {
       this.$router.go(-1)
+      this.refreshPlaces([])
     },
     // 모달이 열리면 map이 freeze된다 (그림 그려서 좌표 찾기 위함)
     freezeMap(event) {
