@@ -4,6 +4,7 @@
       <v-avatar @click="$router.push({name: 'HomeView'})"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
       <v-spacer></v-spacer>
       <v-btn class="moveToRight" color="primary" icon><v-icon>mdi-bell</v-icon></v-btn>
+        <tool-tip-dialog/>
       <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on" icon><v-icon>mdi-account</v-icon></v-btn>
@@ -25,6 +26,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import ToolTipDialog from './ToolTipDialog.vue';
 
 export default {
  name: 'TempHeader', 
@@ -34,6 +36,9 @@ export default {
       { title: 'Logout' },
     ],
   }),
+  components: {
+    ToolTipDialog
+  },
   computed: {
     ...mapGetters(['jwt'])
   },
@@ -69,5 +74,13 @@ export default {
 .moveToUp {
   top: 1px;
   margin-bottom: -1px;
+}
+
+.theme--light.v-btn:hover::before {
+    opacity: 0.00;
+}
+
+.theme--dark.v-btn:hover::before {
+    opacity: 0.08;
 }
 </style>
