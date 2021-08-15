@@ -44,7 +44,6 @@
               <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
             </span>
           </div>
-
           {{ routeInfo.routeDescription }}
 
         </div>
@@ -76,7 +75,7 @@ export default {
     ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved'])
   },
   methods: {
-    ...mapActions(['enterUserprofile', 'fetchRouteInfo']),
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo']),
 
     requestLike(id) {
       this.jwt[3] = id
