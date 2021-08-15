@@ -123,6 +123,14 @@ export default {
     this.$store.dispatch('fetchLoginedToken', this.jwt)
     this.$store.dispatch('fetchLoginedFeeds', this.jwt)
    }
+   axios
+      .get(`http://i5a309.p.ssafy.io:8000/push/${this.jwt[2]}`, {
+        headers: {
+          browser_token: this.getterbrowserToken,
+        },
+      })
+      .then(console.log)
+      .catch(console.log);
   },
   // else if (this.$route.query.access && this.$route.query.refresh){
     //   console.log('token을 지금 처음 저장함')
@@ -225,12 +233,12 @@ export default {
     },
   },
   watch: {
-    getterbrowserToken: function() {
-      const user_id = this.jwt[2]
-      console.log('여기 브라우저 토큰 보내는 시점')
-      console.log(user_id)
-      this.sendBrowerToken(user_id)
-    },
+    // getterbrowserToken: function() {
+    //   const user_id = this.jwt[2]
+    //   console.log('여기 브라우저 토큰 보내는 시점')
+    //   console.log(user_id)
+    //   this.sendBrowerToken(user_id)
+    // },
     isLiked: function() {
       console.log('불려야돼')
       this.$store.dispatch('fetchLoginedFeeds', this.jwt)
