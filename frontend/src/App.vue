@@ -6,7 +6,14 @@
 
 
       <!-- 라우터 뷰 -->
-      <router-view/>
+      <router-view>
+        <!-- <transition
+          mode="out-in"
+          :enter-active-class="this.$route.meta.enterActiveClass"
+          :leave-active-class="this.$route.meta.leaveActiveClass"
+        >
+        </transition> -->
+      </router-view>
 
     
       <!-- Footer -->
