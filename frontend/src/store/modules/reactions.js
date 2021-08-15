@@ -43,7 +43,7 @@ const actions = {
           'access_token': jwt[0],
         }
       }
-    axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/reaction/like/${jwt[2]}/${jwt[3]}`, config)
+    axios.get(`https://i5a309.p.ssafy.io/api/v1/reaction/like/${jwt[2]}/${jwt[3]}`, config)
       .then(res => commit('REFRESH_ISLIKED', (res.data.success)))
       .catch((err) => console.log(err))
     
@@ -56,7 +56,7 @@ const actions = {
           'access_token': jwt[0],
         }
       }
-    axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/reaction/store/${jwt[2]}/${jwt[3]}`, config)
+    axios.get(`https://i5a309.p.ssafy.io/api/v1/reaction/store/${jwt[2]}/${jwt[3]}`, config)
       .then(res => commit('REFRESH_ISSAVED', (res.data.success)))
       .catch((err) => console.log(err))
   },
