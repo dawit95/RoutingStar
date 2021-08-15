@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-4">
-    <ul class="tabs" role="tablist">
-        <li>
+  <v-container class="mt-4">
+    <v-row class="tabs d-flex justify-center" role="tablist">
+        <v-col cols="8" xs="8" class="d-flex justify-center">
           <input type="radio" name="tabs" id="tab1" checked />
           <label for="tab1" 
                 role="tab" 
@@ -13,20 +13,18 @@
               role="tabpanel" 
               aria-labelledby="description" 
               aria-hidden="false">
-
-            <div>
-                <RouteThumbnail
-                  v-for="route in writtenRouteList"
-                  :key="route.id"
-                  :route="route"
-                />
-            </div>           
-
+        <v-row class="content">
+          <RouteThumbnail
+            v-for="route in writtenRouteList"
+            :key="route.id"
+            :route="route"
+          />
+        </v-row>           
           </div>
-        </li>
-    </ul>
+        </v-col>
+    </v-row>
 
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -54,7 +52,11 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
 body {
   padding: 10px;
   text-align: left;
