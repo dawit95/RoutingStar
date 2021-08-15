@@ -53,6 +53,7 @@ public class RouteService {
     @Transactional
     public Long save(RouteRequestDto routeRequestDto, List<PlaceRequestDto> placesRequestDto, List<Long> whatTagIds, List<Long> withTagIds) throws Exception {
 
+        logger.trace(routeRequestDto.getRouteDescription() + "this is description!!!!!!! in save");
         Route route = routeRequestDto.toEntity();
         Optional<User> user = Optional.ofNullable(userRepository.findById(routeRequestDto.getId()).orElseThrow(() -> new NoUserException("존재하지 않는 사용자입니다.")));
 
@@ -85,6 +86,7 @@ public class RouteService {
 
         return routeRepository.findByUserIdInOrderByModifiedAtDesc(list).stream().map((e) -> {
             RouteListResponseDto routeListResponseDto = new RouteListResponseDto(e);
+            logger.trace(routeListResponseDto.getRouteDescription() + "this is description!!!!!!! in find");
             Long routeId = routeListResponseDto.getId();
             if(likeIds.contains(routeId))  routeListResponseDto.setIsLiked(true);
             if(storeIds.contains(routeId))  routeListResponseDto.setIsStored(true);
