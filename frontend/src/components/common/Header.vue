@@ -7,7 +7,7 @@
     </v-btn>
     <v-menu offset-y>
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="account-btn ml-3 pr-3" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+      <v-btn class="account-btn ml-2" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </template>

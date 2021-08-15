@@ -1,31 +1,43 @@
 <template>
   <v-container>
     <v-flex xs12 class="big-box rounded-lg">
-      <list v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
-      <div class="list-prop">
-        <!-- 프로필 이미지, 이름 -->
-        <div>
+
+      <v-list
+      v-for="(feed, idx) in feeds" 
+      :key="idx"
+      :feed="feed"
+      class="pt-0 pr-3 pb-4 pl-3"
+      color="#101423"
+      >
+      <v-card class="mb-4 card-shadow " color="#2a355d" dark>
+        <v-card-title class="pa-2 pl-0 pb-0">
           <v-list-item-avatar size="45px">
             <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
             <v-img @click="onClickUser(feed)" class="elevation-6" :src="feed.user.profileImg" alt="profileImg" ></v-img>
           </v-list-item-avatar>
-          <span class="profile-font" @click="onClickUser(feed)">{{ feed.user.name }}</span> 
-        </div>
-        <!-- 본문내용 -->
-        <div>
-          <div>
+          <span class="name-font" @click="onClickUser(feed)">{{ feed.user.name }}</span>
+        </v-card-title>
+      
+
+        <v-card-text class="text-h5 pb-0">
+          <div class="container">
             <div class="box">
-              <!-- 썸네일 이미지 -->
-              <div v-for="place of feed.places" :key="place.createdOrder" class="d-flex justify-center container">
+              <div v-for="place of feed.places" :key="place.createdOrder" class="d-flex justify-center">
+                <!-- <span v-if="place.isThumbnail===true">
+                  <span @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img class="main-image " :src=place.placeImg alt=""></span>
+                  <span @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img class="mid-image " src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt=""></span>
+                  <span @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})"><img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt=""></span>
+                  <span class="routeImg2" @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}`}})"><img class="main-image" :src=feed.routeImg alt=""></span>
+                </span> -->
                 <span v-if="place.isThumbnail" class="d-flex justify-center">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="main-image " :src=place.placeImg alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="mid-image " src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}`}})" class="route-image" :src=feed.routeImg alt="">
                 </span>
+                
               </div>
-              <!-- 좋아요, 저장 -->
-              <v-row class="pr-6 pt-1" align="center" justify="end">
+              <v-row class="pb-1 pt-2" align="center" justify="end">
               
                 <div v-if="feed.isLiked">
                   <v-icon @click="requestLike(feed.id)" color="red" class="mr-1">mdi-heart</v-icon>
@@ -35,6 +47,7 @@
                 </div> 
                 <div class="subheading mr-2 name-font">{{ feed.likeCnt }}</div>
 
+
                 <div v-if="feed.isStored">
                   <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1">mdi-bookmark</v-icon>
                 </div>
@@ -43,35 +56,82 @@
                 </div> 
                 <div class="subheading name-font">{{ feed.storageCnt }}</div>
               </v-row>
-              <!-- 루트설명 -->
-              <v-row align="center" justify="center">
-                
-                  <v-card-text class="text-center route-description2 text-h7 font-weight-bold route-description-font">
-                    {{ feed.routeDescription }}
-                  </v-card-text>
-                
-              </v-row>
+            </div>
+            <div class="mx-auto mt-3 " style="background-color:#2a355d;" color="#2A355D" dark>
+              <span class="text-center text-h6 font-weight-bold name-font">
+                {{ feed.routeDescription }}
+              </span>
             </div>
           </div>
-        </div>
-      </div>
-      </list>
+          <!-- "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." -->
+        </v-card-text>
+
+        <!-- 기타 버튼 등이 들어가는 v-card-actions -->
+        <!-- <v-card-actions>
+          <v-list-item >
+            <v-row align="center" justify="end">
+              
+              <div v-if="feed.isLiked">
+                <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart</v-icon>
+              </div>
+              <div v-else>
+                <v-icon @click="requestLike(feed.id)" class="mr-1">mdi-heart-outline</v-icon>
+              </div> 
+              <div class="subheading mr-2">{{ feed.likeCnt }}</div>
+
+
+              <div v-if="feed.isStored">
+                <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark</v-icon>
+              </div>
+              <div v-else>
+                <v-icon @click="requestStore(feed.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+              </div> 
+              <div class="subheading">{{ feed.storageCnt }}</div>
+            </v-row>
+          </v-list-item>
+        </v-card-actions> -->
+    </v-card>
+    <!-- <v-card class="mx-auto mt-3 card-shadow" color="#2A355D" dark >
+      <v-card-text class="text-center text-h6 font-weight-bold name-font">
+      {{ feed.routeDescription }}
+    </v-card-text>
+    </v-card > -->
+
+
+    <!-- <div class="mx-auto mt-3 " style="background-color:#2a355d;" color="#2A355D" dark>
+      <span class="text-center text-h6 font-weight-bold name-font">
+        {{ feed.routeDescription }}
+      </span>
+    </div> -->
+
+
+    </v-list>
     </v-flex>
+        <!-- Hacker News item loop -->
+    <!-- {{item}} -->
+    <!-- </div> -->
+<!-- infiniteHandler method 실행 -->
+<!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
+
   </v-container>
 
 </template>
 
 <script>
+// import Header from '@/components/common/Header.vue'
 // infinite scroll: 참조사이트: https://peachscript.github.io/vue-infinite-loading/guide/#installation
 // import InfiniteLoading from 'vue-infinite-loading'
 
+// import { login } from '@/api/user.js'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
+// import HomeDetailView from '@/views/home/HomeDetailView.vue'
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
 // 2. mapGetters에서 필터링 해주기
 // infinte scroll 실험
 const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
+
 export default {
   name: 'HomeView',
   data() {
@@ -221,9 +281,10 @@ export default {
 <style scoped>
 .big-box {
   /* width: 95%; */
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
+/* 전역으로 사용되고 있음 안됨 */
 .main-image {
   width: 200px; height: 200px;
   object-fit: cover;
@@ -263,77 +324,22 @@ export default {
   /* opacity: 25%; */
 }
 .container {
-  /* padding-top: 0; */
-  margin: 0;
+  margin: 0px;
   padding: 0px;
-  /* margin-bottom: 10px; */
 }
-/* 카드하나속성 */
 .box {
   position: relative;
-  margin-bottom: 40px;
 }
-.profile-font {
+.card-shadow {
+  /* box-shadow: 2px 2px 2px 0 white inset; */
+  background: #e0e0e0;
+box-shadow:  14px 14px 13px #898989,
+             -14px -14px 13px #ffffff;
+}
+/* .name-font {
   font-family: 'Do Hyeon', sans-serif;
-  font-size: 20px;
-  margin-left: -5px;
-}
-.name-font {
-  font-family: 'Do Hyeon', sans-serif;
-  font-size: 20px;
-}
+} */
 .background-image {
   background-image: url("../../assets/background-color.jpg");
-}
-.list-prop {
-  /* background-color: rgb(98, 98, 145); */
-  background-color: #101423;
-  color:white;
-  border-radius: 30px;
-  /* background: linear-gradient(145deg, #111525, #0e1220); */
-  box-shadow:  10px 10px 5px #06080e,
-              -10px -10px 5px #1a2038;
-}
-.route-description1 {
-  width: 90%;
-  /* height: 50px; */
-  border-radius: 10px;
-  text-align: center;
-  /* background-color:#2a355d; */
-  padding: 10px 10px 10px 10px;
-  margin: 10px 10px 10px 10px;
-  /* line-height: 50px; */
-  /* background: #c1c8e4; */
-  /* box-shadow: inset 5px 5px 10px #7a7e90,
-              inset -5px -5px 10px #ffffff; */
-
-  /* box-sizing: border-box; */
-  /* display: inline-block; */
-  border: 1px solid transparent;
-  /* border-image: linear-gradient(to right, #01c9ca 0%, #3886FF 100%); */
-  border-image: linear-gradient(to right, #5680e9 0%, #84ceeb 20%, #5ab9ea 20%, #c1c8e4, #8860d0);
-  border-image-slice: 1;
-  background: black;
-  border-image-width: 1px;
-
-  /* background-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa); */
-  /* background-image: linear-gradient(to right, #5680e9, #84ceeb, #5ab9ea, #c1c8e4, #8860d0); */
-  /* background-origin: border-box;
-  background-clip: content-box, border-box; */
-}
-.route-description2 {
-  width: 90%;
-  border-radius: 10px;
-  text-align: center;
-  background-color:#2a355d;
-  padding: 10px 10px 10px 10px;
-  margin: 10px 10px 10px 10px;
-  background: #c1c8e4;
-  box-shadow: inset 5px 5px 10px #7a7e90,
-              inset -5px -5px 10px #ffffff;
-
-}
-.route-description-font {
-  font-family: 'Nanum Gothic Coding', monospace;
 }
 </style>
