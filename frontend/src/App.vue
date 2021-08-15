@@ -6,9 +6,15 @@
 
 
       <!-- 라우터 뷰 -->
-      <div class="mt-1">
-        <router-view/>
-      </div>  
+      <router-view>
+        <!-- <transition
+          mode="out-in"
+          :enter-active-class="this.$route.meta.enterActiveClass"
+          :leave-active-class="this.$route.meta.leaveActiveClass"
+        >
+        </transition> -->
+      </router-view>
+
     
       <!-- Footer -->
       <Nav v-if="$route.name !== 'LoginView'"/>
