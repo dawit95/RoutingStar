@@ -49,7 +49,8 @@ export default {
 </script>
 <style>
 .background-color {
-  background-color: #101423;;
+  background-color: #101423;
+  /* background-image: url("./assets/background-color.jpg"); */
 }
 
 /* .chooseButton까지 TagForm에서 사용되는 CSS */

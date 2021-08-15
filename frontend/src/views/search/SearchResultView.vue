@@ -3,23 +3,22 @@
     <div class="mt-7">
       <button style="color:white" @click="goBack">뒤로가기</button>
     </div>
-    <keep-alive>
-
-      <v-card class="followTabs" dark>
-        <v-tabs
-          v-model="tab"
-          background-color="transparent"
-          grow
+    <v-card class="followTabs" dark>
+      <v-tabs
+        @change="changeTabNum"
+        v-model="$store.state.search.tab"
+        background-color="transparent"
+        grow
+      >
+        <v-tab
+          v-for="item in items"
+          :key="item"
         >
-          <v-tab
-            v-for="item in items"
-            :key="item"
-          >
-            {{ item }}
-          </v-tab>
-        </v-tabs>
+          {{ item }}
+        </v-tab>
+      </v-tabs>
 
-        <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="$store.state.search.tab">
 
           <v-tab-item>
             <v-card>
@@ -49,7 +48,6 @@
         
         </v-tabs-items>
       </v-card>
-    </keep-alive>
   </v-container>
 
 </template>
@@ -65,7 +63,6 @@ export default {
   },
   data () {
     return {
-    tab: null,
     items: ['친구들과 나의 루트', '지금 인기있는 루트',]
     }
   },
@@ -73,10 +70,12 @@ export default {
     ...mapGetters(['searchedFollowRoutes', 'searchedNonFollowRoutes', 'isLiked', 'isSaved', 'jwt', 'whatTag', 'withTag'])
   },
   methods: {
-    ...mapActions(['fetchSearchedRoutes']),
-
+    ...mapActions(['setTabNum', 'fetchSearchedRoutes']),
     goBack() {
       this.$router.go(-1);
+    },
+    changeTabNum(event) {
+      this.setTabNum(event)
     }
   },
   watch: {
