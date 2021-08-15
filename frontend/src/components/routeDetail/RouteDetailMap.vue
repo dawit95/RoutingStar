@@ -7,8 +7,6 @@
             <div id="map"></div>
           </div>
       </v-flex>
-
-      <v-divider></v-divider>
     </v-layout>
   </v-container>
 </template>
