@@ -71,7 +71,7 @@ const actions = {
         'access_token': token.access,
       }
     }
-    axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/routes/${decodeAccessToken.pk}`, config)
+    axios.get(`https://i5a309.p.ssafy.io/api/v1/routes/${decodeAccessToken.pk}`, config)
     // axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/routes/1`, config)
       .then(res => commit('CREATE_HOME', res.data.success))
       .catch((fail) => console.log('fail: ', fail))
