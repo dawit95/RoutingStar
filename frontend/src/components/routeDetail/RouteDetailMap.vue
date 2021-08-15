@@ -7,8 +7,6 @@
             <div id="map"></div>
           </div>
       </v-flex>
-
-      <v-divider></v-divider>
     </v-layout>
   </v-container>
 </template>
@@ -87,38 +85,8 @@ export default {
         console.log(e.latLng.lat())
         console.log(e.latLng.lng())
         this.removePoint(marker,e.latLng.lat(), e.latLng.lng())
-        // this.locations.push({ lat: e.latLng.lat(), lng: e.latLng.lng()})
-        // this.removePoint(marker)
-        // const contentString =  'ulruslfawejfiawfoawejf'
-        // const infowindow = new window.google.maps.InfoWindow({
-        //   content: 'ajvioawefjawiofjawioefjao',
-        // })
-        // marker.position = a
-        // marker.addListener("mouseup", () => {
-        //   // console.log(marker)
-        //   infowindow.open({
-        //     anchor: marker,
-        //     map: this.map,
-        //     shouldFocus: false,
-        //   });
-        // })
-
         })
       }
-      // console.log('이거슨로케이션', this.locations)
-      // const infowindow = new window.google.maps.InfoWindow({
-      //     content: 'ajvioawefjawiofjawioefjao',
-      //   })
-      // marker.addListener("mouseup", () => {
-      //     // console.log(marker)
-      //     infowindow.open({
-      //       anchor: marker,
-      //       map: this.map,
-      //       shouldFocus: false,
-      //     });
-      //   })
-
-
         // 2. 폴리라인을 쓸 수 있도록 객체를 생성해서 map에 얹는다
         this.SET_POLYLINE(new window.google.maps.Polyline
           ({
@@ -147,8 +115,6 @@ export default {
       this.addPlace(newPlace)
       this.refreshPolyline();
     },
-  
-
     removePoint(marker, lat, lng) {
     for( const place of this.routeInfo.places ) {
       if (place.lat == lat && place.lng == lng) { 
@@ -162,8 +128,6 @@ export default {
           `<img src="${a}" alt="" height="100" width="150">` +
                      `<div class="modalcontent">"${b}"</div>`
         })
-        // .theme--dark.v-card iw-subTitle 
-   
       marker.addListener("mouseup", () => {
           // console.log(marker)
           infowindow.open({
@@ -175,40 +139,7 @@ export default {
 
       }
     }},
-    //  console.log(lat, lng)
-    // 
-    //  console.log(this.feed)
-    //  console.log('marker', marker)
-    //  console.log('marker', marker.latLng)
-    //  console.log('이거슨로케이션', this.locations)
-    //   const infowindow = new window.google.maps.InfoWindow({
-    //       content: 'ajvioawefjawiofjawioefjao',
-    //     })
-    //   console.log('infowindow', infowindow)
-    //   console.log('infowindow', infowindow.content)
-    //   marker.addListener("mouseup", () => {
-    //       // console.log(marker)
-    //       infowindow.open({
-    //         anchor: marker,
-    //         map: this.map,
-    //         shouldFocus: false,
-    //       });
-    //     })
-
-      // const latLng = marker.getPosition();
-      // const lat = latLng.lat();
-      // const lng = latLng.lng();
-      // const places = this.places
-      // const idx = places.findIndex( (e) => e.lat == lat && e.lng == lng );
-      // if ( idx != -1 ) {
-      //   marker.setMap(null);
-      //   places.splice(idx,1);
-      //   this.refreshPlaces(places)
-      //   this.refreshPolyline();
-      // }
-    // },
-
-
+   
     // 6. 루트를 새로고침
     refreshPolyline() {
       const path = this.polyLine.getPath();
@@ -289,36 +220,10 @@ export default {
     background-color: #1E1E1E;
     color: #ff0606;
 }
-
-/* .theme--dark.v-card {
-    background-color: #1E1E1E;
-    color: #ff0202;
-} */
-/* .theme--dark.v-card {
-  background-color: red;
-    color: #1976d2;
+.moveUp{
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
-  .v-card {
-      background-color: red;
-      color: #1976d2;
-  } */
-
-/* .theme--dark {
-    background-color: red;
-    color: #1976d2;
-}
-.v-sheet {
-    background-color: red;
-    color: #1976d2;
-} */
-
-/* .theme--dark.v-card {
-    background-color: red;
-    color: #1976d2;
-} */
-
-
-
 
 h3 {
   margin: 40px 0 0;
