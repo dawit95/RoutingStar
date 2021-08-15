@@ -19,7 +19,6 @@ const state = {
   routeMethodType: '',
   clickedRouteId: null,
   routeInfoWithComment: [],
-  routeDetail: [],
   postingCheck: false,
 }
 
@@ -130,6 +129,9 @@ const mutations= {
   },
   SET_SELECTED_ROUTE(state, res) {
     state.selectedRoute = res
+  },
+  CLEAR_ROUTE_INFO(state) {
+    state.routeInfo = []
   }
 }
 
@@ -235,6 +237,7 @@ const actions = {
     }
   },
   fetchRouteInfo({ commit }, payload) {
+    commit('CLEAR_ROUTE_INFO')
     console.log(payload)
     getRouteInfoByRouteId(payload.userId, payload.routeId, payload.access_token,
       (res) => {
@@ -265,6 +268,10 @@ const actions = {
   setSelectedRoute( {commit}, route){
     commit('SET_SELECTED_ROUTE', route)
   },
+  clearRouteInfo({ commit }) {
+    console.log('초기호ㅏ')
+    commit('CLEAR_ROUTE_INFO')
+  }
 }
 
 export default {

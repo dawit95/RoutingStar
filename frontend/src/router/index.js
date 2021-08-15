@@ -46,12 +46,20 @@ const routes = [
   {
     path: '/post',
     name: 'PostRouteView',
-    component: () => import('@/views/post/PostRouteView.vue')
+    component: () => import('@/views/post/PostRouteView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
   {
     path: '/routedetail/:feedId',
     name: 'RouteDetailView',
-    component: () => import('@/views/routeDetail/RouteDetailView')
+    component: () => import('@/views/routeDetail/RouteDetailView'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
   
   // Revise Routes
@@ -65,7 +73,11 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPageView',
-    component: () => import('@/views/myPage/MyPageView.vue')
+    component: () => import('@/views/myPage/MyPageView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
   {
     path: '/profilepage',
