@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
     <v-container class="mx-auto tmpBackground" background-color="#101423" max-width="400">
       <v-row class="moveDown moveRight moveUp">
-=======
-    <div class="mx-auto tmpBackgroud" max-width="400">
-      <div v-if="routeInfo.user">
->>>>>>> 4d11606e1851777e30e180e0d2b56c524e6d6bef
         <v-list-item-avatar color="grey darken-3">
           <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
@@ -47,7 +42,6 @@
            </v-col>
       </v-row>
 
-<<<<<<< HEAD
       <v-row>
         <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
           <span v-if="place.isThumbnail===true">
@@ -56,15 +50,6 @@
           </span>
         </v-col>
       </v-row>
-=======
-
-          <div v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-            <span v-if="place.isThumbnail===true">
-              <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
-            </span>
-          </div>
->>>>>>> 4d11606e1851777e30e180e0d2b56c524e6d6bef
           {{ routeInfo.routeDescription }}
 
        

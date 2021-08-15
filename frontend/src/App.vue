@@ -4,16 +4,23 @@
       <!-- Header -->
       <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' "/>
 
-
       <!-- 라우터 뷰 -->
-      <router-view>
+      <transition
+        mode="out-in"
+        name="router-anim"
+        :enter-active-class="this.$route.meta.enterActiveClass"
+        :leave-active-class="this.$route.meta.leaveActiveClass"
+      > 
+        <router-view/>
+      
+      </transition>
         <!-- <transition
           mode="out-in"
           :enter-active-class="this.$route.meta.enterActiveClass"
           :leave-active-class="this.$route.meta.leaveActiveClass"
         >
         </transition> -->
-      </router-view>
+      <!-- </router-view> -->
 
     
       <!-- Footer -->
@@ -29,9 +36,11 @@ import Nav from '@/components/common/Nav.vue'
 
 export default {
   name: 'App',
-  data: () => ({
-    
-  }),
+  data() {
+    return {
+
+    }
+  },
   components: {
     Header,
     Nav
@@ -61,6 +70,7 @@ export default {
   font-size: 13px;
   font-weight: bold;
   color: #303C6C;
+  font-family: 'Do Hyeon', sans-serif;
 }
 .chooseButton {
   width: 70px;
