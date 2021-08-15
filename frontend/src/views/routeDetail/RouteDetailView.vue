@@ -1,59 +1,64 @@
 <template>
-    <div class="mx-auto tmpBackgroud" max-width="400">
-      <div>
+    <v-container class="mx-auto tmpBackground" background-color="#101423" max-width="400">
+      <v-row class="moveDown moveRight moveUp">
         <v-list-item-avatar color="grey darken-3">
           <v-img @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
-          <!-- <v-list-item-title class="pa-2">Fromecha</v-list-item-title> -->
-          <span @click="onClickUser(routeInfo)">{{ routeInfo.user.name }}</span>
+           <span @click="onClickUser(routeInfo)" class="moveDownBig" style="color: white">{{ routeInfo.user.name }}</span>
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
-            <v-icon>mdi-pencil</v-icon>
+            <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
           </v-btn>
-      </div>    
+      </v-row>    
+      <hr>
         <RouteDetailMap />
+      <hr>
+      <v-row class="moveDown moveRight">
+        <v-col cols="8" xs="8" class="content">
+          <span class="" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+            <button class="button" color="white">{{ whatTag.title }}</button>
+          </span>
 
-        <div v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
-          {{ whatTag.title }}
-        </div>
+          <span class="" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+            <button class="button" color="white">{{ withTag.title }}</button>
+          </span>
+        </v-col>
 
-        <div v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
-          {{ withTag.title }}
-        </div>
-
-        <div>  
+        <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
           <div v-if="routeInfo.isLiked">
-            <v-icon @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
+            <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
           <div class="subheading mr-2">{{ routeInfo.likeCnt }}</div>
 
           <div v-if="routeInfo.isStored">
-              <v-icon @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
+              <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading">{{ routeInfo.storageCnt }}</div>
+           </v-col>
+      </v-row>
 
-
-          <div v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-            <span v-if="place.isThumbnail===true">
-              <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
-            </span>
-          </div>
-
+      <v-row>
+        <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+          <span v-if="place.isThumbnail===true">
+            <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
+          </span>
+        </v-col>
+      </v-row>
           {{ routeInfo.routeDescription }}
 
-        </div>
+       
   
         <div>
           <CommentBox/>
         </div>
     
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -132,9 +137,39 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* 수정필요 전역 ㄴㄴ */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.button {
+  background-color: #B4DFE5;
+  width: 50px;
+  padding: auto;
+  font-size: 0.4em;
+  font-weight: bold;
+  /* font: bold; */
+  }
+
+hr {
+  background-color: white;
+}
+.moveUp {
+  margin-bottom: 12px;
+}
+.moveDown {
+  margin-top: 12px;
+}
+.moveDownLittle {
+  margin-top: 9px;
+}
+.moveDownBig {
+  margin-top: 15px;
+}
+.moveRight {
+  margin-left: 5px;
+}
 .container {
   margin: 0px;
   padding: 0px;
@@ -159,7 +194,7 @@ img {
   left: 110px;
   /* transform: translate( 10%, 10% ); */
 }
-.tmpBackgroud{
+.tmpBackground{
   background-color: aliceblue;
 }
 </style>
