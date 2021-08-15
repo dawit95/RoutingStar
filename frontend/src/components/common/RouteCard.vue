@@ -59,7 +59,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import axios from 'axios'
 
 export default {
   name: 'RouteCard',
@@ -73,103 +72,18 @@ export default {
   computed: {
     ...mapGetters(['jwt', 'feeds', 'searchedNonFollowRoutes', 'isLiked', 'isSaved']),
   },
-  // created() {
-  //   console.log('이것슨피드', this.feed)
-  //   const data = {
-  //     userId : this.jwt[2],
-  //     access_token: this.jwt[0],
-  //     param: {
-  //       whatTag: [this.feed.whatTag[0].id],
-  //       withTag: [this.feed.withTag[0].id],
-  //       }
-  //     }
-  //   console.log('이거슨데이터', data)
-  //   // this.$store.dispatch('fetchSearchedRoutes', data)
-  // },
 
   methods: {
     ...mapActions(['enterUserprofile']),
 
     requestLike(id) {
       this.jwt[3] = id
-      // if (this.feeds[idx].isLiked) {
-      //   this.feeds[idx].likeCnt -= 1
-      // } else {
-      //   this.feeds[idx].likeCnt += 1     
-      // }
-      // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
       this.$store.dispatch('fetchLike', this.jwt)
     },
     requestStore(id) {
       this.jwt[3] = id
-      // if (this.feeds[idx].isStored) {
-      //   this.feeds[idx].storageCnt -= 1
-      // } else {
-      //   this.feeds[idx].storageCnt += 1     
-      // }
-      // this.feeds[idx].isStored = !this.feeds[idx].isStored 
       this.$store.dispatch('fetchStore', this.jwt)
     },
-      // console.log(feed)
-      // console.log(this.searchedNonFollowRoutes)
-      // console.log(this.searchedNonFollowRoutes)
-      // this.jwt[3] = nonFollowRoute.id
-      // for ( const nonFollowRoute of this.searchedNonFollowRoutes) {
-      //   if ( nonFollowRoute.id == feed.id) {
-      //     console.log('일치', nonFollowRoute.id, feed.id, nonFollowRoute)
-          // if (nonFollowRoute.isLiked) {
-          //   nonFollowRoute.likeCnt -= 1
-          // } else {
-          //   nonFollowRoute.likeCnt += 1     
-          // }
-          // nonFollowRoute.isLiked = !nonFollowRoute.isLiked 
-          // this.$store.dispatch('fetchLike', this.jwt)
-        // }
-      // }
-    // },
-      
-      // if (this.feed.isLiked) {
-      //   this.feed.likeCnt -= 1
-      // } else {
-      //   this.feed.likeCnt += 1     
-      // }
-      // this.feed.isLiked = !this.feed.isLiked 
-      // this.$store.dispatch('fetchLike', this.jwt)
-
-    //   const config = {
-    //     headers: {
-    //       'access_token': this.jwt[0],
-    //     }
-    //   }
-     
-    //   axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/reaction/like/${this.jwt[2]}/${this.jwt[3]}`, config)
-    //     .then(res => console.log('응답받은데이터', res.data.success))
-    //     .catch((err) => console.log(err))
-    //      if (this.jwt[4] == "좋아요 취소"){
-    //        feed.likeCnt -= 1
-    //        feed.isLiked = !feed.isLiked
-    //       //  console.log(1, this.jwt)
-    //      }
-    //      else {
-    //         feed.isLiked = !feed.isLiked
-    //         feed.likeCnt += 1
-    //         // console.log(2, this.jwt)
-    //      }
-    //     //  console.log('jwt', this.jwt)
-    //     //  console.log('feed', feed)
-    // },
-
-    // requestStore( id ) {
-    //   this.jwt[3] = id
-    //   if (this.feed.isStored) {
-    //     this.feed.storageCnt -= 1
-    //   } else {
-    //     this.feed.storageCnt += 1     
-    //   }
-    //   this.feed.isStored = !this.feed.isStored 
-    //   this.$store.dispatch('fetchStore', this.jwt)
-    // },
-
     // 닉네임, 사진 누르면 프로필로 간다
     onClickUser(feed) {
       this.enterUserprofile({

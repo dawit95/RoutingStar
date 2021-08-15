@@ -69,6 +69,7 @@ export default {
   font-size: 13px;
   font-weight: bold;
   color: #303C6C;
+  font-family: 'Do Hyeon', sans-serif;
 }
 .chooseButton {
   width: 70px;
