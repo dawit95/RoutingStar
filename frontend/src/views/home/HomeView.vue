@@ -211,7 +211,7 @@ export default {
       }
     }
     
-    axios.get(`http://i5a309.p.ssafy.io:8000/token/refresh`, config)
+    axios.get(`https://i5a309.p.ssafy.io/token/refresh`, config)
     // 응답 받아왔으면 그냥 받아온 access token 을 항상 갱신해주자
     .then(res => {console.log(res)})  
     .catch((fail) => console.log(fail))  

@@ -2,7 +2,7 @@
 <div>
     <!-- 수정 1. google 2. vuex accounts -->
     <!-- <a href="http://localhost:8000/oauth2/authorization/kakao"> -->
-    <h1 style="color: white">하이하이</h1>
+    <!-- <h1 style="color: white">하이하이</h1> -->
     <a href="http://i5a309.p.ssafy.io:8000/oauth2/authorization/kakao">
       <v-img class="mx-auto logoTopM" max-height="300" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
     </a>
