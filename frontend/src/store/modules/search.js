@@ -8,6 +8,7 @@ import { postSearhFollow, postSearhNonFollow } from '@/api/search.js'
 const state = {
   searchedFollowRoutes: [],
   searchedNonFollowRoutes: [],
+  tab: 0,
 }
 
 const getters = {
@@ -17,6 +18,9 @@ const getters = {
   searchedNonFollowRoutes(state) {
     return state.searchedNonFollowRoutes
   },
+  tab(state) {
+    return state.tab
+  }
 }
 
 const mutations= {
@@ -26,6 +30,9 @@ const mutations= {
   SET_SEARCHED_NON_FOLLOW_ROUTES(state, searchResults) {
     state.searchedNonFollowRoutes = searchResults
   },
+  SET_TAB(state, num) {
+    state.tab = num
+  }
 }
 
 // import axios from 'axios'
@@ -60,6 +67,9 @@ const actions = {
         console.log(error)
     })
   },
+  setTabNum({commit}, num) {
+    commit('SET_TAB', num)
+  }
 }
 
 export default {

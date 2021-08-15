@@ -5,7 +5,8 @@
     </div>
     <v-card class="followTabs" dark>
       <v-tabs
-        v-model="tab"
+        @change="changeTabNum"
+        v-model="$store.state.search.tab"
         background-color="transparent"
         grow
       >
@@ -17,7 +18,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="$store.state.search.tab">
 
         <v-tab-item>
           <v-card>
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import RouteCard from '@/components/common/RouteCard.vue'
 
 export default {
@@ -62,16 +63,19 @@ export default {
   },
   data () {
     return {
-    tab: null,
     items: ['친구들과 나의 루트', '지금 인기있는 루트',]
     }
   },
   computed: {
-    ...mapGetters(['searchedFollowRoutes', 'searchedNonFollowRoutes'])
+    ...mapGetters(['searchedFollowRoutes', 'searchedNonFollowRoutes']),
   },
   methods: {
+    ...mapActions(['setTabNum']),
     goBack() {
       this.$router.go(-1);
+    },
+    changeTabNum(event) {
+      this.setTabNum(event)
     }
   },
 }

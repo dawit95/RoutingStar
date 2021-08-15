@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="#0E111E" height="55px" class="moveToUp">
-    <v-avatar @click="$router.push({name: 'HomeView'})"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
+    <v-avatar @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
     <v-spacer></v-spacer>
     <v-btn class="moveToRight" color="grey" x-large icon><v-icon>mdi-bell</v-icon></v-btn>
     <v-menu offset-y>
@@ -39,23 +39,28 @@ export default {
     ...mapActions(['enterUserprofile']),
 
     selectSection(item) {
-    switch (item.title) {
-      case 'MyPage':
-        console.log('MyPage')
-        this.enterUserprofile({ 
-          userId: this.jwt[2],
-          access_token: this.jwt[0],
-          jwtId: this.jwt[2]
-        })
-        break
-      case 'Logout':
-        console.log('Logout')
-        this.$store.state.accounts.jwt = []
-        this.$store.state.accounts.feeds = ''
-        localStorage.removeItem('vuex')
-        this.$router.push('/')
-    }
-  }
+      switch (item.title) {
+        case 'MyPage':
+          console.log('MyPage')
+          this.enterUserprofile({ 
+            userId: this.jwt[2],
+            access_token: this.jwt[0],
+            jwtId: this.jwt[2]
+          })
+          break
+        case 'Logout':
+          console.log('Logout')
+          this.$store.state.accounts.jwt = []
+          this.$store.state.accounts.feeds = ''
+          localStorage.removeItem('vuex')
+          this.$router.push('/')
+      }
+    },
+    moveToHome() {
+      if (this.$route.name != "HomeView") {
+        this.$router.push({ name: "HomeView" }).catch(() => {});
+      }
+    },
   }
 }
 </script>
