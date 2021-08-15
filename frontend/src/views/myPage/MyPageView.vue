@@ -1,10 +1,18 @@
 <template>
-  <v-container>
-    <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 자기 페이지입니다.</v-row>
-    <ProfileInfo/>
-    <v-row class="button mx-8">Edit Profile</v-row>
-    <MyRoutesTabs/>
-  </v-container>
+  <!-- <transition
+    appear
+    appear-active-class="animate__animated animate__zoomIn"
+    leave-active-class="animate__animated animate__zoomOut"
+    name="router-anim"
+  > -->
+
+    <v-container>
+      <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 자기 페이지입니다.</v-row>
+      <ProfileInfo/>
+      <v-row class="button mx-8">Edit Profile</v-row>
+      <MyRoutesTabs/>
+    </v-container>
+  <!-- </transition> -->
 </template>
 
 <script>

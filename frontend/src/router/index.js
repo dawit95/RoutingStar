@@ -8,7 +8,11 @@ const routes = [
   {
     path: '/',
     name: 'LoginView',
-    component: () => import('@/views/accounts/LoginView.vue')
+    component: () => import('@/views/accounts/LoginView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__slower",
+      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+    }
   },
   
   // Common
@@ -21,25 +25,41 @@ const routes = [
     path: '/error',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
-  },
-  
-  // Search
-  {
-    path: '/search',
-    name: 'SearchView',
-    component: () => import('@/views/search/SearchView')
-  },
-  {
-    path: '/searchresult',
-    name: 'SearchResultView',
-    component: () => import('@/views/search/SearchResultView')
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
   
   // Main Page
   {
     path: '/home',
     name: 'HomeView',
-    component: () => import('@/views/home/HomeView')
+    component: () => import('@/views/home/HomeView'),
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    }
+  },
+  
+  // Search
+  {
+    path: '/search',
+    name: 'SearchView',
+    component: () => import('@/views/search/SearchView'),
+    meta: {
+      enterActiveClass: "animate__animated animate__slideInUp",
+      leaveActiveClass: ""
+    }
+  },
+  {
+    path: '/searchresult',
+    name: 'SearchResultView',
+    component: () => import('@/views/search/SearchResultView'),
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    }
   },
   
   // Routes
@@ -49,7 +69,7 @@ const routes = [
     component: () => import('@/views/post/PostRouteView.vue'),
     meta: {
       enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__zoomOut"
+      leaveActiveClass: "animate__animated animate__fadeOut"
     }
   },
   {
@@ -57,8 +77,8 @@ const routes = [
     name: 'RouteDetailView',
     component: () => import('@/views/routeDetail/RouteDetailView'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__zoomOut"
+      enterActiveClass: "animate__animated animate__slideInRight",
+      leaveActiveClass: "animate__animated animate__slideOutRight"
     }
   },
   
@@ -66,7 +86,21 @@ const routes = [
   {
     path: '/reviseroute/:routeId',
     name: 'ReviseRouteView',
-    component: () => import('@/views/revise/ReviseRouteView.vue')
+    component: () => import('@/views/revise/ReviseRouteView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    }
+  },
+  // Revise Others' Route
+  {
+    path: '/reviseothers/:routeId',
+    name: 'ReviseOthersRouteView',
+    component: () => import('@/views/revise/ReviseOthersRouteView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    }
   },
   
   // My Page
@@ -75,24 +109,36 @@ const routes = [
     name: 'MyPageView',
     component: () => import('@/views/myPage/MyPageView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__zoomOut"
+      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
+      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
     }
   },
   {
     path: '/profilepage',
     name: 'OtherUserPageView',
-    component: () => import('@/views/myPage/OtherUserPageView.vue')
+    component: () => import('@/views/myPage/OtherUserPageView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
+      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
+    }
   },
   {
     path: '/badge',
     name: 'BadgeView',
-    component: () => import('@/views/myPage/BadgeView.vue')
+    component: () => import('@/views/myPage/BadgeView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
   {
     path: '/followuserlist',
     name: 'FollowUserListView',
-    component: () => import('@/views/myPage/FollowUserListView.vue')
+    component: () => import('@/views/myPage/FollowUserListView.vue'),
+    meta: {
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__zoomOut"
+    }
   },
 
   // tmp
@@ -100,12 +146,6 @@ const routes = [
     path: '/loginprocess',
     name: 'LoginProcessView',
     component: () => import('@/views/LoginProcessView.vue')
-  },
-  // Revise Others' Route
-  {
-    path: '/reviseothers/:routeId',
-    name: 'ReviseOthersRouteView',
-    component: () => import('@/views/revise/ReviseOthersRouteView.vue')
   },
 ]
 
