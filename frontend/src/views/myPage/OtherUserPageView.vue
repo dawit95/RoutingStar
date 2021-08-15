@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <p style="color: white">로그인한 유저가 보는 남의 페이지입니다.</p>
+  <v-container>
+    <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 남의 페이지입니다.</v-row>
     <ProfileInfo/>
-    <!-- <div class="button mx-8">Following</div> -->
-    <div class="button mx-8" @click="onClickfollowOtherUser">{{ follow }}</div>
+    <v-row class="button mx-8 d-flex justify-center" @click="onClickfollowOtherUser">{{ follow }}</v-row>
     <OtherUserRoutesTab/>
-
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -23,13 +21,6 @@ export default {
   data() {
     return {
       follow: '',
-      // followInfo :{
-      //   userId: this.jwt[2],
-      //   targetId: this.userInfo.Id,
-      //   access_token: this.jwt[0]
-      //   // userId: 3,
-      //   // targetId: 1,
-      // }
     }
   },
   computed: {
@@ -40,7 +31,7 @@ export default {
     
     setFollow() {
       console.log('setFollow 불려짐')
-      if (this.userInfo.followed === true ) {
+      if (this.userInfo.following === true ) {
         this.follow = 'unfollow'
       } else {
         this.follow = 'follow'
@@ -61,44 +52,30 @@ export default {
     const access_token = this.jwt
     this.fetchLoginedToken(access_token)
   },
-  mounted() {
-    // // const access_token = this.jwt
-    // console.log('왜 안된거냐')
-    // // const userId = this.userInfo
-    // console.log(this.userInfo)
-    // this.fetchWrittenRouteList({
-    //   userId: this.userInfo.id,
-    //   access_token: this.jwt[0]
-    // })
-  },
   watch: {
     userInfo: function() {
       this.setFollow()
-      // const access_token = this.jwt
-      // const userId = this.userInfo
-      // this.fetchWrittenRouteList({
-      //   userId: this.userInfo.id,
-      //   access_token: this.jwt[0]
-      // })
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
+/* 얘도 고쳐야함 */
 .button {
   flex: 1 1 auto;
-  padding: 3px;
+  padding: 5px;
   margin: 7px;
   border: 2px solid #D2FDFF;
-  text-align: center;
+  /* text-align: center; */
+  text-align: justify;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
   transition: 0.3s;
   color: #D2FDFF;
   height: 30px;
-  font-size: 13px;
+  font-size: 11px;
   background-color: #101423;
 }
 .button:after {
@@ -123,5 +100,9 @@ export default {
 }
 .button:hover:after {
   width: 0%;
+}
+.moveDown {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 </style>

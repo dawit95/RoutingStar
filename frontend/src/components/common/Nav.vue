@@ -1,11 +1,9 @@
 <template>
-  <!-- <v-card> -->
+  <!-- <v-card class="overflow-hidden mx-auto"> -->
   <v-bottom-navigation
-    fixed
-    grow
-    color="#FBE8A6"
-    dark
+    app grow dark
     background-color="#101423"
+    color="#FBE8A6"
   >
     <v-btn id="SearchView" @click="moveToSearch">
       <span>Search</span>
@@ -31,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Nav",
   data() {
@@ -40,24 +39,31 @@ export default {
   watch: {
     $route(to, from) {
       console.log(from.name + "에서 " + to.name + "으로 온 경우");
-      if(from.name != null) {
+      if(to.name != from.name && from.name != null) {
         const fromObject = document.getElementById(from.name);
         if(fromObject != null) {
-          fromObject.classList.add("v-btn—inactive");
-          fromObject.classList.remove("v-btn—active");
+          fromObject.classList.remove("v-btn--active");
         }
       }
 
       const toObject = document.getElementById(to.name);
 
       if(toObject != null) {
-        document.getElementById(to.name).classList.remove("v-btn—inactive");
-        document.getElementById(to.name).classList.add("v-btn—active");
+        toObject.classList.add("v-btn--active");
       }
+
+      if (from.name === 'PostRouteView' && to.name !== 'PostRouteView' && this.postingCheck === false) {
+        alert('작성중인 내용이 삭제됩니다.')
+        this.refreshPlaces([])
+      }
+
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['postingCheck'])
+  },
   methods: {
+    ...mapActions(['refreshPlaces']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
@@ -69,18 +75,25 @@ export default {
       }
     },
     moveToHome() {
+      if (this.$route.name != "HomeView") {
         this.$router.push({ name: "HomeView" }).catch(() => {});
+      }
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .background-color {
   background-color: #101423;
+}
+
+.theme—dark.v-btn—active:hover::before, .theme—dark.v-btn—active::before {
+    opacity: 0.00;
 }
 
 .theme—dark.v-btn:hover::before {
     opacity: 0.00;
 }
+
 </style>

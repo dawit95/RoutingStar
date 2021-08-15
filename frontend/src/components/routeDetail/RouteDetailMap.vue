@@ -2,8 +2,6 @@
   <v-container fluid grid-list-md>
     <v-layout row swap>
       <v-flex xs12>
-
-        
           <!-- 맵 -->
           <div>
             <div id="map"></div>
@@ -19,7 +17,7 @@
 import {mapGetters, mapMutations, mapActions} from 'vuex'
   
 export default {
-  name: 'Map',
+  name: 'RouteDetailMap',
   components: {  
   },
   props: {
@@ -38,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['feed', 'polyLine'])
+    ...mapGetters(['routeInfo', 'polyLine'])
   },
   methods: {
     ...mapMutations(['SET_POLYLINE',]),
@@ -73,7 +71,7 @@ export default {
           fullscreenControl: false,
         })
         
-      const places = this.feed.places
+      const places = this.routeInfo.places
      
       for( const place of places ) {
         let latLng = new window.google.maps.LatLng( place.lat, place.lng)
@@ -152,7 +150,7 @@ export default {
   
 
     removePoint(marker, lat, lng) {
-    for( const place of this.feed.places ) {
+    for( const place of this.routeInfo.places ) {
       if (place.lat == lat && place.lng == lng) { 
         var a = place.placeImg
         var b = place.title
@@ -214,7 +212,7 @@ export default {
     // 6. 루트를 새로고침
     refreshPolyline() {
       const path = this.polyLine.getPath();
-      const places = this.feed.places
+      const places = this.routeInfo.places
       const bounds = new window.google.maps.LatLngBounds();
 
       path.clear();
