@@ -13,7 +13,6 @@
       <!-- Footer -->
       <Nav v-if="$route.name !== 'LoginView'"/>
 
-
     </v-main>
   </v-app>
 </template>
