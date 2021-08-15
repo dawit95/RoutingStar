@@ -124,7 +124,7 @@ export default {
     this.$store.dispatch('fetchLoginedFeeds', this.jwt)
    }
    axios
-      .get(`http://i5a309.p.ssafy.io:8000/push/${this.jwt[2]}`, {
+      .get(`https://i5a309.p.ssafy.io/push/${this.jwt[2]}`, {
         headers: {
           browser_token: this.getterbrowserToken,
         },
