@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .thumbnailContainer {
   margin: 0px;
   padding: 0px;
