@@ -6,9 +6,8 @@
 
 
       <!-- 라우터 뷰 -->
-      <div class="mt-1">
-        <router-view/>
-      </div>  
+      <router-view/>
+
     
       <!-- Footer -->
       <Nav v-if="$route.name !== 'LoginView'"/>
