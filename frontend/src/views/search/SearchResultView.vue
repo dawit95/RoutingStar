@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import RouteCard from '@/components/common/RouteCard.vue'
 
 export default {
@@ -70,13 +70,41 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['searchedFollowRoutes', 'searchedNonFollowRoutes'])
+    ...mapGetters(['searchedFollowRoutes', 'searchedNonFollowRoutes', 'isLiked', 'isSaved', 'jwt', 'whatTag', 'withTag'])
   },
   methods: {
+    ...mapActions(['fetchSearchedRoutes']),
+
     goBack() {
       this.$router.go(-1);
     }
   },
+  watch: {
+    isLiked: function() {
+      console.log('불려야돼')
+      const data = {
+        userId : this.jwt[2],
+        access_token: this.jwt[0],
+        param: {
+          whatTag: this.whatTag,
+          withTag: this.withTag,
+          }
+      }
+      this.$store.dispatch('fetchSearchedRoutes', data)
+    },
+    isSaved: function() {
+      console.log('얘도 불려야돼')
+      const data = {
+        userId : this.jwt[2],
+        access_token: this.jwt[0],
+        param: {
+          whatTag: this.whatTag,
+          withTag: this.withTag,
+          }
+      }
+      this.$store.dispatch('fetchSearchedRoutes', data)
+    }
+  }
 }
 </script>
 

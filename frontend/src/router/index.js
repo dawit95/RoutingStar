@@ -37,7 +37,7 @@ const routes = [
     name: 'HomeView',
     component: () => import('@/views/home/HomeView'),
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+      enterActiveClass: "animate__animated animate__fadeIn",
       leaveActiveClass: "animate__animated animate__fadeOut"
     }
   },

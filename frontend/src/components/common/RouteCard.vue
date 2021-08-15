@@ -90,7 +90,7 @@ export default {
   methods: {
     ...mapActions(['enterUserprofile']),
 
-    async requestLike(id) {
+    requestLike(id) {
       this.jwt[3] = id
       // if (this.feeds[idx].isLiked) {
       //   this.feeds[idx].likeCnt -= 1
@@ -98,18 +98,9 @@ export default {
       //   this.feeds[idx].likeCnt += 1     
       // }
       // this.feeds[idx].isLiked = !this.feeds[idx].isLiked 
-      await this.$store.dispatch('fetchLike', this.jwt)
-      const data = {
-        userId : this.jwt[2],
-        access_token: this.jwt[0],
-        param: {
-          whatTag: [this.feed.whatTag[0].id],
-          withTag: [this.feed.withTag[0].id],
-          }
-      }
-      await this.$store.dispatch('fetchSearchedRoutes', data)
+      this.$store.dispatch('fetchLike', this.jwt)
     },
-    async requestStore(id) {
+    requestStore(id) {
       this.jwt[3] = id
       // if (this.feeds[idx].isStored) {
       //   this.feeds[idx].storageCnt -= 1
@@ -117,16 +108,7 @@ export default {
       //   this.feeds[idx].storageCnt += 1     
       // }
       // this.feeds[idx].isStored = !this.feeds[idx].isStored 
-      await this.$store.dispatch('fetchStore', this.jwt)
-      const data = {
-        userId : this.jwt[2],
-        access_token: this.jwt[0],
-        param: {
-          whatTag: [this.feed.whatTag[0].id],
-          withTag: [this.feed.withTag[0].id],
-          }
-      }
-      await this.$store.dispatch('fetchSearchedRoutes', data)
+      this.$store.dispatch('fetchStore', this.jwt)
     },
       // console.log(feed)
       // console.log(this.searchedNonFollowRoutes)
@@ -197,32 +179,6 @@ export default {
       })
     }
   },
-  // watch: {
-  //   isLiked: function() {
-  //     console.log('불려야돼')
-  //     const data = {
-  //       userId : this.jwt[2],
-  //       access_token: this.jwt[0],
-  //       param: {
-  //         whatTag: [this.feed.whatTag[0].id],
-  //         withTag: [this.feed.withTag[0].id],
-  //         }
-  //     }
-  //     this.$store.dispatch('fetchSearchedRoutes', data)
-  //   },
-  //   isSaved: function() {
-  //     console.log('얘도 불려야돼')
-  //     const data = {
-  //       userId : this.jwt[2],
-  //       access_token: this.jwt[0],
-  //       param: {
-  //         whatTag: [this.feed.whatTag[0].id],
-  //         withTag: [this.feed.withTag[0].id],
-  //         }
-  //     }
-  //     this.$store.dispatch('fetchSearchedRoutes', data)
-  //   }
-  // }
 }
 </script>
 
