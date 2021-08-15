@@ -6,7 +6,7 @@
       v-for="(feed, idx) in feeds" 
       :key="idx"
       :feed="feed"
-      class="pt-0 pr-1 pb-4"
+      class="pt-0 pr-3 pb-4 pl-3"
       color="#101423"
       >
       <v-card class="mb-4" color="#2A355D" dark>
@@ -281,7 +281,7 @@ export default {
   object-position: top;
   border-radius: 50%;
   position: absolute;
-  left: 65px;
+  left: 17.5%;
   opacity: 25%;
 }
 .container {

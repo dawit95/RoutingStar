@@ -1,11 +1,15 @@
 <template>
-  <v-app-bar app color="#0E111E" height="55px" class="moveToUp">
-    <v-avatar @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
+  <v-app-bar app color="#0E111E" height="60px" class="moveToUp">
+    <v-avatar class="" @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
     <v-spacer></v-spacer>
-    <v-btn class="moveToRight" color="grey" x-large icon><v-icon>mdi-bell</v-icon></v-btn>
+    <v-btn class="moveToRight" color="grey" x-large icon>
+      <v-icon>mdi-bell</v-icon>
+    </v-btn>
     <v-menu offset-y>
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="ml-3 pr-3" color="grey" dark v-bind="attrs" v-on="on" x-large icon><v-icon>mdi-account</v-icon></v-btn>
+      <v-btn class="account-btn ml-3 pr-3" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
     </template>
     <v-list>
       <v-list-item
@@ -65,12 +69,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .moveToRight {
   left: 20px;
 }
 /* .moveToUp {
   top: 1px;
   margin-bottom: -1px;
+} */
+/* .account-btn {
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  flex: 0 1 auto;
+  font-size: 0.75rem;
+  height: inherit;
+  max-width: 168px;
+  min-width: 80px;
+  position: relative;
+  text-transform: none;
+
+
+  color: inherit;
+  display: flex;
+
+  line-height: normal;
+  position: relative;
+  transition: inherit;
+  transition-property: opacity;
 } */
 </style>
