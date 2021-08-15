@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>여기는 태그폼이 들어갈 자리입니다</h2>
     <!-- 태그는 번호로 DB에 저장되는 것으로 논의 -->
     <v-container>
       <H3>누구랑??</H3>
@@ -18,8 +17,8 @@
         </button>
       </div>
     </v-container>
-    <v-container>
-      <H3>무었을???</H3>
+    <v-container class="tag-container">
+      <H3>무엇을???</H3>
       <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
         <button 
           class="button mx-3" 
@@ -100,31 +99,7 @@ export default {
 </script>
 
 <style scoped>
-/* .button {
-  width: 70px;
-  height: 25px;
-  background: #C1C8E4;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
-  margin-top: 6px;
+H3 {
+  font-family: 'Do Hyeon', sans-serif;
 }
-.button span {
-  line-height: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #303C6C;
-}
-.chooseButton {
-  width: 70px;
-  height: 25px;
-  background: #B4DFE5;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
-} */
 </style>
