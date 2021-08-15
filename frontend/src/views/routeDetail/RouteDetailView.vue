@@ -1,6 +1,6 @@
 <template>
     <div class="mx-auto tmpBackgroud" max-width="400">
-      <div>
+      <div v-if="routeInfo.user">
         <v-list-item-avatar color="grey darken-3">
           <v-img @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
