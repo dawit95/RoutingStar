@@ -141,6 +141,11 @@ export default {
       this.dialog = false
       this.recoverFreezeMap()
     },
+  },
+  created() {
+    if (this.routeDescription) {
+      this.createRouteDescription(this.routeDescription)
+    }
   }
 }
 </script>
