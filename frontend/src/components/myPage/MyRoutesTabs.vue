@@ -2,7 +2,7 @@
   <v-container class="mt-4">
     <v-row class="tabs d-flex justify-center" role="tablist" >
       <v-col cols="5" xs="5" >
-        <input type="radio" name="tabs" id="tab1" checked class="Nanum"/>
+        <input type="radio" name="tabs" id="tab2" checked class="Nanum"/>
         <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0">내가 작성한 루트</label>
         <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
 
@@ -17,8 +17,8 @@
       </v-col>
       
       <v-col cols="5" xs="5" >
-        <input type="radio" name="tabs" id="tab2" checked class="Nanum" />
-          <label for="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="0" class="Nanum">내가 저장한 루트</label>
+        <input type="radio" name="tabs" id="tab1" checked class="Nanum" />
+          <label for="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="0">내가 저장한 루트</label>
           <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
           <v-row class="content">
             <RouteThumbnail

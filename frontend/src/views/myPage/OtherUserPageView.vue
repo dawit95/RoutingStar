@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <ProfileInfo/>
-    <v-row class="button mx-8 d-flex justify-center Dohyeon" @click="onClickfollowOtherUser">{{ follow }}</v-row>
+    <!-- <v-row class="button mx-8 d-flex justify-center Dohyeon" @click="onClickfollowOtherUser">{{ follow }}</v-row> -->
     <OtherUserRoutesTab/>
   </v-container>
 </template>

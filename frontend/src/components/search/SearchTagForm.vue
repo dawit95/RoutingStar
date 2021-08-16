@@ -123,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .tag-title-font{
   font-family: 'Do Hyeon', sans-serif;
   font-weight: 100;
