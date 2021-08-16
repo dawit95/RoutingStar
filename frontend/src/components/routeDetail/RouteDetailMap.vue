@@ -26,8 +26,6 @@ export default {
       map: null,
       pointListPk: 0,
       locations: [],
-      infowindow: '',
-      marker: '',
     }
   },
   computed: {
@@ -136,9 +134,9 @@ export default {
 
 
         window.google.maps.event.addListener(marker, 'click', function() {
-        if (this.infowindow) {
-          console.log('으히히히', this.infowindow)
-          this.infowindow.close();
+        if (infowindow) {
+          console.log('으히히히', infowindow)
+          infowindow.close();
         }
         infowindow.open({
               anchor: marker,
