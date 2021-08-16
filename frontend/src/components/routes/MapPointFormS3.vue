@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12 class="big-box rounded-lg">
-    <!-- <draggable class="card-box" @update="onUpdated"> -->
-    <div>
+    <draggable handle=".wehandler" class="card-box" @update="onUpdated">
+      <!-- <div> -->
       <v-list
         outlined
         v-for="(place, idx) in places"
@@ -15,7 +15,7 @@
               color="indigo"
               right
               style="cursor: pointer;"
-              class=" ma-0 pa-0 drag-position"
+              class=" ma-0 pa-0 drag-position wehandler"
               >mdi-drag-horizontal-variant</v-icon
             >
             <post-image-input
@@ -80,8 +80,8 @@
           </v-card>
         </v-card>
       </v-list>
-    </div>
-    <!-- </draggable> -->
+      <!-- </div> -->
+    </draggable>
     <!-- <v-btn @click="postPointImages">확인용 버튼</v-btn> -->
   </v-flex>
 </template>
@@ -89,7 +89,7 @@
 <script>
 // import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex';
-// import draggable from 'vuedraggable'
+import draggable from 'vuedraggable';
 import { dragscroll } from 'vue-dragscroll';
 import AWS from 'aws-sdk';
 import PostImageInput from '@/components/routes/PostImageInput.vue';
@@ -97,7 +97,7 @@ import PostImageInput from '@/components/routes/PostImageInput.vue';
 export default {
   name: 'MapPointFormS3',
   components: {
-    // draggable,
+    draggable,
     PostImageInput: PostImageInput,
   },
   props: {
