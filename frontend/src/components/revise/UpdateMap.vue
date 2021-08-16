@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container fluid>
     <v-layout row swap>
       <v-flex xs12>
         <div class="pac-card" id="pac-card">
@@ -47,11 +47,6 @@ export default {
       },
       map: null,
       pointListPk: 0,
-      positionLst: [
-        { lat: 37.501, lng: 127.039 },
-        { lat: 37.501, lng: 127.001 },
-        { lat: 37.451, lng: 127.039 },
-      ],
     }
   },
   computed: {

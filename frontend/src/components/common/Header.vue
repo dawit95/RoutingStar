@@ -5,9 +5,10 @@
     <v-btn class="moveToRight" color="grey" x-large icon>
       <v-icon>mdi-bell</v-icon>
     </v-btn>
+    <tool-tip-dialog/>
     <v-menu offset-y>
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="account-btn ml-2" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+      <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </template>
@@ -27,6 +28,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import ToolTipDialog from './ToolTipDialog.vue';
 
 export default {
  name: 'TempHeader', 
@@ -36,6 +38,9 @@ export default {
       { title: 'Logout' },
     ],
   }),
+  components: {
+    ToolTipDialog
+  },
   computed: {
     ...mapGetters(['jwt'])
   },
