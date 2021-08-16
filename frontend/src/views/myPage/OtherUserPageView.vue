@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 남의 페이지입니다.</v-row>
     <ProfileInfo/>
     <v-row class="button mx-8 d-flex justify-center" @click="onClickfollowOtherUser">{{ follow }}</v-row>
     <OtherUserRoutesTab/>
