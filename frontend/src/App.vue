@@ -44,7 +44,10 @@ export default {
   components: {
     Header,
     Nav
-  }
+  },
+  mounted() {
+    this.document.documentElement.webkitRequestFullscreen();
+  },
 };
 </script>
 <style>
