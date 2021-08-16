@@ -56,14 +56,21 @@ export default {
         alert('작성중인 내용이 삭제됩니다.')
         this.refreshPlaces([])
       }
+      if (from.name !== 'PostRouteView' && to.name === 'PostRouteView') {
+        this.refreshPlaces([])
+      }
+      // detail에서 tab으로 돌아가면 기존의 tab상태 유지
+      if (from.name === 'RouteDetailView' && to.name === 'SearchResultView') {
+        this.setTabNum(this.tab)
+      }
 
     }
   },
   computed: {
-    ...mapGetters(['postingCheck'])
+    ...mapGetters(['postingCheck', 'tab'])
   },
   methods: {
-    ...mapActions(['refreshPlaces']),
+    ...mapActions(['refreshPlaces', 'setTabNum']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
@@ -76,8 +83,10 @@ export default {
     },
     moveToHome() {
       if (this.$route.name != "HomeView") {
-        this.$router.push({ name: "HomeView" }).catch(() => {});
+        // this.$router.push({ name: "HomeView" }).catch(() => {});
+        this.$router.push({ name: "HomeView" });
       }
+      document.documentElement.webkitRequestFullscreen();
     },
   },
 };

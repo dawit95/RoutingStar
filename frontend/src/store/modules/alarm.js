@@ -4,7 +4,10 @@ import { postBrowserToken } from '@/api/alarm.js'
 // import accounts from "./accounts"
 
 const state = {
-  browserToken : ''
+  browserToken : '',
+  alertMessage: "",
+  likeMessage: "",
+  storeMessage: '',
 }
 
 
@@ -12,7 +15,15 @@ const getters = {
   getterbrowserToken(state) {
     return state.browserToken
   },
-
+  alertMessage(state) {
+    return state.alertMessage;
+  },
+  likeMessage(state) {
+    return state.likeMessage;
+  },
+  storeMessage(state) {
+    return state.storeMessage;
+  }
 }
 
 const mutations= {
@@ -21,6 +32,28 @@ const mutations= {
     console.log('넘어오나?')
     console.log(browserToken)
   },
+  SHOW_ALERT_MODAL(state) {
+    state.alertModal = false;
+    console.log(state.alertModal + "is state of alert modal!!");
+  },
+  SET_ALERT_MESSAGE(state, info) {
+    state.alertMessage = info;
+    setTimeout(() => {
+      state.alertMessage = '';
+    }, 3000);
+  },
+  SET_LIKE_MESSAGE(state, info) {
+    state.likeMessage = info;
+    setTimeout(() => {
+      state.likeMessage = '';
+    }, 3000);
+  },
+  SET_STORE_MESSAGE(state, info) {
+    state.storeMessage = info;
+    setTimeout(() => {
+      state.storeMessage = '';
+    }, 3000);
+  }
 }
 
 const actions = {
@@ -41,6 +74,19 @@ const actions = {
       }, (error) => {
         console.log(error)
     })
+  },
+
+  showAlertModal({commit}, info) {
+    console.log(info + "is message!!");
+    commit('SET_ALERT_MESSAGE', info);
+  },
+  showLikeModal({commit}, info) {
+    console.log(info + "is message!!!");
+    commit('SET_LIKE_MESSAGE', info);
+  },
+  showStoreModal({commit}, info) {
+    console.log(info + "is message!!!") 
+    commit('SET_STORE_MESSAGE', info);
   }
 }
 

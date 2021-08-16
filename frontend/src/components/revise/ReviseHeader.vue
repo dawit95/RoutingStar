@@ -1,91 +1,69 @@
 <template>
-    <v-card class="overflow-hidden">
-    <v-app-bar
-      app
-      color="#101423"
-      dark
-      style="width=100%; justify-content=flex-end;"
-      pa-0
-    >
-      <v-btn
-      @click="goBack"
-      icon>
-        <v-icon x-large>mdi-chevron-left</v-icon>
+    <div class="d-flex revise-header" dark>
+      <v-btn @click="goBack" icon class="pb-1">
+        <v-icon color="white" x-large>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
-      <!-- <v-btn @click="handleClick2" color="#101423" right dark>선택완료</v-btn> -->
 
       <v-dialog
             v-model="dialog"
             persistent
-            max-width="80%"
+            class="mx-0"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
+              <v-btn class="mr-3 post-detail-button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
                 선택완료
-              </v-btn>
+              </v-btn> 
             </template>
             
-            <v-card>
-              <v-card-title>
-                <span class="text-h3">Route Detail</span>
-              </v-card-title>
+        <v-card class="rounded-xl" color="#2A355D">
+          <v-card-actions class="pb-0 pt-1">
+            <v-btn
+              icon
+              color="#D2FDFF"
+              @click="onDialogClose"
+              class="mt-1"
+            >
+              <v-icon x-large>mdi-chevron-left</v-icon>
+            </v-btn>
+          </v-card-actions>
               
               <!-- 썸네일 이미지 보여주는 란 (루트가 올라간) -->
-              <!-- 현재 임시 이미지로 대체되어 있음 -->
-              <v-container>
-                <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" :src="tempThumbnail" alt="...">
-              </v-container>
+          <div>
+            <img v-if="tempThumbnail" class="post-detail-card-image mx-auto" :src="tempThumbnail" alt="thumbnail image preview">
+            <img v-else class="post-detail-card-image mx-auto" src="../../assets/temp_thumbnail.jpg" alt="thumbnail image preview">
+          </div>
 
               <!-- 설명 작성 란 -->
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        @change="createRouteDescription"
-                        label="Description"
-                        hint="25자 내외의 짧은 설명을 기록해주세요"
-                        v-model="RouteDetailData.routeDescription"
-                        :rules="rules"
-                        counter="25">
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+          <v-container>
+            <h3 class="ml-5 post-detail-title-font">Route Description</h3>
+            <v-textarea
+              @change="createRouteDescription"
+              hint="루트에 대해 소개해주세요!"
+              rows="3"
+              counter
+              :rules="rules"
+              row-height="30"
+              color="#D2FDFF"
+              class="mt-0 pa-4 mx-4 post-detail-text-area"
+              dark
+              v-model="RouteDetailData.routeDescription"
+            ></v-textarea>
+
+          </v-container>
             
-              <v-layout>
+              <v-container class="py-0">
                 <UpdateTagForm :reswhatTag="whatTag" :reswithTag="withTag"/>
-              </v-layout>
-            
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="onDialogClose"
-                >
-                  Close
-                </v-btn>
-                <!-- <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="dialog = false"
-                >
-                  Save
-                </v-btn> -->
-              </v-card-actions>
+              </v-container>
               
-              <v-layout>
-                <CreateRouteSuccessModal/>
-              </v-layout>
+              <div class="Create-Route-Success-Modal">
+                <CreateRouteSuccessModal />
+              </div>
             
             </v-card>
           </v-dialog>
-    </v-app-bar>
-  </v-card>
+    </div>
 </template>
 
 <script>
@@ -121,7 +99,8 @@ export default {
         routeDescription: this.routeDescription,
       },
       // 모달에 작성되는 데이터의 조건
-      rules: [v => v.length <= 25 || '25자 이상입니다'],
+      rules: [v => v.length > 0 || '너무 짧아요!!', 
+      v=> v.length <= 300 || '너무 길어요!!'],
       isHovering: false,
     }
   },
@@ -141,6 +120,11 @@ export default {
       this.dialog = false
       this.recoverFreezeMap()
     },
+  },
+  created() {
+    if (this.routeDescription) {
+      this.createRouteDescription(this.routeDescription)
+    }
   }
 }
 </script>
@@ -150,12 +134,47 @@ export default {
   padding-right: 0px;
   padding-left: 8px;
 }
-.grayscale {
-    filter: grayscale(100%);
-  }
+.post-detail-card-image {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  display: block;
+}
+.post-detail-button-font {
+  font-family: 'Do Hyeon', sans-serif;
+}
+.post-detail-text-area {
+  font-family: 'Nanum Gothic Coding', monospace;
+  font-size: 14px;
+  border-radius: 20px;
+  background: #2A355D;
+  box-shadow: inset 5px 5px 11px #1a213a,
+              inset -5px -5px 11px #3a4980;
+}
+.theme--dark.v-input input, .theme--dark.v-input textarea {
+    color: #D2FDFF;
+}
+.post-detail-title-font {
+  font-family: 'Do Hyeon', sans-serif;
+  color: #D2FDFF;
+  font-weight: lighter;
+}
+.post-detail-dialog {
+  border-radius: 30px;
+}
+.Create-Route-Success-Modal{
+  position: relative;
+}
 .card-image {
-border-radius: 7px;
-margin: 4px;
-max-width: 80%;
+  border-radius: 7px;
+  margin: 4px;
+  max-width: 80%;
+}
+.button-font {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
+}
+.revise-header {
+  height: 56px;
+  align-items: center;
 }
 </style>

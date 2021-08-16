@@ -26,6 +26,8 @@ export default {
       map: null,
       pointListPk: 0,
       locations: [],
+      infowindow: '',
+      marker: '',
     }
   },
   computed: {
@@ -60,6 +62,7 @@ export default {
         mapTypeControl: false,
         zoomControl: true,
         fullscreenControl: false,
+        
       })
         
       const places = this.routeInfo.places
@@ -99,21 +102,52 @@ export default {
           var placeImg = place.placeImg
           var placeTitle = place.title
 
+          // const content = '<div class="iw-subTitle">abcdfef</div>'
+          //                  <img src="${placeImg}" alt="" height="100" width="150"></img> +
+          //                 `<div class="modalcontent">"${placeTitle}"</div>`
+          //                 '</div>'
+
+              
           const infowindow = new window.google.maps.InfoWindow({
-            content:    
-            `<img src="${placeImg}" alt="" height="100" width="150">` +
-                      `<div class="modalcontent">"${placeTitle}"</div>`
+            content: 
+            // '<div class="iw-content">abcdef</div>'
+            // '<div class="gm-style gm-style-iw">abcdfef</div>'
+              // '<div class="iw-content">' + 
+              `<img src="${placeImg}" alt="" height="100" width="150">` +
+              `<div class="d-flex justify-center">"${placeTitle}"</div>`
+              // '</div>'
           })
-          // .theme--dark.v-card iw-subTitle 
-    
-          marker.addListener("click", () => {
-            console.log(marker)
-            infowindow.open({
+
+        
+          // marker.addListener("click", () => {
+          //         if (infowindow) {
+          // console.log('infowindow', infowindow)
+          // console.log('marker', marker)
+          // console.log('닫아볼까')
+          // // this.infoWindow.addListener('closeclick', ()=>{
+          // infowindow.close();
+          //         }
+          //   infowindow.open({
+          //     anchor: marker,
+          //     map: this.map,
+          //     shouldFocus: false,
+          //   });
+          // })
+
+
+        window.google.maps.event.addListener(marker, 'click', function() {
+        if (this.infowindow) {
+          console.log('으히히히', this.infowindow)
+          this.infowindow.close();
+        }
+        infowindow.open({
               anchor: marker,
               map: this.map,
               shouldFocus: false,
             });
-          })
+        }
+        )
+
         }
       }
     },
@@ -148,51 +182,35 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-/*style the box which holds the text of the information window*/  
+#map .iw-content { 
+  font-size: 30px; 
+  line-height: 18px; 
+  font-weight: 400; 
+  margin-right: 1px; 
+  padding: 15px 5px 20px 15px; 
+  max-height: 140px; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+}
+/* .iw-subTitle { 
+  font-size: 150px; 
+  font-weight: 700; 
+  padding: 5px 0; } */
 .gm-style .gm-style-iw {
-  background-color: #252525 !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 120px !important;
-  padding-top: 10px;
-  display: block !important;
-}    
-
-/*style the paragraph tag*/
-.gm-style .gm-style-iw #google-popup p{
-  padding: 10px;
+  font-weight: 300;
+  font-size: 30px;
 }
 
-
-/*style the annoying little arrow at the bottom*/
-.gm-style div div div div div div div div {
-  background-color: #252525 !important;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  color: #fff;
-  font-size: 16px;
+.gm-style {
+    font-weight: 300;
+    font-size: 50px;
+    overflow: hidden;
 }
-
-/*style the link*/
-.gm-style div div div div div div div div a {
-  color: #f1f1f1;
-  font-weight: bold;
-}
-
-.modalcontent {
-    background-color: #1E1E1E;
-    color: purple;
-
-}
-.map.theme--dark.v-card {
-    background-color: #1E1E1E;
-    color: #ff0606;
+.gm-style-iw {
+    font-weight: 300;
+    font-size: 50px;
+    overflow: hidden;
 }
 
 h3 {
@@ -211,10 +229,8 @@ a {
 }
 
 #map {
-  height: 400px;
-  /* The height is 400 pixels */
+  height: 250px;
   width: 100%;
-  /* The width is the width of the web page */
 }
 
 .pac-card {
