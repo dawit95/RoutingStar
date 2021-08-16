@@ -12,15 +12,20 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </template>
-    <v-list>
+    <v-list color="black">
+      <v-list-item-group
+        active-class="bg-active"
+        white
+      >
       <v-list-item
         value="true"
         v-for="(item, index) in items"
         :key="index"
         @click="selectSection(item)"
         >
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
-      </v-list-item>
+          <v-list-item-title color="red">{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list-item-group>
     </v-list>
     </v-menu>
   </v-app-bar>
@@ -79,6 +84,11 @@ export default {
 <style scoped>
 .moveToRight {
   left: 20px;
+}
+
+.bg-active {
+  background-color: black;
+  color : white !important;
 }
 /* .moveToUp {
   top: 1px;
