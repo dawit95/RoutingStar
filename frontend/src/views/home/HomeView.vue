@@ -118,7 +118,7 @@ export default {
   },
   created () {
     // 로그인 되 있는 사용자인지 / 처음으로 로그인 된 사용자인지 / 로그인 안된 사용자인지
-  if (this.jwt[0]) {
+  if (this.jwt[0]) {ㄷ
     console.log('token이 이미 저장이 되어있음')
     this.$store.dispatch('fetchLoginedToken', this.jwt)
     this.$store.dispatch('fetchLoginedFeeds', this.jwt)
