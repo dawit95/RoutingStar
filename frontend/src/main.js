@@ -3,6 +3,8 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import vuetify from './plugins/vuetify'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 
 // 알람
@@ -50,6 +52,12 @@ if(payload.data.message.includes("follow")) {
 } else if (payload.data.message.includes("피드좋아요")) {
   store.dispatch('showLikeModal', payload.data.message);
 } else if(payload.data.message.includes("루트 저장")) {
+
+// if(payload.data.title.includes("팔로우 알림")) {
+//   store.dispatch('showAlertModal', payload.data.message);
+// } else if (payload.data.title.includes("좋아요 알림")) {
+//   store.dispatch('showLikeModal', payload.data.message);
+// } else if(payload.data.title.includes("루트 저장 알림")) {
   store.dispatch('showStoreModal', payload.data.message);
 }
 })
@@ -68,5 +76,8 @@ new Vue({
   store,
   router,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  mounted() {
+    AOS.init()
+  }
 }).$mount('#app')

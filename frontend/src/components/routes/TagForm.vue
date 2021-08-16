@@ -17,7 +17,7 @@
         </div>
       </v-container>
       
-      <v-container class="tag-container mb-11">
+      <v-container class="tag-container mb-1">
         <p class="tag-title-font ml-3 mb-0">어떤 것을 할수있는 루트인가요?</p>
         <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
           <button 
@@ -140,6 +140,42 @@ export default {
   cursor: pointer;
   transition: all 0.3x ease-in-out;
   box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
+  animation: jello-horizontal .9s both;
+
+}
+.search-button {
+  width: 90px;
+  background: #101423;
+  color: #FBE8A6;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+  border-radius: 16px;
+  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
+}
+@keyframes jello-horizontal {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
 }
 
 </style>

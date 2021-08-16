@@ -24,46 +24,19 @@
             <div>
               <div class="box">
                 <!-- 썸네일 이미지 -->
-                <div
-                  v-for="place of feed.places"
-                  :key="place.createdOrder"
-                  class="d-flex justify-center container"
-                >
-                  <span v-if="place.isThumbnail" class="d-flex justify-center">
-                    <img
-                      @click="
-                        $router.push({ name: 'RouteDetailView', params: { feedId: `${feed.id}` } })
-                      "
-                      class="main-image"
-                      :src="place.placeImg"
-                      alt=""
-                    />
-                    <img
-                      @click="
-                        $router.push({ name: 'RouteDetailView', params: { feedId: `${feed.id}` } })
-                      "
-                      class="mid-image "
-                      src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png"
-                      alt=""
-                    />
-                    <img
-                      @click="
-                        $router.push({ name: 'RouteDetailView', params: { feedId: `${feed.id}` } })
-                      "
-                      class="logo-image"
-                      src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png"
-                      alt=""
-                    />
-                    <img
-                      @click="
-                        $router.push({ name: 'RouteDetailView', params: { feedId: `${feed.id}` } })
-                      "
-                      class="route-image"
-                      :src="feed.routeImg"
-                      alt=""
-                    />
-                  </span>
-                </div>
+                <span v-if="getThumbnailPlace(feed) !== undefined" class="d-flex justify-center">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="main-image" :src="getThumbnailPlace(feed).placeImg" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="mid-image " src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}`}})" class="route-image" :src=feed.routeImg alt="">
+                </span>
+                <span v-else class="d-flex justify-center">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="main-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/temp_thumbnail.jpg" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="mid-image " src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}`}})" class="route-image" :src=feed.routeImg alt="">
+                </span>
+
                 <!-- 좋아요, 저장 -->
                 <v-row class="pr-6 pt-1" align="center" justify="end">
                   <div v-if="feed.isLiked">
@@ -268,6 +241,13 @@ export default {
         jwtId: this.jwt[2],
       });
     },
+
+    getThumbnailPlace : function(feed) {
+      if( feed === undefined || feed.places == undefined ) {
+        return undefined
+      }
+      return feed.places.find( place => place.isThumbnail)
+    }
   },
   watch: {
     // getterbrowserToken: function() {
@@ -346,7 +326,7 @@ export default {
 /* 카드하나속성 */
 .box {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 .profile-font {
   font-family: 'Do Hyeon', sans-serif;

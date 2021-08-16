@@ -24,7 +24,7 @@ import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
-  name: 'Retry',
+  name: 'ReviseOthersRouteView',
   components: {
     ReviseOthersHeader,
     UpdateOthersMap,

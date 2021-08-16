@@ -8,9 +8,11 @@
         :src="require('../../assets/LogoWithoutWord.png')"
     /></v-avatar>
     <v-spacer></v-spacer>
-    <v-btn class="moveToRight" color="grey" x-large icon>
+    
+    <!-- 알림 아이콘 -->
+    <!-- <v-btn class="moveToRight" color="grey" x-large icon>
       <v-icon>mdi-bell</v-icon>
-    </v-btn>
+    </v-btn> -->
     <tool-tip-dialog />
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
@@ -18,15 +20,21 @@
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </template>
-      <v-list>
+      <v-list color="black">
+      <v-list-item-group
+        active-class="bg-active"
+        white
+      >
+
         <v-list-item
           value="true"
           v-for="(item, index) in items"
           :key="index"
           @click="selectSection(item)"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title style="color: white">{{ item.title }}</v-list-item-title>
         </v-list-item>
+      </v-list-item-group>
       </v-list>
     </v-menu>
   </v-app-bar>
@@ -54,8 +62,8 @@ export default {
     selectSection(item) {
       switch (item.title) {
         case 'MyPage':
-          console.log('MyPage');
-          this.enterUserprofile({
+          // console.log('MyPage')
+          this.enterUserprofile({ 
             userId: this.jwt[2],
             access_token: this.jwt[0],
             jwtId: this.jwt[2],
@@ -89,7 +97,7 @@ export default {
 
 <style scoped>
 .moveToRight {
-  left: 20px;
+  left: 25px;
 }
 
 .bg-active {
