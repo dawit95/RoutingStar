@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <ProfileInfo/>
-    <v-row class="button mx-8 Dohyeon">Edit Profile</v-row>
+    <!-- <v-row class="button mx-8 Dohyeon">Edit Profile</v-row> -->
     <MyRoutesTabs/>
   </v-container>
 </template>

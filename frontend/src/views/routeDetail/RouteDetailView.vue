@@ -12,18 +12,18 @@
       <hr>
         <RouteDetailMap />
       <hr>
-      <v-row class="moveDown moveRight">
+      <v-row class="d-flex moveDown moveRight">
         <v-col cols="8" xs="8" class="content">
-          <span class="Nanum" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
-            <button class="button" color="white">{{ whatTag.title }}</button>
+          <span v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+            <button class="button">{{ whatTag.title }}</button>
           </span>
 
-          <span class="Nanum" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+          <span v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
             <button class="button" color="white">{{ withTag.title }}</button>
           </span>
         </v-col>
 
-        <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
+        <v-col cols="4" xs="4" class="d-flex">  
           <div v-if="routeInfo.isLiked">
             <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
           </div>
@@ -41,14 +41,13 @@
           <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
            </v-col>
       </v-row>
-
+      <br/>
          <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
           <span v-if="place.isThumbnail===true">
             <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
             <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
           </span>
          </div>
-
         <br /><br /><br /><br /><br />><br /><br />
 
       <div >
@@ -162,6 +161,7 @@ export default {
   padding: auto;
   font-size: 0.4em;
   font-weight: bold;
+  border-radius: 5px;
   /* font: bold; */
   }
 
