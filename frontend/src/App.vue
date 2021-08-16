@@ -53,35 +53,5 @@ export default {
   /* background-image: url("./assets/background-color.jpg"); */
 }
 
-/* .chooseButton까지 TagForm에서 사용되는 CSS */
-.button {
-  width: 70px;
-  height: 25px;
-  background: #C1C8E4;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
-  margin-top: 6px;
-}
-.button span {
-  line-height: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #303C6C;
-  font-family: 'Do Hyeon', sans-serif;
-}
-.chooseButton {
-  width: 70px;
-  height: 25px;
-  background: #B4DFE5;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
-}
-
 
 </style>
