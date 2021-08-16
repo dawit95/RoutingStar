@@ -1,12 +1,13 @@
 <template>
+  <div>
     <v-container v-if="routeInfo.user" class="mx-auto" background-color="#101423" max-width="400">
-      <v-row class="moveDown moveRight moveUp">
+      <v-row class="moveDown moveRight moveUp my-1">
         <v-list-item-avatar color="grey darken-3">
           <v-img @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
-           <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
+            <span @click="onClickUser(routeInfo)" class="moveDownBig Dohyeon pt-1" style="color: white">{{ routeInfo.user.name }}</span>
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
-            <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
+            <v-icon class="moveDown moveRight pt-3" color="white">mdi-pencil-outline</v-icon>
           </v-btn>
       </v-row>    
       <hr>
@@ -39,15 +40,15 @@
             <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
-           </v-col>
+            </v-col>
       </v-row>
 
-         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+          <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
           <span v-if="place.isThumbnail===true">
             <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
             <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
           </span>
-         </div>
+          </div>
 
         <br /><br /><br /><br /><br />><br /><br />
 
@@ -55,13 +56,14 @@
       <v-row class="d-flex justify-center underLine Dohyeon">
         {{ routeInfo.routeDescription }}
     </v-row>
-     </div>    
-  
+      </div>    
+
         <div>
           <CommentBox/>
         </div>
     
     </v-container>
+  </div>
 </template>
 
 <script>
@@ -81,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved'])
+    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved']),
   },
   methods: {
     ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo']),
