@@ -63,11 +63,19 @@ export default {
           break;
         case 'Logout':
           console.log('Logout');
+          axios
+            .post('https://i5a309.p.ssafy.io/logout', {
+              params: { title: 'vue.js는 조으다.' },
+              headers: { access_token: this.jwt[0] },
+              timeout: 1000, // 1초 이내에 응답이 없으면 에러 처리
+            })
+            .then((res) => {
+              console.log(res.data);
+            });
           this.$store.state.accounts.jwt = [];
           this.$store.state.home.feeds = '';
           localStorage.removeItem('vuex');
           this.$router.push('/');
-          axios.post('https://i5a309.p.ssafy.io/logout');
       }
     },
     moveToHome() {
