@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- <v-row justify="center"> -->
-    <v-img class="mx-auto logoTopM rotate-center" max-height="400" max-width="400" :src="require('../../assets/logo.png')" />  
-    <!-- <p class="logoFont"> -->
+    <v-row justify="center">
+      <v-img class="logoTopM rotate-center" max-height="300" max-width="300" :src="require('../../assets/LOGO7.png')" />  
       <h1 class="logoFont">ROUTING STAR</h1>
-    <!-- </v-row> -->
+
+    </v-row>
     <!-- width: 30px
     height: 150px /> -->
     <Google />
@@ -30,6 +30,10 @@ export default {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   color: white;
+  font-size: 44px;
+  position: absolute;
+  top: 206px;
+  /* left: 30%; */
 }
 
 .logoTopM {
