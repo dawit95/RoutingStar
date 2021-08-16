@@ -1,48 +1,52 @@
 <template>
   <v-app-bar app color="#0E111E" height="60px" class="moveToUp">
-    <v-avatar class="" @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
+    <v-avatar class="" @click="moveToHome"
+      ><v-img
+        class="mx-auto"
+        max-height="200"
+        max-width="400"
+        :src="require('../../assets/LogoWithoutWord.png')"
+    /></v-avatar>
     <v-spacer></v-spacer>
     <v-btn class="moveToRight" color="grey" x-large icon>
       <v-icon>mdi-bell</v-icon>
     </v-btn>
-    <tool-tip-dialog/>
+    <tool-tip-dialog />
     <v-menu offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </template>
-    <v-list>
-      <v-list-item
-        value="true"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="selectSection(item)"
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          value="true"
+          v-for="(item, index) in items"
+          :key="index"
+          @click="selectSection(item)"
         >
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-menu>
   </v-app-bar>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 import ToolTipDialog from './ToolTipDialog.vue';
 
 export default {
- name: 'TempHeader', 
- data: () => ({
-    items: [
-      { title: 'MyPage' },
-      { title: 'Logout' },
-    ],
+  name: 'TempHeader',
+  data: () => ({
+    items: [{ title: 'MyPage' }, { title: 'Logout' }],
   }),
   components: {
-    ToolTipDialog
+    ToolTipDialog,
   },
   computed: {
-    ...mapGetters(['jwt'])
+    ...mapGetters(['jwt']),
   },
   methods: {
     ...mapActions(['enterUserprofile']),
@@ -50,30 +54,29 @@ export default {
     selectSection(item) {
       switch (item.title) {
         case 'MyPage':
-          console.log('MyPage')
-          this.enterUserprofile({ 
+          console.log('MyPage');
+          this.enterUserprofile({
             userId: this.jwt[2],
             access_token: this.jwt[0],
-            jwtId: this.jwt[2]
-          })
-          break
+            jwtId: this.jwt[2],
+          });
+          break;
         case 'Logout':
-          console.log('Logout')
-          this.$store.state.accounts.jwt = []
-          this.$store.state.home.feeds = ''
-          localStorage.removeItem('vuex')
-          this.$router.push('/')
+          console.log('Logout');
+          this.$store.state.accounts.jwt = [];
+          this.$store.state.home.feeds = '';
+          localStorage.removeItem('vuex');
+          this.$router.push('/');
+          axios.post('https://i5a309.p.ssafy.io/logout');
       }
     },
     moveToHome() {
-      if (this.$route.name != "HomeView") {
-        this.$router.push({ name: "HomeView" }).catch(() => {});
+      if (this.$route.name != 'HomeView') {
+        this.$router.push({ name: 'HomeView' }).catch(() => {});
       }
     },
-
-    
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
