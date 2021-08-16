@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FallingImg/>
     <!-- <v-row justify="center"> -->
     <v-img class="mx-auto logoTopM rotate-center" max-height="400" max-width="400" :src="require('../../assets/logo.png')" />  
     <!-- <p class="logoFont"> -->
@@ -15,12 +16,14 @@
 <script>
 import Google from '@/components/accounts/Google.vue'
 // import Kakao from '@/components/accounts/Kakao.vue'
+import FallingImg from '@/components/common/FallingImg.vue'
 
 export default {
   name: 'LoginView',
   components: {
     Google,
     // Kakao,
+    FallingImg
   },
 }
 </script>
