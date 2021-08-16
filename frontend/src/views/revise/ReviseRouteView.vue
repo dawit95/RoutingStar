@@ -75,9 +75,7 @@ export default {
   async created () {
     const token = this.jwt
     this.$store.dispatch('fetchLoginedToken', token)
-    console.log(this.jwt)
     const tmp_id = this.jwt[2]
-    console.log(`userID확인 : ${this.jwt[2]}`)
     this.setClickedRouteId(this.$route.params.routeId)
     // prop받은 routeId로 변경필요
     const routeId = this.$route.params.routeId
@@ -92,8 +90,6 @@ export default {
     }
     await axios.get(`http://i5a309.p.ssafy.io:8000/api/v1/route/${tmp_id}/${routeId}`, config)
       .then((res) => {
-        console.log('응답받음')
-        console.log(res)
         this.responseData = res.data
         this.canRendering = true
       })
