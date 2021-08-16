@@ -46,7 +46,7 @@ export default {
     Nav
   },
   mounted() {
-    this.document.documentElement.webkitRequestFullscreen();
+    document.documentElement.webkitRequestFullscreen();
   },
 };
 </script>
