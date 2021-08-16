@@ -1,27 +1,34 @@
 <template>
-  <v-app-bar app color="#0E111E" height="60px" class="moveToUp">
-    <v-avatar class="" @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
+  <v-app-bar app color="#0E111E" width="100%" height="54px" class="moveToUp">
+    <v-avatar class="mt-2" @click="moveToHome"><v-img class="mx-auto" max-height="200" max-width="400" :src="require('../../assets/LogoWithoutWord.png')" /></v-avatar>
+    
     <v-spacer></v-spacer>
-    <v-btn class="moveToRight" color="grey" x-large icon>
+    
+    <!-- 알림 아이콘 -->
+    <!-- <v-btn class="moveToRight" color="grey" x-large icon>
       <v-icon>mdi-bell</v-icon>
     </v-btn>
+     -->
+
     <tool-tip-dialog/>
-    <v-menu offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </template>
-    <v-list>
-      <v-list-item
-        value="true"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="selectSection(item)"
-        >
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
+      <v-menu offset-y>
+        
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="account-btn mr-1" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+      
+      <v-list>
+        <v-list-item
+          value="true"
+          v-for="(item, index) in items"
+          :key="index"
+          @click="selectSection(item)"
+          >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-menu>
   </v-app-bar>
 </template>
