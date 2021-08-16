@@ -13,13 +13,9 @@
     <!-- <v-btn class="moveToRight" color="grey" x-large icon>
       <v-icon>mdi-bell</v-icon>
     </v-btn>
-<<<<<<< HEAD
      -->
 
     <tool-tip-dialog/>
-=======
-    <tool-tip-dialog />
->>>>>>> fe/feature/#05-6
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
