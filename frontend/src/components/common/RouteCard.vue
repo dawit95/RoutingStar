@@ -1,5 +1,6 @@
 <template>
-  <v-flex xs12 class="big-box rounded-lg">
+  <!-- <v-flex xs12 class="big-box rounded-lg"> -->
+  <v-container class="big-box rounded-lg backColor">
     <div class="list-prop">
       <!-- 프로필 이미지, 이름 -->
       <div>
@@ -50,7 +51,8 @@
         </v-row>
       </div>
     </div>
-  </v-flex>
+  </v-container>
+  <!-- </v-flex> -->
 </template>
 
 
@@ -94,6 +96,9 @@ export default {
 </script>
 
 <style scoped>
+.backColor {
+  background-color: black;
+}
 .big-box {
   /* width: 95%; */
   margin-left: 25px;
