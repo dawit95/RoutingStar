@@ -1,47 +1,68 @@
 <template>
   <v-flex xs12 class="big-box rounded-lg">
     <draggable class="card-box" @update="onUpdated">
-      <v-list outlined v-for="(place, idx) in places" :key="place.createdOrder" class="rounded-lg mb-2">
+      <v-list
+        outlined
+        v-for="(place, idx) in places"
+        :key="place.createdOrder"
+        class="rounded-lg mb-2"
+      >
 
-          <v-card flat class="d-flex">
-            <v-card flat>
-              <post-image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
-                <div slot="activator">
-                  <v-avatar size="140px" rounded v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
-                    <v-icon dark x-large>
-                      mdi-plus
-                    </v-icon>
-                  </v-avatar>
-                  <v-avatar size="140px" rounded v-ripple v-else class="lighten ml-1">
-                    <img :src="place.placeImg" alt="Image">
-                  </v-avatar>
-                </div>
-              </post-image-input>
-              
-            </v-card>
-            <v-card flat class="d-flex flex-column">
-              <v-text-field v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" 
-              label="short description" color="indigo" class="d-flex align-center" rows="2">
-                <v-icon right slot="prepend" color="grey">mdi-comment</v-icon>
-              </v-text-field>
-              <v-switch
-                class="switch-prop pa-0"
-                id="thumbnail_switch"
-                @click="refreshThumbnailBtn(place)"
-                :label="place.isThumbnail ? thumbnailLabel : '썸네일 등록하기!'"
-                :disabled="(!place.isThumbnail && isthumbail) || !place.imageUpload"
-                :v-model="place.isThumbnail"
-                inset color="indigo darken-3"></v-switch>
-            </v-card>
+        <!-- <v-card flat class="d-flex">
+          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+          {{ idx }}
+          <v-spacer></v-spacer>
+          <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
+        </v-card> -->
+        <!-- <v-card flat class="d-flex justify-end">
 
-            <v-card flat class="d-flex flex-column">
-              <v-icon left style="cursor: pointer;" class="pa-0 ma-0 justify-end align-start" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
-              <v-spacer></v-spacer>
-              <v-icon drak absolute right style="cursor: pointer;" class=" ma-0 pa-0">mdi-drag-horizontal-variant</v-icon>
-            <!-- <v-icon class="d-flex col-9 justify-end">mdi-plus</v-icon> -->
-            </v-card>
+          {{place.createdOrder}}
+          <v-spacer></v-spacer>
+          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+          <v-spacer></v-spacer>
+          <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
+        </v-card> -->
+        <!-- <v-list-item outlined>
+          <v-list-item-content class="py-0">
+              <input @change="onFileSelected(place)" id="uploadFile" accept="image/*" type="file">
+              <img style="width:50px;" id="preview-image" :src="fileList[place.createdOrder]" alt="">
+            <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
+          </v-list-item-content>
+        </v-list-item> -->
+          <v-card flat class="d-flex justify-end">
+                
+          <post-image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
+            <div slot="activator">
+              <v-avatar size="50px" v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
+                <!-- <span>Image</span> -->
+                <v-icon dark x-large>
+                  mdi-plus
+                </v-icon>
+              </v-avatar>
+              <v-avatar size="50px" v-ripple v-else class="lighten ml-1">
+                <img :src="place.placeImg" alt="Image">
+              </v-avatar>
+            </div>
+          </post-image-input>
 
+          <v-spacer></v-spacer>
+          <v-icon drak large right style="cursor: pointer;">mdi-drag-horizontal-variant</v-icon>
+          <!-- <v-spacer></v-spacer> -->
+          <v-icon left style="cursor: pointer;" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
         </v-card>
+        <v-list-item outlined>
+          <v-list-item-content class="py-0">
+            <v-textarea v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" label="장소에대한 짧은설명" rows="1" prepend-icon="mdi-comment"></v-textarea>
+          </v-list-item-content>
+        </v-list-item>
+          <v-switch
+          class="switch-prop"
+          id="thumbnail_switch"
+          @click="refreshThumbnailBtn(place)"
+          :label="place.isThumbnail ? thumbnailLabel : '썸네일로 설정하기!'" 
+          :disabled="(!place.isThumbnail && isthumbail) || !place.imageUpload"
+          :v-model="place.isThumbnail"
+          inset color="indigo darken-3"></v-switch>
       </v-list>
     </draggable>
     <!-- <v-btn @click="postPointImages">확인용 버튼</v-btn> -->
@@ -57,7 +78,7 @@ import AWS from 'aws-sdk'
 import PostImageInput from '@/components/routes/PostImageInput.vue'
 
 export default {
-  name: 'MapPointFormS3',
+  name: 'MapPointFormS3 copy',
   components: {
     draggable,
     PostImageInput: PostImageInput,
@@ -144,14 +165,14 @@ export default {
         this.$emit('change-isthumbail')
         // this.isthumbail = !this.isthumbail
         place.isThumbnail = false
-        this.thumbnailLabel = '썸네일 등록하기!'
+        this.thumbnailLabel = '썸네일로 설정하기!'
         this.$store.state.images.thumbnailChecked = false
       // 썸네일이 아닌경우 => 첨부파일이 등록되어있다면 => 썸네일로 지정
       } else if (this.isthumbail === false) {
         this.$emit('change-isthumbail')
         // this.isthumbail = !this.isthumbail
         place.isThumbnail = true
-        this.thumbnailLabel = '썸네일 등록완료!'
+        this.thumbnailLabel = '썸네일 이미지가 등록되었습니다.'
 
         const image = this.imgList[place.createdOrder]
         const date = new Date().getTime();
@@ -191,9 +212,9 @@ export default {
 <style scoped>
 .big-box {
   width: 300px;
-  height: 350px;
+  height: 300px;
   overflow: scroll;
-  margin: 0px 20px 0 15px;
+  margin: 0 20px 0 15px;
   background-color: #2A355D;
   overflow-x: hidden;
 }
@@ -232,5 +253,4 @@ input[type=file]::file-selector-button:hover {
 .switch-prop {
   margin: 0 0 0 10px;
 }
-
 </style>

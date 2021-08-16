@@ -58,7 +58,7 @@ const getters = {
   },
   postingCheck(state) {
     return state.postingCheck
-  }
+  },
 }
 
 const mutations= {
@@ -78,15 +78,6 @@ const mutations= {
   REFRESH_PLACES(state, newPlaces) {
     state.places = newPlaces
   },
-  // UPDATE_DRAGGERBLE_ITEMS(state, event) {
-  //   var ary = [...state.places]
-
-  //   var tmp = ary[event.newIndex]
-  //   ary[event.newIndex] = ary[event.oldIndex]
-  //   ary[event.oldIndex] = tmp
-
-  //   state.places = ary;
-  // },
   UPDATE_DRAGGERBLE_ITEMS(state, event) {
     console.log(state.places)
 
@@ -135,7 +126,12 @@ const mutations= {
   },
   SET_ROUTE_INFO_WITH_COMMENT(state, res) {
     state.routeInfoWithComment = res
-    console.log('SET_ROUTE_INFO_WITH_COMMENT', res)
+  },
+  SET_SELECTED_ROUTE(state, res) {
+    state.selectedRoute = res
+  },
+  CLEAR_ROUTE_INFO(state) {
+    state.routeInfo = []
   }
 }
 
@@ -241,11 +237,14 @@ const actions = {
     }
   },
   fetchRouteInfo({ commit }, payload) {
-    // console.log(payload)
-    getRouteInfoByRouteId(1, payload.routeId, payload.access_token,
+    commit('CLEAR_ROUTE_INFO')
+    console.log(payload)
+    getRouteInfoByRouteId(payload.userId, payload.routeId, payload.access_token,
       (res) => {
+        
+        console.log('액션스~~~')
         console.log(res)
-        commit('SET_ROUTE_INFO', res)
+        commit('SET_ROUTE_INFO', res.data.success)
       }, (error) => {
         console.log(error)
     })
@@ -266,6 +265,13 @@ const actions = {
         console.log(error)
     })
   },
+  setSelectedRoute( {commit}, route){
+    commit('SET_SELECTED_ROUTE', route)
+  },
+  clearRouteInfo({ commit }) {
+    console.log('초기호ㅏ')
+    commit('CLEAR_ROUTE_INFO')
+  }
 }
 
 export default {
