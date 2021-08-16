@@ -1,16 +1,8 @@
 <template>
-  <v-card class="overflow-hidden">
-    <v-app-bar
-      app
-      color="#101423"
-      dark
-      style="width=100%; justify-content=flex-end;"
-      pa-0
-    >
-      <v-btn
-      @click="goBack"
-      icon>
-        <v-icon x-large>mdi-chevron-left</v-icon>
+    <div class="d-flex revise-header" dark>
+
+      <v-btn @click="goBack" icon class="pb-1">
+        <v-icon color="white" x-large>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
@@ -22,7 +14,7 @@
       >
         
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mr-3 button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
+          <v-btn class="button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
             선택완료
           </v-btn>
         </template>
@@ -74,8 +66,7 @@
         
         </v-card>
       </v-dialog>
-    </v-app-bar>
-  </v-card>
+    </div>
 </template>
 
 <script>
@@ -127,20 +118,21 @@ export default {
 }
 </script>
 
-<style>
-.v-toolbar__content, .v-toolbar__extension {
-  padding-right: 0px;
-  padding-left: 8px;
-}
+<style scoped>
 .grayscale {
-    filter: grayscale(100%);
-  }
+  filter: grayscale(100%);
+}
 .card-image {
-border-radius: 7px;
-margin: 4px;
-max-width: 80%;
+  border-radius: 7px;
+  margin: 4px;
+  max-width: 80%;
 }
 .button-font {
   font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
+}
+.revise-header {
+  height: 56px;
+  align-items: center;
 }
 </style>

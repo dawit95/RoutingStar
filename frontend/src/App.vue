@@ -1,8 +1,11 @@
 <template>
   <v-app>
     <v-main class="background-color">
+      <follow-alert/>
+      <like-alert></like-alert>
+      <store-alert></store-alert>
       <!-- Header -->
-      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' "/>
+      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' && $route.name !== 'ReviseOthersRouteView'"/>
 
       <!-- 라우터 뷰 -->
       <transition
@@ -31,6 +34,9 @@
 </template>
 
 <script>
+import StoreAlert from '@/components/alert/StoreAlert.vue'
+import LikeAlert from '@/components/alert/LikeAlert.vue'
+import FollowAlert from '@/components/alert/FollowAlert.vue'
 import Header from '@/components/common/Header.vue'
 import Nav from '@/components/common/Nav.vue'
 
@@ -38,13 +44,15 @@ export default {
   name: 'App',
   data() {
     return {
-
     }
   },
   components: {
     Header,
-    Nav
-  }
+    Nav,
+    FollowAlert,
+    LikeAlert,
+    StoreAlert
+  },
 };
 </script>
 <style>
@@ -52,7 +60,6 @@ export default {
   background-color: #101423;
   /* background-image: url("./assets/background-color.jpg"); */
 }
-
 /* .chooseButton까지 TagForm에서 사용되는 CSS */
 .button {
   width: 70px;

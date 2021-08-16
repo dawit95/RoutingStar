@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #createRouteSuccessModal {
   background-color: #101423;
 }
