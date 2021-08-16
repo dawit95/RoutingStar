@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <ProfileInfo/>
-    <v-row class="button mx-8">Edit Profile</v-row>
+    <v-row class="button mx-8 Dohyeon">Edit Profile</v-row>
     <MyRoutesTabs/>
   </v-container>
 </template>
@@ -44,7 +44,11 @@ export default {
 }
 </script>
 
+
 <style scoped>
+.Dohyeon {
+  font-family: 'Do Hyeon', sans-serif;
+}
 .button {
   flex: 1 1 auto;
   padding: 3px;
