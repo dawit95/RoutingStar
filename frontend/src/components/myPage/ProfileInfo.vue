@@ -20,9 +20,17 @@
             <div v-else class="mt-1 d-flex justify-center Nanum">0</div>
           </v-col>
         </v-row>
+        <v-row>
+             <div class="button mx-8 Dohyeon mr-3 d-flex justify-center">Edit</div>
+
+        </v-row>
       </v-col>          
     </v-row>
+   <!-- <v-row>  -->
+     <div class="button mx-8 Dohyeon mr-3 d-flex justify-center">Edit</div>
 
+     <!-- </v-row> -->
+    
     <v-row class="d-flex justify-center mb-3">
       <div class="mt-3 Nanum moveRightLittle" v-if="userInfo.userDescription">{{ userInfo.userDescription }}</div>
       <div class="mt-3 Nanum moveRightLittle" v-else>{{ userInfo.email }}</div>
@@ -75,6 +83,47 @@ export default {
 </script>                                                                               
 
 <style scoped>
+.Dohyeon {
+  font-family: 'Do Hyeon', sans-serif;
+}
+.button {
+  flex: 1 1 auto;
+  padding: 3px;
+  margin: 7px;
+  border: 2px solid #D2FDFF;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+  color: #D2FDFF;
+  height: 30px;
+  font-size: 13px;
+  background-color: #101423;
+}
+.button:after {
+  position: absolute;
+  transition: 0.3s;
+  content: "";
+  width: 0;
+  left: 50%;
+  bottom: 0;
+  height: 3px;
+  background: #D2FDFF;
+}
+.button:hover {
+  cursor: pointer;
+}
+.button:hover:after {
+  width: 100%;
+  left: 0;
+}
+.button:hover {
+  box-shadow: 0px 0px 0px 3px #f7f7f7;
+}
+.button:hover:after {
+  width: 0%;
+}
 .Nanum {
   font-family: 'Nanum Gothic Coding', monospace;
 }
@@ -105,6 +154,9 @@ p {
 }
 .moveLeftLittle {
   margin-right: 3px;
+}
+.moveRight {
+  margin-left: 0px;
 }
 .moveRightLittle {
   margin-left: 10px;
