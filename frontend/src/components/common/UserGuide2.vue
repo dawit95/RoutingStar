@@ -1,53 +1,70 @@
-<template>
-  <div id="background">
-    <v-carousel height="800px" hide-delimiter-background show-arrows-on-hover>
-      <v-carousel-item class="intro">
+<template id="background">
+  <div>
+    <v-carousel
+      class="carousel"
+      height="auto"
+      cycle
+      hide-delimiter-background
+      show-arrows-on-hover
+    >
+      <v-carousel-item class="intro" style="height: 800px;">
         <section class="intro tracking-in-expand">
           <div class="introDescription">
             <div class="text-caption">당신의 발자취가 별이 되어 떠있는 곳</div>
             <p>RoutingStar</p>
           </div>
           <img
-            class="introImage" style="margin: 0 auto;"
+            class="introImage"
+            style="margin: 0 auto;"
             src="https://res.cloudinary.com/dsderm9xw/image/upload/v1622028117/3D%20Illustrations/3d-illustration4_usckww.png"
             alt="3d illustration of boy with a flag"
           />
         </section>
       </v-carousel-item>
 
-      <v-carousel-item class="guide1">
+      <v-carousel-item style="" class="guide1">
         <section class="guide1 focus-in-expand-fwd" justify="center">
-            <v-img :src="require('../../assets/그림1.png')" />
+          <v-img class="ma-2 focus-in-expand-fwd" :src="require('../../assets/그림1.png')" />
           <div class="guide1Description">
             <h1 class="Dohyeon">정보를 얻을래!</h1>
             <br />
-            <div>우아아아</div>
+            <div>
+                    <v-img class="ma-2 focus-in-expand-fwd" :src="require('../../assets/설명1.png')" />
+            </div>
           </div>
         </section>
       </v-carousel-item>
 
       <v-carousel-item class="guide2 focus-in-expand-fwd">
         <section class="guide2 ">
-          <div class="guide2Description" data-aos="slide-down">
-            <img
-              class="guide2Image"
-              src="https://res.cloudinary.com/dsderm9xw/image/upload/v1622028057/3D%20Illustrations/3d-illustration1_j06j0a.png"
-              alt="3d illustration of boy with laptop sitting"
-              data-aos="slide-up"
-            />
-            <h1>공유할래!</h1>
-            <div></div>
+          <div>
+            <v-img class="ma-2 tilt-in-top-1" :src="require('../../assets/그림2.png')" />
+            <v-img class="ma-2 tilt-in-fwd-tr" :src="require('../../assets/그림3.png')" />
+            <div class="guide2Description">
+              <h1 class="Dohyeon">공유할래!</h1>
+              <div>
+                  <v-img class="ma-2 focus-in-expand-fwd" :src="require('../../assets/설명2.png')" />
+              </div>
+            </div>
           </div>
         </section>
       </v-carousel-item>
 
-      <!-- <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-sheet :color="colors[i]" height="100%">
-          <v-row class="fill-height" align="center" justify="center">
-              
-          </v-row>
-        </v-sheet>
-      </v-carousel-item> -->
+      <v-carousel-item class="guide3 focus-in-expand-fwd">
+        <section class="guide3">
+          <div>
+            <v-img class="ma-2 tilt-in-top-1" :src="require('../../assets/그림5.png')" />
+            <v-img class="ma-2 tilt-in-fwd-tr" :src="require('../../assets/그림6.png')" />
+            <div class="guide3Description">
+              <h1 class="Dohyeon">탐나는데!?</h1>
+              <div>
+                  <v-img class="ma-2 focus-in-expand-fwd" :src="require('../../assets/설명3.png')" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </v-carousel-item>
+
     </v-carousel>
     <footer>
       Developed by RoutingStar
@@ -74,8 +91,12 @@ export default {
 }
 
 * {
-    font-family: "Nanum Gothic";
+  font-family: "Nanum Gothic";
 }
+
+/* .carousel {
+    min-height: 700px;
+} */
 
 footer {
   background: #101423;
@@ -117,13 +138,12 @@ footer {
   font-size: 48px;
 }
 .guide1Description div {
-  background: #fff3e2;
   color: #101423;
   font-size: 20px;
   border-radius: 10px;
 }
 .guide1Description h1[data-v-196bde76] {
-    padding: 0px;
+  padding: 0px;
 }
 
 .guide2 {
@@ -140,12 +160,32 @@ footer {
   padding: 120px 0px 20px 0px;
 }
 .guide2Description div {
-  background: #ffd4a9;
   color: #632b2b;
   font-size: 20px;
   padding: 10px;
   border-radius: 10px;
 }
+
+.guide3 {
+  display: flex;
+  background: #B4DFE5;
+  justify-content: space-evenly;
+  padding-top: 80px;
+  overflow: hidden;
+}
+.guide3Description h1 {
+  font-size: 48px;
+  color: #101423;
+  padding: 120px 0px 20px 0px;
+}
+.guide3Description div {
+  color: #101423;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
 
 .Nanum {
   font-family: "Nanum Gothic Coding", monospace;
@@ -155,7 +195,7 @@ footer {
 }
 
 /* responsiveness */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   .intro {
     display: block;
     padding-top: 10px;
@@ -195,12 +235,30 @@ footer {
   .guide2Description h1 {
     padding: 30px 0px;
   }
+    .guide3 {
+    display: block;
+    padding-top: 10px;
+    height: auto;
+  }
+  .guide3Image {
+    width: 100%;
+  }
+  .guide3Description {
+    padding: 20px;
+  }
+  .guide3Description h1 {
+    padding: 30px 0px;
+  }
+}
+
+element.style {
+    width: auto;
 }
 
 .tracking-in-expand {
-  -webkit-animation: tracking-in-expand 2s cubic-bezier(0.215, 0.61, 0.355, 1)
+  -webkit-animation: tracking-in-expand 1s cubic-bezier(0.215, 0.61, 0.355, 1)
     both;
-  animation: tracking-in-expand 2s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  animation: tracking-in-expand 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
 }
 /* ----------------------------------------------
  * Generated by Animista on 2021-8-17 0:55:48
@@ -240,9 +298,9 @@ footer {
 }
 
 .focus-in-expand-fwd {
-  -webkit-animation: focus-in-expand-fwd 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  -webkit-animation: focus-in-expand-fwd 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
-  animation: focus-in-expand-fwd 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: focus-in-expand-fwd 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 /* ----------------------------------------------
@@ -288,6 +346,91 @@ footer {
     transform: translateZ(0);
     -webkit-filter: blur(0);
     filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.tilt-in-fwd-tr {
+	-webkit-animation: tilt-in-fwd-tr 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: tilt-in-fwd-tr 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2021-8-17 4:3:17
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation tilt-in-fwd-tr
+ * ----------------------------------------
+ */
+@-webkit-keyframes tilt-in-fwd-tr {
+  0% {
+    -webkit-transform: rotateY(20deg) rotateX(35deg) translate(300px, -300px) skew(-35deg, 10deg);
+    transform: rotateY(20deg) rotateX(35deg) translate(300px, -300px) skew(-35deg, 10deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0) rotateX(0deg) translate(0, 0) skew(0deg, 0deg);
+    transform: rotateY(0) rotateX(0deg) translate(0, 0) skew(0deg, 0deg);
+    opacity: 1;
+  }
+}
+@keyframes tilt-in-fwd-tr {
+  0% {
+    -webkit-transform: rotateY(20deg) rotateX(35deg) translate(300px, -300px) skew(-35deg, 10deg);
+    transform: rotateY(20deg) rotateX(35deg) translate(300px, -300px) skew(-35deg, 10deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0) rotateX(0deg) translate(0, 0) skew(0deg, 0deg);
+    transform: rotateY(0) rotateX(0deg) translate(0, 0) skew(0deg, 0deg);
+    opacity: 1;
+  }
+}
+
+.tilt-in-top-1 {
+	-webkit-animation: tilt-in-top-1 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: tilt-in-top-1 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+/* ----------------------------------------------
+ * Generated by Animista on 2021-8-17 4:4:59
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation tilt-in-top-1
+ * ----------------------------------------
+ */
+@-webkit-keyframes tilt-in-top-1 {
+  0% {
+    -webkit-transform: rotateY(30deg) translateY(-300px) skewY(-30deg);
+            transform: rotateY(30deg) translateY(-300px) skewY(-30deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0deg) translateY(0) skewY(0deg);
+            transform: rotateY(0deg) translateY(0) skewY(0deg);
+    opacity: 1;
+  }
+}
+@keyframes tilt-in-top-1 {
+  0% {
+    -webkit-transform: rotateY(30deg) translateY(-300px) skewY(-30deg);
+            transform: rotateY(30deg) translateY(-300px) skewY(-30deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0deg) translateY(0) skewY(0deg);
+            transform: rotateY(0deg) translateY(0) skewY(0deg);
     opacity: 1;
   }
 }
