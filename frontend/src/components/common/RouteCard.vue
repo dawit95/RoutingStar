@@ -1,6 +1,6 @@
 <template>
   <!-- <v-flex xs12 class="big-box rounded-lg"> -->
-  <v-container class="big-box rounded-lg backColor">
+  <v-container class="big-box backColor pa-4">
     <div class="list-prop">
       <!-- 프로필 이미지, 이름 -->
       <div>
@@ -117,7 +117,7 @@ export default {
 } */
 .box {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 /* .thumbnail {
   top: 0;
