@@ -5,16 +5,16 @@
         <div slot="activator"><v-avatar size="100px" class="mb-3"><img :src="userInfo.profileImg" alt="profileImage"></v-avatar></div>
       </v-col>
       <v-col cols="7" xs="7">
-        <v-row class="mt-1 d-flex justify-center">
+        <v-row class="mt-1 d-flex justify-center pr-5">
           <div><h4>{{ userInfo.name }}</h4></div>
         </v-row>
         <v-row class="d-flex justify-center" @click="onClickFollowList">
-          <v-col class="ma-1 pa-1">
+          <v-col class="ma-1 pa-1 pr-5">
             <div class="mt-1 d-flex justify-center">Followers</div>
             <div v-if="followUserList" class="mt-1 d-flex justify-center">{{ followerCnt }}</div>
             <div v-else class="mt-1 d-flex justify-center">0</div>
           </v-col>
-          <v-col class="ma-1 pa-1">
+          <v-col class="ma-1 pa-1 pr-5">
             <div class="mt-1 d-flex justify-center">Followings</div>
             <div v-if="followUserList" class="mt-1 d-flex justify-center">{{ followingCnt }}</div>
             <div v-else class="mt-1 d-flex justify-center">0</div>
@@ -75,7 +75,9 @@ export default {
 </script>                                                                               
 
 <style scoped>
-/* app 전역 말이 되니 */
+p {
+  padding: 0px 50px 0px 0px;
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -96,5 +98,8 @@ export default {
 .moveLeft {
   position: absolute;
   left: 160px;
+}
+.moveLeftLittle {
+  margin-right: 3px;
 }
 </style>
