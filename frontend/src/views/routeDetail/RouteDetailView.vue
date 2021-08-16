@@ -42,18 +42,8 @@
            </v-col>
       </v-row>
       <br/>
-         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-          <span v-if="place.isThumbnail===true">
-            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
-            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
-          </span>
-         </div>
-        <br /><br /><br /><br /><br />><br /><br />
 
       <div >
-      <v-row class="d-flex justify-center underLine Dohyeon">
-        {{ routeInfo.routeDescription }}
-    </v-row>
 
         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
         <span v-if="place.isThumbnail===true">
@@ -66,7 +56,7 @@
 
       <br /><br /><br /><br /><br />><br /><br />
 
-    <div >
+
     <v-row class="d-flex justify-center underLine Dohyeon">
       {{ routeInfo.routeDescription }}
     </v-row>
