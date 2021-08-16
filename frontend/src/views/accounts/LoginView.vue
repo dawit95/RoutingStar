@@ -1,7 +1,10 @@
 <template>
   <div>
+    <FallingImg/>
     <v-row justify="center">
       <v-img class="logoTopM rotate-center" max-height="300" max-width="300" :src="require('../../assets/LOGO7.png')" />  
+    <!-- <v-row justify="center"> -->
+    <!-- <p class="logoFont"> -->
       <h1 class="logoFont">ROUTING STAR</h1>
 
     </v-row>
@@ -15,12 +18,14 @@
 <script>
 import Google from '@/components/accounts/Google.vue'
 // import Kakao from '@/components/accounts/Kakao.vue'
+import FallingImg from '@/components/common/FallingImg.vue'
 
 export default {
   name: 'LoginView',
   components: {
     Google,
     // Kakao,
+    FallingImg
   },
 }
 </script>
