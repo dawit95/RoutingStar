@@ -71,11 +71,11 @@ export default {
           // axios.post('https://i5a309.p.ssafy.io/logout', config).then((res) => {
           axios.post('https://i5a309.p.ssafy.io/logout', '', config).then((res) => {
             console.log(res.data);
-            this.$store.state.accounts.jwt = [];
-            this.$store.state.home.feeds = '';
-            localStorage.removeItem('vuex');
-            this.$router.push('/');
           });
+          this.$store.state.accounts.jwt = [];
+          this.$store.state.home.feeds = '';
+          localStorage.removeItem('vuex');
+          this.$router.push('/');
       }
     },
     moveToHome() {
