@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
     <v-container class="mx-auto" background-color="#101423" max-width="400">
+=======
+    <v-container class="mx-auto tmpBackground" background-color="#101423" max-width="400">
+>>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
       <v-row class="moveDown moveRight moveUp">
         <v-list-item-avatar color="grey darken-3">
           <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
@@ -42,8 +46,13 @@
            </v-col>
       </v-row>
 
+<<<<<<< HEAD
       <!-- <v-row> -->
         <div class="d-flex box" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+=======
+      <v-row>
+        <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+>>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
           <span v-if="place.isThumbnail===true">
             <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
             <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
@@ -56,11 +65,15 @@
       <v-row class="d-flex justify-center underLine">
         {{ routeInfo.routeDescription }}
       </v-row>
+<<<<<<< HEAD
       </div>
 
       <v-row>
         <CommentBox/>
       </v-row>
+=======
+          {{ routeInfo.routeDescription }}
+>>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
 
     </v-container>
 </template>
