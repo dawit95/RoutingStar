@@ -1,16 +1,7 @@
 <template>
-    <v-card class="overflow-hidden">
-    <v-app-bar
-      app
-      color="#101423"
-      dark
-      style="width=100%; justify-content=flex-end;"
-      pa-0
-    >
-      <v-btn
-      @click="goBack"
-      icon>
-        <v-icon x-large>mdi-chevron-left</v-icon>
+    <div class="d-flex revise-header" dark>
+      <v-btn @click="goBack" icon class="pb-1">
+        <v-icon color="white" x-large>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
@@ -22,22 +13,25 @@
             max-width="80%"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
+              <v-btn class="button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
                 선택완료
               </v-btn>
             </template>
             
             <v-card>
-              <v-card-title>
+              <!-- <v-card-title>
                 <span class="text-h3">Route Detail</span>
-              </v-card-title>
+              </v-card-title> -->
               
               <!-- 썸네일 이미지 보여주는 란 (루트가 올라간) -->
               <!-- 현재 임시 이미지로 대체되어 있음 -->
-              <v-container>
+              <!-- <v-container>
                 <img class="card-image" :class="{grayscale:!isHovering}" @mouseover="isHovering = true" @mouseout="isHovering = false" :src="tempThumbnail" alt="...">
-              </v-container>
-
+              </v-container> -->
+              <div>
+                <img v-if="tempThumbnail" class="card-image mx-auto" :src="tempThumbnail" alt="thumbnail image preview">
+                <img v-else class="card-image mx-auto" src="../../assets/temp_thumbnail.jpg" alt="thumbnail image preview">
+              </div>
               <!-- 설명 작성 란 -->
               <v-card-text>
                 <v-container>
@@ -69,13 +63,7 @@
                 >
                   Close
                 </v-btn>
-                <!-- <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="dialog = false"
-                >
-                  Save
-                </v-btn> -->
+
               </v-card-actions>
               
               <v-layout>
@@ -84,8 +72,7 @@
             
             </v-card>
           </v-dialog>
-    </v-app-bar>
-  </v-card>
+    </div>
 </template>
 
 <script>
@@ -141,21 +128,30 @@ export default {
       this.dialog = false
       this.recoverFreezeMap()
     },
+  },
+  created() {
+    if (this.routeDescription) {
+      this.createRouteDescription(this.routeDescription)
+    }
   }
 }
 </script>
 
-<style>
-.v-toolbar__content, .v-toolbar__extension {
-  padding-right: 0px;
-  padding-left: 8px;
-}
+<style scoped>
 .grayscale {
-    filter: grayscale(100%);
-  }
+  filter: grayscale(100%);
+}
 .card-image {
-border-radius: 7px;
-margin: 4px;
-max-width: 80%;
+  border-radius: 7px;
+  margin: 4px;
+  max-width: 80%;
+}
+.button-font {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
+}
+.revise-header {
+  height: 56px;
+  align-items: center;
 }
 </style>
