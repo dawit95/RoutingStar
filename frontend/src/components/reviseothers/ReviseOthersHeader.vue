@@ -19,7 +19,7 @@
       <v-dialog
         v-model="dialog"
         persistent
-        class="mx-0 "
+        class="mx-0"
       >
         
         <template v-slot:activator="{ on, attrs }">
@@ -162,6 +162,5 @@ export default {
 }
 .Create-Route-Success-Modal{
   position: relative;
-
 }
 </style>
