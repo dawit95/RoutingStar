@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on" icon><v-icon>mdi-lightbulb-multiple-outline</v-icon></v-btn>
+        <v-btn class=" ml-2" color="grey" v-bind="attrs" v-on="on" x-large icon><v-icon>mdi-tools</v-icon></v-btn>
       </template>
       <v-card>
         <v-toolbar
