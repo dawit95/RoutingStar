@@ -56,11 +56,11 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         //response 에 token 정보 주입
 //        writeTokenResponse(response, token);
 
+        logger.trace("??????????????????????????????accessToken : {}",token.getAccess_token());
         //유저에게 돌려보네기 upload시 우리 서버로
-        String redirect_uri = "http://i5a309.p.ssafy.io:8080/loginprocess?access="+token.getAccess_token()+"&refresh="+token.getRefresh_token();
+        String redirect_uri = "https://i5a309.p.ssafy.io/loginprocess?access="+token.getAccess_token()+"&refresh="+token.getRefresh_token();
 //        String redirect_uri = "http://localhost:8080/loginprocess?access="+token.getAccess_token()+"&refresh="+token.getRefresh_token();
         response.sendRedirect(redirect_uri);
-
     }
 
     private void writeTokenResponse(HttpServletResponse response, Token token)
