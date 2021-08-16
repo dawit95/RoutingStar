@@ -1,20 +1,19 @@
 <template>
   <div class="commentBox">
     <div>
-      <v-row class="form-group">
-          <v-text-field color="amber lighten-4" label="댓글을 입력해주세요" v-model="WrittingComment"></v-text-field>
-          <button class="addCommentBtn" @click="onClickAddComment">댓글작성</button>
+      <v-row class="form-group"> 
+          <v-text-field dark color="white" label="댓글을 입력해주세요" v-model="WrittingComment"></v-text-field>
+          <button class="addCommentBtn moveDown" @click="onClickAddComment">댓글작성</button>
       </v-row>
       
       <div class="commentList">
-        <v-row v-for="(comment, idx) of routeInfoWithComment.comments" v-bind:key="idx">
+        <v-row v-for="(comment, idx) of routeInfo.comments" v-bind:key="idx">
           <div @click="onClickUser(comment.user)">
-            <!-- <img class="followListImg" :src=comment.user.profileImg alt=""> -->
-            <span>{{ comment.user.name }}</span>
+            <span style="color:white">{{ comment.user.name }}</span>
           </div>
-          <span class="mx-3">{{ comment.comment}}</span>
+          <span class="mx-3" style="color:white">{{ comment.comment}}</span>
           <!-- 댓글 작성 본인만 삭제 가능하게 -->
-          <button class="mx-2" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
+          <button class="mx-2" style="color:white" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
         </v-row>
       </div>
     </div>
@@ -28,7 +27,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CommentForm',
   computed: {
-    ...mapGetters(['jwt', 'routeInfoWithComment', 'newComment', 'deletedComment'])
+    ...mapGetters(['jwt', 'routeInfo', 'newComment', 'deletedComment'])
   },
   data() {
     return {
@@ -36,7 +35,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRouteInfoWithComment', 'createComment', 'deleteCommentActions']),
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'createComment', 'deleteCommentActions']),
 
     onClickUser(user) {
       this.enterUserprofile({
@@ -49,7 +48,7 @@ export default {
     onClickAddComment() {
       if (this.WrittingComment) {
         const payload = {
-          routeId : this.routeInfoWithComment.id,
+          routeId : this.routeInfo.id,
           access_token : this.jwt[0],
           param : {
             comment: this.WrittingComment,
@@ -73,24 +72,33 @@ export default {
   created() {
     // console.log('여기서도 되나여')
     // console.log(this.$route.params)
-    console.log(this.$route.params.feedId)
-    const routeId = this.$route.params.feedId
-    this.fetchRouteInfoWithComment(routeId)
+    // console.log(this.$route.params.feedId)
+    // const routeId = this.$route.params.feedId
+    // this.fetchRouteInfoWithComment(routeId)
   },
   watch: {
     newComment: function() {
-      const routeId = this.$route.params.feedId
-      this.fetchRouteInfoWithComment(routeId)
+      this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.routeInfo.id,
+      access_token: this.jwt[0]
+    })
     },
     deletedComment: function() {
-      const routeId = this.$route.params.feedId
-      this.fetchRouteInfoWithComment(routeId)
+      this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.routeInfo.id,
+      access_token: this.jwt[0]
+    })
     },
   }
 }
 </script>
 
-<style>
+<style scoped>
+.moveDown {
+  margin-top: 18px;
+}
 .commentBox {
     width:80%;
     margin:50px;
@@ -108,6 +116,8 @@ export default {
   background-color: #FBE8A6;
   border-radius: 30px;  
   filter: drop-shadow(0px 7px 7px rgba(0, 0, 0, 0.25));
+  font-size: 0.9em;
+  font-weight: bold;
 }
 .followListImg {
   width: 30px; height: 30px;

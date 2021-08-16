@@ -1,0 +1,200 @@
+<template>
+    <v-container class="mx-auto" background-color="#101423" max-width="400">
+      <v-row class="moveDown moveRight moveUp">
+        <v-list-item-avatar color="grey darken-3">
+          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
+        </v-list-item-avatar>
+           <span @click="onClickUser(routeInfo)" class="moveDownBig" style="color: white">{{ routeInfo.user.name }}</span>
+          <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
+            <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
+          </v-btn>
+      </v-row>    
+      <hr>
+        <RouteDetailMap />
+      <hr>
+      <v-row class="moveDown moveRight">
+        <v-col cols="8" xs="8" class="content">
+          <span class="" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+            <button class="button" color="white">{{ whatTag.title }}</button>
+          </span>
+
+          <span class="" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+            <button class="button" color="white">{{ withTag.title }}</button>
+          </span>
+        </v-col>
+
+        <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
+          <div v-if="routeInfo.isLiked">
+            <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
+          </div>
+          <div v-else>
+            <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
+          </div> 
+          <div class="subheading mr-2">{{ routeInfo.likeCnt }}</div>
+
+          <div v-if="routeInfo.isStored">
+              <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
+          </div>
+          <div v-else>
+            <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+          </div> 
+          <div class="subheading">{{ routeInfo.storageCnt }}</div>
+           </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+          <span v-if="place.isThumbnail===true">
+            <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
+          </span>
+        </v-col>
+      </v-row>
+          {{ routeInfo.routeDescription }}
+
+       
+  
+        <div>
+          <CommentBox/>
+        </div>
+    
+    </v-container>
+</template>
+
+<script>
+import { mapGetters, mapActions } from 'vuex'
+import RouteDetailMap from '@/components/routeDetail/RouteDetailMap.vue'
+import CommentBox from '@/components/routeDetail/CommentBox.vue'
+
+export default {
+  name: 'RouteDetailView',
+  components: {
+    RouteDetailMap,
+    CommentBox
+  },
+  data() {
+    return {
+      map: null,
+    }
+  },
+  computed: {
+    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved'])
+  },
+  methods: {
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo']),
+
+    requestLike(id) {
+      this.jwt[3] = id
+      this.$store.dispatch('fetchLike', this.jwt)
+    },
+    requestStore(id) {
+      this.jwt[3] = id
+      this.$store.dispatch('fetchStore', this.jwt)
+    },
+    moveToRevisePage(routeId) {
+      // feed를 작성한 userId와 현재 로그인한 userID와 같다면 => reviseroute/routeId
+      if (this.routeInfo.user.id === this.jwt[2]) {
+        this.$router.push({ name: 'ReviseRouteView', params: { routeId: `${routeId}`}})
+        // 작성자와 로그인유저가 다르고, 로그인 유저가 저장한 feed라면 => reviseothers/routeId
+      } else if (this.routeInfo.user.id !== this.jwt[2] && this.routeInfo.isStored) {
+        this.$router.push({ name: 'ReviseOthersRouteView', params: { routeId: `${routeId}`}})
+      }
+    },
+    // 닉네임, 사진 누르면 프로필로 간다
+    onClickUser(feed) {
+      this.enterUserprofile({
+        userId: feed.user.id,
+        access_token: this.jwt[0],
+        jwtId: this.jwt[2]
+      })
+    }, 
+  },
+  created() {
+    this.fetchRouteInfo({
+      userId: this.jwt[2],
+      routeId: this.$route.params.feedId,
+      access_token: this.jwt[0]
+    })
+  },
+  watch: {
+    isLiked: function() {
+      console.log('불려야돼')
+        this.fetchRouteInfo({
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
+    },
+    isSaved: function() {
+      console.log('얘도 불려야돼')
+      this.fetchRouteInfo({
+        userId: this.jwt[2],
+        routeId: this.$route.params.feedId,
+        access_token: this.jwt[0]
+        })
+    },
+  },
+}
+</script>
+
+<style scoped>
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.button {
+  background-color: #B4DFE5;
+  width: 50px;
+  padding: auto;
+  font-size: 0.4em;
+  font-weight: bold;
+  /* font: bold; */
+  }
+
+hr {
+  background-color: white;
+}
+.moveUp {
+  margin-bottom: 12px;
+}
+.moveDown {
+  margin-top: 12px;
+}
+.moveDownLittle {
+  margin-top: 9px;
+}
+.moveDownBig {
+  margin-top: 15px;
+}
+.moveRight {
+  margin-left: 5px;
+}
+.container {
+  margin: 0px;
+  padding: 0px;
+}
+img {
+  width: 150px; height: 150px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+}
+.box {
+  position: relative;
+}
+.thumbnail {
+  top: 0;
+  left: 0;
+  position: relative;
+}
+.routeImg {
+  position: absolute;
+  top: -10px;
+  left: 110px;
+  /* transform: translate( 10%, 10% ); */
+}
+.tmpBackground{
+  background-color: aliceblue;
+}
+</style>
