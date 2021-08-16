@@ -2,7 +2,7 @@
   <v-app>
     <v-main class="background-color">
       <!-- Header -->
-      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' "/>
+      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' && $route.name !== 'ReviseOthersRouteView'"/>
 
       <!-- 라우터 뷰 -->
       <transition
@@ -52,7 +52,6 @@ export default {
   background-color: #101423;
   /* background-image: url("./assets/background-color.jpg"); */
 }
-
 /* .chooseButton까지 TagForm에서 사용되는 CSS */
 .button {
   width: 70px;
