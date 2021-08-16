@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
     <v-container class="mx-auto" background-color="#101423" max-width="400">
-=======
-    <v-container class="mx-auto tmpBackground" background-color="#101423" max-width="400">
->>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
       <v-row class="moveDown moveRight moveUp">
         <v-list-item-avatar color="grey darken-3">
           <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
@@ -34,7 +30,7 @@
           <div v-else>
             <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
-          <div class="subheading mr-2" style="color:white">{{ routeInfo.likeCnt }}</div>
+          <div class="subheading mr-2">{{ routeInfo.likeCnt }}</div>
 
           <div v-if="routeInfo.isStored">
               <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
@@ -42,39 +38,26 @@
           <div v-else>
             <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
-          <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
+          <div class="subheading">{{ routeInfo.storageCnt }}</div>
            </v-col>
       </v-row>
 
-<<<<<<< HEAD
-      <!-- <v-row> -->
-        <div class="d-flex box" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-=======
       <v-row>
         <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
->>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
           <span v-if="place.isThumbnail===true">
-            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
-            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+            <span class="thumbnail"><img :src=place.placeImg alt=""></span>
+            <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
           </span>
-        </div>
-
-        <br /><br /><br /><br /><br />
-
-      <div >
-      <v-row class="d-flex justify-center underLine">
-        {{ routeInfo.routeDescription }}
+        </v-col>
       </v-row>
-<<<<<<< HEAD
-      </div>
-
-      <v-row>
-        <CommentBox/>
-      </v-row>
-=======
           {{ routeInfo.routeDescription }}
->>>>>>> 3c1b9bf30ac17f36c192643723b12706a3c2f151
 
+       
+  
+        <div>
+          <CommentBox/>
+        </div>
+    
     </v-container>
 </template>
 
@@ -135,6 +118,7 @@ export default {
   },
   watch: {
     isLiked: function() {
+      console.log('불려야돼')
         this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
@@ -142,6 +126,7 @@ export default {
         })
     },
     isSaved: function() {
+      console.log('얘도 불려야돼')
       this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
@@ -153,13 +138,6 @@ export default {
 </script>
 
 <style scoped>
-.underLine {
-  color: #B4DFE5;
-  text-decoration: underline;
-  text-decoration-color: white;
-  text-decoration-thickness: 3px;
-}
-
 .content {
     display: flex;
     flex-wrap: wrap;
@@ -189,9 +167,6 @@ hr {
 .moveDownBig {
   margin-top: 15px;
 }
-.moveLeft {
-  margin-right: 50px;
-}
 .moveRight {
   margin-left: 5px;
 }
@@ -207,25 +182,18 @@ img {
 }
 .box {
   position: relative;
-  margin: 15px 32%;
 }
 .thumbnail {
-  position: absolute;
   top: 0;
   left: 0;
-
-  /* width: 10px; height: 10px;
-  object-fit: cover;
-  object-position: left;
-  border-radius: 50%;
-  position: absolute; */
+  position: relative;
 }
-
 .routeImg {
   position: absolute;
-  top: 0;
-  left: 0;
-} 
+  top: -10px;
+  left: 110px;
+  /* transform: translate( 10%, 10% ); */
+}
 .tmpBackground{
   background-color: aliceblue;
 }
