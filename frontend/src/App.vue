@@ -53,9 +53,6 @@ export default {
     LikeAlert,
     StoreAlert,
   },
-  mounted() {
-    document.documentElement.webkitRequestFullscreen();
-  },
 };
 </script>
 <style>
