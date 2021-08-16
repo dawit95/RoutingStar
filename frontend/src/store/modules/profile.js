@@ -60,7 +60,10 @@ const actions = {
       dispatch('fetchWrittenRouteList', payload)
       dispatch('fetchSavedRouteList', payload)
       if (payload.userId === payload.jwtId) {
-        router.push({ name: 'MyPageView' })
+        // router.push({ name: 'MyPageView' })
+        if (router.name != "MyPageView") {
+          router.push({ name: "MyPageView" }).catch(() => {});
+        }
       } else {
         router.push({ name: 'OtherUserPageView' })
       }

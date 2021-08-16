@@ -1,12 +1,13 @@
 <template>
-    <v-container class="mx-auto" background-color="#101423" max-width="400">
-      <v-row class="moveDown moveRight moveUp">
+  <div>
+    <v-container v-if="routeInfo.user" class="mx-auto" background-color="#101423" max-width="400">
+      <v-row class="moveDown moveRight moveUp my-1">
         <v-list-item-avatar color="grey darken-3">
-          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
+          <v-img @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
-           <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
+            <span @click="onClickUser(routeInfo)" class="moveDownBig Dohyeon pt-1" style="color: white">{{ routeInfo.user.name }}</span>
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
-            <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
+            <v-icon class="moveDown moveRight pt-3" color="white">mdi-pencil-outline</v-icon>
           </v-btn>
       </v-row>    
       <hr>
@@ -39,28 +40,35 @@
             <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
-           </v-col>
+            </v-col>
       </v-row>
       <br/>
-         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-          <span v-if="place.isThumbnail===true">
-            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
-            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
-          </span>
-         </div>
-        <br /><br /><br /><br /><br />><br /><br />
 
       <div >
-      <v-row class="d-flex justify-center underLine Dohyeon">
-        {{ routeInfo.routeDescription }}
+
+        <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+        <span v-if="place.isThumbnail===true">
+          <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
+          <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+          <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+          <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+        </span>
+        </div>
+
+      <br /><br /><br /><br /><br />><br /><br />
+
+
+    <v-row class="d-flex justify-center underLine Dohyeon">
+      {{ routeInfo.routeDescription }}
     </v-row>
-     </div>    
-  
+      </div>    
+
         <div>
           <CommentBox/>
         </div>
     
     </v-container>
+  </div>
 </template>
 
 <script>
@@ -80,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved'])
+    ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved']),
   },
   methods: {
     ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo']),
@@ -120,7 +128,7 @@ export default {
   },
   watch: {
     isLiked: function() {
-        this.fetchRouteInfo({
+      this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
         access_token: this.jwt[0]
@@ -216,5 +224,26 @@ img {
 
 .tmpBackground{
   background-color: aliceblue;
+}
+.mid-image {
+  width: 150px; height: 150px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  position: absolute;
+  /* left: 17.5%; */
+  /* left: 50%; */
+  justify-content: center;
+  opacity: 25%;
+
+}
+.logo-image {
+  width: 145px; height: 145px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 1%;
 }
 </style>

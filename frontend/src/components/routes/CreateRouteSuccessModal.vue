@@ -1,6 +1,6 @@
 <template>
-  <div class="text-center ">
-    <v-dialog v-model="dialog2" persistent width="800">
+  <div class="text-center create-success-modal">
+    <v-dialog v-model="dialog2" persistent width="800px" class="text-center mx-0">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           icon
@@ -9,34 +9,30 @@
           v-bind="attrs"
           v-on="on"
           @click="postPointImages"
-          class="mb-3 detail-compelete-button"
+          class="mb-2 detail-compelete-button"
         >
           <v-icon x-large>mdi-check-circle-outline</v-icon>
         </v-btn>
       </template>
 
       <v-card id="createRouteSuccessModal">
-        <v-card-title class="text-h5 textColor">
-          완성 시 나오는 페이지 입니다.
-        </v-card-title>
-        
-        <v-layout>
+        <div>
           <CreateRouteCanvas :isCompleted="isCompleted"/>
-        </v-layout>
+        </div>
         
-        <v-card-text>
-          <p class="textColor">
-            당신만의 루팅스타가 생성 완료되었습니다.
-          </p>
-        </v-card-text>
+        <div class="text-center mb-9">
+          <h3 class="datil-complete-text mb-2" style="color:#D2FDFF;">우리 동네의 별자리가</h3>
+          <h3 class="datil-complete-text">새롭게 떠올랐습니다.</h3>
+        </div>
 
         <v-divider></v-divider>
 
-        <v-card-actions>
+        <v-card-actions class="mt-2">
           <v-spacer></v-spacer>
           <v-btn
-            color="primary"
+            color="#FBE8A6"
             text
+            class="create-route-success-button"
             @click="onClickComplete"
           >
             Complete!
@@ -78,11 +74,14 @@ export default {
 
 <style scoped>
 #createRouteSuccessModal {
-  background-color: #101423;
+  background-color: #2A355D;
 }
-
-.textColor {
-  color: #D2FDFF;
+.datil-complete-text {
+  /* color: #D2FDFF; */
+  color: #FBE8A6;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: lighter;
+  font-size: 20px;
 }
 
 .detail-compelete-button {
@@ -90,5 +89,15 @@ export default {
   right:    13px;
   bottom:   0px
 }
-
+.create-route-success-button {
+  width: 80px;
+  background: #101423;
+  color: #FBE8A6;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+  border-radius: 16px;
+  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
+}
 </style>

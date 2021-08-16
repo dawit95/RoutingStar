@@ -55,7 +55,7 @@
 
           </v-container>
 
-          <v-container class="py-0">
+          <v-container class="pb-9">
             <TagForm />
           </v-container>
           
@@ -118,13 +118,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-toolbar__content, .v-toolbar__extension {
   padding-right: 0px;
   padding-left: 8px;
 }
 .post-detail-card-image {
-  width: 200px; height: 200px;
+  width: 160px; height: 160px;
   border-radius: 50%;
   display: block;
 }

@@ -30,7 +30,7 @@
 
       <v-tabs-items v-model="$store.state.search.tab" >
           <v-tab-item>
-            <v-card>
+            <v-card >
               <div v-if="searchedFollowRoutes.length">
                 <RouteCard
                   v-for="feed in searchedFollowRoutes"
