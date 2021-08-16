@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <!-- 태그는 번호로 DB에 저장되는 것으로 논의 -->
-    <v-container>
-      <H3>누구랑??</H3>
+  <v-container class="pt-0 px-0">
+    <h3 class="ml-5 post-detail-title-font">Tags</h3>
+    <div class="tag-box mx-4">
+      <v-container class="tag-container">
+        <p class="tag-title-font ml-3 mb-0">누구와 함께하는 루트인가요?</p>
       <div v-for="withTag in withTagObj" :key="withTag.idx" class="d-inline" style="flex">
         <button 
-          class="button mx-3" 
-          :class="{grayscale:!withTag.isSelcted}" 
+          class="tag-button mx-3" 
+          :class="{chooseButton: withTag.isSelcted}"
           @click="addWithTag(withTag.tagnum); addWithTagButtonClass(withTag.idx);"
         >
-
-        
-          <span >
+          <span>
             {{ withTag.tag }}
           </span>
         </button>
       </div>
     </v-container>
-    <v-container class="tag-container">
-      <H3>무엇을???</H3>
+
+    <v-container class="tag-container mb-11">
+      <p class="tag-title-font ml-3 mb-0">어떤 것을 할수있는 루트인가요?</p>
       <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
         <button 
-          class="button mx-3" 
-          :class="{grayscale:!whatTag.isSelcted}" 
+          class="tag-button mx-3" 
+          :class="{chooseButton: whatTag.isSelcted}"
           @click="addWhatTag(whatTag.tagnum); addWhatTagButtonClass(whatTag.idx);"
         >
           <span>
@@ -31,7 +31,8 @@
         </button>
       </div>
     </v-container>
-  </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -131,21 +132,45 @@ export default {
 </script>
 
 <style>
-/* 임시로 가독성을 위해 넣는 클래스 스타일입니다 */
-/* .button {
-  height: 65px;
-  background: #8860D0;
+.tag-title-font{
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: 100;
+  color: #FBE8A6;
+  font-size: 15px;
+
+}
+.tag-box {
+  border-radius: 20px;
+  background: #2A355D;
+  box-shadow: inset 5px 5px 11px #1a213a,
+              inset -5px -5px 11px #3a4980;
+}
+.tag-button {
+  width: 60px;
+  height: 23px;
+  background: #C1C8E4;
   border-radius: 16px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3x ease-in-out;
+  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
+  margin-top: 6px;
 }
-.button span {
-  line-height: 50px;
-  font-size: 20px;
-  color: #C1C8E4
-} */
-H3 {
+.tag-button span {
+  line-height: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #303C6C;
   font-family: 'Do Hyeon', sans-serif;
+}
+.chooseButton {
+  width: 60px;
+  height: 23px;
+  background: #B4DFE5;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
 }
 </style>

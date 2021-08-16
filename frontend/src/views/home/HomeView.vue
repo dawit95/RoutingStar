@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <div v-if="!this.feeds.length">
+     <EmptyHome/>
+    </div>
     <v-flex xs12 class="big-box rounded-lg">
       <div v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
       <div class="list-prop">
@@ -49,7 +52,7 @@
                   <v-card-text class="text-center route-description2 text-h7 font-weight-bold route-description-font">
                     {{ feed.routeDescription }}
                   </v-card-text>
-                
+
               </v-row>
             </div>
           </div>
@@ -72,12 +75,16 @@
 
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
+import EmptyHome from '../../components/common/EmptyHome.vue'
 
 // 1. created 되는 순간에 axios get 요청으로 데이터 받아오기
 // 2. mapGetters에서 필터링 해주기
 // infinte scroll 실험
 const api = 'https://hn.algolia.com/api/v1/search_by_date?tags=story'
 export default {
+  components: { 
+    EmptyHome 
+  },
   name: 'HomeView',
   data() {
     return {
