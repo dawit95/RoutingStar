@@ -26,6 +26,8 @@ export default {
       map: null,
       pointListPk: 0,
       locations: [],
+      infowindow: '',
+      marker: '',
     }
   },
   computed: {
@@ -97,8 +99,8 @@ export default {
     openPlaceInfo(marker, lat, lng) {
       for( const place of this.routeInfo.places ) {
         if (place.lat == lat && place.lng == lng) { 
-          // var placeImg = place.placeImg
-          // var placeTitle = place.title
+          var placeImg = place.placeImg
+          var placeTitle = place.title
 
           // const content = '<div class="iw-subTitle">abcdfef</div>'
           //                  <img src="${placeImg}" alt="" height="100" width="150"></img> +
@@ -107,22 +109,45 @@ export default {
 
               
           const infowindow = new window.google.maps.InfoWindow({
-            content: '<div class="iw-content">abcdef</div>'
+            content: 
+            // '<div class="iw-content">abcdef</div>'
             // '<div class="gm-style gm-style-iw">abcdfef</div>'
               // '<div class="iw-content">' + 
-              // `<img src="${placeImg}" alt="" height="100" width="150">` +
-              // `<div class="gm-style gm-style-iw">"${placeTitle}"</div>` +
+              `<img src="${placeImg}" alt="" height="100" width="150">` +
+              `<div class="d-flex justify-center">"${placeTitle}"</div>`
               // '</div>'
           })
-    
-          marker.addListener("click", () => {
-            console.log(marker)
-            infowindow.open({
+
+        
+          // marker.addListener("click", () => {
+          //         if (infowindow) {
+          // console.log('infowindow', infowindow)
+          // console.log('marker', marker)
+          // console.log('닫아볼까')
+          // // this.infoWindow.addListener('closeclick', ()=>{
+          // infowindow.close();
+          //         }
+          //   infowindow.open({
+          //     anchor: marker,
+          //     map: this.map,
+          //     shouldFocus: false,
+          //   });
+          // })
+
+
+        window.google.maps.event.addListener(marker, 'click', function() {
+        if (this.infowindow) {
+          console.log('으히히히', this.infowindow)
+          this.infowindow.close();
+        }
+        infowindow.open({
               anchor: marker,
               map: this.map,
               shouldFocus: false,
             });
-          })
+        }
+        )
+
         }
       }
     },
