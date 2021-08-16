@@ -1,5 +1,5 @@
 <template>
-  <v-layout row swap>
+  <v-container class="pa-0">
     <ReviseOthersHeader :tempThumbnail="tempThumbnail" @freeze-map="freezeMap" @recover-freeze-map="recoverFreezeMap"/>
     <Map :isFreeze="isFreeze"/>
     <v-divider></v-divider>
@@ -8,7 +8,7 @@
     @update-tumbnail-image="updateThumbnailImage"
     @change-isthumbail="changeIsthumbail"/>
 
-  </v-layout>
+  </v-container>
 
 </template>
 

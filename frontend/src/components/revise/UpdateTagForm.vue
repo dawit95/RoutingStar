@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>여기는 태그폼이 들어갈 자리입니다</h2>
     <!-- 태그는 번호로 DB에 저장되는 것으로 논의 -->
     <v-container>
       <H3>누구랑??</H3>
@@ -12,21 +11,21 @@
         >
 
         
-          <span class="button span">
+          <span >
             {{ withTag.tag }}
           </span>
         </button>
       </div>
     </v-container>
-    <v-container>
-      <H3>무었을???</H3>
+    <v-container class="tag-container">
+      <H3>무엇을???</H3>
       <div v-for="whatTag in whatTagObj" :key="whatTag.idx" class="d-inline" style="flex">
         <button 
           class="button mx-3" 
           :class="{grayscale:!whatTag.isSelcted}" 
           @click="addWhatTag(whatTag.tagnum); addWhatTagButtonClass(whatTag.idx);"
         >
-          <span class="button span">
+          <span>
             {{ whatTag.tag }}
           </span>
         </button>
@@ -146,4 +145,7 @@ export default {
   font-size: 20px;
   color: #C1C8E4
 } */
+H3 {
+  font-family: 'Do Hyeon', sans-serif;
+}
 </style>
