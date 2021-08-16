@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .logout()
-                .logoutSuccessUrl("/")
+                .logoutUrl("/logout")
                 //front-end CI/CD 구현시 변경될 uri =>  변경완료
                 .logoutSuccessUrl("https://i5a309.p.ssafy.io/")
 //                .logoutSuccessUrl("http://localhost:8080/")
