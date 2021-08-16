@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center moveDown" style="color: white">로그인한 유저가 보는 자기 페이지입니다.</v-row>
     <ProfileInfo/>
-    <v-row class="button mx-8">Edit Profile</v-row>
+    <v-row class="button mx-8 Dohyeon">Edit Profile</v-row>
     <MyRoutesTabs/>
   </v-container>
 </template>
@@ -45,7 +44,11 @@ export default {
 }
 </script>
 
+
 <style scoped>
+.Dohyeon {
+  font-family: 'Do Hyeon', sans-serif;
+}
 .button {
   flex: 1 1 auto;
   padding: 3px;

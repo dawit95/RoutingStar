@@ -1,15 +1,10 @@
 <template>
-<<<<<<< HEAD
-    <v-container class="mx-auto tmpBackground" background-color="#101423" max-width="400">
+    <v-container class="mx-auto" background-color="#101423" max-width="400">
       <v-row class="moveDown moveRight moveUp">
-=======
-    <div class="mx-auto tmpBackgroud" max-width="400">
-      <div v-if="routeInfo.user">
->>>>>>> 4d11606e1851777e30e180e0d2b56c524e6d6bef
         <v-list-item-avatar color="grey darken-3">
-          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6" alt="" :src="routeInfo.user.profileImg"></v-img>
+          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
-           <span @click="onClickUser(routeInfo)" class="moveDownBig" style="color: white">{{ routeInfo.user.name }}</span>
+           <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
             <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
           </v-btn>
@@ -19,11 +14,11 @@
       <hr>
       <v-row class="moveDown moveRight">
         <v-col cols="8" xs="8" class="content">
-          <span class="" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+          <span class="Nanum" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
             <button class="button" color="white">{{ whatTag.title }}</button>
           </span>
 
-          <span class="" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+          <span class="Nanum" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
             <button class="button" color="white">{{ withTag.title }}</button>
           </span>
         </v-col>
@@ -35,7 +30,7 @@
           <div v-else>
             <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
-          <div class="subheading mr-2">{{ routeInfo.likeCnt }}</div>
+          <div class="subheading mr-2" style="color:white">{{ routeInfo.likeCnt }}</div>
 
           <div v-if="routeInfo.isStored">
               <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
@@ -43,31 +38,24 @@
           <div v-else>
             <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
-          <div class="subheading">{{ routeInfo.storageCnt }}</div>
+          <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
            </v-col>
       </v-row>
 
-<<<<<<< HEAD
-      <v-row>
-        <v-col v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
           <span v-if="place.isThumbnail===true">
-            <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-            <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
+            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
+            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
           </span>
-        </v-col>
-      </v-row>
-=======
+         </div>
 
-          <div v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-            <span v-if="place.isThumbnail===true">
-              <span class="thumbnail"><img :src=place.placeImg alt=""></span>
-              <span class="routeImg"><img :src=routeInfo.routeImg alt=""></span>
-            </span>
-          </div>
->>>>>>> 4d11606e1851777e30e180e0d2b56c524e6d6bef
-          {{ routeInfo.routeDescription }}
+        <br /><br /><br /><br /><br />><br /><br />
 
-       
+      <div >
+      <v-row class="d-flex justify-center underLine Dohyeon">
+        {{ routeInfo.routeDescription }}
+    </v-row>
+     </div>    
   
         <div>
           <CommentBox/>
@@ -133,7 +121,6 @@ export default {
   },
   watch: {
     isLiked: function() {
-      console.log('불려야돼')
         this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
@@ -141,7 +128,6 @@ export default {
         })
     },
     isSaved: function() {
-      console.log('얘도 불려야돼')
       this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
@@ -153,10 +139,22 @@ export default {
 </script>
 
 <style scoped>
+.underLine {
+  color: #B4DFE5;
+  text-decoration: underline;
+  text-decoration-color: white;
+  text-decoration-thickness: 3px;
+}
+.Nanum {
+  font-family: 'Nanum Gothic Coding', monospace;
+}
+.Dohyeon {
+  font-family: 'Do Hyeon', sans-serif;
+}
 .content {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5px;
 }
 .button {
   background-color: #B4DFE5;
@@ -185,6 +183,10 @@ hr {
 .moveRight {
   margin-left: 5px;
 }
+.moveLeft {
+  margin-right: 50px;
+}
+
 .container {
   margin: 0px;
   padding: 0px;
@@ -197,18 +199,21 @@ img {
 }
 .box {
   position: relative;
+  margin: 5px 32%;
 }
+
 .thumbnail {
+  position: absolute;
   top: 0;
   left: 0;
-  position: relative;
+
 }
 .routeImg {
   position: absolute;
-  top: -10px;
-  left: 110px;
-  /* transform: translate( 10%, 10% ); */
-}
+  top: 0;
+  left: 0;
+} 
+
 .tmpBackground{
   background-color: aliceblue;
 }

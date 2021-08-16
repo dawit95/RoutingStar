@@ -1,19 +1,29 @@
 <template>
   <v-app>
     <v-main class="background-color">
+      <follow-alert/>
+      <like-alert></like-alert>
+      <store-alert></store-alert>
       <!-- Header -->
-      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' "/>
-
+      <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' && $route.name !== 'ReviseOthersRouteView'"/>
 
       <!-- 라우터 뷰 -->
-      <router-view>
+      <transition
+        mode="out-in"
+        name="router-anim"
+        :enter-active-class="this.$route.meta.enterActiveClass"
+        :leave-active-class="this.$route.meta.leaveActiveClass"
+      > 
+        <router-view/>
+      
+      </transition>
         <!-- <transition
           mode="out-in"
           :enter-active-class="this.$route.meta.enterActiveClass"
           :leave-active-class="this.$route.meta.leaveActiveClass"
         >
         </transition> -->
-      </router-view>
+      <!-- </router-view> -->
 
     
       <!-- Footer -->
@@ -24,52 +34,34 @@
 </template>
 
 <script>
+import StoreAlert from '@/components/alert/StoreAlert.vue'
+import LikeAlert from '@/components/alert/LikeAlert.vue'
+import FollowAlert from '@/components/alert/FollowAlert.vue'
 import Header from '@/components/common/Header.vue'
 import Nav from '@/components/common/Nav.vue'
 
 export default {
   name: 'App',
-  data: () => ({
-    
-  }),
+  data() {
+    return {
+    }
+  },
   components: {
     Header,
-    Nav
-  }
+    Nav,
+    FollowAlert,
+    LikeAlert,
+    StoreAlert,
+  },
+  mounted() {
+    document.documentElement.webkitRequestFullscreen();
+  },
 };
 </script>
 <style>
 .background-color {
-  background-color: #101423;;
-}
-
-/* .chooseButton까지 TagForm에서 사용되는 CSS */
-.button {
-  width: 70px;
-  height: 25px;
-  background: #C1C8E4;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
-  margin-top: 6px;
-}
-.button span {
-  line-height: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #303C6C;
-}
-.chooseButton {
-  width: 70px;
-  height: 25px;
-  background: #B4DFE5;
-  border-radius: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3x ease-in-out;
-  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
+  background-color: #101423;
+  /* background-image: url("./assets/background-color.jpg"); */
 }
 
 

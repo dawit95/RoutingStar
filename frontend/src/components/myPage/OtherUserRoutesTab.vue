@@ -2,7 +2,7 @@
   <v-container class="mt-4">
     <v-row class="tabs d-flex justify-center" role="tablist">
         <v-col cols="8" xs="8" class="d-flex justify-center">
-          <input type="radio" name="tabs" id="tab1" checked />
+          <input type="radio" name="tabs" id="tab1" checked class="Nanum" />
           <label for="tab1" 
                 role="tab" 
                 aria-selected="true" 
@@ -52,6 +52,9 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.Nanum {
+  font-family: 'Nanum Gothic Coding', monospace;
+}
 .content {
     display: flex;
     flex-wrap: wrap;
@@ -96,7 +99,7 @@ h1 span {
 .tabs label {
   display: block;
   padding: 9px 25px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   background: #C1C8E4;

@@ -44,7 +44,14 @@ messaging.getToken()
 // Handle received push notification at foreground
 messaging.onMessage(payload => {
   console.log(payload)
-  alert(payload.data.message)
+  // alert(payload.data.message)
+  if(payload.data.message.includes("follow")) {
+    store.dispatch('showAlertModal', payload.data.message);
+  } else if (payload.data.message.includes("피드좋아요")) {
+    store.dispatch('showLikeModal', payload.data.message);
+  } else if(payload.data.message.includes("루트 저장")) {
+    store.dispatch('showStoreModal', payload.data.message);
+  }
 })
 // 알람 끝
 

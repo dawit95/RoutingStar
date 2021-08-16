@@ -5,10 +5,12 @@
 
           <v-card flat class="d-flex">
             <v-card flat>
+              <v-icon large color="indigo" right style="cursor: pointer;" class=" ma-0 pa-0 drag-position">mdi-drag-horizontal-variant</v-icon>
               <post-image-input v-model="avatar" :place="place" @update-tumbnail-image="updateThumbnailImage">
                 <div slot="activator">
                   <v-avatar size="140px" rounded v-ripple v-if="!place.placeImg" class="grey lighten-3 ml-1">
-                    <v-icon dark x-large>
+                    <v-icon color="indigo" dark x-large>
+                      <!-- 2A355D / 303c6c -->
                       mdi-plus
                     </v-icon>
                   </v-avatar>
@@ -20,12 +22,13 @@
               
             </v-card>
             <v-card flat class="d-flex flex-column">
+              
               <v-text-field v-model="place.content" @click="activePoint(place)" @mouseout="stopPoint(place)" 
-              label="short description" color="indigo" class="d-flex align-center" rows="2">
+              label="간략한 설명" color="indigo" class="text-field-font" rows="2">
                 <v-icon right slot="prepend" color="grey">mdi-comment</v-icon>
               </v-text-field>
               <v-switch
-                class="switch-prop pa-0"
+                class="switch-prop pa-0 text-field-font"
                 id="thumbnail_switch"
                 @click="refreshThumbnailBtn(place)"
                 :label="place.isThumbnail ? thumbnailLabel : '썸네일 등록하기!'"
@@ -37,7 +40,7 @@
             <v-card flat class="d-flex flex-column">
               <v-icon left style="cursor: pointer;" class="pa-0 ma-0 justify-end align-start" @click="removePoint(place.marker, idx)">mdi-close</v-icon>
               <v-spacer></v-spacer>
-              <v-icon drak absolute right style="cursor: pointer;" class=" ma-0 pa-0">mdi-drag-horizontal-variant</v-icon>
+              <!-- <v-icon drak right style="cursor: pointer;" class=" ma-0 pa-0">mdi-drag-horizontal-variant</v-icon> -->
             <!-- <v-icon class="d-flex col-9 justify-end">mdi-plus</v-icon> -->
             </v-card>
 
@@ -190,15 +193,15 @@ export default {
 
 <style scoped>
 .big-box {
-  width: 300px;
-  height: 350px;
+  /* width: 300px; */
+  height: 330px;
   overflow: scroll;
-  margin: 0px 20px 0 15px;
+  margin: 5px 15px 0 15px;
   background-color: #2A355D;
   overflow-x: hidden;
 }
 .big-box::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 .big-box::-webkit-scrollbar-thumb {
   background-color: #2A355D;
@@ -232,5 +235,16 @@ input[type=file]::file-selector-button:hover {
 .switch-prop {
   margin: 0 0 0 10px;
 }
-
+.drag-position {
+  position: absolute;
+  background-color: none;
+  z-index: 6;
+  /* width: 200px; height: 200px; */
+  /* object-position: top; */
+  left: 5px;
+  /* top: 50%; */
+}
+.text-field-font {
+  font-size: 14px;
+}
 </style>

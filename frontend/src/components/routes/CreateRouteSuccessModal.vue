@@ -1,49 +1,49 @@
 <template>
-  <div>
-     <div class="text-center">
-      <v-dialog v-model="dialog2" persistent width="800">
-        <template v-slot:activator="{ on, attrs }">
+  <div class="text-center ">
+    <v-dialog v-model="dialog2" persistent width="800">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          icon
+          color="#F4976C"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          @click="postPointImages"
+          class="mb-3 detail-compelete-button"
+        >
+          <v-icon x-large>mdi-check-circle-outline</v-icon>
+        </v-btn>
+      </template>
+
+      <v-card id="createRouteSuccessModal">
+        <v-card-title class="text-h5 textColor">
+          완성 시 나오는 페이지 입니다.
+        </v-card-title>
+        
+        <v-layout>
+          <CreateRouteCanvas :isCompleted="isCompleted"/>
+        </v-layout>
+        
+        <v-card-text>
+          <p class="textColor">
+            당신만의 루팅스타가 생성 완료되었습니다.
+          </p>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn
-            color="blue darken-1"
-            dark
-            v-bind="attrs"
-            v-on="on"
-            @click="postPointImages"
+            color="primary"
+            text
+            @click="onClickComplete"
           >
             Complete!
           </v-btn>
-        </template>
-
-        <v-card id="createRouteSuccessModal">
-          <v-card-title class="text-h5 textColor">
-            완성 시 나오는 페이지 입니다.
-          </v-card-title>
-          
-          <v-layout>
-            <CreateRouteCanvas :isCompleted="isCompleted"/>
-          </v-layout>
-          
-          <v-card-text>
-            <p class="textColor">
-              당신만의 루팅스타가 생성 완료되었습니다.
-            </p>
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="onClickComplete"
-            >
-              Complete!
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </div>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -76,13 +76,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #createRouteSuccessModal {
   background-color: #101423;
 }
 
 .textColor {
   color: #D2FDFF;
+}
+
+.detail-compelete-button {
+  position: absolute;
+  right:    13px;
+  bottom:   0px
 }
 
 </style>

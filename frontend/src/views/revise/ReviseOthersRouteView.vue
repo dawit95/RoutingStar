@@ -1,5 +1,5 @@
 <template>
-  <v-layout v-if="canRendering" row swap>
+  <v-container v-if="canRendering" class="pa-0">
     <ReviseOthersHeader 
     :tempThumbnail="tempThumbnail" 
     @freeze-map="freezeMap" 
@@ -13,7 +13,7 @@
     @update-tumbnail-image="updateThumbnailImage" 
     @change-isthumbail="changeIsthumbail"/>
 
-  </v-layout>
+  </v-container>
 </template>
 
 <script>
