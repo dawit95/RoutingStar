@@ -1,8 +1,8 @@
 <template>
-    <v-container class="mx-auto" background-color="#101423" max-width="400">
+    <v-container v-if="routeInfo.user" class="mx-auto" background-color="#101423" max-width="400">
       <v-row class="moveDown moveRight moveUp">
         <v-list-item-avatar color="grey darken-3">
-          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
+          <v-img @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
         </v-list-item-avatar>
            <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
@@ -121,7 +121,7 @@ export default {
   },
   watch: {
     isLiked: function() {
-        this.fetchRouteInfo({
+      this.fetchRouteInfo({
         userId: this.jwt[2],
         routeId: this.$route.params.feedId,
         access_token: this.jwt[0]
