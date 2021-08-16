@@ -1,5 +1,5 @@
 <template>
-  <v-container class="search-result-tabs">
+  <v-container class="search-result-tabs backColor">
     <!-- 뒤로가기 버튼 -->
     <v-btn
       @click="goBack"
@@ -28,8 +28,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="$store.state.search.tab">
-
+      <v-tabs-items v-model="$store.state.search.tab" >
           <v-tab-item>
             <v-card>
               <div v-if="searchedFollowRoutes.length">
@@ -119,7 +118,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.backColor {
+  background-color: black;
+}
 .search-result-tabs {
   font-family: 'Do Hyeon', sans-serif;
 }

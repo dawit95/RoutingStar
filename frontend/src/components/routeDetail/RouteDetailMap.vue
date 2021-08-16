@@ -26,8 +26,6 @@ export default {
       map: null,
       pointListPk: 0,
       locations: [],
-      infowindow: '',
-      marker: '',
     }
   },
   computed: {
@@ -53,7 +51,7 @@ export default {
     initMap() {
       this.map = new window.google.maps.Map(document.getElementById("map"),
       {
-        mapId: "8e0a97af9386fef",
+        // mapId: "8e0a97af9386fef",
         // 경로의 중앙에 포커스가 위치하도록 설정하였음(초기는 멀캠)
         // center: { lat:this.latLstItems[(Math.abs(this.latLstItems.length/2))], lng:this.lngLstItems[(Math.abs(this.latLstItems.length/2))] },
         center: { lat: 37.501, lng: 127.039 },
@@ -62,7 +60,86 @@ export default {
         mapTypeControl: false,
         zoomControl: true,
         fullscreenControl: false,
-        
+        styles: [
+            { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+            { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+            { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+            {
+              featureType: "administrative.locality",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#d59563" }],
+            },
+            {
+              featureType: "poi",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#d59563" }],
+            },
+            {
+              featureType: "poi.park",
+              elementType: "geometry",
+              stylers: [{ color: "#263c3f" }],
+            },
+            {
+              featureType: "poi.park",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#6b9a76" }],
+            },
+            {
+              featureType: "road",
+              elementType: "geometry",
+              stylers: [{ color: "#38414e" }],
+            },
+            {
+              featureType: "road",
+              elementType: "geometry.stroke",
+              stylers: [{ color: "#212a37" }],
+            },
+            {
+              featureType: "road",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#9ca5b3" }],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "geometry",
+              stylers: [{ color: "#746855" }],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "geometry.stroke",
+              stylers: [{ color: "#1f2835" }],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#f3d19c" }],
+            },
+            {
+              featureType: "transit",
+              elementType: "geometry",
+              stylers: [{ color: "#2f3948" }],
+            },
+            {
+              featureType: "transit.station",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#d59563" }],
+            },
+            {
+              featureType: "water",
+              elementType: "geometry",
+              stylers: [{ color: "#17263c" }],
+            },
+            {
+              featureType: "water",
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#515c6d" }],
+            },
+            {
+              featureType: "water",
+              elementType: "labels.text.stroke",
+              stylers: [{ color: "#17263c" }],
+            },
+          ],
       })
         
       const places = this.routeInfo.places
@@ -72,7 +149,8 @@ export default {
         let marker = new window.google.maps.Marker({
           position: latLng,
           map: this.map,
-          animation: window.google.maps.Animation.DROP
+          animation: window.google.maps.Animation.DROP,
+          icon: 'https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/pin_sample(xxxs).png'
         });
         // 마커 더블클릭시 삭제a
         marker.addListener('mousedown', (e) => {
@@ -136,9 +214,9 @@ export default {
 
 
         window.google.maps.event.addListener(marker, 'click', function() {
-        if (this.infowindow) {
-          console.log('으히히히', this.infowindow)
-          this.infowindow.close();
+        if (infowindow) {
+          console.log('으히히히', infowindow)
+          infowindow.close();
         }
         infowindow.open({
               anchor: marker,

@@ -13,18 +13,18 @@
       <hr>
         <RouteDetailMap />
       <hr>
-      <v-row class="moveDown moveRight">
+      <v-row class="d-flex moveDown moveRight">
         <v-col cols="8" xs="8" class="content">
-          <span class="Nanum" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
-            <button class="button" color="white">{{ whatTag.title }}</button>
+          <span v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+            <button class="button">{{ whatTag.title }}</button>
           </span>
 
-          <span class="Nanum" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+          <span v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
             <button class="button" color="white">{{ withTag.title }}</button>
           </span>
         </v-col>
 
-        <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
+        <v-col cols="4" xs="4" class="d-flex">  
           <div v-if="routeInfo.isLiked">
             <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
           </div>
@@ -42,19 +42,24 @@
           <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
             </v-col>
       </v-row>
-
-          <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-          <span v-if="place.isThumbnail===true">
-            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
-            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
-          </span>
-          </div>
-
-        <br /><br /><br /><br /><br />><br /><br />
+      <br/>
 
       <div >
-      <v-row class="d-flex justify-center underLine Dohyeon">
-        {{ routeInfo.routeDescription }}
+
+        <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+        <span v-if="place.isThumbnail===true">
+          <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
+          <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+          <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+          <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+        </span>
+        </div>
+
+      <br /><br /><br /><br /><br />><br /><br />
+
+
+    <v-row class="d-flex justify-center underLine Dohyeon">
+      {{ routeInfo.routeDescription }}
     </v-row>
       </div>    
 
@@ -164,6 +169,7 @@ export default {
   padding: auto;
   font-size: 0.4em;
   font-weight: bold;
+  border-radius: 5px;
   /* font: bold; */
   }
 
@@ -218,5 +224,26 @@ img {
 
 .tmpBackground{
   background-color: aliceblue;
+}
+.mid-image {
+  width: 150px; height: 150px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  position: absolute;
+  /* left: 17.5%; */
+  /* left: 50%; */
+  justify-content: center;
+  opacity: 25%;
+
+}
+.logo-image {
+  width: 145px; height: 145px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 1%;
 }
 </style>
