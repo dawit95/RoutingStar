@@ -52,7 +52,6 @@ export default {
   background-color: #101423;
   /* background-image: url("./assets/background-color.jpg"); */
 }
-
 /* .chooseButton까지 TagForm에서 사용되는 CSS */
 .button {
   width: 70px;
