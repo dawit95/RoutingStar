@@ -24,14 +24,14 @@
           <v-toolbar-title>👏 User Guide</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
-        <user-guide></user-guide>
+        <user-guide2></user-guide2>
       </v-card>
     </v-dialog>
   <!-- </v-row> -->
 </template>
 
 <script>
-import UserGuide from './UserGuide.vue';
+import UserGuide2 from './UserGuide2.vue';
 
   export default {
     data () {
@@ -43,7 +43,7 @@ import UserGuide from './UserGuide.vue';
       }
     },
     components: {
-        UserGuide
+        UserGuide2
     }
   }
 
