@@ -104,4 +104,7 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.moveUp {
+  margin-top: 50px;
+}
 </style>
