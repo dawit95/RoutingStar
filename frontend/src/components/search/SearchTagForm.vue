@@ -121,11 +121,6 @@ export default {
       }
     }
   },
-  // watch: {
-  //   searchedFollowRoutes: function() {
-  //       this.$router.push({ name: 'SearchResultView' })
-  //   }
-  // },
 }
 </script>
 
