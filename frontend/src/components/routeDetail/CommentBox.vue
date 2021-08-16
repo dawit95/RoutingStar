@@ -1,12 +1,12 @@
 <template>
   <div class="commentBox">
     <div>
-      <v-row class="form-group"> 
+      <v-row class="form-group Nanum"> 
           <v-text-field dark color="white" label="댓글을 입력해주세요" v-model="WrittingComment"></v-text-field>
           <button class="addCommentBtn moveDown" @click="onClickAddComment">댓글작성</button>
       </v-row>
       
-      <div class="commentList">
+      <div class="commentList Nanum">
         <v-row v-for="(comment, idx) of routeInfo.comments" v-bind:key="idx">
           <div @click="onClickUser(comment.user)">
             <span style="color:white">{{ comment.user.name }}</span>
@@ -96,6 +96,9 @@ export default {
 </script>
 
 <style scoped>
+.Nanum {
+  font-family: 'Nanum Gothic Coding', monospace;
+}
 .moveDown {
   margin-top: 18px;
 }
