@@ -55,7 +55,7 @@ export default {
     selectSection(item) {
       switch (item.title) {
         case 'MyPage':
-          console.log('MyPage')
+          // console.log('MyPage')
           this.enterUserprofile({ 
             userId: this.jwt[2],
             access_token: this.jwt[0],
@@ -83,7 +83,7 @@ export default {
 
 <style scoped>
 .moveToRight {
-  left: 20px;
+  left: 25px;
 }
 
 .bg-active {

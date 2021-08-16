@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class=" ml-2" color="grey" v-bind="attrs" v-on="on" x-large icon><v-icon>mdi-tools</v-icon></v-btn>
+        <v-btn class="ml-2 moveToRight" color="grey" v-bind="attrs" v-on="on" x-large icon><v-icon>mdi-map-marker-question-outline</v-icon></v-btn>
       </template>
       <v-card>
         <v-toolbar
@@ -54,6 +54,7 @@ import UserGuide2 from './UserGuide2.vue';
 .theme--dark.v-btn:focus::before {
     opacity: 0.00;
 }
-
-
+.moveToRight {
+  left: 10px;
+}
 </style>

@@ -75,12 +75,13 @@
 
 <!-- Use preprocessors via the lang attribute! e.g. <style lang="scss"> -->
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Palette+Mosaic&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Palette+Mosaic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+/* *{
+  margin:0;
+  padding:0;
+  font-family: 'Nanum Gothic', sans-serif;
+} */
 
 .intro {
   display: flex;

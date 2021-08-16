@@ -118,7 +118,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-toolbar__content, .v-toolbar__extension {
   padding-right: 0px;
   padding-left: 8px;
