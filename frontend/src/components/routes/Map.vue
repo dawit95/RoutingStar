@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container fluid>
     <v-layout row swap>
       <v-flex xs12>
         <div class="pac-card" id="pac-card">

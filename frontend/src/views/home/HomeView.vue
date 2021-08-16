@@ -4,7 +4,7 @@
      <EmptyHome/>
     </div>
     <v-flex xs12 class="big-box rounded-lg">
-      <list v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
+      <div v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
       <div class="list-prop">
         <!-- 프로필 이미지, 이름 -->
         <div>
@@ -21,7 +21,7 @@
               <!-- 썸네일 이미지 -->
               <div v-for="place of feed.places" :key="place.createdOrder" class="d-flex justify-center container">
                 <span v-if="place.isThumbnail" class="d-flex justify-center">
-                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="main-image " :src=place.placeImg alt="">
+                  <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="main-image" :src=place.placeImg alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="mid-image " src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}` }})" class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
                   <img @click="$router.push({name: 'RouteDetailView', params: { feedId: `${feed.id}`}})" class="route-image" :src=feed.routeImg alt="">
@@ -58,8 +58,13 @@
           </div>
         </div>
       </div>
-      </list>
+      </div>
     </v-flex>
+    <!-- Hacker News item loop -->
+    <!-- {{item}} -->
+    <!-- </div> -->
+    <!-- infiniteHandler method 실행 -->
+    <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
   </v-container>
 
 </template>
@@ -348,9 +353,12 @@ export default {
   background-color:#2a355d;
   padding: 10px 10px 10px 10px;
   margin: 10px 10px 10px 10px;
-  background: #c1c8e4;
+  /* background: #c1c8e4;
   box-shadow: inset 5px 5px 10px #7a7e90,
-              inset -5px -5px 10px #ffffff;
+              inset -5px -5px 10px #ffffff; */
+  background: #2a355d;
+  box-shadow: inset 5px 5px 10px #181e35,
+              inset -5px -5px 10px #3c4c85;
 
 }
 .route-description-font {
