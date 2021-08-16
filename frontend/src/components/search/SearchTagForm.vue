@@ -1,7 +1,6 @@
 <template>
   <v-container class="pt-0 px-0">
-    <h3 class="ml-5 post-detail-title-font">Tags</h3>
-    <div class="tag-box mx-4">
+    <div class="tag-box mx-4 mt-6">
       <v-container class="tag-container">
         <p class="tag-title-font ml-3 ma-3">누구와 함께하는 루트를 찾고 있나요?</p>
       <div v-for="withTag in withTagObj" :key="withTag.idx" class="d-inline" style="flex">
@@ -165,6 +164,8 @@ export default {
   cursor: pointer;
   transition: all 0.3x ease-in-out;
   box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
+  animation: jello-horizontal .9s both;
+
 }
 .search-button {
   width: 90px;
@@ -177,4 +178,29 @@ export default {
   border-radius: 16px;
   filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.25));
 }
+@keyframes jello-horizontal {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
 </style>
