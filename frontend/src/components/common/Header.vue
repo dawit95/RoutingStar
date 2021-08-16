@@ -55,7 +55,7 @@ export default {
         case 'Logout':
           console.log('Logout')
           this.$store.state.accounts.jwt = []
-          this.$store.state.accounts.feeds = ''
+          this.$store.state.home.feeds = ''
           localStorage.removeItem('vuex')
           this.$router.push('/')
       }
@@ -65,6 +65,8 @@ export default {
         this.$router.push({ name: "HomeView" }).catch(() => {});
       }
     },
+
+    
   }
 }
 </script>
