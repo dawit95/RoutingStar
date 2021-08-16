@@ -68,8 +68,8 @@ const routes = [
     name: 'PostRouteView',
     component: () => import('@/views/post/PostRouteView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__fadeOut"
+      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
+      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
     }
   },
   {
@@ -88,8 +88,8 @@ const routes = [
     name: 'ReviseRouteView',
     component: () => import('@/views/revise/ReviseRouteView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__fadeOut"
+      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
+      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
     }
   },
   // Revise Others' Route
@@ -98,8 +98,8 @@ const routes = [
     name: 'ReviseOthersRouteView',
     component: () => import('@/views/revise/ReviseOthersRouteView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__fadeOut"
+      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
+      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
     }
   },
   
@@ -109,8 +109,8 @@ const routes = [
     name: 'MyPageView',
     component: () => import('@/views/myPage/MyPageView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
-      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
     }
   },
   {
@@ -118,8 +118,8 @@ const routes = [
     name: 'OtherUserPageView',
     component: () => import('@/views/myPage/OtherUserPageView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__faster",
-      leaveActiveClass: "animate__animated animate__fadeOut aimate__faster"
+      enterActiveClass: "animate__animated animate__zoomIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
     }
   },
   {
@@ -136,8 +136,8 @@ const routes = [
     name: 'FollowUserListView',
     component: () => import('@/views/myPage/FollowUserListView.vue'),
     meta: {
-      enterActiveClass: "animate__animated animate__zoomIn",
-      leaveActiveClass: "animate__animated animate__zoomOut"
+      enterActiveClass: "animate__animated animate__slideInUp",
+      leaveActiveClass: ""
     }
   },
 

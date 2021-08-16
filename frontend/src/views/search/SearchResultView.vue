@@ -1,18 +1,28 @@
 <template>
-  <v-container>
-    <div class="mt-7">
-      <button style="color:white" @click="goBack">뒤로가기</button>
-    </div>
-    <v-card class="followTabs" dark>
+  <v-container class="search-result-tabs">
+    <!-- 뒤로가기 버튼 -->
+    <v-btn
+      @click="goBack"
+      icon
+      style="color:white"
+    >
+      <v-icon x-large>mdi-chevron-left</v-icon>
+    </v-btn>
+  
       <v-tabs
         @change="changeTabNum"
         v-model="$store.state.search.tab"
-        background-color="transparent"
+        background-color="#101423"
+        rounded-pill
+        dark
         grow
+        class="mt-3;"
       >
         <v-tab
           v-for="item in items"
           :key="item"
+          style="font-size:16px; color:#D2FDFF;"
+          class="search-result-tab"
         >
           {{ item }}
         </v-tab>
@@ -23,13 +33,15 @@
           <v-tab-item>
             <v-card>
               <div v-if="searchedFollowRoutes.length">
-                  <RouteCard
-                    v-for="feed in searchedFollowRoutes"
-                    :key="feed.id"
-                    :feed="feed"
-                  />
+                <RouteCard
+                  v-for="feed in searchedFollowRoutes"
+                  :key="feed.id"
+                  :feed="feed"
+                />
               </div>
-              <div v-else >검색 결과가 없습니다. 다시 검색해볼까요?</div>
+              <div class="my-5" style="text-align:center" v-else >
+                <h4>검색 결과가 없습니다. 다시 검색해볼까요?</h4>
+              </div>
             </v-card>
           </v-tab-item>
 
@@ -42,12 +54,12 @@
                     :feed="feed"
                   />
               </div> 
-              <div v-else >검색 결과가 없습니다. 다시 검색해볼까요?</div>
+              <div class="my-5" style="text-align:center" v-else>
+                <h4>검색 결과가 없습니다. 다시 검색해볼까요?</h4>
+              </div>
             </v-card>
           </v-tab-item>
-        
         </v-tabs-items>
-      </v-card>
   </v-container>
 
 </template>
@@ -108,5 +120,16 @@ export default {
 </script>
 
 <style>
-
+.search-result-tabs {
+  font-family: 'Do Hyeon', sans-serif;
+}
+.search-result-tab{
+  color: #D2FDFF;
+  background-color: #101423;
+  border-radius: 10px; 
+  
+}
+.result-div {
+  background-color: #101423;
+}
 </style>
