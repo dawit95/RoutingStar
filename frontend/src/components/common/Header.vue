@@ -11,24 +11,27 @@
      -->
 
     <tool-tip-dialog/>
-      <v-menu offset-y>
-        
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="account-btn mr-1" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
-        </template>
-      
-      <v-list>
-        <v-list-item
-          value="true"
-          v-for="(item, index) in items"
-          :key="index"
-          @click="selectSection(item)"
-          >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+    <v-menu offset-y>
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn class="account-btn" color="grey" dark v-bind="attrs" v-on="on" x-large icon>
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
+    </template>
+    <v-list color="black">
+      <v-list-item-group
+        active-class="bg-active"
+        white
+      >
+      <v-list-item
+        value="true"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="selectSection(item)"
+        >
+          <v-list-item-title color="red">{{ item.title }}</v-list-item-title>
         </v-list-item>
-      </v-list>
+      </v-list-item-group>
+    </v-list>
     </v-menu>
   </v-app-bar>
 </template>
@@ -57,7 +60,7 @@ export default {
     selectSection(item) {
       switch (item.title) {
         case 'MyPage':
-          console.log('MyPage')
+          // console.log('MyPage')
           this.enterUserprofile({ 
             userId: this.jwt[2],
             access_token: this.jwt[0],
@@ -85,7 +88,12 @@ export default {
 
 <style scoped>
 .moveToRight {
-  left: 20px;
+  left: 25px;
+}
+
+.bg-active {
+  background-color: black;
+  color : white !important;
 }
 /* .moveToUp {
   top: 1px;

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <ProfileInfo/>
-    <v-row class="button mx-8 d-flex justify-center Dohyeon" @click="onClickfollowOtherUser">{{ follow }}</v-row>
+    <!-- <v-row class="button mx-8 d-flex justify-center Dohyeon" @click="onClickfollowOtherUser">{{ follow }}</v-row> -->
     <OtherUserRoutesTab/>
   </v-container>
 </template>
@@ -103,5 +103,8 @@ export default {
 .moveDown {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.moveUp {
+  margin-top: 50px;
 }
 </style>
