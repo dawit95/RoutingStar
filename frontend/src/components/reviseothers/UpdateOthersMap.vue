@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container fluid>
     <v-layout row swap>
       <v-flex xs12>
         <div class="pac-card" id="pac-card">
@@ -85,7 +85,7 @@ export default {
         })
         // Map생성시 기존 data에 대한 마커 생성
         const length = this.resPlacesData.length
-        console.log(this.resPlacesData)
+        // console.log(this.resPlacesData)
         for (let x = 0; x < length; x++) {
           let pk = this.pointListPk
           this.pointListPk = this.pointListPk + 1

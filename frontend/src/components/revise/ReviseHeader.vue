@@ -1,16 +1,7 @@
 <template>
-  <v-card class="overflow-hidden">
-    <v-app-bar
-      app
-      color="#101423"
-      dark
-      style="width=100%;"
-      pa-0
-    >
-      <v-btn
-      @click="goBack"
-      icon>
-        <v-icon x-large>mdi-chevron-left</v-icon>
+    <div class="d-flex revise-header" dark>
+      <v-btn @click="goBack" icon class="pb-1">
+        <v-icon color="white" x-large>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
@@ -72,8 +63,7 @@
             
             </v-card>
           </v-dialog>
-    </v-app-bar>
-  </v-card>
+    </div>
 </template>
 
 <script>
@@ -130,6 +120,11 @@ export default {
       this.dialog = false
       this.recoverFreezeMap()
     },
+  },
+  created() {
+    if (this.routeDescription) {
+      this.createRouteDescription(this.routeDescription)
+    }
   }
 }
 </script>
@@ -168,5 +163,18 @@ export default {
 }
 .Create-Route-Success-Modal{
   position: relative;
+}
+.card-image {
+  border-radius: 7px;
+  margin: 4px;
+  max-width: 80%;
+}
+.button-font {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
+}
+.revise-header {
+  height: 56px;
+  align-items: center;
 }
 </style>
