@@ -77,7 +77,7 @@ const routes = [
     name: 'RouteDetailView',
     component: () => import('@/views/routeDetail/RouteDetailView'),
     meta: {
-      enterActiveClass: "animate__animated animate__slideInRight",
+      enterActiveClass: "animate__animated animate__fadeIn",
       leaveActiveClass: "animate__animated animate__slideOutRight"
     }
   },
