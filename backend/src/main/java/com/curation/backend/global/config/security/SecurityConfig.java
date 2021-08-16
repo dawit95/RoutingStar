@@ -2,6 +2,7 @@ package com.curation.backend.global.config.security;
 
 import com.curation.backend.global.config.auth.CustomOAuth2UserService;
 import com.curation.backend.global.filter.JwtAuthFilter;
+import com.curation.backend.global.handler.CustomLogoutSuccessHandler;
 import com.curation.backend.global.handler.CustomOAuth2SuccessHandler;
 import com.curation.backend.token.service.TokenService;
 import com.curation.backend.user.domain.Role;
@@ -25,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
     private final TokenService tokenService;
     private final UserRepository userRepository;
 
@@ -55,8 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
-                //front-end CI/CD 구현시 변경될 uri
-//                .logoutSuccessUrl("https://i5a309.p.ssafy.io/")
+                //front-end CI/CD 구현시 변경될 uri =>  변경완료
+                .logoutSuccessUrl("https://i5a309.p.ssafy.io/")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
 
                 .and()
                 .oauth2Login()
