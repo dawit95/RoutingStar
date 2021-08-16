@@ -1,6 +1,6 @@
 <!--https://github.com/Abiola-Farounbi/Landing-Page-VUE/blob/master/src/App.vue-->
 <template>
-<v-col cols="12" sm="1" md="1">
+
   <main id="app">
     <section class='intro'>
       <div class='introDescription' data-aos="zoom-in"
@@ -18,14 +18,12 @@
        <img class='guide1Image' src='https://res.cloudinary.com/dsderm9xw/image/upload/v1622028085/3D%20Illustrations/3d-illustration2_ykuua3.png' 
        alt='3d illustration of boy sitting with legs crossed'
        data-aos="slide-down"
-     data-aos-ease = 'ease'
-      data-aos-duration="1500"
-     data-aos-delay='500'/>
+       data-aos-duration="1500"
+/>
       <div class='guide1Description'
       data-aos="slide-up"
-     data-aos-ease = 'ease'
-      data-aos-duration="1500"
-     data-aos-delay='1000'>
+      data-aos-duration="1000"
+>
         <h1> 정보를 얻을래! </h1>
         <br>
          <div>
@@ -39,15 +37,11 @@
      <section class='guide2'>
       <div class='guide2Description'
       data-aos="slide-down"
-        data-aos-ease = 'ease'
-         data-aos-duration="1500"
-        data-aos-delay='1000'>
+>
                 <img class='guide2Image' src='https://res.cloudinary.com/dsderm9xw/image/upload/v1622028057/3D%20Illustrations/3d-illustration1_j06j0a.png' 
         alt='3d illustration of boy with laptop sitting'
         data-aos="slide-up"
-         data-aos-duration="1500"
-        data-aos-ease = 'ease'
-        data-aos-delay='1000'
+
         />
             <h1> 공유할래! </h1>
          <div>
@@ -62,15 +56,11 @@
      <section class='guide3'>
       <div class='guide3Description'
       data-aos="slide-down"
-        data-aos-ease = 'ease'
-         data-aos-duration="1500"
-        data-aos-delay='1000'>
+>
                 <img class='guide3Image' src='https://superscene.pro/images/section-2-image-6@2x.png' width="282.56px" height="300px"
         alt='3d illustration of boy with laptop sitting'
         data-aos="slide-up"
-         data-aos-duration="1500"
-        data-aos-ease = 'ease'
-        data-aos-delay='1000'
+
         />
             <h1> 탐나는데? </h1>
          <div>
@@ -85,7 +75,7 @@
     Developed by RoutingStar
   </footer>
   </main>
-</v-col>
+
 </template>
 
 
@@ -105,7 +95,7 @@
   background: #101423;
   justify-content: space-evenly;
   padding-top:80px;
-  /* height: 500px; */
+  height: 700px;
 }
 .introDescription {
   font-size:20px;
@@ -125,7 +115,7 @@
   justify-content: space-evenly;
   padding-top:80px;
   overflow:hidden;
-  height: 500px;
+  height: 700px;
 }
 .guide1Description h1{
   color:#101423;
@@ -147,7 +137,7 @@
   justify-content: space-evenly;
   padding-top:80px;
    overflow:hidden;
-   height: 500px;
+   height: 700px;
 }
 .guide2Description h1{
   font-size:48px;
@@ -168,7 +158,7 @@
   justify-content: space-evenly;
   padding-top:80px;
    overflow:hidden;
-   height: 500px;
+   height: 700px;
 }
 .guide3Description h1{
   font-size:48px;
@@ -189,6 +179,49 @@ footer{
   padding:10px;
   text-align: right;
   font-weight: 900;
+}
+
+/* responsiveness */
+@media screen and (max-width: 700px){
+  .intro{
+  display:block;
+  padding-top:10px;
+  height:auto;
+}
+.introImage{
+  width:100%;
+}
+.introDescription {
+  padding: 30px 0px 0px 20px;
+}
+ .guide1{
+ display:block;
+  padding-top:10px;
+  height:auto;
+}
+.guide1Image{
+  width:100%;
+}
+.guide1Description {
+  padding: 20px;
+}
+.guide1Description h1{
+  padding:30px 0px;
+}
+.guide2{
+ display:block;
+  padding-top:10px;
+  height:auto;
+}
+.guide2Image{
+  width:100%;
+}
+.guide2Description {
+  padding: 20px;
+}
+.guide2Description h1{
+  padding:30px 0px;
+}
 }
 </style>
 
