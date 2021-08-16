@@ -30,6 +30,7 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
         logger.trace("CustomLogoutSuccessHandler.onLogoutSuccess ::::"); super.onLogoutSuccess(request, response, authentication);
 
         String access_token = request.getHeader("access_token");
+        logger.trace("?>>>>>>>>>>>>로그아웃 access_token: {}",access_token);
 
         if (access_token != null && tokenService.verifyToken(access_token)) {
             Long id = tokenService.getId(access_token);
