@@ -11,7 +11,7 @@
     </div>
     <!-- <input type="file" ref="file" :name="uploadFieldName" @change="onFileChange($event.target.name, $event.target.files)" style="display:none"> -->
     <input
-      capture
+      capture="gallery"
       type="file"
       accept="images/*"
       ref="file"
