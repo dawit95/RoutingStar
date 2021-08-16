@@ -82,9 +82,12 @@ export default {
       }
     },
     moveToHome() {
+      /*
       if (this.$route.name != "HomeView") {
         this.$router.push({ name: "HomeView" }).catch(() => {});
       }
+      */
+      document.documentElement.webkitRequestFullscreen();
     },
   },
 };
