@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <v-main class="background-color">
+      <follow-alert/>
+      <like-alert></like-alert>
+      <store-alert></store-alert>
       <!-- Header -->
       <Header v-if="$route.name !== 'LoginView' && $route.name !== 'PostRouteView' && $route.name !== 'ReviseRouteView' && $route.name !== 'ReviseOthersRouteView'"/>
 
@@ -31,6 +34,9 @@
 </template>
 
 <script>
+import StoreAlert from '@/components/alert/StoreAlert.vue'
+import LikeAlert from '@/components/alert/LikeAlert.vue'
+import FollowAlert from '@/components/alert/FollowAlert.vue'
 import Header from '@/components/common/Header.vue'
 import Nav from '@/components/common/Nav.vue'
 
@@ -38,13 +44,15 @@ export default {
   name: 'App',
   data() {
     return {
-
     }
   },
   components: {
     Header,
-    Nav
-  }
+    Nav,
+    FollowAlert,
+    LikeAlert,
+    StoreAlert
+  },
 };
 </script>
 <style>
