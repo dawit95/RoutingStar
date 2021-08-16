@@ -47,11 +47,11 @@ messaging.getToken()
 messaging.onMessage(payload => {
 console.log(payload)
 // alert(payload.data.message)
-if(payload.data.message.includes("follow")) {
+if(payload.data.title.includes("팔로우 알림")) {
   store.dispatch('showAlertModal', payload.data.message);
-} else if (payload.data.message.includes("피드좋아요")) {
+} else if (payload.data.title.includes("좋아요 알림")) {
   store.dispatch('showLikeModal', payload.data.message);
-} else if(payload.data.message.includes("루트 저장")) {
+} else if(payload.data.title.includes("루트 저장 알림")) {
   store.dispatch('showStoreModal', payload.data.message);
 }
 })
