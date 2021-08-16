@@ -1,67 +1,67 @@
 <template>
-    <v-container class="mx-auto" background-color="#101423" max-width="400">
-      <v-row class="moveDown moveRight moveUp">
-        <v-list-item-avatar color="grey darken-3">
-          <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
-        </v-list-item-avatar>
-           <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
-          <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
-            <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
-          </v-btn>
-      </v-row>    
-      <hr>
-        <RouteDetailMap />
-      <hr>
-      <v-row class="moveDown moveRight">
-        <v-col cols="8" xs="8" class="content">
-          <span class="Nanum" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
-            <button class="button" color="white">{{ whatTag.title }}</button>
-          </span>
+  <v-container class="pa-0">
+    <v-row class="moveDown moveRight moveUp">
+      <v-list-item-avatar color="grey darken-3">
+        <v-img v-if="routeInfo.user" @click="onClickUser(routeInfo)" class="elevation-6 Nanum" alt="" :src="routeInfo.user.profileImg"></v-img>
+      </v-list-item-avatar>
+          <span @click="onClickUser(routeInfo)" class="moveDownBig Nanum" style="color: white">{{ routeInfo.user.name }}</span>
+        <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
+          <v-icon class="moveDown moveRight" color="white">mdi-pencil-outline</v-icon>
+        </v-btn>
+    </v-row>    
+    <hr>
+      <RouteDetailMap />
+    <hr>
+    <v-row class="moveDown moveRight">
+      <v-col cols="8" xs="8" class="content">
+        <span class="Nanum" v-for="(whatTag, idx) in routeInfo.whatTag" v-bind:key="idx +'i'">
+          <button class="button" color="white">{{ whatTag.title }}</button>
+        </span>
 
-          <span class="Nanum" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
-            <button class="button" color="white">{{ withTag.title }}</button>
-          </span>
-        </v-col>
+        <span class="Nanum" v-for="(withTag, idx) in routeInfo.withTag" v-bind:key="idx+ 'j'">
+          <button class="button" color="white">{{ withTag.title }}</button>
+        </span>
+      </v-col>
 
-        <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
-          <div v-if="routeInfo.isLiked">
-            <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
-          </div>
-          <div v-else>
-            <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
-          </div> 
-          <div class="subheading mr-2" style="color:white">{{ routeInfo.likeCnt }}</div>
-
-          <div v-if="routeInfo.isStored">
-              <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
-          </div>
-          <div v-else>
-            <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
-          </div> 
-          <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
-           </v-col>
-      </v-row>
-
-         <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
-          <span v-if="place.isThumbnail===true">
-            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
-            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
-          </span>
-         </div>
-
-        <br /><br /><br /><br /><br />><br /><br />
-
-      <div >
-      <v-row class="d-flex justify-center underLine Dohyeon">
-        {{ routeInfo.routeDescription }}
-    </v-row>
-     </div>    
-  
-        <div>
-          <CommentBox/>
+      <v-col cols="4" xs="4" class="d-flex moveDownLittle">  
+        <div v-if="routeInfo.isLiked">
+          <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
         </div>
-    
-    </v-container>
+        <div v-else>
+          <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
+        </div> 
+        <div class="subheading mr-2" style="color:white">{{ routeInfo.likeCnt }}</div>
+
+        <div v-if="routeInfo.isStored">
+            <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
+        </div>
+        <div v-else>
+          <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+        </div> 
+        <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
+          </v-col>
+    </v-row>
+
+        <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+        <span v-if="place.isThumbnail===true">
+          <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
+          <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+        </span>
+        </div>
+
+      <br /><br /><br /><br /><br />><br /><br />
+
+    <div >
+    <v-row class="d-flex justify-center underLine Dohyeon">
+      {{ routeInfo.routeDescription }}
+    </v-row>
+    </div>    
+
+      <div>
+        <CommentBox/>
+      </div>
+  
+  </v-container>
 </template>
 
 <script>

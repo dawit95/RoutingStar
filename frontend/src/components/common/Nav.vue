@@ -63,14 +63,25 @@ export default {
       if (from.name === 'RouteDetailView' && to.name === 'SearchResultView') {
         this.setTabNum(this.tab)
       }
-
+      if (from.name === 'ReviseRouteView' && to.name !== 'ReviseRouteView') {
+        this.refreshPlaces([])
+      }
+      if (from.name !== 'ReviseRouteView' && to.name === 'ReviseRouteView') {
+        this.refreshPlaces([])
+      }
+      if (from.name === 'ReviseOthersRouteView' && to.name !== 'ReviseOthersRouteView') {
+        this.refreshPlaces([])
+      }
+      if (from.name !== 'ReviseOthersRouteView' && to.name === 'ReviseOthersRouteView') {
+        this.refreshPlaces([])
+      }
     }
   },
   computed: {
     ...mapGetters(['postingCheck', 'tab'])
   },
   methods: {
-    ...mapActions(['refreshPlaces', 'setTabNum']),
+    ...mapActions(['refreshPlaces', 'setTabNum', 'clearRouteInfo']),
     moveToSearch() {
       if (this.$route.name != "SearchView") {
         this.$router.push({ name: "SearchView" });
