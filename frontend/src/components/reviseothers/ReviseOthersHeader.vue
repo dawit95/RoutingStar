@@ -22,7 +22,7 @@
       >
         
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mr-3 button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
+          <v-btn class="button-font" color="#101423" dark right v-bind="attrs" v-on="on" @click="freezeMap">
             선택완료
           </v-btn>
         </template>
@@ -127,7 +127,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-toolbar__content, .v-toolbar__extension {
   padding-right: 0px;
   padding-left: 8px;
