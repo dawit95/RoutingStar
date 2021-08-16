@@ -148,6 +148,7 @@ export default {
         )
         this.polyLine.setMap(this.map);
         this.map.addListener("click", this.addPoint);
+        this.freezeBound()
       }
       // 실제 Google Map 객체를 생성하는 것은 null 일때만 
       // 루트를 그릴 때 freeze 상태라면 bound 조정하고, 아니라면 검색창 붙인다

@@ -153,6 +153,7 @@ export default {
       } else {
         this.attachSearch()
         this.refreshPolyline()
+        this.freezeBound()
       }
     },
 

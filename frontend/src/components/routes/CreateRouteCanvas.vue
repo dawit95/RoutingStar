@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="canvas-body">
     <canvas id="canvas"></canvas>
-    <v-btn @click="canvasToPng">루트 그림으로 변환 확인</v-btn>
-    <img v-bind:src="imgDataUrl" alt="">
+    <!-- <v-btn @click="canvasToPng">루트 그림으로 변환 확인</v-btn>
+    <img v-bind:src="imgDataUrl" alt=""> -->
   </div>
 </template>
 
@@ -56,6 +56,15 @@ export default {
             shadow: shadow,
         })
     },
+    createLine3(s, e, shadow ) {
+      return new window.fabric.Line( [ s.x, s.y, e.x, e.y ], {
+            //fill:'white',
+            stroke:'white',
+            strokeWidth: 4,
+            shadow: shadow,
+            opacity: 0.4
+        })
+    },
     // createCircle(point, lineWidth, lineColor, shadow) {
     createCircle(point, lineWidth) {
       return new window.fabric.Circle ({
@@ -64,12 +73,15 @@ export default {
         radius: lineWidth,
         stroke: '#8860D0',
         fill: '#8860D0',
+        // stroke: 'white',
+        // fill: 'white',
+        opacity: 0.7,
         // shadow: shadow
       })
     },
     drawPolyLine() {
       // console.log("drawPolyLine")
-      let canvas = new window.fabric.Canvas("canvas", {width:400, height:400 });
+      let canvas = new window.fabric.Canvas("canvas", {width:340, height:340 });
       // console.log(canvas.getWidth())
       // console.log(this.xyPoints)
       // var canvasPolyline = new window.fabric.Polyline(
@@ -97,11 +109,13 @@ export default {
       // canvasPolyline.center()
       let shadow = new window.fabric.Shadow( {
         blur:17,
-        color:'#D2FDFF',
+        // color:'#D2FDFF',
+        color:'#96F9FF',
       })
 
-      const lineWidth = 6
-      const lineColor = '#D2FDFF'
+      const lineWidth = 7
+      // const lineColor = '#D2FDFF'
+      const lineColor = '#96F9FF'
 
       let polyLine = []
 
@@ -111,6 +125,7 @@ export default {
         
         polyLine.push( this.createLine( s, e, lineWidth, lineColor, shadow ))
         polyLine.push( this.createLine2( s, e, lineColor, shadow ))
+        polyLine.push( this.createLine3( s, e, shadow ))
         
       }
 
@@ -122,20 +137,6 @@ export default {
         selectable: false,
         objectCaching: false,
       })
-      /*
-      const canvasWidth = 400
-      const canvasHeight = 400
-      const margin = 0.6
-
-      let bounds = group.getBoundingRect()
-      let widthRatio = bounds.width / canvasWidth
-      let heightRatio = bounds.height / canvasHeight
-
-      if ( widthRatio > heightRatio ) {
-        group.scaleToWidth( canvasWidth * margin )  
-      } else {
-        group.scaleToHeight( canvasHeight * margin)  
-      } */     
 
       canvas.add(group)
       group.center()
@@ -186,7 +187,6 @@ export default {
           console.log(data)
           const access_token = this.jwt[0]
           console.log(access_token)
-          // 동기적으로 callback을 활용한다 !!!! 으아아아아 
           console.log('createroute 실행전', this.jwt)
           this.createRoute(this.jwt)
         })
@@ -210,16 +210,14 @@ export default {
 </script>
 
 <style scoped>
-/* body같은거 빼기 */
-body {
+.canvas-body {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: #101423;
+        background-color: #2A355D;
       }
-
 #canvas {
-  width: 800px;
+  width: 100%;
   height: 400px;
 }
 </style>
