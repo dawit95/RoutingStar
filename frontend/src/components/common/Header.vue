@@ -68,7 +68,8 @@ export default {
               access_token: this.jwt[0],
             },
           };
-          axios.post('https://i5a309.p.ssafy.io/logout', config).then((res) => {
+          // axios.post('https://i5a309.p.ssafy.io/logout', config).then((res) => {
+          axios.post('https://i5a309.p.ssafy.io/logout', '', config).then((res) => {
             console.log(res.data);
             this.$store.state.accounts.jwt = [];
             this.$store.state.home.feeds = '';
