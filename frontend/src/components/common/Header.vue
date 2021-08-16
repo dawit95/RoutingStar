@@ -52,12 +52,6 @@ export default {
     ...mapActions(['enterUserprofile']),
 
     selectSection(item) {
-      console.log(this.jwt[0]);
-      const config = {
-        headers: {
-          access_token: this.jwt[0],
-        },
-      };
       switch (item.title) {
         case 'MyPage':
           console.log('MyPage');
@@ -69,13 +63,18 @@ export default {
           break;
         case 'Logout':
           console.log('Logout');
+          var config = {
+            headers: {
+              access_token: this.jwt[0],
+            },
+          };
           axios.post('https://i5a309.p.ssafy.io/logout', config).then((res) => {
             console.log(res.data);
+            this.$store.state.accounts.jwt = [];
+            this.$store.state.home.feeds = '';
+            localStorage.removeItem('vuex');
+            this.$router.push('/');
           });
-          this.$store.state.accounts.jwt = [];
-          this.$store.state.home.feeds = '';
-          localStorage.removeItem('vuex');
-          this.$router.push('/');
       }
     },
     moveToHome() {
