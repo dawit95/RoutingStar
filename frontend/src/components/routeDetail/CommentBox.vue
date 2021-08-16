@@ -6,14 +6,14 @@
           <button class="addCommentBtn moveDown" @click="onClickAddComment">댓글작성</button>
       </v-row>
       
-      <div class="commentList Nanum">
+      <div class="commentList Nanum ">
         <v-row v-for="(comment, idx) of routeInfo.comments" v-bind:key="idx">
-          <div @click="onClickUser(comment.user)">
-            <span style="color:white">{{ comment.user.name }}</span>
-          </div>
-          <span class="mx-3" style="color:white">{{ comment.comment}}</span>
-          <!-- 댓글 작성 본인만 삭제 가능하게 -->
-          <button class="mx-2" style="color:white" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
+          <span @click="onClickUser(comment.user)"></span>
+            <span class="nicknameColor">{{ comment.user.name }}</span>
+            <span class="mx-3" style="color:white">{{ comment.comment}}</span>
+            <!-- 댓글 작성 본인만 삭제 가능하게 -->
+            <button id="btn" type="button" class="mx-2" style="color:white" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
+          
         </v-row>
       </div>
     </div>
@@ -96,6 +96,19 @@ export default {
 </script>
 
 <style scoped>
+#btn {
+  widows: 10px;
+  border: none;
+  border-radius: 2px;
+  font-family: 'Do Hyeon', sans-serif;
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+  color: #212529;
+  background-color: red;
+ }
+.nicknameColor {
+  color: #D1FDFE;
+}
 .Nanum {
   font-family: 'Nanum Gothic Coding', monospace;
 }

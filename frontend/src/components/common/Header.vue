@@ -91,6 +91,11 @@ export default {
 .moveToRight {
   left: 20px;
 }
+
+.bg-active {
+  background-color: black;
+  color : white !important;
+}
 /* .moveToUp {
   top: 1px;
   margin-bottom: -1px;
