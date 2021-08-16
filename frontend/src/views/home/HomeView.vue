@@ -308,7 +308,7 @@ export default {
 /* 카드하나속성 */
 .box {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 .profile-font {
   font-family: 'Do Hyeon', sans-serif;
