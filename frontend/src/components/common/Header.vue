@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 .moveToRight {
-  left: 20px;
+  left: 25px;
 }
 /* .moveToUp {
   top: 1px;
