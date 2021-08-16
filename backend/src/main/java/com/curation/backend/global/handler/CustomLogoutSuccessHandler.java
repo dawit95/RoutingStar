@@ -27,9 +27,10 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        logger.trace("CustomLogoutSuccessHandler.onLogoutSuccess ::::"); super.onLogoutSuccess(request, response, authentication);
+//        logger.trace("CustomLogoutSuccessHandler.onLogoutSuccess ::::"); super.onLogoutSuccess(request, response, authentication);
 
         String access_token = request.getHeader("access_token");
+        logger.trace("{}",request.getHeaderNames());
         logger.trace("?>>>>>>>>>>>>로그아웃 access_token: {}",access_token);
 
         if (access_token != null && tokenService.verifyToken(access_token)) {
