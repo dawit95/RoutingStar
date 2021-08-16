@@ -1,20 +1,19 @@
 <template>
   <div class="commentBox">
     <div>
-      <v-row class="form-group">
-          <v-text-field color="amber lighten-4" label="댓글을 입력해주세요" v-model="WrittingComment"></v-text-field>
-          <button class="addCommentBtn" @click="onClickAddComment">댓글작성</button>
+      <v-row class="form-group"> 
+          <v-text-field dark color="white" label="댓글을 입력해주세요" v-model="WrittingComment"></v-text-field>
+          <button class="addCommentBtn moveDown" @click="onClickAddComment">댓글작성</button>
       </v-row>
       
       <div class="commentList">
         <v-row v-for="(comment, idx) of routeInfo.comments" v-bind:key="idx">
           <div @click="onClickUser(comment.user)">
-            <!-- <img class="followListImg" :src=comment.user.profileImg alt=""> -->
-            <span>{{ comment.user.name }}</span>
+            <span style="color:white">{{ comment.user.name }}</span>
           </div>
-          <span class="mx-3">{{ comment.comment}}</span>
+          <span class="mx-3" style="color:white">{{ comment.comment}}</span>
           <!-- 댓글 작성 본인만 삭제 가능하게 -->
-          <button class="mx-2" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
+          <button class="mx-2" style="color:white" v-if="comment.user.id == jwt[2]" @click="onClickDeleteComment(comment)">X</button>
         </v-row>
       </div>
     </div>
@@ -36,7 +35,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRouteInfo', 'createComment', 'deleteCommentActions']),
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'createComment', 'deleteCommentActions']),
 
     onClickUser(user) {
       this.enterUserprofile({
@@ -96,7 +95,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.moveDown {
+  margin-top: 18px;
+}
 .commentBox {
     width:80%;
     margin:50px;
@@ -114,6 +116,8 @@ export default {
   background-color: #FBE8A6;
   border-radius: 30px;  
   filter: drop-shadow(0px 7px 7px rgba(0, 0, 0, 0.25));
+  font-size: 0.9em;
+  font-weight: bold;
 }
 .followListImg {
   width: 30px; height: 30px;
