@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div v-if="!this.feeds">
+    <div v-if="!this.feeds.length">
      <EmptyHome/>
     </div>
     <v-flex xs12 class="big-box rounded-lg">
@@ -52,7 +52,7 @@
                   <v-card-text class="text-center route-description2 text-h7 font-weight-bold route-description-font">
                     {{ feed.routeDescription }}
                   </v-card-text>
-                
+
               </v-row>
             </div>
           </div>
