@@ -1,6 +1,6 @@
 // store/modules/routes.js
 
-import { postRoute, updateRoute, getRouteInfoByRouteId, getRouteInfoWithComment } from '@/api/routes.js'
+import { postRoute, updateRoute, getRouteInfoByRouteId, getRouteInfoWithComment, deleteRoute } from '@/api/routes.js'
 // import accounts from '@/store/modules/accounts.js'
 import images from './images'
 // import accounts from './accounts'
@@ -271,7 +271,19 @@ const actions = {
   clearRouteInfo({ commit }) {
     console.log('초기호ㅏ')
     commit('CLEAR_ROUTE_INFO')
-  }
+  },
+
+  deleteRouteActions({ dispatch }, payload) {
+    console.log('루트 삭제 엑션스')
+    console.log(payload)
+    deleteRoute(payload.userId, payload.routeId, payload.access_token,
+      (res) => {
+        console.log(res)
+        dispatch('clearRouteInfo')
+      }, (error) => {
+        console.log(error)
+    })
+  },
 }
 
 export default {
