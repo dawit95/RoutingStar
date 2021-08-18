@@ -97,7 +97,7 @@ export default {
         // this.$router.push({ name: "HomeView" }).catch(() => {});
         this.$router.push({ name: "HomeView" });
       }
-      document.documentElement.webkitRequestFullscreen();
+      // document.documentElement.webkitRequestFullscreen();
     },
   },
 };
