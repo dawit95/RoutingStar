@@ -14,7 +14,6 @@
     <input
       type="file"
       ref="file"
-      capture="gallery"
       :name="uploadFieldName"
       @change="onFileSelected(place, $event.target.name, $event.target.files)"
       style="display:none"
