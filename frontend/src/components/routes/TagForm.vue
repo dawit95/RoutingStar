@@ -100,6 +100,12 @@ export default {
 </script>
 
 <style>
+.post-detail-title-font {
+  font-family: 'Do Hyeon', sans-serif;
+  color: #D2FDFF;
+  font-weight: lighter;
+}
+
 .tag-title-font{
   font-family: 'Do Hyeon', sans-serif;
   font-weight: 100;
@@ -177,5 +183,6 @@ export default {
     transform: scale3d(1, 1, 1);
   }
 }
+
 
 </style>

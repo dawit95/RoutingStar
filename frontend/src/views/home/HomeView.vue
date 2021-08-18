@@ -5,7 +5,7 @@
     </div>
     <v-flex xs12 class="big-box rounded-lg">
       <div v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
-      <div class="list-prop">
+      <div class="list-prop mt-6">
         <!-- 프로필 이미지, 이름 -->
         <div>
           <v-list-item-avatar size="45px">
@@ -52,9 +52,10 @@
                 <div class="subheading name-font">{{ feed.storageCnt }}</div>
               </v-row>
               <!-- 루트설명 -->
+
+                <h5 class="ml-4 mt-1" style="font-family: 'Do Hyeon', sans-serif; font-weight: lighter">Route Description</h5>
               <v-row align="center" justify="center">
-                
-                  <v-card-text class="text-center route-description2 text-h7 font-weight-bold route-description-font">
+                  <v-card-text class="text-center route-description2 text-h7 route-description-font">
                     {{ feed.routeDescription }}
                   </v-card-text>
 
@@ -363,8 +364,8 @@ export default {
   border-radius: 10px;
   text-align: center;
   background-color:#2a355d;
-  padding: 10px 10px 10px 10px;
-  margin: 10px 10px 10px 10px;
+  padding: 10px 20px 10px 20px;
+  margin: 10px 25px 15px 25px;
   /* background: #c1c8e4;
   box-shadow: inset 5px 5px 10px #7a7e90,
               inset -5px -5px 10px #ffffff; */

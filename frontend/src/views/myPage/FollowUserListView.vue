@@ -1,8 +1,13 @@
 <template>
   <v-container>
-    <div class="mt-7">
-      <button style="color:white" @click="goBack">뒤로가기</button>
-    </div>
+    <v-btn
+      @click="goBack"
+      icon
+      style="color:white"
+    >
+      <v-icon x-large>mdi-chevron-left</v-icon>
+    </v-btn>
+
     <v-card class="followTabs" dark>
       <v-tabs
         v-model="tab"
@@ -19,36 +24,33 @@
 
       <v-tabs-items v-model="tab">
 
-        <v-tab-item>
-          <v-card>
-            <div v-if="followUserList" >
+        <v-tab-item class="tab-item">
+    
+            <v-container v-if="followUserList.followerList.length !== 0" >
 
                 <div v-for="(follower, idx) of followUserList.followerList" v-bind:key="idx">
-                  <div @click="onClickUser(follower.follower)">
-                    <img class="followListImg" :src=follower.follower.profileImg alt="">
-                    <p>{{ follower.follower.name }}</p>
-                  </div>
+                  <v-row @click="onClickUser(follower.follower)">
+                   <v-col><img class="followListImg" :src=follower.follower.profileImg alt=""></v-col>
+                   <v-col><p>{{ follower.follower.name }}</p></v-col>
+                  </v-row>
                 </div>
 
-            </div>
+            </v-container>
             <div v-else >아직 루트메이트가 없습니다. 찾으러 가볼까요?</div>
-          </v-card>
         </v-tab-item>
 
-        <v-tab-item>
-          <v-card>
-            <div v-if="followUserList" >
+        <v-tab-item class="tab-item">
+            <v-container v-if="followUserList.followingList.length !== 0" >
               
               <div v-for="(following, idx) of followUserList.followingList" v-bind:key="idx">
-                <div @click="onClickUser(following.following)">
-                  <img class="followListImg" :src=following.following.profileImg alt="">
-                  <p>{{ following.following.name }}</p>
-                </div>
+                <v-row @click="onClickUser(following.following)">
+                  <v-col><img class="followListImg" :src=following.following.profileImg alt=""></v-col>
+                  <v-col><p>{{ following.following.name }}</p></v-col>
+                </v-row>
               </div>
               
-            </div>
+            </v-container>
             <div v-else >아직 루트메이트가 없습니다. 찾으러 가볼까요?</div>
-          </v-card>
         </v-tab-item>
       
       </v-tabs-items>
@@ -105,5 +107,9 @@ export default {
   /* object-fit: cover; */
   /* object-position: top; */
   border-radius: 50%;
+}
+.tab-item {
+  background-color: #101423;
+  font-family: 'Do Hyeon', sans-serif;
 }
 </style>
