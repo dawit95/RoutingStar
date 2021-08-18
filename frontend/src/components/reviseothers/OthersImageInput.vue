@@ -10,7 +10,9 @@
       <slot name="activator"></slot>
     </div>
     <!-- <input type="file" ref="file" :name="uploadFieldName" @change="onFileChange($event.target.name, $event.target.files)" style="display:none"> -->
-    <input accept="file_extension|video/*|image/*|media_type" type="file" ref="file" :name="uploadFieldName" @change="onFileSelected(place, $event.target.name, $event.target.files)" style="display:none">
+    <!-- 동영상 편집용 -->
+    <input type="file" ref="file" :name="uploadFieldName" @change="onFileSelected(place, $event.target.name, $event.target.files)" style="display:none">
+    <!-- <input accept="file_extension|video/*|image/*|media_type" type="file" ref="file" :name="uploadFieldName" @change="onFileSelected(place, $event.target.name, $event.target.files)" style="display:none"> -->
   </div>
 </template>
 
