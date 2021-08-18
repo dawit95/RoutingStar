@@ -14,7 +14,7 @@
     <input
       type="file"
       ref="file"
-      accept=".heic, .png, .jpg, .gif"
+      capture="gallery"
       :name="uploadFieldName"
       @change="onFileSelected(place, $event.target.name, $event.target.files)"
       style="display:none"
