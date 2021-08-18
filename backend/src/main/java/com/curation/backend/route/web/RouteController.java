@@ -29,6 +29,7 @@ public class RouteController {
 
     @PostMapping("/route")
     public ResponseEntity<SuccessResponseDto> addRoute(@RequestBody RouteRequestDto route) throws Exception {
+        logger.trace("루트 등록 요청을 보냄, 유저아이디 : {}", route.getId());
         Long id = routeService.save(route, route.getPlaces(), route.getWhatTag(), route.getWithTag());
         HttpStatus status = HttpStatus.OK;
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(id);
@@ -54,6 +55,7 @@ public class RouteController {
 
     @PutMapping("/route/{routeId}")
     public ResponseEntity<SuccessResponseDto> modifyRoute(@PathVariable("routeId") Long id, @RequestBody RouteRequestDto routeRequestDto) throws NoRouteException {
+        logger.trace("루트 등록 요청을 보냄, 유저아이디 : {}, 라우트아이디 : {}", routeRequestDto.getId(),id);
         Long routeId = routeService.modifyRoute(id, routeRequestDto, routeRequestDto.getPlaces(), routeRequestDto.getWhatTag(), routeRequestDto.getWithTag());
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse(routeId);
         HttpStatus status = HttpStatus.OK;
