@@ -9,6 +9,11 @@
           <v-btn v-if="routeInfo.user.id === this.jwt[2] || routeInfo.isStored" @click="moveToRevisePage(routeInfo.id)" icon>
             <v-icon class="moveDown moveRight pt-3" color="white">mdi-pencil-outline</v-icon>
           </v-btn>
+          
+          <v-btn v-if="routeInfo.user.id === this.jwt[2]" @click="onClickdeleteRoute(routeInfo.id)" icon>
+            <v-icon class="moveDown moveRight pt-3" color="white">mdi-trash-can-outline</v-icon>
+          </v-btn>
+          
       </v-row>    
       <hr>
         <RouteDetailMap />
@@ -91,10 +96,10 @@ export default {
     ...mapGetters(['routeInfo', 'jwt', 'isLiked', 'isSaved']),
   },
   methods: {
-    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo']),
+    ...mapActions(['enterUserprofile', 'fetchRouteInfo', 'clearRouteInfo', 'deleteRouteActions']),
 
     requestLike(id) {
-      this.jwt[3] = id
+      this.jwt[3] = id, 
       this.$store.dispatch('fetchLike', this.jwt)
     },
     requestStore(id) {
@@ -117,7 +122,16 @@ export default {
         access_token: this.jwt[0],
         jwtId: this.jwt[2]
       })
-    }, 
+    },
+    onClickdeleteRoute(routeId) {
+      const payload = {
+        userId: this.jwt[2],
+        routeId: routeId,
+        access_token: this.jwt[0]
+      }
+      this.deleteRouteActions(payload)
+      this.$router.go(-1);
+    }
   },
   created() {
     this.fetchRouteInfo({
