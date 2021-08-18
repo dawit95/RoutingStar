@@ -10,7 +10,7 @@
       <slot name="activator"></slot>
     </div>
     <!-- <input type="file" ref="file" :name="uploadFieldName" @change="onFileChange($event.target.name, $event.target.files)" style="display:none"> -->
-    <input accept="image/*, .heic" type="file" ref="file" :name="uploadFieldName" @change="onFileSelected(place, $event.target.name, $event.target.files)" style="display:none">
+    <input accept=".heic, .png, .jpg, .gif" type="file" ref="file" :name="uploadFieldName" @change="onFileSelected(place, $event.target.name, $event.target.files)" style="display:none">
   </div>
 </template>
 
