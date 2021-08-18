@@ -4,9 +4,9 @@
     <div @click="$router.push({name: 'RouteDetailView', params: { feedId: `${route.id}` }})">
       <div class="box">     
         <div v-if="route" class="thumbnail"><img class="profileThumbnailImg" :src="this.routeThumbnail" alt="thumnbnail"></div>
-        <div v-else class="thumbnail"><img class="profileThumbnailImg" src="@/assets/temp_thumbnail.jpg" alt=""></div>
+        <div v-else class="thumbnail"><img class="profileThumbnailImg" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/temp_thumbnail.jpg" alt=""></div>
         <div v-if="route" class="routeImg"><img class="profileThumbnailImg" :src="this.routeImg" alt="routeImage"></div>
-        <div v-else class="routeImg"><img class="profileThumbnailImg" src="@/assets/tmp_route_img.png" alt=""></div>
+        <div v-else class="routeImg"><img class="profileThumbnailImg" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt=""></div>
       </div>
     </div>
   </div>
@@ -26,10 +26,13 @@ export default {
       if (place !== undefined) {
         return place.placeImg
       }
-      return "@/assets/temp_thumbnail.jpg"
+      return "https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/temp_thumbnail.jpg"
     },
     routeImg() {
-      return this.route.routeImg
+      if (this.route.routeImg !== undefined) {
+        return this.route.routeImg
+      }
+      return "https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png"
     }
   },
 }
@@ -59,6 +62,6 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate( 10%, 10% );
+  transform: translate( 3%, 3% );
 }
 </style>
