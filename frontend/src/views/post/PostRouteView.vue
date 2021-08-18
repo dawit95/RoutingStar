@@ -17,6 +17,7 @@
 import Map from '@/components/routes/Map.vue'
 import MapPointFormS3 from '@/components/routes/MapPointFormS3.vue'
 import ReviseOthersHeader from '@/components/reviseothers/ReviseOthersHeader.vue'
+import { mapActions } from 'vuex'
 
 export default {
  name: 'PostRouteView',
@@ -33,6 +34,7 @@ export default {
     ReviseOthersHeader,
   },
   methods: {
+    ...mapActions(['changeMethodType']),
     // 모달이 열리면 map freeze하기
     freezeMap() {
       this.isFreeze = true
@@ -48,6 +50,9 @@ export default {
     changeIsthumbail() {
       this.isthumbail = !this.isthumbail
     },
+  },
+  created() {
+    this.changeMethodType('post')
   }
 }
 </script>
