@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-4">
-    <v-row class="tabs d-flex justify-center" role="tablist" >
+    <v-row class="tabs d-flex justify-center justify-center" role="tablist" >
       <v-col cols="5" xs="5" >
         <input type="radio" name="tabs" id="tab1" checked class="Nanum"/>
         <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0">내가 작성한 루트</label>
