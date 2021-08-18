@@ -64,6 +64,7 @@ public class RouteController {
 
         @DeleteMapping("/route/{userId}/{routeId}")
     public ResponseEntity<SuccessResponseDto> deleteRoute(@PathVariable("userId") Long userId, @PathVariable("routeId") Long id) throws NoRouteException {
+        logger.trace("지우기 테스트 => 유저 pk : {} || 라우트 id : {}",userId,id);
         routeService.deleteRoute(userId, id);
         SuccessResponseDto successResponseDto = responseGenerateService.generateSuccessResponse("성공적으로 삭제되었습니다.");
         HttpStatus status = HttpStatus.OK;
