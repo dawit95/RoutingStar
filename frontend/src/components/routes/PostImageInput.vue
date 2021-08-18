@@ -14,6 +14,7 @@
     <input
       type="file"
       ref="file"
+      accept="file_extension|video/*|image/*|media_type"
       :name="uploadFieldName"
       @change="onFileSelected(place, $event.target.name, $event.target.files)"
       style="display:none"
