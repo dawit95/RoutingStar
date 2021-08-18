@@ -71,6 +71,16 @@ function getRouteInfoWithComment(routeId, success, fail) {
   .catch(fail);
 }
 
+function deleteRoute(userId, routeId, access_token, success, fail) {
+  instance
+    .delete(`api/v1/route//${userId}/${routeId}` , {
+      headers: {
+        'access_token': access_token,
+      }
+    })
+    .then(success)
+    .catch(fail);
+}
 
 export { 
   postRoute,
@@ -78,5 +88,6 @@ export {
   getSavedRoute,
   getRouteInfoByRouteId,
   updateRoute,
-  getRouteInfoWithComment
+  getRouteInfoWithComment,
+  deleteRoute
  }
