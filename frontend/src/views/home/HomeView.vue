@@ -5,21 +5,17 @@
     </div>
     <v-flex xs12 class="big-box rounded-lg">
       <div v-for="(feed, idx) in feeds" :key="idx" :feed="feed">
-        <div class="list-prop">
-          <!-- 프로필 이미지, 이름 -->
-          <div>
-            <v-list-item-avatar size="45px">
-              <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
-              <v-img
-                @click="onClickUser(feed)"
-                class="elevation-6"
-                :src="feed.user.profileImg"
-                alt="profileImg"
-              ></v-img>
-            </v-list-item-avatar>
-            <span class="profile-font" @click="onClickUser(feed)">{{ feed.user.name }}</span>
-          </div>
-          <!-- 본문내용 -->
+      <div class="list-prop mt-6">
+        <!-- 프로필 이미지, 이름 -->
+        <div>
+          <v-list-item-avatar size="45px">
+            <!-- https://m.blog.naver.com/lizziechung/221793761299 -->
+            <v-img @click="onClickUser(feed)" class="elevation-6" :src="feed.user.profileImg" alt="profileImg" ></v-img>
+          </v-list-item-avatar>
+          <span class="profile-font" @click="onClickUser(feed)">{{ feed.user.name }}</span> 
+        </div>
+        <!-- 본문내용 -->
+        <div>
           <div>
             <div>
               <div class="box">
@@ -51,23 +47,19 @@
                   </div>
                   <div class="subheading mr-2 name-font">{{ feed.likeCnt }}</div>
 
-                  <div v-if="feed.isStored">
-                    <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1"
-                      >mdi-bookmark</v-icon
-                    >
-                  </div>
-                  <div v-else>
-                    <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1"
-                      >mdi-bookmark-outline</v-icon
-                    >
-                  </div>
-                  <div class="subheading name-font">{{ feed.storageCnt }}</div>
-                </v-row>
-                <!-- 루트설명 -->
-                <v-row align="center" justify="center">
-                  <v-card-text
-                    class="text-center route-description2 text-h7 font-weight-bold route-description-font"
-                  >
+                <div v-if="feed.isStored">
+                  <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1">mdi-bookmark</v-icon>
+                </div>
+                <div v-else>
+                  <v-icon @click="requestStore(feed.id)" color="#B4DFE5" class="mr-1">mdi-bookmark-outline</v-icon>
+                </div> 
+                <div class="subheading name-font">{{ feed.storageCnt }}</div>
+              </v-row>
+              <!-- 루트설명 -->
+
+                <h5 class="ml-4 mt-1" style="font-family: 'Do Hyeon', sans-serif; font-weight: lighter">Route Description</h5>
+              <v-row align="center" justify="center">
+                  <v-card-text class="text-center route-description2 text-h7 route-description-font">
                     {{ feed.routeDescription }}
                   </v-card-text>
                 </v-row>
@@ -379,9 +371,9 @@ export default {
   width: 90%;
   border-radius: 10px;
   text-align: center;
-  background-color: #2a355d;
-  padding: 10px 10px 10px 10px;
-  margin: 10px 10px 10px 10px;
+  background-color:#2a355d;
+  padding: 10px 20px 10px 20px;
+  margin: 10px 25px 15px 25px;
   /* background: #c1c8e4;
   box-shadow: inset 5px 5px 10px #7a7e90,
               inset -5px -5px 10px #ffffff; */

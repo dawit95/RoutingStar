@@ -20,10 +20,10 @@
             <div v-else class="mt-1 d-flex justify-center Nanum" @click="onClickFollowList">0</div>
           </v-col>
 
-           <div v-if="jwt[2]==userInfo.id" class="button Dohyeon mr-6 d-flex justify-center">Edit</div>
-          <div v-else class="button Dohyeon mr-6 d-flex justify-center" @click="onClickfollowOtherUser">{{ follow }}</div>
         </v-row>
         <v-row>
+          <div v-if="jwt[2]==userInfo.id" class="button Dohyeon mr-6 d-flex justify-center">Edit</div>
+          <div v-else class="button Dohyeon mr-6 d-flex justify-center" @click="onClickfollowOtherUser">{{ follow }}</div>
              <!-- <div class="button mx-8 Dohyeon mr-3 d-flex justify-center">Edit</div> -->
 
         </v-row>

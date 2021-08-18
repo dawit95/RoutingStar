@@ -1,9 +1,10 @@
 <template>
   <v-container class="mt-4">
-    <v-row class="tabs d-flex justify-center" role="tablist">
-        <v-col cols="8" xs="8" class="d-flex justify-center">
+    <v-row class="tabs d-flex" role="tablist">
+        <v-col cols="8" xs="8" class="d-flex">
           <input type="radio" name="tabs" id="tab1" checked class="Nanum" />
-          <label for="tab1" 
+          <label for="tab1"
+                class="ml-5" 
                 role="tab" 
                 aria-selected="true" 
                 aria-controls="panel1" 
