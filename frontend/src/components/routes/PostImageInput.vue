@@ -12,21 +12,21 @@
     <!-- <input type="file" ref="file" :name="uploadFieldName" @change="onFileChange($event.target.name, $event.target.files)" style="display:none"> -->
     <!-- accept="images/*" -->
     <!-- 동영상 편집용 -->
-    <!-- <input
+    <input
       type="file"
       ref="file"
       accept="file_extension|video/*|image/*|media_type"
       :name="uploadFieldName"
       @change="onFileSelected(place, $event.target.name, $event.target.files)"
       style="display:none"
-    /> -->
-    <input
+    />
+    <!-- <input
       type="file"
       ref="file"
       :name="uploadFieldName"
       @change="onFileSelected(place, $event.target.name, $event.target.files)"
       style="display:none"
-    />
+    /> -->
   </div>
 </template>
 
