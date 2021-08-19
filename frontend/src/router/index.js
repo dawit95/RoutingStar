@@ -21,8 +21,13 @@ const routes = [
     name: 'App',
     component: () => import('@/App.vue')
   },
+  // Error Page
   {
-    path: '/error',
+    path: '*',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
     name: 'ErrorView',
     component: () => import('@/views/ErrorView'),
     meta: {
@@ -30,7 +35,6 @@ const routes = [
       leaveActiveClass: "animate__animated animate__zoomOut"
     }
   },
-  
   // Main Page
   {
     path: '/home',
