@@ -1,14 +1,15 @@
-## RoutingStar 프로젝트 포팅 매뉴얼
+# RoutingStar 프로젝트 포팅 매뉴얼
 
-1. gitlab 소스 크론 이후 빌드 및 배포할수 있는 작업 문서  
-   <br>
-   Frontend :
+## 1. gitlab 소스 크론 이후 빌드 및 배포할수 있는 작업 문서 
+
+### FrontEnd
 
 - 모든 빌드 버전은 package.json에 있습니다.
   `bash "aos": "^2.3.4", "aws-sdk": "^2.960.0", "axios": "^0.21.1", "babel-plugin-transform-runtime": "^6.23.0", "circular-json": "^0.5.9", "core-js": "^3.6.5", "firebase": "^8.9.1", "jsonwebtoken": "^8.5.1", "vue": "^2.6.11", "vue-dragscroll": "^3.0.0", "vue-google-login": "^2.0.5", "vue-infinite-loading": "^2.4.5", "vue-router": "^3.2.0", "vuedraggable": "^2.24.3", "vuetify": "^2.4.0", "vuex": "^3.4.0", "vuex-persistedstate": "^4.0.0" `
-  Backend
-  사용한 JVM :
-- openjdk version 1.8.0_292 (Zulu 8.54.0.21-CA-win64)
+
+### BackEnd
+
+- 사용한 JVM : openjdk version 1.8.0_292 (Zulu 8.54.0.21-CA-win64)
 - SpringBoot version '2.5.2' (IDE => intellij ultimate version 212.4746.92)- gradle 방식(build.gradle파일에 선언되어있음)
 
 2. 빌드시 사용되는 환경변수
@@ -87,7 +88,7 @@ url = jdbc:mariadb://i5a309.p.ssafy.io:3306/RoutingStar?autoReconnect=true&useUn
 
 프로퍼티 정의된 목록은 없습니다.
 
-### 프로젝트에서 사용하는 외부 서비스 정보문서
+## 2. 프로젝트에서 사용하는 외부 서비스 정보문서
 
 FCM => (https://firebase.google.com/docs/cloud-messaging?hl=ko) dawit0310@gmail.com으로 등록 : 알림메시지 클라우드<br>
 AWS S3 => (https://aws.amazon.com/ko/) edkim3275@gmail.com으로 가입된 S3 버켓을 사용{벗켓 주소 : https://s3.console.aws.amazon.com/s3/buckets/routingstar-photo-album?region=ap-northeast-2&tab=objects}<br>
@@ -95,4 +96,11 @@ GoogleMap => .env.local에 api key등록 (등록 이메일 : hyun.ohenn@gmail.co
 Google Cloud => dawit0310@gmail.com으로 등록<br>
 Kakao developer => dawit0310@gmail.com으로 등록<br>
 
-### 시연 시나리오
+## 3. 데이터베이스 덤프 파일 최신본
+
+exec폴더 내에 `backup_20210819.zip`파일로 별도 첨부합니다.
+
+## 4. 시연 시나리오
+
+exec폴더 내에 `시연 시나리오.pptx`파일로 별도 첨부합니다.
+
