@@ -68,6 +68,7 @@
           </div>
         </div>
       </div>
+      </div>
     </v-flex>
     <!-- Hacker News item loop -->
     <!-- {{item}} -->
