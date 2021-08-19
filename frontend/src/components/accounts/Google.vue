@@ -9,7 +9,7 @@
     <div class="rounded-lg">
 
     <a href="https://i5a309.p.ssafy.io/oauth2/authorization/google">
-      <v-img class="mx-auto loginButtonM circle" max-height="46" max-width="308" :src="require('../../assets/madeGoogle.png')" />
+      <v-img class="mx-auto loginButtonM circleLittle" max-height="60" max-width="308" :src="require('../../assets/madeGoogle.png')" />
     </a>
     </div>
 </div>
@@ -47,4 +47,5 @@
 .logoTopM {margin-top: 70px;}
 .loginButtonM {margin-top: 30px;}
 .circle {border-radius: 15px;}
+.circleLittle {border-radius: 10px;}
 </style>
