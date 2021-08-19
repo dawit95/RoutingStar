@@ -49,11 +49,13 @@ console.log('아래가 알람 온거입니다.')
 console.log(payload)
 // alert(payload.data.message)
 if(payload.data.message.includes("팔로우")) {
+  console.log('팔로우로 들어옴')
   store.dispatch('showAlertModal', payload.data.message);
 } else if (payload.data.message.includes("좋아요")) {
+  console.log('좋아요로 들어옴')
   store.dispatch('showLikeModal', payload.data.message);
 } else if(payload.data.message.includes("루트")) {
-
+  console.log('루트로 들어옴')
 // if(payload.data.title.includes("팔로우 알림")) {
 //   store.dispatch('showAlertModal', payload.data.message);
 // } else if (payload.data.title.includes("좋아요 알림")) {
