@@ -52,7 +52,7 @@ if(payload.data.message.includes("follow")) {
   store.dispatch('showAlertModal', payload.data.message);
 } else if (payload.data.message.includes("좋아요")) {
   store.dispatch('showLikeModal', payload.data.message);
-} else if(payload.data.message.includes("루트 저장")) {
+} else if(payload.data.message.includes("루트")) {
 
 // if(payload.data.title.includes("팔로우 알림")) {
 //   store.dispatch('showAlertModal', payload.data.message);
