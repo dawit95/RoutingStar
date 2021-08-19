@@ -4,12 +4,12 @@
     <!-- <a href="http://localhost:8000/oauth2/authorization/kakao"> -->
     <!-- <h1 style="color: white">하이하이</h1> -->
     <a href="https://i5a309.p.ssafy.io/oauth2/authorization/kakao">
-      <v-img class="mx-auto logoTopM" max-height="290" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
+      <v-img class="mx-auto logoTopM" max-height="280" max-width="300" :src="require('../../assets/kakao_login_medium_wide.png')" />
     </a>
     <div class="rounded-lg">
 
     <a href="https://i5a309.p.ssafy.io/oauth2/authorization/google">
-      <v-img class="mx-auto loginButtonM circleLittle" max-height="350" max-width="301" :src="require('../../assets/madeGoogle.png')" />
+      <v-img class="mx-auto loginButtonM circleLittle" max-height="370" max-width="301" :src="require('../../assets/madeGoogle.png')" />
     </a>
     </div>
 </div>
