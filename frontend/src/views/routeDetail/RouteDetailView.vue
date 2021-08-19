@@ -34,15 +34,15 @@
             <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart</v-icon>
           </div>
           <div v-else>
-            <v-icon color="white" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
+            <v-icon color="red" @click="requestLike(routeInfo.id)" class="mr-1">mdi-heart-outline</v-icon>
           </div> 
           <div class="subheading mr-2" style="color:white">{{ routeInfo.likeCnt }}</div>
 
           <div v-if="routeInfo.isStored">
-              <v-icon color="brown" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
+              <v-icon color="#B4DFE5" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark</v-icon>
           </div>
           <div v-else>
-            <v-icon color="white" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
+            <v-icon color="#B4DFE5" @click="requestStore(routeInfo.id)" class="mr-1">mdi-bookmark-outline</v-icon>
           </div> 
           <div class="subheading" style="color:white">{{ routeInfo.storageCnt }}</div>
             </v-col>
