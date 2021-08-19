@@ -45,12 +45,12 @@ public class ReactionService {
         //이미 좋아요가 눌러져있음
         if(like != null) {
             likeRepository.deleteById(like.getId());
-            message = "좋아요를 등록했습니다.";
+            message = "좋아요를 취소했습니다.";
             alarmService.addAlarm(user.getId(),route.getUser().getId(),"좋아요 알림",user.getName()+"님이 "+route.getUser().getName()+"님의 피드에 "+message);
 //            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
         } else {
             like = Like.builder().route(route).user(user).build();
-            message = "좋아요를 취소했습니다.";
+            message = "좋아요를 등록했습니다.";
             likeRepository.save(like);
             alarmService.addAlarm(user.getId(),route.getUser().getId(),"좋아요 알림",user.getName()+"님이 "+route.getUser().getName()+"님의 피드에 "+message);
 //            pushService.searchReceivedUser(user.getId(),"좋아요 알림",user.getName()+"가 "+route.getUser().getName()+"의 피드"+message);
