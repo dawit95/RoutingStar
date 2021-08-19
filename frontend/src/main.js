@@ -48,7 +48,7 @@ messaging.onMessage(payload => {
 console.log('아래가 알람 온거입니다.')
 console.log(payload)
 // alert(payload.data.message)
-if(payload.data.message.includes("follow")) {
+if(payload.data.message.includes("팔로우")) {
   store.dispatch('showAlertModal', payload.data.message);
 } else if (payload.data.message.includes("좋아요")) {
   store.dispatch('showLikeModal', payload.data.message);
