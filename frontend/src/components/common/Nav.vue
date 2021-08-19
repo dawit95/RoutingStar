@@ -30,6 +30,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Swal from 'sweetalert2'
+
 export default {
   name: "Nav",
   data() {
@@ -53,7 +55,23 @@ export default {
       }
 
       if (from.name === 'PostRouteView' && to.name !== 'PostRouteView' && this.postingCheck === false) {
-        alert('작성중인 내용이 삭제됩니다.')
+        // alert('작성중인 내용이 삭제됩니다.')
+        Swal.fire('작성내용이 삭제됩니다.')
+        // Swal.fire({
+        //   title: 'Warning!',
+        //   text: '작성중인 내용이 삭제됩니다.',
+        //   icon: 'warning',
+        //   confirmButtonText: 'ok'
+        // })
+        // Swal.fire({
+        //   title: '작성내용이 삭제됩니다.',
+        //   showClass: {
+        //     popup: 'animate__animated animate__fadeInDown'
+        //   },
+        //   hideClass: {
+        //     popup: 'animate__animated animate__fadeOutUp'
+        //   }
+        // })
         this.refreshPlaces([])
       }
       if (from.name !== 'PostRouteView' && to.name === 'PostRouteView') {
