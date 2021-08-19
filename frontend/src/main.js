@@ -45,6 +45,7 @@ messaging.getToken()
 
 // Handle received push notification at foreground
 messaging.onMessage(payload => {
+console.log('아래가 알람 온거입니다.')
 console.log(payload)
 // alert(payload.data.message)
 if(payload.data.message.includes("follow")) {
