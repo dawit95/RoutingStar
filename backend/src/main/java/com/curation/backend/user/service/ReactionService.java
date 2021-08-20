@@ -96,7 +96,7 @@ public class ReactionService {
             alarmService.addAlarm(user.getId(),target.getId(),"팔로우 알림",user.getName()+"님이 "+target.getName()+"님을 "+message);
         } else {
             followerFollowing = followerFollowing.builder().follower(user).following(target).build();
-            message = "팔로우했습니다.";
+            message = "팔로우 했습니다.";
             followerFollowingRepository.save(followerFollowing);
             alarmService.addAlarm(user.getId(),target.getId(),"팔로우 알림",user.getName()+"님이 "+target.getName()+"님을 "+message);
         }
