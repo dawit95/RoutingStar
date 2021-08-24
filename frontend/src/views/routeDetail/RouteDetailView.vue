@@ -58,6 +58,13 @@
           <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
           <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
         </span>
+
+        <span v-else>
+          <div class="thumbnail d-flex"><img src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/temp_thumbnail.jpg" alt=""></div>
+          <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+          <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+          <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+        </span>
         </div>
 
       <br /><br /><br /><br /><br />><br /><br />
