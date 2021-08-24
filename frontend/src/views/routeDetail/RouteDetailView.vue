@@ -51,7 +51,7 @@
 
       <div >
 
-        <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+        <!-- <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
         <span v-if="place.isThumbnail===true">
           <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
           <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
@@ -65,6 +65,22 @@
           <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
           <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
         </span>
+
+        </div> -->
+
+        <div class="d-flex box moveUp">
+          <span v-if="getThumbnailPlace(routeInfo.places) !== undefined">
+            <div class="thumbnail d-flex"><img :src=place.placeImg alt=""></div>
+            <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+            <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+          </span>
+          <span v-else>
+            <div class="thumbnail d-flex"><img src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/temp_thumbnail.jpg" alt=""></div>
+            <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
+            <img class="logo-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/LOGO1.png" alt="">
+            <div class="routeImg d-flex"><img :src=routeInfo.routeImg alt=""></div>
+          </span>
         </div>
 
       <br /><br /><br /><br /><br />><br /><br />
@@ -138,6 +154,12 @@ export default {
       }
       this.deleteRouteActions(payload)
       this.$router.go(-1);
+    },
+    getThumbnailPlace : function(places) {
+      if(places == undefined ) {
+        return undefined
+      }
+      return places.find( place => place.isThumbnail)
     }
   },
   created() {
