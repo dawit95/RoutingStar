@@ -68,7 +68,7 @@
 
         </div> -->
 
-        <div class="d-flex box moveUp" v-for="(place, idx) in routeInfo.places" :key="idx+'k'">
+        <div class="d-flex box moveUp">
           <span v-if="getThumbnailPlace(routeInfo.places) !== undefined">
             <div class="thumbnail d-flex"><img :src="getThumbnailPlace(routeInfo.places).placeImg" alt=""></div>
             <img class="mid-image" src="https://routingstar-photo-album.s3.ap-northeast-2.amazonaws.com/assets/mid-image-black.png" alt="">
